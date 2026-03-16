@@ -1,0 +1,1118 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modelos de Convites | Convites Premium</title>
+    <meta name="description"
+        content="Galeria de modelos de convites digitais premium. Escolha seu modelo favorito para aniversários, casamentos, 15 anos e muito mais.">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;900&display=swap"
+        rel="stylesheet">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                    },
+                    colors: {
+                        dark: '#0a0a0a',
+                        darker: '#050505',
+                        primary: '#ffffff',
+                        accent: '#c9557c',
+                        'accent-light': '#e8a0b8',
+                        glass: 'rgba(255, 255, 255, 0.05)',
+                    }
+                }
+            }
+        }
+    </script>
+
+    <!-- FontAwesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* Theme Variables */
+        :root {
+            --bg-primary: #ffffff;
+            --bg-secondary: #f3f4f6;
+            --bg-card: #ffffff;
+            --text-primary: #1a1a2e;
+            --text-secondary: #6b7280;
+            --text-muted: #9ca3af;
+            --border-color: rgba(0, 0, 0, 0.1);
+            --glass-bg: rgba(0, 0, 0, 0.03);
+            --glass-border: rgba(0, 0, 0, 0.08);
+            --shadow-color: rgba(0, 0, 0, 0.1);
+        }
+
+        [data-theme="dark"] {
+            --bg-primary: #0a0a0a;
+            --bg-secondary: #1a1a2e;
+            --bg-card: rgba(255, 255, 255, 0.03);
+            --text-primary: #ffffff;
+            --text-secondary: #9ca3af;
+            --text-muted: #6b7280;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --shadow-color: rgba(0, 0, 0, 0.4);
+        }
+
+        body {
+            background: var(--bg-primary);
+            color: var(--text-primary);
+            min-height: 100vh;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        [data-theme="dark"] body {
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #0a0a0a 100%);
+        }
+
+        .glass-panel {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+        }
+
+        .gradient-text {
+            background: linear-gradient(135deg, #c9557c, #e8a0b8, #c9557c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* Theme Toggle */
+        .theme-toggle {
+            width: 56px;
+            height: 28px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            padding: 2px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .theme-toggle .toggle-knob {
+            width: 22px;
+            height: 22px;
+            background: var(--bg-primary);
+            border-radius: 50%;
+            transition: transform 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 4px var(--shadow-color);
+        }
+
+        .theme-toggle .toggle-knob svg {
+            width: 14px;
+            height: 14px;
+            color: #f59e0b;
+        }
+
+        [data-theme="dark"] .theme-toggle .toggle-knob {
+            transform: translateX(28px);
+        }
+
+        [data-theme="dark"] .theme-toggle .toggle-knob svg {
+            color: #a78bfa;
+        }
+
+        /* Model Card */
+        .model-card {
+            background: var(--bg-card);
+            border: 2px solid var(--border-color);
+            border-radius: 16px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+            width: 180px;
+            display: flex;
+            flex-direction: column;
+            height: 345px;
+        }
+
+        @media (min-width: 768px) {
+            .model-card {
+                width: 200px;
+                height: 365px;
+            }
+        }
+
+        .model-card:hover {
+            border-color: rgba(201, 85, 124, 0.3);
+            transform: translateY(-4px);
+            box-shadow: 0 12px 40px var(--shadow-color);
+        }
+
+        .model-card.selected {
+            border-color: #c9557c;
+            box-shadow: 0 0 30px rgba(201, 85, 124, 0.4);
+        }
+
+        .model-card.selected::before {
+            content: '\2713';
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: linear-gradient(135deg, #c9557c, #a84466);
+            color: #fff;
+            font-size: 14px;
+            font-weight: 700;
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            z-index: 10;
+        }
+
+        .model-cover {
+            width: 100%;
+            aspect-ratio: 3/4;
+            object-fit: cover;
+            transition: transform 0.4s ease, opacity 0.4s ease;
+            opacity: 0;
+        }
+
+        .model-cover.loaded {
+            opacity: 1;
+        }
+
+        .model-card:hover .model-cover.loaded {
+            transform: scale(1.05);
+        }
+
+        /* Skeleton loading */
+        .cover-skeleton {
+            width: 100%;
+            aspect-ratio: 3/4;
+            background: linear-gradient(110deg, var(--bg-secondary) 8%, rgba(255,255,255,0.15) 18%, var(--bg-secondary) 33%);
+            background-size: 200% 100%;
+            animation: skeleton-shimmer 1.5s ease-in-out infinite;
+        }
+
+        @keyframes skeleton-shimmer {
+            0% { background-position: 200% 0; }
+            100% { background-position: -200% 0; }
+        }
+
+        .card-info-skeleton .skel-line {
+            height: 12px;
+            background: linear-gradient(110deg, var(--bg-secondary) 8%, rgba(255,255,255,0.1) 18%, var(--bg-secondary) 33%);
+            background-size: 200% 100%;
+            animation: skeleton-shimmer 1.5s ease-in-out infinite;
+            border-radius: 4px;
+        }
+
+        .card-info {
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+            padding: 0.75rem;
+        }
+
+        /* Loading overlay */
+        #loadingOverlay {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 4rem 0;
+            gap: 1rem;
+        }
+
+        #loadingOverlay .loading-text {
+            color: var(--text-muted);
+            font-size: 0.875rem;
+        }
+
+        /* Carousel */
+        .carousel-container {
+            position: relative;
+        }
+
+        .carousel-track {
+            display: flex;
+            gap: 1rem;
+            overflow-x: auto;
+            scroll-snap-type: x mandatory;
+            scroll-behavior: smooth;
+            padding: 0.5rem 0;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+            cursor: grab;
+        }
+
+        .carousel-track::-webkit-scrollbar {
+            display: none;
+        }
+
+        .carousel-track>* {
+            scroll-snap-align: start;
+        }
+
+        .carousel-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 40px;
+            height: 40px;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            z-index: 10;
+            box-shadow: 0 4px 12px var(--shadow-color);
+        }
+
+        .carousel-arrow:hover {
+            background: #c9557c;
+            color: white;
+            border-color: #c9557c;
+        }
+
+        .carousel-arrow.left {
+            left: 0;
+        }
+
+        .carousel-arrow.right {
+            right: 0;
+        }
+
+        .carousel-arrow svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        /* Notice Bar */
+        .notice-bar {
+            background: linear-gradient(135deg, rgba(201, 85, 124, 0.1), rgba(201, 85, 124, 0.05));
+            border: 1px solid rgba(201, 85, 124, 0.2);
+        }
+
+        /* Search */
+        .search-input {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+        }
+
+        .search-input:focus {
+            border-color: rgba(201, 85, 124, 0.5);
+            outline: none;
+            box-shadow: 0 0 20px rgba(201, 85, 124, 0.2);
+        }
+
+        .search-input::placeholder {
+            color: var(--text-muted);
+        }
+
+        .suggestion-btn {
+            background: rgba(201, 85, 124, 0.1);
+            border: 1px solid rgba(201, 85, 124, 0.3);
+            color: #c9557c;
+            padding: 0.5rem 1rem;
+            border-radius: 9999px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .suggestion-btn:hover {
+            background: rgba(201, 85, 124, 0.2);
+            border-color: rgba(201, 85, 124, 0.5);
+        }
+
+        .suggestion-btn.active {
+            background: #c9557c;
+            color: white;
+            border-color: #c9557c;
+        }
+
+        /* Buttons */
+        .btn-primary {
+            background: linear-gradient(135deg, #c9557c, #a84466);
+            color: white;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            box-shadow: 0 4px 20px rgba(201, 85, 124, 0.4);
+        }
+
+        .btn-secondary {
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            border-color: rgba(201, 85, 124, 0.3);
+        }
+
+        /* Bottom Bar */
+        .bottom-bar {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: var(--bg-primary);
+            backdrop-filter: blur(12px);
+            border-top: 1px solid rgba(201, 85, 124, 0.3);
+            padding: 1rem;
+            z-index: 100;
+        }
+
+        [data-theme="dark"] .bottom-bar {
+            background: rgba(10, 10, 10, 0.95);
+        }
+
+        .btn-orcamento {
+            background: linear-gradient(135deg, #c9557c, #a84466);
+            color: white;
+            font-weight: 600;
+            padding: 0.875rem 2rem;
+            border-radius: 9999px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 20px rgba(201, 85, 124, 0.3);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .btn-orcamento:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(201, 85, 124, 0.5);
+        }
+
+        /* Section Title */
+        .section-title {
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        /* Preview Modal */
+        .preview-modal {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.9);
+            display: none;
+            flex-direction: column;
+            z-index: 1000;
+        }
+
+        .preview-modal.active {
+            display: flex;
+        }
+
+        .preview-modal-header {
+            background: rgba(15, 15, 25, 0.95);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 10px 12px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 10;
+            gap: 0.5rem;
+        }
+
+        .preview-modal-body {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px;
+            overflow: hidden;
+        }
+
+        .preview-iframe-container {
+            background: #000;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 25px 80px rgba(0, 0, 0, 0.5);
+            transition: all 0.3s ease;
+        }
+
+        .device-btn {
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: all 0.2s ease;
+        }
+
+        .device-btn.active {
+            background: #c9557c;
+            color: white;
+        }
+
+        .device-btn:not(.active) {
+            background: rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .device-btn:not(.active):hover {
+            background: rgba(255, 255, 255, 0.15);
+        }
+
+        /* Loading spinner */
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 3px solid rgba(255, 255, 255, 0.1);
+            border-top-color: #c9557c;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+
+<body class="antialiased">
+    <!-- Navigation -->
+    <nav class="sticky top-0 z-50 glass-panel">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="index.html" class="text-xl font-bold tracking-tight">
+                <span class="gradient-text">Convites</span><span
+                    class="text-gray-500 text-sm align-top ml-1">Premium</span>
+            </a>
+            <div class="flex items-center gap-4">
+                <!-- Theme Toggle -->
+                <div class="theme-toggle" onclick="toggleTheme()" title="Alternar tema">
+                    <div class="toggle-knob">
+                        <svg id="themeIcon" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd"
+                                d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
+                                clip-rule="evenodd" />
+                        </svg>
+                    </div>
+                </div>
+                <a href="orcamentos/" class="text-sm font-medium hover:text-accent transition-colors">Orçamento</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Notice Bar -->
+    <div class="notice-bar py-6 px-6 text-center">
+        <p class="text-lg md:text-xl max-w-4xl mx-auto font-medium">
+            Convites feitos com nossos modelos são entregues <span class="text-accent font-bold">mais rapidamente</span>!
+        </p>
+    </div>
+
+    <!-- Header -->
+    <header class="py-8 px-6 text-center">
+        <h1 class="text-4xl md:text-5xl font-bold mb-4">
+            Nossos <span class="gradient-text">Modelos</span>
+        </h1>
+        <p class="text-gray-500 max-w-2xl mx-auto mb-6">
+            Escolha um modelo e veja a prévia de como seu convite irá ficar!
+        </p>
+
+        <!-- Search -->
+        <div class="max-w-xl mx-auto relative mb-4">
+            <input type="text" id="searchInput" placeholder="Buscar por tema, cor ou nome..."
+                class="search-input w-full px-5 py-4 pl-12 rounded-full">
+            <svg class="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-gray-400" fill="none"
+                stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+        </div>
+
+        <!-- Suggestion Buttons -->
+        <div class="flex flex-wrap gap-2 justify-center mb-4" id="suggestionButtons">
+            <button class="suggestion-btn" data-term="15 Anos" onclick="toggleSuggestion('15 Anos')"><span>15 Anos</span></button>
+            <button class="suggestion-btn" data-term="Casamento" onclick="toggleSuggestion('Casamento')"><span>Casamento</span></button>
+            <button class="suggestion-btn" data-term="Aniversário" onclick="toggleSuggestion('Aniversário')"><span>Aniversário</span></button>
+            <button class="suggestion-btn" data-term="Debutante" onclick="toggleSuggestion('Debutante')"><span>Debutante</span></button>
+            <button class="suggestion-btn" data-term="Formatura" onclick="toggleSuggestion('Formatura')"><span>Formatura</span></button>
+        </div>
+
+        <p class="text-xs text-gray-400">Os modelos correspondentes aparecerão primeiro</p>
+    </header>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay">
+        <div class="loading-spinner"></div>
+        <p class="loading-text">Carregando modelos...</p>
+    </div>
+
+    <!-- Models Sections -->
+    <main class="max-w-7xl mx-auto px-6 pb-28 opacity-0 transition-opacity duration-500" id="modelsContainer">
+        <!-- Will be populated by JavaScript -->
+    </main>
+
+    <!-- Fixed Bottom Bar -->
+    <div class="bottom-bar">
+        <div class="max-w-7xl mx-auto flex justify-center">
+            <a href="orcamentos/" class="btn-orcamento">
+                Ir para Orçamento
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                </svg>
+            </a>
+        </div>
+    </div>
+
+    <!-- Preview Modal -->
+    <div class="preview-modal" id="previewModal">
+        <div class="preview-modal-header">
+            <button onclick="closePreview()" class="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-white text-gray-800 text-xs font-semibold hover:bg-gray-100 transition-colors">
+                <i class="fa-solid fa-xmark text-sm"></i>
+                Fechar
+            </button>
+            <div class="text-right">
+                <h2 id="previewTitle" class="text-white font-semibold text-xs sm:text-sm truncate max-w-[140px] sm:max-w-none leading-tight mb-1"></h2>
+                <button onclick="chooseFromPreview()" class="px-3 py-1.5 rounded-lg text-xs bg-accent hover:bg-accent/90 text-white font-semibold transition-colors">
+                    <i class="fa-solid fa-check mr-1"></i> Escolher
+                </button>
+            </div>
+        </div>
+        <div class="preview-modal-body" onclick="closePreview()">
+            <div class="preview-iframe-container" id="previewContainer" style="width:390px;height:844px;max-height:85vh;" onclick="event.stopPropagation()">
+                <iframe id="previewFrame" class="w-full h-full" style="border:none;"></iframe>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ============================
+        // SUPABASE CONFIG
+        // ============================
+        const SUPABASE_URL = 'https://xchphsltccopelblbsyb.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhjaHBoc2x0Y2NvcGVsYmxic3liIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDEyMDk0MTAsImV4cCI6MjA1Njc4NTQxMH0.8e2V0H1xRJi_3w_GYWOWn8dWfAEcPqS8mPR3k5U0hMo';
+        const SUPABASE_ASSETS = SUPABASE_URL + '/storage/v1/object/public/modelos';
+        const SUPABASE_CODE = SUPABASE_URL + '/storage/v1/object/public/modelos-code';
+
+        // Sanitize slug for Storage paths (remove accents)
+        function sanitizeSlug(slug) {
+            return slug.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-zA-Z0-9\-_]/g, '-');
+        }
+
+        // ============================
+        // THEME
+        // ============================
+        function toggleTheme() {
+            const html = document.documentElement;
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            html.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            updateThemeIcon(newTheme);
+        }
+
+        function updateThemeIcon(theme) {
+            const icon = document.getElementById('themeIcon');
+            if (theme === 'dark') {
+                icon.innerHTML = '<path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z"/>';
+            } else {
+                icon.innerHTML = '<path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"/>';
+            }
+        }
+
+        // Initialize theme
+        (function () {
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            document.documentElement.setAttribute('data-theme', savedTheme);
+            updateThemeIcon(savedTheme);
+        })();
+
+        // ============================
+        // PREVIEW MODAL
+        // ============================
+        let currentPreviewModel = null;
+
+        function openPreview(model) {
+            currentPreviewModel = model;
+            document.getElementById('previewTitle').textContent = model.name;
+            document.getElementById('previewFrame').src = SUPABASE_CODE + '/' + sanitizeSlug(model.slug) + '/index.html';
+            document.getElementById('previewModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+            // Always mobile view
+            const container = document.getElementById('previewContainer');
+            container.style.width = '390px';
+            container.style.height = '844px';
+            container.style.maxHeight = '85vh';
+        }
+
+        function closePreview() {
+            document.getElementById('previewModal').classList.remove('active');
+            document.getElementById('previewFrame').src = 'about:blank';
+            document.body.style.overflow = '';
+            currentPreviewModel = null;
+        }
+
+        function toggleDevice(device) {
+            const container = document.getElementById('previewContainer');
+            const btnMobile = document.getElementById('btnMobile');
+            const btnDesktop = document.getElementById('btnDesktop');
+
+            if (device === 'mobile') {
+                container.style.width = '390px';
+                container.style.height = '844px';
+                container.style.maxHeight = '85vh';
+                btnMobile.classList.add('active');
+                btnDesktop.classList.remove('active');
+            } else {
+                container.style.width = '100%';
+                container.style.height = '100%';
+                container.style.maxHeight = '85vh';
+                btnMobile.classList.remove('active');
+                btnDesktop.classList.add('active');
+            }
+        }
+
+        function chooseFromPreview() {
+            if (currentPreviewModel) {
+                selectModel(currentPreviewModel.slug);
+            }
+        }
+
+        // Close on Escape
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closePreview();
+        });
+
+        // ============================
+        // MODEL DATA
+        // ============================
+        let slugs = [];
+        let models = [];
+        let selectedModelSlug = null;
+        let coverObserver = null;
+        let lastModelosJson = '';
+
+        // Load models from Supabase DB
+        async function discoverSlugs() {
+            try {
+                const r = await fetch(SUPABASE_URL + '/rest/v1/modelos?select=slug,name,tipo,tema,paleta_cores,button_color,capa_path,idade&order=name', {
+                    headers: { 'apikey': SUPABASE_ANON_KEY }
+                });
+                const data = await r.json();
+                const newJson = JSON.stringify(data);
+                if (newJson !== lastModelosJson) {
+                    lastModelosJson = newJson;
+                    // Preencher models diretamente com dados do DB
+                    models = data.map(m => ({
+                        slug: m.slug,
+                        name: m.name || formatSlug(m.slug),
+                        tipo: m.tipo,
+                        tema: m.tema,
+                        paletaCores: m.paleta_cores,
+                        buttonColor: m.button_color || '#c9557c',
+                        tags: buildTags(m.tipo),
+                        cover: SUPABASE_ASSETS + '/' + sanitizeSlug(m.slug) + '/' + (m.capa_path || 'assets/capa.jpg'),
+                        loaded: true
+                    }));
+                    slugs = models.map(m => m.slug);
+                    return true;
+                }
+                return false;
+            } catch (e) {
+                console.error('Error loading models from Supabase:', e);
+                return false;
+            }
+        }
+
+        function buildTags(tipo) {
+            const tags = [];
+            if (tipo) tags.push(tipo);
+            if (tipo === 'Aniversário') tags.push('15 Anos');
+            if (tipo === 'Debutante') tags.push('15 Anos');
+            if (tipo === 'Formatura') tags.push('Adulto');
+            if (tipo === 'Casamento') tags.push('Adulto');
+            return tags;
+        }
+
+        function formatSlug(slug) {
+            return slug
+                .replace(/^(modelo-|Modelo-)/, '')
+                .replace(/-/g, ' ')
+                .replace(/([A-Z])/g, ' $1')
+                .trim();
+        }
+
+        // Initialize Intersection Observer for lazy cover loading
+        function initCoverObserver() {
+            coverObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        const src = img.dataset.src;
+                        if (src) {
+                            img.src = src;
+                            img.removeAttribute('data-src');
+                        }
+                        coverObserver.unobserve(img);
+                    }
+                });
+            }, {
+                rootMargin: '200px',
+                threshold: 0.01
+            });
+        }
+
+        async function loadModels(showLoading = true) {
+            // Check selected model first
+            const saved = localStorage.getItem('selectedModel');
+            if (saved) {
+                try {
+                    const data = JSON.parse(saved);
+                    selectedModelSlug = data.slug;
+                } catch(e) {}
+            }
+
+            // Show loading overlay
+            const overlay = document.getElementById('loadingOverlay');
+            const container = document.getElementById('modelsContainer');
+            if (showLoading) {
+                overlay.style.display = 'flex';
+                container.style.opacity = '0';
+            }
+
+            // Discover models from Supabase DB (populates models array directly)
+            await discoverSlugs();
+
+            // Render all models at once
+            renderModels();
+
+            // Fade in
+            if (showLoading) {
+                overlay.style.display = 'none';
+                container.style.opacity = '1';
+            }
+        }
+
+        async function loadModelConfig(slug) {
+            try {
+                const r = await fetch('/modelos/' + slug + '/config.js');
+                const t = await r.text();
+                const nome = (t.match(/"nome":\s*"([^"]*)"/) || [,''])[1] || formatSlug(slug);
+                const tipo = (t.match(/"tipo":\s*"([^"]*)"/) || [,''])[1] || '';
+                const tema = (t.match(/"tema":\s*"([^"]*)"/) || [,''])[1] || '';
+                const paletaCores = (t.match(/"paletaCores":\s*"([^"]*)"/) || [,''])[1] || '';
+                const buttonColor = (t.match(/"buttonColor":\s*"([^"]*)"/) || [,''])[1] || '#c9557c';
+                const capaPath = (t.match(/"capa":\s*"([^"]*)"/) || [,''])[1];
+
+                const tags = [];
+                if (tipo) tags.push(tipo);
+                if (tipo === 'Aniversário') tags.push('15 Anos');
+                if (tipo === 'Debutante') tags.push('15 Anos');
+                if (tipo === 'Formatura') tags.push('Adulto');
+                if (tipo === 'Casamento') tags.push('Adulto');
+
+                models.push({
+                    slug,
+                    name: nome,
+                    tipo,
+                    tema,
+                    paletaCores,
+                    buttonColor,
+                    tags,
+                    cover: capaPath ? '/modelos/' + slug + '/' + capaPath : '/modelos/' + slug + '/assets/capa.jpg',
+                    loaded: true
+                });
+            } catch(e) {
+                models.push({
+                    slug,
+                    name: formatSlug(slug),
+                    tipo: '',
+                    tema: '',
+                    paletaCores: '',
+                    buttonColor: '#c9557c',
+                    tags: [],
+                    cover: '/modelos/' + slug + '/assets/capa.jpg',
+                    loaded: true
+                });
+            }
+        }
+
+        // ============================
+        // SECTIONS
+        // ============================
+        const sections = [
+            { id: 'todos', title: 'Todos os Convites', filter: () => true },
+            { id: 'aniversario', title: 'Aniversário', filter: m => m.tipo === 'Aniversário' },
+            { id: 'casamento', title: 'Casamento', filter: m => m.tipo === 'Casamento' },
+            { id: 'debutante', title: 'Debutante', filter: m => m.tipo === 'Debutante' },
+            { id: 'formatura', title: 'Formatura', filter: m => m.tipo === 'Formatura' }
+        ];
+
+        // ============================
+        // SELECT MODEL
+        // ============================
+        function selectModel(slug) {
+            const model = models.find(m => m.slug === slug);
+            if (!model) return;
+
+            const modelData = {
+                slug: model.slug,
+                name: model.name,
+                tema: model.tema,
+                tipo: model.tipo,
+                paletaCores: model.paletaCores,
+                buttonColor: model.buttonColor,
+                capa: model.cover.replace(/^\//, '')
+            };
+
+            localStorage.setItem('selectedModel', JSON.stringify(modelData));
+            window.location.href = 'orcamentos/';
+        }
+
+        // ============================
+        // CREATE CARD (for filtered renders)
+        // ============================
+        function createModelCard(model, isSelected) {
+            const card = document.createElement('div');
+            card.className = `model-card relative ${isSelected ? 'selected' : ''}`;
+            card.dataset.slug = model.slug;
+            card.dataset.configLoaded = 'true';
+            card.dataset.tags = model.tags.join(' ').toLowerCase();
+            card.dataset.name = model.name.toLowerCase();
+            card.dataset.colors = (model.paletaCores || '').toLowerCase();
+            card.dataset.tema = (model.tema || '').toLowerCase();
+
+            card.innerHTML = `
+                <div class="cover-click-area relative overflow-hidden" onclick="openPreview(models.find(m=>m.slug==='${model.slug}'))" style="cursor:pointer">
+                    <img src="${model.cover}"
+                         alt="${model.name}"
+                         class="model-cover loaded"
+                         onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 300 400%22%3E%3Crect fill=%22%23e5e7eb%22 width=%22300%22 height=%22400%22/%3E%3Ctext fill=%22%239ca3af%22 x=%22150%22 y=%22200%22 text-anchor=%22middle%22 font-size=%2214%22%3ESem capa%3C/text%3E%3C/svg%3E';">
+                </div>
+                <div class="card-info">
+                    <h3 class="card-name font-semibold text-sm mb-0.5 line-clamp-1">${model.name}</h3>
+                    <p class="card-colors text-xs text-accent line-clamp-1">${model.paletaCores || model.tema || ''}</p>
+                    <div class="flex-1"></div>
+                    <button onclick="event.stopPropagation(); selectModel('${model.slug}')"
+                            class="w-full py-1.5 px-2 rounded-lg text-[11px] font-medium bg-gradient-to-r from-[#c9557c] to-[#a84466] text-white">
+                        ${isSelected ? '\u2713 Selecionado' : 'Escolher'}
+                    </button>
+                    <button onclick="event.stopPropagation(); openPreview(models.find(m=>m.slug==='${model.slug}'))"
+                       class="w-full py-1.5 px-2 rounded-lg text-[11px] text-center border mt-1" style="background:var(--bg-secondary);border-color:var(--border-color);color:var(--text-primary)">
+                        Ver Prévia
+                    </button>
+                </div>
+            `;
+
+            return card;
+        }
+
+        // ============================
+        // CREATE SECTION
+        // ============================
+        function createSection(section, filteredModels) {
+            const sectionModels = filteredModels.filter(section.filter);
+            if (sectionModels.length === 0) return null;
+
+            const sectionEl = document.createElement('section');
+            sectionEl.className = 'mb-12';
+            sectionEl.dataset.section = section.id;
+
+            sectionEl.innerHTML = `
+                <h2 class="section-title">${section.title} <span class="text-sm font-normal text-gray-400">(${sectionModels.length})</span></h2>
+                <div class="carousel-container">
+                    <button class="carousel-arrow left" onclick="scrollCarousel(this, -1)">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+                        </svg>
+                    </button>
+                    <div class="carousel-track"></div>
+                    <button class="carousel-arrow right" onclick="scrollCarousel(this, 1)">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+                        </svg>
+                    </button>
+                </div>
+            `;
+
+            const track = sectionEl.querySelector('.carousel-track');
+            sectionModels.forEach(model => {
+                track.appendChild(createModelCard(model, model.slug === selectedModelSlug));
+            });
+
+            return sectionEl;
+        }
+
+        // ============================
+        // SCROLL CAROUSEL
+        // ============================
+        function scrollCarousel(button, direction) {
+            const track = button.parentElement.querySelector('.carousel-track');
+            const scrollAmount = 220 * direction;
+            track.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+        }
+
+        // ============================
+        // RENDER (for search/filter)
+        // ============================
+        function renderModels(searchTerm = '') {
+            const container = document.getElementById('modelsContainer');
+            container.innerHTML = '';
+            const term = (searchTerm || '').toLowerCase().trim();
+
+            let filteredModels = [...models];
+
+            if (term) {
+                const terms = term.split(/\s+/).filter(t => t.length > 0);
+                filteredModels = filteredModels.filter(m => {
+                    return terms.every(t =>
+                        m.name.toLowerCase().includes(t) ||
+                        (m.paletaCores && m.paletaCores.toLowerCase().includes(t)) ||
+                        (m.tema && m.tema.toLowerCase().includes(t)) ||
+                        (m.tipo && m.tipo.toLowerCase().includes(t)) ||
+                        m.tags.some(tag => tag.toLowerCase().includes(t))
+                    );
+                });
+                filteredModels.sort((a, b) => a.name.localeCompare(b.name, 'pt-BR'));
+            }
+
+            sections.forEach(section => {
+                const sectionEl = createSection(section, filteredModels);
+                if (sectionEl) {
+                    container.appendChild(sectionEl);
+                }
+            });
+
+            // Enable drag scroll on new carousels
+            setTimeout(enableDragScroll, 100);
+        }
+
+        // ============================
+        // SEARCH / SUGGESTIONS
+        // ============================
+        function toggleSuggestion(term) {
+            const btn = document.querySelector(`.suggestion-btn[data-term="${term}"]`);
+            const input = document.getElementById('searchInput');
+            const currentValue = input.value.trim();
+
+            if (btn.classList.contains('active')) {
+                const terms = currentValue.split(/\s+/).filter(t => t.toLowerCase() !== term.toLowerCase());
+                input.value = terms.join(' ');
+                btn.classList.remove('active');
+                btn.innerHTML = `<span>${term}</span>`;
+            } else {
+                const newValue = currentValue ? `${currentValue} ${term}` : term;
+                input.value = newValue;
+                btn.classList.add('active');
+                btn.innerHTML = `<span>${term}</span><span class="ml-1 opacity-70">✕</span>`;
+            }
+
+            renderModels(input.value);
+        }
+
+        function updateSuggestionButtons(searchValue) {
+            const terms = searchValue.toLowerCase().split(/\s+/).filter(t => t.length > 0);
+            document.querySelectorAll('.suggestion-btn').forEach(btn => {
+                const btnTerm = btn.dataset.term.toLowerCase();
+                const isActive = terms.some(t => btnTerm.includes(t) || t.includes(btnTerm));
+                btn.classList.toggle('active', isActive);
+                if (isActive) {
+                    btn.innerHTML = `<span>${btn.dataset.term}</span><span class="ml-1 opacity-70">✕</span>`;
+                } else {
+                    btn.innerHTML = `<span>${btn.dataset.term}</span>`;
+                }
+            });
+        }
+
+        document.getElementById('searchInput').addEventListener('input', (e) => {
+            renderModels(e.target.value);
+            updateSuggestionButtons(e.target.value);
+        });
+
+        // ============================
+        // DRAG SCROLL
+        // ============================
+        function enableDragScroll() {
+            document.querySelectorAll('.carousel-track').forEach(track => {
+                if (track.dataset.dragEnabled) return;
+                track.dataset.dragEnabled = 'true';
+
+                let isDown = false;
+                let startX;
+                let scrollLeft;
+
+                track.addEventListener('mousedown', (e) => {
+                    if (e.target.closest('button')) return;
+                    isDown = true;
+                    track.style.cursor = 'grabbing';
+                    startX = e.pageX - track.offsetLeft;
+                    scrollLeft = track.scrollLeft;
+                });
+
+                track.addEventListener('mouseleave', () => {
+                    isDown = false;
+                    track.style.cursor = 'grab';
+                });
+
+                track.addEventListener('mouseup', () => {
+                    isDown = false;
+                    track.style.cursor = 'grab';
+                });
+
+                track.addEventListener('mousemove', (e) => {
+                    if (!isDown) return;
+                    e.preventDefault();
+                    const x = e.pageX - track.offsetLeft;
+                    const walk = (x - startX) * 1.5;
+                    track.scrollLeft = scrollLeft - walk;
+                });
+
+                // Touch support
+                track.addEventListener('touchstart', (e) => {
+                    startX = e.touches[0].pageX - track.offsetLeft;
+                    scrollLeft = track.scrollLeft;
+                }, { passive: true });
+
+                track.addEventListener('touchmove', (e) => {
+                    const x = e.touches[0].pageX - track.offsetLeft;
+                    const walk = (x - startX) * 1.5;
+                    track.scrollLeft = scrollLeft - walk;
+                }, { passive: true });
+            });
+        }
+
+        // ============================
+        // INIT & POLLING
+        // ============================
+        initCoverObserver();
+        loadModels();
+
+        // Poll for model changes every 15 seconds
+        setInterval(async () => {
+            const changed = await discoverSlugs();
+            if (changed) {
+                // Re-render (models already populated by discoverSlugs)
+                renderModels();
+            }
+        }, 15000);
+    </script>
+</body>
+
+</html>

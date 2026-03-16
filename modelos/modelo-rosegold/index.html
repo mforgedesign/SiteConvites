@@ -1,0 +1,1516 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <!-- Prevent browser caching - always fetch fresh content -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+
+    <title>Carregando Convite...</title>
+
+    <!-- SEO / Open Graph (To be dynamically updated) -->
+    <meta property="og:title" content="Convite Especial">
+    <meta property="og:description" content="Você foi convidado!">
+    <meta property="og:image" content="">
+    <meta property="og:type" content="website">
+
+    <!-- Envelope Favicon -->
+    <link rel="icon"
+        href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><path d='M64 112c-8.8 0-16 7.2-16 16v22.1L220.5 291.7c20.7 17 50.4 17 71.1 0L464 150.1V128c0-8.8-7.2-16-16-16H64zM48 212.2V384c0 8.8 7.2 16 16 16H448c8.8 0 16-7.2 16-16V212.2L322 328.8c-38.4 31.5-93.7 31.5-132 0L48 212.2zM0 128C0 92.7 28.7 64 64 64H448c35.3 0 64 28.7 64 64V384c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V128z'/></svg>">
+
+    <!-- CSS / Libraries / Config -->
+    
+    <!-- Supabase Config (injected) -->
+    <script>
+      window.__SUPABASE_URL = 'https://xchphsltccopelblbsyb.supabase.co';
+      window.__SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhjaHBoc2x0Y2NvcGVsYmxic3liIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDEyMDk0MTAsImV4cCI6MjA1Njc4NTQxMH0.8e2V0H1xRJi_3w_GYWOWn8dWfAEcPqS8mPR3k5U0hMo';
+      window.__SUPABASE_ASSETS = 'https://xchphsltccopelblbsyb.supabase.co/storage/v1/object/public/modelos';
+      window.__MODEL_SLUG = 'modelo-rosegold';
+      window.__CONFIG_LOADED = false;
+
+      // Helper para URLs de assets
+      window.assetUrl = function(path) {
+        if (!path) return '';
+        // Remove prefixo "assets/" duplicado se houver
+        const cleanPath = path.replace(/^assets\//, '');
+        return window.__SUPABASE_ASSETS + '/' + window.__MODEL_SLUG + '/assets/' + cleanPath;
+      };
+
+      // Carregar config do Supabase de forma assíncrona
+      window.__loadConfig = async function() {
+        try {
+          const res = await fetch(
+            window.__SUPABASE_URL + '/rest/v1/modelos?slug=eq.' + window.__MODEL_SLUG + '&select=config_json',
+            { headers: { 'apikey': window.__SUPABASE_ANON_KEY } }
+          );
+          const data = await res.json();
+          if (data && data[0] && data[0].config_json) {
+            window.config = data[0].config_json;
+            window.__CONFIG_LOADED = true;
+            // Dispara evento para código que depende do config
+            window.dispatchEvent(new Event('configLoaded'));
+          } else {
+            console.warn('Config não encontrado no Supabase para:', window.__MODEL_SLUG);
+            window.dispatchEvent(new Event('configError'));
+          }
+        } catch (e) {
+          console.error('Erro ao carregar config:', e);
+          window.dispatchEvent(new Event('configError'));
+        }
+      };
+    </script>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --button-color: #751a1a;
+            --overlay-shadow: linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0) 100%);
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif;
+            overflow: hidden;
+            background-color: #000;
+        }
+
+        /* Utilitários de Transição e Camadas */
+        .camada {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: opacity 0.8s ease-in-out;
+        }
+
+        /* Contorno Cinza no Texto (Stroke) */
+        .texto-capa {
+            color: white;
+            text-shadow:
+                -1px -1px 0 #555,
+                1px -1px 0 #555,
+                -1px 1px 0 #555,
+                1px 1px 0 #555;
+        }
+
+        /* Animação da Mãozinha */
+        @keyframes clicando {
+
+            0%,
+            100% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(0.9);
+            }
+        }
+
+        .animar-clique {
+            animation: clicando 1.5s infinite ease-in-out;
+        }
+
+        /* Classes de Estado */
+        .invisivel {
+            opacity: 0;
+            pointer-events: none;
+        }
+
+        .visivel {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        /* Sombra suave para o cronômetro */
+        .texto-sombra {
+            text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.8);
+        }
+
+        /* Dynamic button styling */
+        .custom-button-bg {
+            background-color: var(--button-color) !important;
+        }
+
+        /* Modal Styles */
+        .modal {
+            position: fixed;
+            inset: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            z-index: 200;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            padding: 1rem;
+        }
+
+        .modal.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+            background: #ccc;
+            border-radius: 10px;
+        }
+
+        /* Loading Screen */
+        #loader {
+            position: fixed;
+            inset: 0;
+            background: #000;
+            z-index: 999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(255, 255, 255, 0.1);
+            border-left-color: #fff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* CapCut-style Sparkle Transition */
+        .slide-transition {
+            position: absolute;
+            inset: 0;
+            z-index: 25;
+            pointer-events: none;
+            opacity: 0;
+            overflow: hidden;
+        }
+
+        .slide-transition.active {
+            opacity: 1;
+        }
+
+        .slide-transition canvas {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Sparkle Overlays */
+        .brilho-camada {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 15; /* Between background (10) and HUD (30) */
+            object-fit: contain; /* The user said they are already in correct positions for 9:16 */
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
+
+        .brilho-camada.ativo {
+            opacity: 1;
+        }
+
+        /* Continuous Opening Particles */
+        .opening-particles {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 22; /* Above opening media (20), below transition (25) */
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
+
+        .opening-particles.ativo {
+            opacity: 1;
+        }
+    </style>
+</head>
+
+<body class="w-full h-[100dvh] flex justify-center items-center">
+
+    <div id="loader">
+        <div class="spinner"></div>
+    </div>
+
+    <div id="wrapper" class="w-full h-full flex justify-center items-center bg-[#111]">
+        <!-- Fixed Viewport Container (9:16 aspect ratio roughly, scalable) -->
+        <div id="mainContainer" class="relative w-full max-w-[480px] h-[100dvh] max-h-[854px] bg-black shadow-2xl overflow-hidden transition-all duration-300">
+
+            <!-- Background (Unified) - Layer 1 -->
+        <img id="fundoTelaImg" class="camada z-10 invisivel">
+        <video id="fundoTelaVideo" class="camada z-10 invisivel" playsinline loop muted></video>
+
+        <!-- Sequence Player (Abertura) - Layer 2 -->
+        <video id="videoAbertura" class="camada z-20 invisivel" playsinline muted></video>
+        <img id="imgAbertura" class="camada z-20 invisivel" style="object-fit: cover;" onerror="this.style.display='none'">
+
+        <!-- Continuous Opening Particles (CapCut Style) -->
+        <canvas id="openingParticlesCanvas" class="opening-particles invisivel"></canvas>
+
+        <!-- CapCut Transition Overlay -->
+        <div id="slideTransition" class="slide-transition">
+            <canvas id="sparkleCanvas"></canvas>
+        </div>
+
+        <!-- SOM -->
+        <audio id="musicaFundo" loop preload="auto"></audio>
+
+        <!-- Controles de Áudio e Pular -->
+        <button id="btnMute"
+            class="absolute top-4 left-4 z-40 text-white bg-black/50 rounded-full w-10 h-10 flex items-center justify-center invisivel transition-all hover:bg-black/70">
+            <i class="fa-solid fa-volume-high" id="iconMute"></i>
+        </button>
+
+        <button id="btnPular"
+            class="absolute top-4 right-4 z-40 bg-white/20 backdrop-blur-sm border border-white/40 text-white px-4 py-1 rounded-full text-xs font-semibold uppercase tracking-wider invisivel hover:bg-white/30 transition-all">
+            Pular
+        </button>
+
+        <!-- Sparkle Overlays -->
+        <img id="brilhoEsquerdo" class="brilho-camada" src="" alt="">
+        <img id="brilhoDireito" class="brilho-camada" src="" alt="">
+        <img id="brilhoCentro" class="brilho-camada" src="" alt="">
+
+        <!-- Timer Countdown no Topo -->
+        <div id="countdownContainer"
+            class="absolute top-[34px] left-0 w-full z-40 flex flex-col items-center justify-center invisivel transition-opacity duration-1000 texto-sombra pointer-events-none hidden">
+            <h2 class="text-white text-[10px] sm:text-xs uppercase tracking-[0.2em] mb-2 font-semibold opacity-90">
+                Contagem Regressiva</h2>
+            <div class="flex gap-3 sm:gap-4 text-white">
+                <div class="flex flex-col items-center">
+                    <span id="contadorMeses" class="text-xl sm:text-2xl font-bold leading-none">00</span>
+                    <span class="text-[8px] sm:text-[10px] uppercase opacity-80">Meses</span>
+                </div>
+                <div class="flex flex-col items-center">
+                    <span id="contadorDias" class="text-xl sm:text-2xl font-bold leading-none">00</span>
+                    <span class="text-[8px] sm:text-[10px] uppercase opacity-80">Dias</span>
+                </div>
+                <div class="flex flex-col items-center">
+                    <span id="contadorHoras" class="text-xl sm:text-2xl font-bold leading-none">00</span>
+                    <span class="text-[8px] sm:text-[10px] uppercase opacity-80">Hs</span>
+                </div>
+                <div class="flex flex-col items-center">
+                    <span id="contadorMinutos" class="text-xl sm:text-2xl font-bold leading-none">00</span>
+                    <span class="text-[8px] sm:text-[10px] uppercase opacity-80">Min</span>
+                </div>
+                <div class="flex flex-col items-center">
+                    <span id="contadorSegundos" class="text-xl sm:text-2xl font-bold leading-none">00</span>
+                    <span class="text-[8px] sm:text-[10px] uppercase opacity-80">Seg</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Gradiente e HUD de Botões -->
+        <div id="containerShadow"
+            class="absolute bottom-0 left-0 w-full z-30 pb-10 px-2 pt-20 invisivel transition-opacity duration-1000">
+        </div>
+
+        <div id="containerBotoes"
+            class="absolute bottom-10 left-0 w-full z-40 px-2 invisivel transition-opacity duration-1000 flex justify-center">
+            <div id="gridBotoes" class="flex flex-row flex-nowrap justify-evenly gap-1 w-full max-w-[480px]">
+                <!-- Gerado via JS -->
+            </div>
+        </div>
+
+        <!-- TELA INICIAL: CAPA -->
+        <div id="capaInicial"
+            class="absolute inset-0 z-50 bg-cover bg-center flex flex-col items-center justify-center cursor-pointer transition-opacity duration-700">
+            <div class="absolute inset-0 bg-black/20"></div>
+
+            <!-- Preloader UI (shown while assets load) -->
+            <div id="preloaderUI" class="absolute z-10 flex flex-col items-center gap-3" style="transition: opacity 0.5s ease;">
+                <p class="text-white/70 text-xs uppercase tracking-[0.25em] font-medium">Carregando...</p>
+                <div class="w-48 h-[3px] bg-white/20 rounded-full overflow-hidden">
+                    <div id="preloaderBar" class="h-full bg-white/80 rounded-full" style="width: 0%; transition: width 0.3s ease;"></div>
+                </div>
+                <p id="preloaderSlow" class="text-white/50 text-[10px] mt-1" style="opacity: 0; transition: opacity 0.5s ease;">
+                    Parece que a sua conexão com a internet está um pouco lenta...
+                </p>
+            </div>
+
+            <!-- Click to interact (hidden until preload finishes) -->
+            <div id="dicaInteractionContainer" class="absolute z-10 flex flex-col items-center gap-1 animate-pulse" style="opacity: 0; pointer-events: none; transition: opacity 0.6s ease;">
+                <div class="flex items-center gap-3">
+                    <span class="texto-capa text-2xl font-bold uppercase tracking-widest">Clique</span>
+                    <i class="fa-solid fa-hand-pointer text-4xl text-white drop-shadow-lg animar-clique"></i>
+                </div>
+                <h1 id="capa-text" class="texto-capa text-2xl font-bold uppercase tracking-widest text-center">
+                    para interagir!
+                </h1>
+            </div>
+            </div>
+        </div>
+
+        <!-- Marca d'água de Pagamento Pendente -->
+        <div id="watermark"
+            class="absolute inset-0 z-[100] flex items-center justify-center pointer-events-none hidden">
+            <div class="transform -rotate-45 pointer-events-none select-none opacity-80">
+                <h1 class="text-4xl sm:text-6xl font-black uppercase tracking-widest text-center whitespace-nowrap"
+                    style="-webkit-text-stroke: 1px rgba(0,0,0,0.3); color: rgba(255,255,255,0.25);">
+                    Pagamento<br>Pendente
+                </h1>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAIS / POPUP -->
+
+    <!-- Popup HTML Universal (Manual, RSVP, Pix, etc) -->
+    <div id="popupHtmlModal" class="modal" onclick="closeModal('popupHtmlModal')">
+        <div class="relative w-full max-w-[400px] max-h-[90vh] rounded-xl shadow-2xl overflow-hidden flex flex-col border border-white/20 bg-black/40 backdrop-blur-xl"
+            onclick="event.stopPropagation()">
+            <div class="relative z-10 flex justify-between items-center p-4 border-b border-white/10 bg-white/5">
+                <div class="flex items-center gap-3">
+                    <i id="popupHtmlIcon" class="text-white text-xl"></i>
+                    <h2 id="popupHtmlTitle" class="text-xl font-bold text-white">Informação</h2>
+                </div>
+                <button onclick="closeModal('popupHtmlModal')" class="text-white hover:text-gray-300 transition-colors">
+                    <i class="fa-solid fa-xmark text-2xl"></i>
+                </button>
+            </div>
+            <div class="relative z-10 p-6 overflow-y-auto custom-scrollbar text-white flex-1 relative">
+                <div id="popupHtmlContent" class="text-sm leading-relaxed w-full">
+                    <!-- Conteúdo Injetado via JS -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Popup Imagem/Presentes -->
+    <div id="popupImage" class="modal" onclick="closeModal('popupImage')">
+        <div class="relative max-w-[90vw] max-h-[90vh] rounded-xl shadow-2xl overflow-hidden"
+            onclick="event.stopPropagation()">
+            <button onclick="closeModal('popupImage')"
+                class="absolute top-3 right-3 z-10 bg-black/50 text-white hover:bg-black/70 rounded-full w-10 h-10 flex items-center justify-center transition-colors border border-white/20">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+            <img id="popupImageImg" src="" class="max-w-full max-h-[85vh] object-contain rounded-lg">
+        </div>
+    </div>
+
+    <!-- MAIN SCRIPT LOGIC -->
+    <script>
+        let config = null;
+        let transicaoFeita = false;
+        let estaMutado = false;
+        let iniciouInteracao = false;
+        let currentRSVPNumber = "";
+        let acompCount = 0;
+
+        // Sequence Player State
+        let slideAssets = [];
+        let currentSlideIndex = 0;
+        let slideTimer = null;
+        let isTransitioning = false;
+
+        // Script to fix window inner height on iOS
+        function setViewportHeight() {
+            let vh = window.innerHeight * 0.01;
+            document.documentElement.style.setProperty('--vh', `${vh}px`);
+        }
+        window.addEventListener('resize', setViewportHeight);
+        setViewportHeight();
+
+        // References
+        const capa = document.getElementById('capaInicial');
+        const videoAbertura = document.getElementById('videoAbertura');
+        const imgAbertura = document.getElementById('imgAbertura');
+        const fundoTelaVideo = document.getElementById('fundoTelaVideo');
+        const fundoTelaImg = document.getElementById('fundoTelaImg');
+        const audio = document.getElementById('musicaFundo');
+        const btnPular = document.getElementById('btnPular');
+        const btnMute = document.getElementById('btnMute');
+        const iconMute = document.getElementById('iconMute');
+        const containerBotoes = document.getElementById('containerBotoes');
+        const containerShadow = document.getElementById('containerShadow');
+        const gridBotoes = document.getElementById('gridBotoes');
+
+        // Robust Video Function from v5
+        function setupRobustVideo(videoElement) {
+            if (!videoElement) return;
+            videoElement.setAttribute('playsinline', '');
+            videoElement.setAttribute('webkit-playsinline', '');
+            videoElement.setAttribute('preload', 'auto');
+
+            let stuckTimer = null;
+            let lastTime = -1;
+
+            videoElement.addEventListener('waiting', () => {
+                clearTimeout(stuckTimer);
+                stuckTimer = setTimeout(() => {
+                    if (videoElement.paused) videoElement.play().catch(() => { });
+                }, 5000);
+            });
+
+            videoElement.addEventListener('playing', () => clearTimeout(stuckTimer));
+
+            videoElement.addEventListener('error', () => {
+                setTimeout(() => {
+                    videoElement.load();
+                    videoElement.play().catch(e => console.log('Retry play failed', e));
+                }, 3000);
+            });
+
+            setInterval(() => {
+                if (!videoElement.paused && !videoElement.ended && videoElement.readyState > 2) {
+                    lastTime = videoElement.currentTime;
+                }
+            }, 2000);
+        }
+
+        async function init() {
+            try {
+                // Config is now loaded synchronously via a <script> tag before this runs
+                if (typeof window.config !== 'undefined') {
+                    config = window.config;
+                    applyConfig();
+                } else {
+                    console.error("Erro: config.js não foi carregado corretamente.");
+                }
+
+                document.getElementById('loader').style.display = 'none';
+
+                // Setup Videos: background + abertura both get robust retry for Safari/Mi Browser
+                setupRobustVideo(document.getElementById('fundoTelaVideo'));
+                setupRobustVideo(document.getElementById('videoAbertura'));
+
+            } catch (err) {
+                console.error("Erro ao carregar config.json:", err);
+            }
+        }
+
+        function applyConfig() {
+            // SEO
+            document.title = config.convite.seo.pageTitle || "Convite";
+            document.querySelector("meta[property='og:title']").content = config.convite.seo.ogTitle || "";
+            document.querySelector("meta[property='og:description']").content = config.convite.seo.ogDescription || "";
+            if (config.assets.capa) document.querySelector("meta[property='og:image']").content = config.assets.capa;
+
+            // Styles
+            document.documentElement.style.setProperty('--button-color', config.config.buttonColor || "#751a1a");
+            if (config.config.shadowStyle) {
+                document.getElementById('containerShadow').style.background = config.config.shadowStyle;
+            }
+
+            // Capa
+            if (config.assets.capa) {
+                capa.style.backgroundImage = `url('${config.assets.capa}')`;
+            }
+
+            // Música
+            if (config.assets.musica) {
+                audio.src = config.assets.musica;
+            }
+
+            // Background Media
+            const bgMediaUrl = config.assets.folhaVazia || config.assets.folhaPreenchida;
+            if (bgMediaUrl) {
+                if (bgMediaUrl.endsWith('.mp4')) {
+                    fundoTelaVideo.src = bgMediaUrl;
+                } else {
+                    fundoTelaImg.src = bgMediaUrl;
+                }
+            }
+
+            // Sparkles
+            document.getElementById('brilhoEsquerdo').src = "assets/brilho_esquerdo.gif";
+            document.getElementById('brilhoDireito').src = "assets/brilho_direito.gif";
+            document.getElementById('brilhoCentro').src = "assets/brilho_centro.gif";
+
+            // Abertura Media — preload ALL slides and show progress bar
+            slideAssets = config.assets.aberturaSlides || [];
+            preloadAllSlides();
+
+            // Render Buttons based on config arrays
+            renderButtons(config.botoes || []);
+
+            // Timer
+            if (config.evento.data && (config.upsell.lembrete !== false)) {
+                setupCountdown();
+            }
+
+            // Interaction Event (will be enabled after preload finishes)
+            capa.addEventListener('click', startSequence);
+
+            // Watermark (Pagamento Pendente)
+            const watermarkEl = document.getElementById('watermark');
+            if (watermarkEl) {
+                if (config.config.exibirMarcaDagua) {
+                    watermarkEl.classList.remove('hidden');
+                } else {
+                    watermarkEl.classList.add('hidden');
+                }
+            }
+        }
+
+        // ==========================================
+        // BUTTON RENDERING & SIZING
+        // ==========================================
+        function renderButtons(buttonsData) {
+            gridBotoes.innerHTML = '';
+            const btnCount = buttonsData.length;
+            const sizeMultiplier = config.config.buttonSize || 1.0;
+            const isFilled = config.config.isButtonFilled !== false;
+
+            let gridClasses = "flex flex-row justify-center items-start transition-all duration-300 gap-2";
+            if (btnCount > 4) {
+                gridClasses = "grid grid-flow-col auto-cols-fr w-full max-w-[480px] place-items-start transition-all duration-300";
+                if (btnCount === 5) gridClasses += " gap-2 scale-95 origin-bottom";
+                else gridClasses += " gap-1 scale-90 origin-bottom";
+            }
+            gridBotoes.className = gridClasses;
+
+            buttonsData.forEach((btn, index) => {
+                const anchor = document.createElement('a');
+                anchor.className = "group flex flex-col items-center gap-1 focus:outline-none w-full min-w-0 cursor-pointer";
+                anchor.id = "btn-" + index;
+
+                // Configure Action
+                if (btn.tipoAcao === 'Link') {
+                    anchor.href = btn.conteudo;
+                    anchor.target = "_blank";
+                } else if (btn.tipoAcao === 'PopupImagem') {
+                    anchor.onclick = (e) => { e.preventDefault(); openImageModal(btn.conteudo); };
+                } else if (btn.tipoAcao === 'PopupHtml') {
+                    anchor.onclick = (e) => { e.preventDefault(); openHtmlModal(btn); };
+                } else if (btn.tipoAcao === 'RSVP') {
+                    anchor.onclick = (e) => { e.preventDefault(); openRSVPModal(btn); };
+                }
+
+                // Sizing Details
+                const basePx = 48;
+                const sizePx = basePx * sizeMultiplier;
+                const baseIconRem = 1.125;
+                const iconRem = baseIconRem * sizeMultiplier;
+
+                // Render Visuals
+                if (btn.tipoVisual === 'imagem' && btn.urlImagem) {
+                    // Image / SVG button (no css borders)
+                    anchor.innerHTML = `
+                        <div class="transition-transform duration-300 group-hover:scale-105 group-active:scale-95 flex items-center justify-center" style="width: ${sizePx}px; height: ${sizePx}px;">
+                            <img src="${btn.urlImagem}" alt="${btn.titulo}" class="w-full h-full object-contain filter drop-shadow-lg">
+                        </div>
+                        <span class="btn-label text-[10px] uppercase font-bold text-white tracking-wide text-center leading-tight drop-shadow-md w-full px-1" style="word-break: normal; overflow-wrap: normal; white-space: pre-wrap;">
+                            ${btn.titulo}
+                        </span>
+                    `;
+                } else {
+                    // Standard CSS button
+                    anchor.innerHTML = `
+                        <div class="rounded-full border border-stone-300 p-[2px] transition-transform duration-300 group-hover:scale-105 group-active:scale-95">
+                            <div class="rounded-full flex items-center justify-center shadow-lg transition-colors group-hover:bg-stone-700"
+                                 style="width: ${sizePx}px; height: ${sizePx}px; background-color: ${isFilled ? 'var(--button-color)' : 'transparent'};">
+                                <i class="${btn.icone}" style="font-size: ${iconRem}rem; color: ${isFilled ? '#ffffff' : 'var(--button-color)'};"></i>
+                            </div>
+                        </div>
+                        <span class="btn-label text-[10px] uppercase font-bold text-white tracking-wide text-center leading-tight drop-shadow-md w-full px-1" style="word-break: normal; overflow-wrap: normal; white-space: pre-wrap;">
+                            ${btn.titulo}
+                        </span>
+                    `;
+                }
+                
+                gridBotoes.appendChild(anchor);
+            });
+
+            // Auto-size labels from v5
+            autoSizeButtonLabels();
+        }
+
+        function autoSizeButtonLabels() {
+            const labels = Array.from(gridBotoes.querySelectorAll('.btn-label'));
+            if (!labels.length) return;
+            
+            // Base size depends on number of buttons. If <= 4, 10px is great. If more, start at 9.
+            let fontSize = labels.length > 4 ? 9 : 10;
+            const minFontSize = 7.5; // Legibility threshold
+            
+            // Allow lines to wrap naturally
+            labels.forEach(l => {
+                l.style.whiteSpace = 'normal';
+                l.style.wordWrap = 'normal';
+                l.style.lineHeight = '1.1';
+            });
+            
+            function hasOverflow() {
+                for (const label of labels) {
+                    const words = label.textContent.trim().split(/\s+/);
+                    const containerWidth = label.closest('a').clientWidth;
+                    
+                    for (const word of words) {
+                        const temp = document.createElement('span');
+                        temp.style.cssText = `font-size:${fontSize}px;font-weight:700;letter-spacing:0.025em;text-transform:uppercase;visibility:hidden;position:absolute;white-space:nowrap;font-family:'Montserrat',sans-serif;`;
+                        temp.textContent = word;
+                        document.body.appendChild(temp);
+                        const wordWidth = temp.offsetWidth;
+                        document.body.removeChild(temp);
+                        
+                        // We leave 2px padding on each side (4px total)
+                        if (wordWidth > containerWidth - 4) {
+                            return true; // This word is too big, shrink everything
+                        }
+                    }
+                }
+                return false;
+            }
+            
+            // Iteratively shrink ALL labels together to maintain uniformity
+            while (fontSize > minFontSize && hasOverflow()) {
+                fontSize -= 0.5;
+            }
+            
+            labels.forEach(l => l.style.fontSize = fontSize + 'px');
+            
+            // If we hit the absolute minimum and still have overflow, apply tighter letter spacing
+            if (hasOverflow()) {
+                labels.forEach(l => {
+                    l.classList.remove('tracking-wide');
+                    l.style.letterSpacing = '-0.03em';
+                });
+            }
+        }
+
+        // ==========================================
+        // ASSET PRELOADER
+        // ==========================================
+        function preloadAllSlides() {
+            const preloaderUI = document.getElementById('preloaderUI');
+            const preloaderBar = document.getElementById('preloaderBar');
+            const preloaderSlow = document.getElementById('preloaderSlow');
+            const dicaContainer = document.getElementById('dicaInteractionContainer');
+
+            if (slideAssets.length === 0) {
+                // No slides to preload — show interact button immediately
+                preloaderUI.style.opacity = '0';
+                setTimeout(() => { preloaderUI.style.display = 'none'; }, 500);
+                dicaContainer.style.opacity = '1';
+                dicaContainer.style.pointerEvents = 'auto';
+                return;
+            }
+
+            let loaded = 0;
+            const total = slideAssets.length;
+
+            // Show slow connection warning after 5s
+            const slowTimer = setTimeout(() => {
+                preloaderSlow.style.opacity = '1';
+            }, 5000);
+
+            function onAssetLoaded() {
+                loaded++;
+                const pct = Math.round((loaded / total) * 100);
+                preloaderBar.style.width = pct + '%';
+
+                if (loaded >= total) {
+                    clearTimeout(slowTimer);
+                    // All assets loaded — fade out loader, show interact button
+                    preloaderUI.style.opacity = '0';
+                    setTimeout(() => {
+                        preloaderUI.style.display = 'none';
+                        dicaContainer.style.opacity = '1';
+                        dicaContainer.style.pointerEvents = 'auto';
+                    }, 500);
+                }
+            }
+
+            slideAssets.forEach(url => {
+                const isVideo = url.endsWith('.mp4') || url.endsWith('.webm');
+                if (isVideo) {
+                    // Preload video by fetching blob into cache
+                    fetch(url)
+                        .then(r => r.blob())
+                        .then(() => onAssetLoaded())
+                        .catch(() => onAssetLoaded()); // count as loaded even if failed
+                } else {
+                    // Preload image
+                    const img = new Image();
+                    img.onload = onAssetLoaded;
+                    img.onerror = onAssetLoaded;
+                    img.src = url;
+                }
+            });
+        }
+
+        // ==========================================
+        // SEQUENCE & TRANSITIONS (CAPCUT STYLE)
+        // ==========================================
+        function startSequence() {
+            if (iniciouInteracao) return;
+            iniciouInteracao = true;
+
+            capa.classList.add('invisivel');
+            btnMute.classList.remove('invisivel');
+
+            if (audio && config.assets.musica) {
+                audio.volume = 0.5;
+                audio.play().catch(e => { setTimeout(() => audio.play(), 500); });
+            }
+
+            if (fundoTelaVideo && fundoTelaVideo.src) {
+                fundoTelaVideo.play().catch(e => console.log("Bg play failed"));
+            }
+
+            if (config.convite.tipoAbertura === 'nenhuma' || slideAssets.length === 0) {
+                irParaLoop();
+            } else {
+                // Only show "Pular" if there are 2+ slides (meaningful sequence)
+                if (slideAssets.length > 0) btnPular.classList.remove('invisivel');
+                
+                if (config.convite.particulasAbertura) {
+                    startOpeningParticles();
+                }
+
+                playSlide(0);
+            }
+        }
+
+        function playSlide(index, onReady) {
+            if (index >= slideAssets.length) {
+                irParaLoop();
+                return;
+            }
+
+            currentSlideIndex = index;
+            const slideUrl = slideAssets[index];
+            const isVideo = slideUrl.endsWith('.mp4') || slideUrl.endsWith('.webm');
+
+            // Clean up both elements
+            videoAbertura.onended = null;
+            videoAbertura.oncanplay = null;
+            videoAbertura.ontimeupdate = null;
+            videoAbertura.classList.add('invisivel');
+            imgAbertura.classList.add('invisivel');
+            clearTimeout(slideTimer);
+
+            if (isVideo) {
+                videoAbertura.src = slideUrl;
+                
+                // Use 'playing' event — fires only when the first frame is actually visible
+                let readyFired = false;
+                videoAbertura.oncanplay = () => {
+                    videoAbertura.oncanplay = null;
+                    // INSTANT show — bypass .camada CSS transition
+                    videoAbertura.style.transition = 'none';
+                    videoAbertura.classList.remove('invisivel');
+                    videoAbertura.offsetHeight; // force reflow
+                    videoAbertura.style.transition = '';
+                    videoAbertura.play().catch(e => console.warn("Play blocked:", e));
+                };
+                
+                videoAbertura.addEventListener('playing', function onPlaying() {
+                    videoAbertura.removeEventListener('playing', onPlaying);
+                    if (readyFired) return;
+                    readyFired = true;
+                    // Small buffer so GPU composites the frame before white recedes
+                    setTimeout(() => {
+                        if (onReady) { onReady(); onReady = null; }
+                    }, 100);
+                });
+                
+                // Pre-trigger transition BEFORE video ends (only if there are more slides)
+                let transitionTriggered = false;
+                
+                if (index < slideAssets.length - 1) {
+                    // Multiple slides — transition to next slide
+                    videoAbertura.ontimeupdate = () => {
+                        if (transitionTriggered) return;
+                        if (videoAbertura.duration > 0 && videoAbertura.currentTime >= videoAbertura.duration - 0.8) {
+                            transitionTriggered = true;
+                            videoAbertura.ontimeupdate = null;
+                            triggerTransition(index + 1);
+                        }
+                    };
+                    videoAbertura.onended = () => {
+                        if (!transitionTriggered) {
+                            transitionTriggered = true;
+                            videoAbertura.onended = null;
+                            triggerTransition(index + 1);
+                        }
+                    };
+                } else {
+                    // Last or only slide — go to main loop when done
+                    // timeupdate fallback in case onended doesn't fire
+                    let loopTriggered = false;
+                    videoAbertura.ontimeupdate = () => {
+                        if (loopTriggered) return;
+                        if (videoAbertura.duration > 0 && videoAbertura.currentTime >= videoAbertura.duration - 0.5) {
+                            loopTriggered = true;
+                            videoAbertura.ontimeupdate = null;
+                            videoAbertura.onended = null;
+                            irParaLoop();
+                        }
+                    };
+                    videoAbertura.onended = () => {
+                        if (!loopTriggered) {
+                            loopTriggered = true;
+                            videoAbertura.ontimeupdate = null;
+                            videoAbertura.onended = null;
+                            irParaLoop();
+                        }
+                    };
+                    }
+                
+                videoAbertura.load();
+            } else {
+                const img = imgAbertura;
+                img.onload = () => {
+                    img.classList.remove('invisivel');
+                    // Signal: image is visible, white can now fade out
+                    if (onReady) { onReady(); onReady = null; }
+                    img.onload = null;
+                };
+                img.src = slideUrl;
+                
+                // If image is cached, onload may not fire
+                if (img.complete) {
+                    img.classList.remove('invisivel');
+                    if (onReady) { onReady(); onReady = null; }
+                }
+                
+                // Images display for 4 seconds before next action
+                slideTimer = setTimeout(() => {
+                    if (index < slideAssets.length - 1) {
+                        triggerTransition(index + 1);
+                    } else {
+                        irParaLoop();
+                    }
+                }, 4000);
+            }
+        }
+
+        // ==========================================
+        // SPARKLE CANVAS TRANSITION ENGINE
+        // ==========================================
+        function createSparkleParticles(w, h) {
+            const particles = [];
+            // Sparkle stars (small, bright, fast)
+            for (let i = 0; i < 45; i++) {
+                particles.push({
+                    type: 'sparkle',
+                    x: Math.random() * w,
+                    y: Math.random() * h,
+                    size: 1 + Math.random() * 4,
+                    speedX: (Math.random() - 0.5) * 3,
+                    speedY: (Math.random() - 0.5) * 3,
+                    opacity: 0.3 + Math.random() * 0.7,
+                    rotation: Math.random() * Math.PI * 2,
+                    rotSpeed: (Math.random() - 0.5) * 0.15,
+                    twinkleSpeed: 2 + Math.random() * 4,
+                    delay: Math.random() * 0.3 // stagger entry
+                });
+            }
+            // Bokeh circles (large, blurry, slow)
+            for (let i = 0; i < 14; i++) {
+                particles.push({
+                    type: 'bokeh',
+                    x: Math.random() * w,
+                    y: Math.random() * h,
+                    size: 15 + Math.random() * 50,
+                    speedX: (Math.random() - 0.5) * 1.5,
+                    speedY: -0.5 - Math.random() * 1.5, // float upward
+                    opacity: 0.08 + Math.random() * 0.15,
+                    delay: Math.random() * 0.2
+                });
+            }
+            // Lens flare streak
+            particles.push({
+                type: 'flare',
+                x: w * 0.3,
+                y: h * 0.4,
+                angle: -0.4,
+                length: w * 1.5,
+                opacity: 0
+            });
+            return particles;
+        }
+
+        function drawSparkleFrame(ctx, w, h, particles, progress, whiteAlpha) {
+            ctx.clearRect(0, 0, w, h);
+
+            // Background white wash (dip to white)
+            ctx.fillStyle = `rgba(255, 255, 255, ${whiteAlpha})`;
+            ctx.fillRect(0, 0, w, h);
+
+            for (const p of particles) {
+                // Stagger: particles with delay > progress haven't appeared yet
+                const localProgress = Math.max(0, Math.min(1, (progress - p.delay) / (1 - p.delay)));
+                if (localProgress <= 0) continue;
+
+                const alpha = p.opacity * localProgress;
+
+                if (p.type === 'sparkle') {
+                    p.x += p.speedX;
+                    p.y += p.speedY;
+                    p.rotation += p.rotSpeed;
+                    const twinkle = 0.5 + 0.5 * Math.sin(localProgress * p.twinkleSpeed * Math.PI);
+                    const sz = p.size * (0.5 + localProgress) * twinkle;
+                    
+                    ctx.save();
+                    ctx.translate(p.x, p.y);
+                    ctx.rotate(p.rotation);
+                    ctx.globalAlpha = alpha * twinkle;
+                    
+                    // Draw a 4-point star
+                    ctx.fillStyle = '#ffffff';
+                    ctx.shadowColor = 'rgba(255, 255, 255, 0.9)';
+                    ctx.shadowBlur = sz * 3;
+                    ctx.beginPath();
+                    for (let j = 0; j < 4; j++) {
+                        const angle = (j / 4) * Math.PI * 2 - Math.PI / 2;
+                        const nextAngle = ((j + 0.5) / 4) * Math.PI * 2 - Math.PI / 2;
+                        ctx.lineTo(Math.cos(angle) * sz * 2.5, Math.sin(angle) * sz * 2.5);
+                        ctx.lineTo(Math.cos(nextAngle) * sz * 0.4, Math.sin(nextAngle) * sz * 0.4);
+                    }
+                    ctx.closePath();
+                    ctx.fill();
+                    ctx.restore();
+
+                } else if (p.type === 'bokeh') {
+                    p.x += p.speedX;
+                    p.y += p.speedY;
+                    const sz = p.size * (0.6 + localProgress * 0.4);
+                    
+                    ctx.save();
+                    ctx.globalAlpha = alpha * localProgress;
+                    const grad = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, sz);
+                    grad.addColorStop(0, 'rgba(255, 255, 255, 0.6)');
+                    grad.addColorStop(0.4, 'rgba(255, 255, 240, 0.3)');
+                    grad.addColorStop(1, 'rgba(255, 255, 255, 0)');
+                    ctx.fillStyle = grad;
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, sz, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.restore();
+
+                } else if (p.type === 'flare') {
+                    ctx.save();
+                    ctx.globalAlpha = localProgress * 0.35;
+                    ctx.translate(p.x, p.y);
+                    ctx.rotate(p.angle);
+                    const flareGrad = ctx.createLinearGradient(-p.length/2, 0, p.length/2, 0);
+                    flareGrad.addColorStop(0, 'rgba(255,255,255,0)');
+                    flareGrad.addColorStop(0.3, 'rgba(255,255,255,0.4)');
+                    flareGrad.addColorStop(0.5, 'rgba(255,255,255,0.8)');
+                    flareGrad.addColorStop(0.7, 'rgba(255,255,255,0.4)');
+                    flareGrad.addColorStop(1, 'rgba(255,255,255,0)');
+                    ctx.fillStyle = flareGrad;
+                    const thickness = 6 + localProgress * 20;
+                    ctx.fillRect(-p.length/2, -thickness/2, p.length, thickness);
+                    ctx.restore();
+                }
+            }
+            ctx.globalAlpha = 1;
+            ctx.shadowBlur = 0;
+        }
+
+        function runSparkleTransition(onPeak, onComplete) {
+            const canvas = document.getElementById('sparkleCanvas');
+            const container = document.getElementById('mainContainer');
+            const transitionEl = document.getElementById('slideTransition');
+            
+            canvas.width = container.clientWidth;
+            canvas.height = container.clientHeight;
+            const ctx = canvas.getContext('2d');
+            const w = canvas.width;
+            const h = canvas.height;
+
+            const particles = createSparkleParticles(w, h);
+            const FADE_IN_MS = 800;
+            const FADE_OUT_MS = 700;
+
+            let peakReached = false;
+            let holdReleased = false;
+            let fadeOutStartTime = null;
+            const startTime = performance.now();
+
+            // This function is passed to onPeak → called when next slide is ready
+            function releaseHold() {
+                holdReleased = true;
+                fadeOutStartTime = performance.now();
+            }
+
+            transitionEl.classList.add('active');
+
+            function animate(now) {
+                const elapsed = now - startTime;
+
+                if (elapsed < FADE_IN_MS) {
+                    // Phase 1: Build up sparkles → dip to white
+                    const progress = elapsed / FADE_IN_MS;
+                    const eased = progress * progress;
+                    drawSparkleFrame(ctx, w, h, particles, eased, eased * 0.95);
+                    requestAnimationFrame(animate);
+
+                } else if (!holdReleased) {
+                    // Phase 2: HOLD at peak white until next slide is ready
+                    if (!peakReached) {
+                        peakReached = true;
+                        if (onPeak) onPeak(releaseHold);
+                    }
+                    drawSparkleFrame(ctx, w, h, particles, 1, 0.97);
+                    requestAnimationFrame(animate);
+
+                } else {
+                    // Phase 3: Fade out sparkles (reverse)
+                    const fadeOutElapsed = now - fadeOutStartTime;
+                    if (fadeOutElapsed >= FADE_OUT_MS) {
+                        // Done
+                        ctx.clearRect(0, 0, w, h);
+                        transitionEl.classList.remove('active');
+                        if (onComplete) onComplete();
+                        return;
+                    }
+                    const progress = 1 - (fadeOutElapsed / FADE_OUT_MS);
+                    const eased = progress * progress;
+                    drawSparkleFrame(ctx, w, h, particles, eased, eased * 0.9);
+                    requestAnimationFrame(animate);
+                }
+            }
+
+            requestAnimationFrame(animate);
+        }
+
+        function triggerTransition(nextIndex) {
+            if (isTransitioning) return;
+            isTransitioning = true;
+            
+            if (nextIndex >= slideAssets.length) {
+                isTransitioning = false;
+                irParaLoop();
+                return;
+            }
+            
+            runSparkleTransition(
+                // onPeak: swap media, then call releaseHold when next slide is visible
+                (releaseHold) => {
+                    // INSTANT hide — bypass .camada CSS transition
+                    videoAbertura.style.transition = 'none';
+                    imgAbertura.style.transition = 'none';
+                    videoAbertura.pause();
+                    videoAbertura.onended = null;
+                    videoAbertura.oncanplay = null;
+                    videoAbertura.ontimeupdate = null;
+                    videoAbertura.classList.add('invisivel');
+                    imgAbertura.classList.add('invisivel');
+                    // Force reflow so browser applies instantly
+                    videoAbertura.offsetHeight;
+                    videoAbertura.style.transition = '';
+                    imgAbertura.style.transition = '';
+                    // playSlide will call releaseHold when the new media is ready
+                    playSlide(nextIndex, releaseHold);
+                },
+                // onComplete: transition animation fully done
+                () => {
+                    isTransitioning = false;
+                }
+            );
+        }
+
+        function irParaLoop() {
+            if (transicaoFeita) return;
+            transicaoFeita = true;
+
+            stopOpeningParticles();
+
+            // Clear sparkle canvas and hide transition overlay
+            const sparkleCanvas = document.getElementById('sparkleCanvas');
+            if (sparkleCanvas) {
+                const sCtx = sparkleCanvas.getContext('2d');
+                sCtx.clearRect(0, 0, sparkleCanvas.width, sparkleCanvas.height);
+            }
+            const slideTransEl = document.getElementById('slideTransition');
+            if (slideTransEl) slideTransEl.classList.remove('active');
+
+            btnPular.classList.add('invisivel');
+            videoAbertura.classList.add('invisivel');
+            imgAbertura.classList.add('invisivel');
+
+            if (fundoTelaImg.getAttribute('src')) fundoTelaImg.classList.remove('invisivel');
+            if (fundoTelaVideo.getAttribute('src')) fundoTelaVideo.classList.remove('invisivel');
+            containerBotoes.classList.remove('invisivel');
+            containerShadow.classList.remove('invisivel');
+
+            // Mostra o timer apenas se estiver configurado e ativado
+            const countdownContainer = document.getElementById('countdownContainer');
+            if (countdownContainer && !countdownContainer.classList.contains('hidden')) {
+                countdownContainer.classList.remove('invisivel');
+            }
+
+            // Sparkles
+            if (config.config.brilhos) {
+                if (config.config.brilhos.esquerdo) document.getElementById('brilhoEsquerdo').classList.add('ativo');
+                if (config.config.brilhos.direito) document.getElementById('brilhoDireito').classList.add('ativo');
+                if (config.config.brilhos.centro) document.getElementById('brilhoCentro').classList.add('ativo');
+            }
+
+            // Pausa intro após a transição
+            setTimeout(() => videoAbertura.pause(), 800);
+        }
+
+        // Legacy V5 handlers removed — sequence player now controls videoAbertura.onended
+        btnPular.onclick = () => {
+            // Skip entire opening sequence
+            clearTimeout(slideTimer);
+            videoAbertura.onended = null;
+            videoAbertura.oncanplay = null;
+            videoAbertura.pause();
+            stopOpeningParticles();
+            irParaLoop();
+        };
+
+        btnMute.onclick = () => {
+            estaMutado = !estaMutado;
+            audio.muted = estaMutado;
+            videoAbertura.muted = estaMutado;
+            fundoTelaVideo.muted = estaMutado;
+            iconMute.className = estaMutado ? "fa-solid fa-volume-xmark" : "fa-solid fa-volume-high";
+            if (estaMutado) btnMute.classList.add("bg-red-500/50");
+            else btnMute.classList.remove("bg-red-500/50");
+        };
+
+        // ==========================================
+        // MODALS & RSVP SCRIPT INJECTIONS
+        // ==========================================
+        function openHtmlModal(btn, htmlOverride) {
+            const title = btn.titulo.replace(/\n/g, ' ');
+            const icon = btn.icone;
+            const content = htmlOverride || btn.conteudo;
+
+            document.getElementById('popupHtmlTitle').innerText = title;
+            const iconEl = document.getElementById('popupHtmlIcon');
+            if (iconEl && icon) iconEl.className = icon + " text-white text-xl";
+            
+            const contentDiv = document.getElementById('popupHtmlContent');
+            contentDiv.innerHTML = content;
+            document.getElementById('popupHtmlModal').classList.add('active');
+            
+            // Re-attach RSVP listeners if RSVP HTML was just injected
+            attachRSVPListeners();
+        }
+
+        function openImageModal(src) {
+            if (!src) return;
+            document.getElementById('popupImageImg').src = src;
+            document.getElementById('popupImage').classList.add('active');
+        }
+
+        function closeModal(id) {
+            document.getElementById(id).classList.remove('active');
+        }
+
+        // Global functions for inline HTML attributes (like onclick)
+        window.openRSVPModal = function(btn) {
+            const rsvpConfig = btn.rsvpConfig || { exibirNome: true, exibirWhatsapp: true, exibirAcompanhantes: true };
+            const whatsapp = (btn.whatsapp || "").replace(/\D/g, '');
+
+            // Se tudo estiver desativado, vai direto pro WhatsApp
+            if (!rsvpConfig.exibirNome && !rsvpConfig.exibirWhatsapp && !rsvpConfig.exibirAcompanhantes) {
+                const msg = `Olá! Estou confirmando minha presença no ${window.config.evento.tipo} de ${window.config.evento.nome}!`;
+                window.open(`https://wa.me/${whatsapp}?text=${encodeURIComponent(msg)}`, '_blank');
+                return;
+            }
+
+            let html = `<div class="text-left"><div class="space-y-4">`;
+            
+            if (rsvpConfig.exibirNome) {
+                html += `<div><label class="block text-stone-300 text-xs font-bold mb-1 uppercase">Seu Nome Completo *</label><input type="text" id="rsvp-name" class="w-full bg-black/40 border border-stone-500/50 rounded p-2 text-white focus:border-green-500 focus:outline-none placeholder-stone-400 truncate" placeholder="Ex: Maria Silva"></div>`;
+            }
+            
+            if (rsvpConfig.exibirWhatsapp) {
+                html += `<div><label class="block text-stone-300 text-xs font-bold mb-1 uppercase">Seu WhatsApp *</label><input type="tel" id="rsvp-phone" class="w-full bg-black/40 border border-stone-500/50 rounded p-2 text-white focus:border-green-500 focus:outline-none placeholder-stone-400 truncate" placeholder="(DDD) 99999-9999"></div>`;
+            }
+            
+            if (rsvpConfig.exibirAcompanhantes) {
+                html += `
+                <div id="container-acompanhantes">
+                    <label class="block text-stone-300 text-xs font-bold mb-1 uppercase">Total de Acompanhantes</label>
+                    <div class="flex items-center gap-3">
+                        <button id="btn-dec-acomp" class="w-10 h-10 bg-stone-700/80 rounded text-white font-bold hover:bg-stone-600 transition-colors">-</button>
+                        <span id="txt-acomp-count" class="text-white font-bold text-xl w-8 text-center drop-shadow-md">0</span>
+                        <button id="btn-inc-acomp" class="w-10 h-10 bg-stone-700/80 rounded text-white font-bold hover:bg-stone-600 transition-colors">+</button>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2 mt-2" id="check-container">
+                    <input type="checkbox" id="check-no-acomp" class="w-4 h-4 rounded bg-black/40 border-stone-500 text-green-500 focus:ring-green-500 focus:ring-offset-0">
+                    <label for="check-no-acomp" class="text-stone-200 text-xs cursor-pointer select-none drop-shadow">Vou sozinho(a) / Sem acompanhantes</label>
+                </div>`;
+            }
+            
+            html += `<button id="btn-submit-rsvp" class="w-full bg-green-600 hover:bg-green-500 text-white font-bold py-3 rounded-lg transition-colors mt-2 shadow-lg flex items-center justify-center gap-2">Confirmar no WhatsApp <i class="fa-solid fa-paper-plane"></i></button></div></div>`;
+            
+            openHtmlModal(btn, html);
+            
+            // Ativa os ouvintes de clique após o HTML ser injetado no modal
+            setTimeout(() => {
+                attachRSVPListeners();
+                document.getElementById('btn-submit-rsvp').onclick = () => {
+                    sendRSVP(whatsapp, rsvpConfig);
+                };
+            }, 50);
+        };
+
+        window.sendRSVP = function(number, rsvpConfig) {
+            const currentRSVPNumber = number; // já limpo no openRSVPModal
+            const txtName = document.getElementById('rsvp-name');
+            const txtPhone = document.getElementById('rsvp-phone');
+            
+            let name = txtName ? txtName.value.trim() : "";
+            let phone = txtPhone ? txtPhone.value.trim() : "";
+            
+            if (rsvpConfig.exibirNome && !name) return alert("Por favor, preencha seu nome.");
+            if (rsvpConfig.exibirWhatsapp && !phone) return alert("Por favor, preencha seu WhatsApp.");
+
+            let msg = `Olá! Gostaria de confirmar minha presença no ${window.config.evento.tipo} de ${window.config.evento.nome}.\n`;
+            if (name) msg += `\n*Nome:* ${name}`;
+            if (phone) msg += `\n*Telefone:* ${phone}`;
+
+            if (rsvpConfig.exibirAcompanhantes) {
+                const checkNoAcomp = document.getElementById('check-no-acomp');
+                const acompCountTxt = document.getElementById('txt-acomp-count');
+                const acompCount = acompCountTxt ? parseInt(acompCountTxt.innerText) : 0;
+                
+                if (checkNoAcomp && checkNoAcomp.checked) {
+                    msg += `\n*Acompanhantes:* Nenhum (Vou sozinho)`;
+                } else {
+                    msg += `\n*Acompanhantes:* ${acompCount > 0 ? acompCount : 'Nenhum'}`;
+                }
+            }
+
+            window.open(`https://wa.me/${currentRSVPNumber}?text=${encodeURIComponent(msg)}`, '_blank');
+            closeModal('popupHtmlModal');
+        };
+
+        // Attach listeners if RSVP elements exist in DOM
+        function attachRSVPListeners() {
+            const btnDec = document.getElementById('btn-dec-acomp');
+            const btnInc = document.getElementById('btn-inc-acomp');
+            const checkNoAcomp = document.getElementById('check-no-acomp');
+            const txtAcompCount = document.getElementById('txt-acomp-count');
+            const containerAcomp = document.getElementById('container-acompanhantes');
+
+            if(btnDec && btnInc && txtAcompCount) {
+                btnDec.onclick = () => {
+                    let c = parseInt(txtAcompCount.innerText);
+                    if (c > 0) { c--; txtAcompCount.innerText = c; }
+                };
+                btnInc.onclick = () => {
+                    let c = parseInt(txtAcompCount.innerText);
+                    c++; txtAcompCount.innerText = c;
+                };
+            }
+
+            if(checkNoAcomp && containerAcomp) {
+                checkNoAcomp.onchange = (e) => {
+                    if (e.target.checked) {
+                        containerAcomp.classList.add('hidden');
+                        if(txtAcompCount) txtAcompCount.innerText = "0";
+                    } else {
+                        containerAcomp.classList.remove('hidden');
+                    }
+                };
+            }
+        }
+
+        // ==========================================
+        // COUNTDOWN
+        // ==========================================
+        function setupCountdown() {
+            const container = document.getElementById('countdownContainer');
+            const dataAlvo = new Date(`${config.evento.data}T${config.evento.hora || '00:00'}:00`);
+
+            if (isNaN(dataAlvo.getTime())) return;
+            container.classList.remove('hidden');
+            // Starts invisible, shown when opening video ends
+
+            function update() {
+                const agora = new Date();
+                let diferenca = dataAlvo - agora;
+
+                if (diferenca <= 0) {
+                    document.getElementById('contadorMeses').innerText = "00";
+                    document.getElementById('contadorDias').innerText = "00";
+                    document.getElementById('contadorHoras').innerText = "00";
+                    document.getElementById('contadorMinutos').innerText = "00";
+                    document.getElementById('contadorSegundos').innerText = "00";
+                    return;
+                }
+
+                let anos = dataAlvo.getFullYear() - agora.getFullYear();
+                let meses = dataAlvo.getMonth() - agora.getMonth();
+                let dias = dataAlvo.getDate() - agora.getDate();
+                let horas = dataAlvo.getHours() - agora.getHours();
+                let minutos = dataAlvo.getMinutes() - agora.getMinutes();
+
+                if (minutos < 0) { minutos += 60; horas--; }
+                if (horas < 0) { horas += 24; dias--; }
+                if (dias < 0) {
+                    const mesAnterior = new Date(dataAlvo.getFullYear(), dataAlvo.getMonth(), 0);
+                    dias += mesAnterior.getDate();
+                    meses--;
+                }
+                if (meses < 0) { meses += 12; anos--; }
+
+                let segundos = Math.floor((diferenca % (1000 * 60)) / 1000);
+                const totalMeses = (anos * 12) + meses;
+                const fmt = (num) => num < 10 ? `0${num}` : num;
+
+                document.getElementById('contadorMeses').innerText = fmt(totalMeses);
+                document.getElementById('contadorDias').innerText = fmt(dias);
+                document.getElementById('contadorHoras').innerText = fmt(horas);
+                document.getElementById('contadorMinutos').innerText = fmt(minutos);
+                document.getElementById('contadorSegundos').innerText = fmt(segundos);
+            }
+
+            update();
+            setInterval(update, 1000);
+        }
+
+        // ==========================================
+        // CONTINUOUS OPENING PARTICLES (CAPCUT EFFECT)
+        // ==========================================
+        let openingParticlesRAF = null;
+
+        function startOpeningParticles() {
+            if (openingParticlesRAF) return;
+            const canvas = document.getElementById('openingParticlesCanvas');
+            if (!canvas) return;
+            
+            canvas.classList.remove('invisivel');
+            setTimeout(() => canvas.classList.add('ativo'), 50); // slight delay for transition
+            
+            const container = document.getElementById('mainContainer');
+            canvas.width = container.clientWidth;
+            canvas.height = container.clientHeight;
+            const ctx = canvas.getContext('2d');
+            const w = canvas.width;
+            const h = canvas.height;
+            
+            const particles = [];
+            
+            // Huge Bokeh (very blurry, deep warm colors, low opacity)
+            for(let i=0; i<12; i++) {
+                particles.push({
+                    type: 'huge',
+                    x: Math.random() * w,
+                    y: Math.random() * h,
+                    size: 80 + Math.random() * 120, // 80-200px
+                    speedY: 0.2 + Math.random() * 0.3, // Faster fall
+                    speedX: (Math.random() - 0.5) * 0.2,
+                    opacity: 0.03 + Math.random() * 0.08
+                });
+            }
+
+            // Large Bokeh (blurry, warm colors)
+            for(let i=0; i<18; i++) {
+                particles.push({
+                    type: 'large',
+                    x: Math.random() * w,
+                    y: Math.random() * h,
+                    size: 30 + Math.random() * 50, // 30-80px
+                    speedY: 0.3 + Math.random() * 0.4, // Faster fall
+                    speedX: (Math.random() - 0.5) * 0.3,
+                    opacity: 0.05 + Math.random() * 0.15
+                });
+            }
+            
+            // Small Bokeh (sharper, brighter, yellow/white)
+            for(let i=0; i<15; i++) {
+                particles.push({
+                    type: 'small',
+                    x: Math.random() * w,
+                    y: Math.random() * h,
+                    size: 4 + Math.random() * 16, // 4-20px
+                    speedY: 0.4 + Math.random() * 0.5, // Faster fall
+                    speedX: (Math.random() - 0.5) * 0.4,
+                    opacity: 0.15 + Math.random() * 0.35
+                });
+            }
+
+            function draw() {
+                ctx.clearRect(0, 0, w, h);
+                ctx.globalCompositeOperation = 'screen'; // Looks better for overlapping lights
+                
+                for (const p of particles) {
+                    p.y += p.speedY;
+                    p.x += p.speedX;
+                    
+                    if (p.y > h + p.size) {
+                        p.y = -p.size;
+                        p.x = Math.random() * w;
+                    }
+                    if (p.x > w + p.size) p.x = -p.size;
+                    if (p.x < -p.size) p.x = w + p.size;
+                    
+                    const grad = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.size);
+                    
+                    if (p.type === 'huge') {
+                        // Deep red/orange, very soft
+                        grad.addColorStop(0, `rgba(255, 120, 80, ${p.opacity})`);
+                        grad.addColorStop(0.5, `rgba(255, 100, 50, ${p.opacity * 0.5})`);
+                        grad.addColorStop(1, `rgba(255, 100, 50, 0)`);
+                    } else if (p.type === 'large') {
+                        // Warm orange/peach
+                        grad.addColorStop(0, `rgba(255, 180, 120, ${p.opacity})`);
+                        grad.addColorStop(0.5, `rgba(255, 150, 80, ${p.opacity * 0.5})`);
+                        grad.addColorStop(1, `rgba(255, 150, 80, 0)`);
+                    } else {
+                        // Bright yellow/white, sharper
+                        grad.addColorStop(0, `rgba(255, 250, 200, ${p.opacity})`);
+                        grad.addColorStop(0.4, `rgba(255, 240, 150, ${p.opacity * 0.8})`);
+                        grad.addColorStop(1, `rgba(255, 240, 150, 0)`);
+                    }
+                    
+                    ctx.fillStyle = grad;
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.size, 0, Math.PI*2);
+                    ctx.fill();
+                }
+                
+                openingParticlesRAF = requestAnimationFrame(draw);
+            }
+            
+            draw();
+        }
+
+        function stopOpeningParticles() {
+            const canvas = document.getElementById('openingParticlesCanvas');
+            if (canvas) {
+                canvas.classList.remove('ativo');
+                setTimeout(() => {
+                    canvas.classList.add('invisivel');
+                    if (openingParticlesRAF) {
+                        cancelAnimationFrame(openingParticlesRAF);
+                        openingParticlesRAF = null;
+                    }
+                }, 1000); // Wait for CSS opacity fade
+            }
+        }
+
+        init();
+    </script>
+</body>
+
+</html>

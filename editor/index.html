@@ -1,0 +1,1059 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Editor de Convites</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: #0f0f13;
+      color: #e4e4e7;
+      min-height: 100vh;
+    }
+
+    /* ============ LOGIN ============ */
+    .login-screen {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #0f0f13 0%, #1a1a24 50%, #0f0f13 100%);
+    }
+    .login-box {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 20px;
+      padding: 40px;
+      width: 100%;
+      max-width: 400px;
+    }
+    .login-box h1 {
+      font-size: 24px;
+      font-weight: 700;
+      text-align: center;
+      margin-bottom: 8px;
+      background: linear-gradient(135deg, #a78bfa, #6d28d9);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .login-box p {
+      text-align: center;
+      color: #71717a;
+      font-size: 14px;
+      margin-bottom: 32px;
+    }
+    .login-box .field {
+      margin-bottom: 16px;
+    }
+    .login-box label {
+      display: block;
+      font-size: 12px;
+      font-weight: 500;
+      color: #a1a1aa;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .login-box input {
+      width: 100%;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 10px;
+      padding: 12px 16px;
+      color: #e4e4e7;
+      font-size: 15px;
+      font-family: inherit;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .login-box input:focus {
+      border-color: rgba(167,139,250,0.4);
+    }
+    .login-box .btn-login {
+      width: 100%;
+      padding: 14px;
+      background: linear-gradient(135deg, #7c3aed, #6d28d9);
+      border: none;
+      border-radius: 10px;
+      color: #fff;
+      font-size: 15px;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      transition: all 0.2s;
+      margin-top: 8px;
+    }
+    .login-box .btn-login:hover { filter: brightness(1.15); }
+    .login-box .btn-login:disabled { opacity: 0.5; cursor: not-allowed; }
+    .login-box .error-msg {
+      color: #ef4444;
+      font-size: 13px;
+      text-align: center;
+      margin-top: 12px;
+      display: none;
+    }
+    .login-box .error-msg.show { display: block; }
+
+    /* ============ TOP BAR ============ */
+    .topbar {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      height: 56px;
+      background: rgba(15,15,19,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 24px;
+    }
+    .topbar h1 {
+      font-size: 16px; font-weight: 600;
+      background: linear-gradient(135deg, #a78bfa, #6d28d9);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+    }
+    .topbar .topbar-actions {
+      display: flex; align-items: center; gap: 12px;
+    }
+    .topbar .btn-back, .topbar .btn-logout {
+      display: none; align-items: center; gap: 8px;
+      background: rgba(255,255,255,0.06); border: 1px solid rgba(255,255,255,0.1);
+      color: #d4d4d8; padding: 8px 16px; border-radius: 8px;
+      cursor: pointer; font-size: 13px; font-family: inherit;
+      transition: all 0.2s;
+    }
+    .topbar .btn-back:hover, .topbar .btn-logout:hover { background: rgba(255,255,255,0.1); color: #fff; }
+
+    /* ============ LIST VIEW ============ */
+    .list-view { padding: 76px 24px 24px; }
+    .list-header {
+      display: flex; align-items: center; justify-content: space-between;
+      margin-bottom: 20px;
+    }
+    .list-header h2 { font-size: 20px; font-weight: 600; }
+    .list-header .count {
+      font-size: 13px; color: #71717a; background: rgba(255,255,255,0.05);
+      padding: 4px 12px; border-radius: 20px;
+    }
+    .search-box {
+      width: 100%; max-width: 400px; margin-bottom: 20px;
+      background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 10px; padding: 10px 16px; color: #e4e4e7;
+      font-size: 14px; font-family: inherit; outline: none;
+      transition: border-color 0.2s;
+    }
+    .search-box:focus { border-color: rgba(167,139,250,0.4); }
+    .search-box::placeholder { color: #52525b; }
+
+    .models-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 16px;
+    }
+    .model-card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 14px;
+      overflow: hidden;
+      cursor: pointer;
+      transition: all 0.25s;
+    }
+    .model-card:hover {
+      border-color: rgba(167,139,250,0.3);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+    }
+    .model-card .cover {
+      width: 100%; aspect-ratio: 9/12; object-fit: cover;
+      background: #1a1a22; display: block;
+    }
+    .model-card .info { padding: 14px; }
+    .model-card .info .name {
+      font-size: 13px; font-weight: 600; color: #e4e4e7;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+      margin-bottom: 4px;
+    }
+    .model-card .info .meta {
+      font-size: 11px; color: #71717a;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .model-card .info .meta .badge {
+      background: rgba(167,139,250,0.12); color: #a78bfa;
+      padding: 2px 8px; border-radius: 4px; font-weight: 500;
+    }
+
+    /* ============ EDIT VIEW ============ */
+    .edit-view {
+      display: none;
+      height: calc(100vh - 56px);
+      margin-top: 56px;
+    }
+    .edit-view.active { display: flex; }
+    .list-view.hidden { display: none; }
+
+    .preview-panel {
+      flex: 1; min-width: 0;
+      background: #000; position: relative;
+    }
+    .preview-panel iframe { width: 100%; height: 100%; border: none; }
+    .preview-panel .loading-overlay {
+      position: absolute; inset: 0;
+      display: flex; align-items: center; justify-content: center;
+      background: #0f0f13; color: #71717a; font-size: 14px;
+    }
+
+    .edit-panel {
+      width: 400px; flex-shrink: 0;
+      background: #15151b;
+      border-left: 1px solid rgba(255,255,255,0.06);
+      overflow-y: auto; padding: 24px;
+      display: flex; flex-direction: column; gap: 16px;
+    }
+
+    .edit-panel .panel-title {
+      font-size: 15px; font-weight: 600; color: #e4e4e7;
+      padding-bottom: 12px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .edit-panel .panel-title span {
+      font-weight: 400; color: #71717a; font-size: 12px;
+      display: block; margin-top: 4px;
+    }
+
+    .section-label {
+      font-size: 11px; font-weight: 600; color: #6d28d9;
+      text-transform: uppercase; letter-spacing: 1px;
+      margin-top: 8px; margin-bottom: -4px;
+    }
+
+    .field-group { display: flex; flex-direction: column; gap: 6px; }
+    .field-group label {
+      font-size: 12px; font-weight: 500; color: #a1a1aa;
+      text-transform: uppercase; letter-spacing: 0.5px;
+    }
+    .field-group input, .field-group select, .field-group textarea {
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 8px; padding: 10px 14px;
+      color: #e4e4e7; font-size: 14px; font-family: inherit;
+      outline: none; transition: border-color 0.2s;
+    }
+    .field-group input:focus, .field-group select:focus, .field-group textarea:focus {
+      border-color: rgba(167,139,250,0.4);
+    }
+    .field-group select { cursor: pointer; }
+    .field-group select option { background: #1e1e28; color: #e4e4e7; }
+    .field-group textarea { min-height: 80px; resize: vertical; }
+
+    .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+    .color-field { display: flex; gap: 10px; align-items: center; }
+    .color-field input[type="color"] {
+      width: 44px; height: 40px; padding: 3px;
+      border-radius: 8px; cursor: pointer;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+    .color-field input[type="text"] { flex: 1; }
+
+    .edit-panel .spacer { flex: 1; }
+
+    .btn-save {
+      width: 100%; padding: 12px;
+      background: linear-gradient(135deg, #7c3aed, #6d28d9);
+      border: none; border-radius: 10px;
+      color: #fff; font-size: 14px; font-weight: 600;
+      font-family: inherit; cursor: pointer;
+      transition: all 0.2s;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+    }
+    .btn-save:hover { filter: brightness(1.15); transform: translateY(-1px); }
+    .btn-save:active { transform: translateY(0); }
+    .btn-save.saving { background: #3f3f46; pointer-events: none; }
+    .btn-save.saved { background: linear-gradient(135deg, #059669, #047857); }
+
+    .btn-delete {
+      width: 100%; padding: 10px;
+      background: rgba(220,38,38,0.1);
+      border: 1px solid rgba(220,38,38,0.2);
+      border-radius: 10px;
+      color: #ef4444; font-size: 13px; font-weight: 500;
+      font-family: inherit; cursor: pointer;
+      transition: all 0.2s;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+    }
+    .btn-delete:hover { background: rgba(220,38,38,0.2); border-color: rgba(220,38,38,0.4); }
+
+    .btn-refresh-preview {
+      width: 100%; padding: 8px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 8px;
+      color: #a1a1aa; font-size: 12px; font-weight: 500;
+      font-family: inherit; cursor: pointer;
+      transition: all 0.2s;
+      display: flex; align-items: center; justify-content: center; gap: 6px;
+    }
+    .btn-refresh-preview:hover { background: rgba(255,255,255,0.08); color: #e4e4e7; }
+
+    /* ============ SLIDES MANAGER ============ */
+    .slides-section { margin-top: 8px; }
+    .slides-list { display: flex; flex-direction: column; gap: 8px; }
+    .slide-item {
+      display: flex; align-items: center; gap: 10px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.06);
+      border-radius: 8px; padding: 10px 12px;
+    }
+    .slide-item .slide-icon {
+      width: 32px; height: 32px;
+      background: rgba(167,139,250,0.12);
+      border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+      color: #a78bfa; font-size: 14px; flex-shrink: 0;
+    }
+    .slide-item .slide-name {
+      flex: 1; font-size: 13px; color: #e4e4e7;
+      overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    }
+    .slide-item .btn-remove-slide {
+      background: none; border: none;
+      color: #71717a; cursor: pointer; padding: 4px;
+      font-size: 14px; transition: color 0.2s;
+    }
+    .slide-item .btn-remove-slide:hover { color: #ef4444; }
+
+    .btn-add-slide {
+      width: 100%; padding: 10px;
+      background: rgba(167,139,250,0.08);
+      border: 1px dashed rgba(167,139,250,0.3);
+      border-radius: 8px;
+      color: #a78bfa; font-size: 13px; font-weight: 500;
+      font-family: inherit; cursor: pointer;
+      transition: all 0.2s;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+    }
+    .btn-add-slide:hover { background: rgba(167,139,250,0.15); }
+
+    /* ============ DELETE CONFIRM MODAL ============ */
+    .modal-overlay {
+      position: fixed; inset: 0; z-index: 300;
+      background: rgba(0,0,0,0.7);
+      backdrop-filter: blur(4px);
+      display: none; align-items: center; justify-content: center;
+    }
+    .modal-overlay.active { display: flex; }
+    .modal {
+      background: #1a1a24;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 16px; padding: 28px;
+      max-width: 400px; width: 90%; text-align: center;
+    }
+    .modal .modal-icon {
+      width: 56px; height: 56px;
+      background: rgba(220,38,38,0.1); border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 16px;
+    }
+    .modal .modal-icon i { font-size: 24px; color: #ef4444; }
+    .modal h3 { font-size: 18px; font-weight: 600; color: #e4e4e7; margin-bottom: 8px; }
+    .modal p { font-size: 14px; color: #71717a; margin-bottom: 24px; line-height: 1.5; }
+    .modal p strong { color: #e4e4e7; }
+    .modal .modal-actions { display: flex; gap: 12px; }
+    .modal .btn-cancel {
+      flex: 1; padding: 10px;
+      background: rgba(255,255,255,0.06);
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 10px; color: #d4d4d8;
+      font-size: 14px; font-weight: 500; font-family: inherit;
+      cursor: pointer; transition: all 0.2s;
+    }
+    .modal .btn-cancel:hover { background: rgba(255,255,255,0.1); }
+    .modal .btn-confirm-delete {
+      flex: 1; padding: 10px;
+      background: linear-gradient(135deg, #dc2626, #b91c1c);
+      border: none; border-radius: 10px;
+      color: #fff; font-size: 14px; font-weight: 600;
+      font-family: inherit; cursor: pointer; transition: all 0.2s;
+    }
+    .modal .btn-confirm-delete:hover { filter: brightness(1.15); }
+
+    .toast {
+      position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px);
+      background: #27272a; color: #e4e4e7; padding: 12px 24px;
+      border-radius: 10px; font-size: 13px; font-weight: 500;
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+      opacity: 0; transition: all 0.3s ease; z-index: 200;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+    .toast.success { border-color: rgba(5,150,105,0.3); }
+    .toast.error { border-color: rgba(220,38,38,0.3); }
+
+    @media (max-width: 768px) {
+      .edit-view { flex-direction: column; }
+      .preview-panel { height: 40vh; }
+      .edit-panel { width: 100%; flex: 1; border-left: none; border-top: 1px solid rgba(255,255,255,0.06); }
+      .field-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- LOGIN SCREEN -->
+  <div class="login-screen" id="loginScreen">
+    <div class="login-box">
+      <h1><i class="fa-solid fa-wand-magic-sparkles" style="margin-right:8px;"></i>Editor de Convites</h1>
+      <p>Faça login para acessar o editor</p>
+      <form id="loginForm" onsubmit="return handleLogin(event)">
+        <div class="field">
+          <label>Email</label>
+          <input type="email" id="loginEmail" placeholder="seu@email.com" required>
+        </div>
+        <div class="field">
+          <label>Senha</label>
+          <input type="password" id="loginPassword" placeholder="Sua senha" required>
+        </div>
+        <button type="submit" class="btn-login" id="btnLogin">
+          <i class="fa-solid fa-right-to-bracket"></i> Entrar
+        </button>
+        <div class="error-msg" id="loginError"></div>
+      </form>
+    </div>
+  </div>
+
+  <!-- MAIN APP (hidden until login) -->
+  <div id="mainApp" style="display:none;">
+    <!-- TOP BAR -->
+    <div class="topbar">
+      <h1><i class="fa-solid fa-wand-magic-sparkles" style="margin-right:8px;"></i>Editor de Convites</h1>
+      <div class="topbar-actions">
+        <button class="btn-back" id="btnBack"><i class="fa-solid fa-arrow-left"></i> Voltar para lista</button>
+        <button class="btn-logout" id="btnLogout" style="display:flex;"><i class="fa-solid fa-right-from-bracket"></i> Sair</button>
+      </div>
+    </div>
+
+    <!-- LIST VIEW -->
+    <div class="list-view" id="listView">
+      <div class="list-header">
+        <h2>Modelos</h2>
+        <span class="count" id="modelCount">0 modelos</span>
+      </div>
+      <input type="text" class="search-box" id="searchBox" placeholder="Buscar por nome, tema ou paleta de cores...">
+      <div class="models-grid" id="modelsGrid"></div>
+    </div>
+
+    <!-- EDIT VIEW -->
+    <div class="edit-view" id="editView">
+      <div class="preview-panel">
+        <iframe id="previewFrame" src="about:blank"></iframe>
+        <div class="loading-overlay" id="loadingOverlay">
+          <i class="fa-solid fa-spinner fa-spin" style="margin-right:8px;"></i> Carregando preview...
+        </div>
+      </div>
+      <div class="edit-panel">
+        <div class="panel-title">
+          Editar Convite
+          <span id="editingSlug"></span>
+        </div>
+
+        <div class="section-label">Evento</div>
+
+        <div class="field-group">
+          <label>Nome do Convite</label>
+          <input type="text" id="editNome" placeholder="Nome do evento">
+        </div>
+
+        <div class="field-group">
+          <label>Tipo de Evento</label>
+          <select id="editTipo">
+            <option value="">Selecione...</option>
+            <option value="Aniversário">Aniversário</option>
+            <option value="Casamento">Casamento</option>
+            <option value="Debutante">Debutante</option>
+            <option value="Formatura">Formatura</option>
+            <option value="Chá de Bebê">Chá de Bebê</option>
+            <option value="Chá de Cozinha">Chá de Cozinha</option>
+            <option value="Chá de Panela">Chá de Panela</option>
+            <option value="Revelação">Revelação</option>
+            <option value="Outro">Outro</option>
+          </select>
+        </div>
+
+        <div class="field-row">
+          <div class="field-group">
+            <label>Data</label>
+            <input type="date" id="editData">
+          </div>
+          <div class="field-group">
+            <label>Hora</label>
+            <input type="time" id="editHora">
+          </div>
+        </div>
+
+        <div class="field-group">
+          <label>Idade</label>
+          <input type="number" id="editIdade" placeholder="Ex: 15" min="0" max="120">
+        </div>
+
+        <div class="section-label">Aparência</div>
+
+        <div class="field-group">
+          <label>Tema do Convite</label>
+          <input type="text" id="editTema" placeholder="Ex: Alladin, Floral, Minimalista">
+        </div>
+
+        <div class="field-group">
+          <label>Paleta de Cores</label>
+          <input type="text" id="editPaleta" placeholder="Ex: Roxo e Dourado">
+        </div>
+
+        <div class="field-group">
+          <label>Cor dos Botões</label>
+          <div class="color-field">
+            <input type="color" id="editButtonColorPicker" value="#6b21a8">
+            <input type="text" id="editButtonColor" placeholder="#6b21a8">
+          </div>
+        </div>
+
+        <div class="section-label">Slides de Abertura</div>
+
+        <div class="slides-section">
+          <div class="slides-list" id="aberturaSlidesList"></div>
+          <button class="btn-add-slide" id="btnAddSlide" onclick="addSlide('abertura')">
+            <i class="fa-solid fa-plus"></i> Adicionar Slide
+          </button>
+          <input type="file" id="slideFileInput" accept="video/*,image/*" style="display:none;">
+        </div>
+
+        <div class="section-label">Folha Preenchida</div>
+
+        <div class="slides-section">
+          <div class="slides-list" id="folhaList"></div>
+          <button class="btn-add-slide" onclick="addSlide('folha')">
+            <i class="fa-solid fa-upload"></i> Trocar Folha Preenchida
+          </button>
+          <input type="file" id="folhaFileInput" accept="video/*" style="display:none;">
+        </div>
+
+        <button class="btn-refresh-preview" id="btnRefreshPreview">
+          <i class="fa-solid fa-rotate"></i> Atualizar Preview
+        </button>
+
+        <div class="spacer"></div>
+
+        <button class="btn-save" id="btnSave">
+          <i class="fa-solid fa-floppy-disk"></i> Salvar Alterações
+        </button>
+
+        <button class="btn-delete" id="btnDelete">
+          <i class="fa-solid fa-trash-can"></i> Excluir Modelo
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- DELETE CONFIRM MODAL -->
+  <div class="modal-overlay" id="deleteModal">
+    <div class="modal">
+      <div class="modal-icon"><i class="fa-solid fa-trash-can"></i></div>
+      <h3>Excluir Modelo?</h3>
+      <p>Tem certeza que deseja excluir <strong id="deleteModelName"></strong>?<br>Esta ação não pode ser desfeita.</p>
+      <div class="modal-actions">
+        <button class="btn-cancel" id="btnCancelDelete">Cancelar</button>
+        <button class="btn-confirm-delete" id="btnConfirmDelete">
+          <i class="fa-solid fa-trash-can"></i> Excluir
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- TOAST -->
+  <div class="toast" id="toast"></div>
+
+  <script>
+    // ============ SUPABASE CONFIG ============
+    const SUPABASE_URL = 'https://xchphsltccopelblbsyb.supabase.co';
+    const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhjaHBoc2x0Y2NvcGVsYmxic3liIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDEyMDk0MTAsImV4cCI6MjA1Njc4NTQxMH0.8e2V0H1xRJi_3w_GYWOWn8dWfAEcPqS8mPR3k5U0hMo';
+    const SUPABASE_ASSETS = SUPABASE_URL + '/storage/v1/object/public/modelos';
+    const SUPABASE_CODE = SUPABASE_URL + '/storage/v1/object/public/modelos-code';
+
+    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    let allModels = [];
+    let currentModel = null;
+    let previewUpdateTimer = null;
+    let currentSlideType = null;
+
+    function sanitizeSlug(slug) {
+      return slug.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-zA-Z0-9\-_]/g, '-');
+    }
+
+    // ============ AUTH ============
+    async function checkSession() {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session) {
+        showMainApp();
+        loadModels();
+      }
+    }
+
+    async function handleLogin(e) {
+      e.preventDefault();
+      const email = document.getElementById('loginEmail').value;
+      const password = document.getElementById('loginPassword').value;
+      const btn = document.getElementById('btnLogin');
+      const errorEl = document.getElementById('loginError');
+
+      btn.disabled = true;
+      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Entrando...';
+      errorEl.classList.remove('show');
+
+      const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+
+      if (error) {
+        errorEl.textContent = 'Email ou senha incorretos';
+        errorEl.classList.add('show');
+        btn.disabled = false;
+        btn.innerHTML = '<i class="fa-solid fa-right-to-bracket"></i> Entrar';
+        return false;
+      }
+
+      showMainApp();
+      loadModels();
+      return false;
+    }
+
+    async function handleLogout() {
+      await supabase.auth.signOut();
+      document.getElementById('mainApp').style.display = 'none';
+      document.getElementById('loginScreen').style.display = 'flex';
+    }
+
+    function showMainApp() {
+      document.getElementById('loginScreen').style.display = 'none';
+      document.getElementById('mainApp').style.display = 'block';
+    }
+
+    // ============ LOAD MODELS ============
+    async function loadModels() {
+      try {
+        const { data, error } = await supabase
+          .from('modelos')
+          .select('*')
+          .order('name');
+
+        if (error) throw error;
+
+        allModels = data || [];
+        renderGrid(allModels);
+        document.getElementById('modelCount').textContent = `${allModels.length} modelos`;
+      } catch (e) {
+        showToast('Erro ao carregar modelos: ' + e.message, 'error');
+      }
+    }
+
+    function renderGrid(models) {
+      const grid = document.getElementById('modelsGrid');
+      if (models.length === 0) {
+        grid.innerHTML = '<p style="color:#52525b;grid-column:1/-1;text-align:center;padding:40px;">Nenhum modelo encontrado</p>';
+        return;
+      }
+      grid.innerHTML = models.map(m => `
+        <div class="model-card" data-slug="${m.slug}" onclick="openEditor('${m.slug}')">
+          <img class="cover" src="${SUPABASE_ASSETS}/${sanitizeSlug(m.slug)}/${m.capa_path || 'assets/capa.jpg'}" alt="${m.name}"
+               onerror="this.style.background='#1a1a22';this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 133%22><rect fill=%22%231a1a22%22 width=%22100%22 height=%22133%22/><text x=%2250%22 y=%2266%22 text-anchor=%22middle%22 fill=%22%233f3f46%22 font-size=%2212%22>Sem capa</text></svg>'">
+          <div class="info">
+            <div class="name">${m.name || m.slug}</div>
+            <div class="meta">
+              <span class="badge">${m.tema || 'Sem tema'}</span>
+              <span>${m.tipo || ''}</span>
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    // ============ SEARCH ============
+    document.getElementById('searchBox').addEventListener('input', (e) => {
+      const q = e.target.value.toLowerCase();
+      const filtered = allModels.filter(m =>
+        (m.name || '').toLowerCase().includes(q) ||
+        (m.slug || '').toLowerCase().includes(q) ||
+        (m.tema || '').toLowerCase().includes(q) ||
+        (m.paleta_cores || '').toLowerCase().includes(q) ||
+        (m.tipo || '').toLowerCase().includes(q)
+      );
+      renderGrid(filtered);
+    });
+
+    // ============ OPEN EDITOR ============
+    async function openEditor(slug) {
+      currentModel = allModels.find(m => m.slug === slug);
+      if (!currentModel) return;
+
+      document.getElementById('listView').classList.add('hidden');
+      document.getElementById('editView').classList.add('active');
+      document.getElementById('btnBack').style.display = 'flex';
+      document.getElementById('btnLogout').style.display = 'none';
+
+      // Fill fields
+      document.getElementById('editingSlug').textContent = slug;
+      document.getElementById('editNome').value = currentModel.name || '';
+      document.getElementById('editTema').value = currentModel.tema || '';
+      document.getElementById('editPaleta').value = currentModel.paleta_cores || '';
+      document.getElementById('editTipo').value = currentModel.tipo || '';
+      document.getElementById('editData').value = currentModel.data || '';
+      document.getElementById('editHora').value = currentModel.hora || '';
+      document.getElementById('editIdade').value = currentModel.idade || '';
+      const btnColor = currentModel.button_color || '#6b21a8';
+      document.getElementById('editButtonColor').value = btnColor;
+      document.getElementById('editButtonColorPicker').value = btnColor;
+
+      // Render slides
+      renderSlides();
+
+      // Reset save button
+      const btn = document.getElementById('btnSave');
+      btn.classList.remove('saving', 'saved');
+      btn.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Salvar Alterações';
+
+      // Load preview
+      loadPreview(slug);
+    }
+
+    function renderSlides() {
+      const configJson = currentModel.config_json || {};
+      const aberturaSlides = configJson.assets?.aberturaSlides || [];
+      const folhaPreenchida = configJson.assets?.folhaPreenchida || '';
+
+      // Abertura slides
+      const aberturaList = document.getElementById('aberturaSlidesList');
+      aberturaList.innerHTML = aberturaSlides.map((slide, i) => `
+        <div class="slide-item">
+          <div class="slide-icon"><i class="fa-solid fa-film"></i></div>
+          <div class="slide-name">${slide.replace('assets/', '')}</div>
+          <button class="btn-remove-slide" onclick="removeSlide('abertura', ${i})" title="Remover">
+            <i class="fa-solid fa-xmark"></i>
+          </button>
+        </div>
+      `).join('');
+
+      // Folha preenchida
+      const folhaList = document.getElementById('folhaList');
+      if (folhaPreenchida) {
+        folhaList.innerHTML = `
+          <div class="slide-item">
+            <div class="slide-icon"><i class="fa-solid fa-file-video"></i></div>
+            <div class="slide-name">${folhaPreenchida.replace('assets/', '')}</div>
+          </div>
+        `;
+      } else {
+        folhaList.innerHTML = '';
+      }
+    }
+
+    function loadPreview(slug) {
+      const frame = document.getElementById('previewFrame');
+      const overlay = document.getElementById('loadingOverlay');
+      overlay.style.display = 'flex';
+      frame.src = `${SUPABASE_CODE}/${sanitizeSlug(slug)}/index.html`;
+      frame.onload = () => { overlay.style.display = 'none'; };
+    }
+
+    // ============ GO BACK ============
+    function goBack() {
+      document.getElementById('editView').classList.remove('active');
+      document.getElementById('listView').classList.remove('hidden');
+      document.getElementById('btnBack').style.display = 'none';
+      document.getElementById('btnLogout').style.display = 'flex';
+      document.getElementById('previewFrame').src = 'about:blank';
+      currentModel = null;
+    }
+    document.getElementById('btnBack').addEventListener('click', goBack);
+
+    // ============ COLOR PICKER SYNC ============
+    document.getElementById('editButtonColorPicker').addEventListener('input', (e) => {
+      document.getElementById('editButtonColor').value = e.target.value;
+    });
+    document.getElementById('editButtonColor').addEventListener('input', (e) => {
+      const v = e.target.value;
+      if (/^#[0-9a-fA-F]{6}$/.test(v)) {
+        document.getElementById('editButtonColorPicker').value = v;
+      }
+    });
+
+    // ============ REFRESH PREVIEW ============
+    document.getElementById('btnRefreshPreview').addEventListener('click', () => {
+      if (!currentModel) return;
+      loadPreview(currentModel.slug);
+    });
+
+    // ============ SAVE ============
+    document.getElementById('btnSave').addEventListener('click', async () => {
+      if (!currentModel) return;
+
+      const btn = document.getElementById('btnSave');
+      const nome = document.getElementById('editNome').value.trim();
+      const tema = document.getElementById('editTema').value.trim();
+      const paleta = document.getElementById('editPaleta').value.trim();
+      const buttonColor = document.getElementById('editButtonColor').value.trim();
+      const tipo = document.getElementById('editTipo').value.trim();
+      const data = document.getElementById('editData').value.trim();
+      const hora = document.getElementById('editHora').value.trim();
+      const idade = document.getElementById('editIdade').value.trim();
+
+      if (!/^#[0-9a-fA-F]{6}$/.test(buttonColor)) {
+        showToast('Cor hex inválida. Use formato #RRGGBB', 'error');
+        return;
+      }
+
+      btn.classList.add('saving');
+      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Salvando...';
+
+      try {
+        // Update config_json
+        const configJson = { ...currentModel.config_json };
+        if (!configJson.evento) configJson.evento = {};
+        if (!configJson.convite) configJson.convite = {};
+        if (!configJson.config) configJson.config = {};
+
+        configJson.evento.nome = nome;
+        configJson.evento.tipo = tipo;
+        configJson.evento.data = data;
+        configJson.evento.hora = hora;
+        configJson.evento.idade = idade;
+        configJson.convite.tema = tema;
+        configJson.convite.paletaCores = paleta;
+        configJson.config.buttonColor = buttonColor;
+
+        const { error } = await supabase
+          .from('modelos')
+          .update({
+            name: nome,
+            tipo,
+            tema,
+            paleta_cores: paleta,
+            button_color: buttonColor,
+            data,
+            hora,
+            idade,
+            config_json: configJson,
+            updated_at: new Date().toISOString()
+          })
+          .eq('slug', currentModel.slug);
+
+        if (error) throw error;
+
+        btn.classList.remove('saving');
+        btn.classList.add('saved');
+        btn.innerHTML = '<i class="fa-solid fa-check"></i> Salvo!';
+
+        // Update local data
+        currentModel.name = nome;
+        currentModel.tipo = tipo;
+        currentModel.tema = tema;
+        currentModel.paleta_cores = paleta;
+        currentModel.button_color = buttonColor;
+        currentModel.data = data;
+        currentModel.hora = hora;
+        currentModel.idade = idade;
+        currentModel.config_json = configJson;
+
+        showToast('Configurações salvas!', 'success');
+
+        setTimeout(() => {
+          btn.classList.remove('saved');
+          btn.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Salvar Alterações';
+        }, 2000);
+      } catch (e) {
+        btn.classList.remove('saving');
+        btn.innerHTML = '<i class="fa-solid fa-floppy-disk"></i> Salvar Alterações';
+        showToast('Erro: ' + e.message, 'error');
+      }
+    });
+
+    // ============ SLIDES MANAGEMENT ============
+    function addSlide(type) {
+      currentSlideType = type;
+      if (type === 'abertura') {
+        document.getElementById('slideFileInput').click();
+      } else {
+        document.getElementById('folhaFileInput').click();
+      }
+    }
+
+    async function removeSlide(type, index) {
+      if (!currentModel || type !== 'abertura') return;
+
+      const configJson = { ...currentModel.config_json };
+      if (!configJson.assets) configJson.assets = [];
+      if (!configJson.assets.aberturaSlides) return;
+
+      configJson.assets.aberturaSlides.splice(index, 1);
+
+      const { error } = await supabase
+        .from('modelos')
+        .update({ config_json: configJson, updated_at: new Date().toISOString() })
+        .eq('slug', currentModel.slug);
+
+      if (error) {
+        showToast('Erro ao remover slide: ' + error.message, 'error');
+        return;
+      }
+
+      currentModel.config_json = configJson;
+      renderSlides();
+      showToast('Slide removido!', 'success');
+    }
+
+    document.getElementById('slideFileInput').addEventListener('change', async (e) => {
+      const file = e.target.files[0];
+      if (!file || !currentModel) return;
+      await uploadSlideFile(file, 'abertura');
+      e.target.value = '';
+    });
+
+    document.getElementById('folhaFileInput').addEventListener('change', async (e) => {
+      const file = e.target.files[0];
+      if (!file || !currentModel) return;
+      await uploadSlideFile(file, 'folha');
+      e.target.value = '';
+    });
+
+    async function uploadSlideFile(file, type) {
+      const slug = currentModel.slug;
+      const safeSlug = sanitizeSlug(slug);
+      const fileName = type === 'abertura'
+        ? `slide_${Date.now()}.${file.name.split('.').pop()}`
+        : `folha_preenchida.${file.name.split('.').pop()}`;
+      const remotePath = `${safeSlug}/assets/${fileName}`;
+
+      showToast('Enviando arquivo...', 'success');
+
+      const { error: uploadError } = await supabase.storage
+        .from('modelos')
+        .upload(remotePath, file, { upsert: true });
+
+      if (uploadError) {
+        showToast('Erro no upload: ' + uploadError.message, 'error');
+        return;
+      }
+
+      // Update config_json
+      const configJson = { ...currentModel.config_json };
+      if (!configJson.assets) configJson.assets = {};
+
+      if (type === 'abertura') {
+        if (!configJson.assets.aberturaSlides) configJson.assets.aberturaSlides = [];
+        configJson.assets.aberturaSlides.push(`assets/${fileName}`);
+      } else {
+        configJson.assets.folhaPreenchida = `assets/${fileName}`;
+      }
+
+      const { error: dbError } = await supabase
+        .from('modelos')
+        .update({ config_json: configJson, updated_at: new Date().toISOString() })
+        .eq('slug', slug);
+
+      if (dbError) {
+        showToast('Erro ao salvar config: ' + dbError.message, 'error');
+        return;
+      }
+
+      currentModel.config_json = configJson;
+      renderSlides();
+      showToast('Arquivo enviado e configurado!', 'success');
+    }
+
+    // ============ DELETE ============
+    document.getElementById('btnDelete').addEventListener('click', () => {
+      if (!currentModel) return;
+      document.getElementById('deleteModelName').textContent = currentModel.name || currentModel.slug;
+      document.getElementById('deleteModal').classList.add('active');
+    });
+
+    document.getElementById('btnCancelDelete').addEventListener('click', () => {
+      document.getElementById('deleteModal').classList.remove('active');
+    });
+
+    document.getElementById('deleteModal').addEventListener('click', (e) => {
+      if (e.target === document.getElementById('deleteModal')) {
+        document.getElementById('deleteModal').classList.remove('active');
+      }
+    });
+
+    document.getElementById('btnConfirmDelete').addEventListener('click', async () => {
+      if (!currentModel) return;
+
+      const btn = document.getElementById('btnConfirmDelete');
+      btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Excluindo...';
+
+      try {
+        // Delete from DB
+        const { error: dbError } = await supabase
+          .from('modelos')
+          .delete()
+          .eq('slug', currentModel.slug);
+
+        if (dbError) throw dbError;
+
+        // Try to delete from storage (best effort)
+        const safeSlug = sanitizeSlug(currentModel.slug);
+        try {
+          await supabase.storage.from('modelos').remove([`${safeSlug}/`]);
+          await supabase.storage.from('modelos-code').remove([`${safeSlug}/`]);
+        } catch (e) { /* ignore storage errors */ }
+
+        document.getElementById('deleteModal').classList.remove('active');
+        showToast('Modelo excluído com sucesso!', 'success');
+
+        allModels = allModels.filter(m => m.slug !== currentModel.slug);
+        renderGrid(allModels);
+        document.getElementById('modelCount').textContent = `${allModels.length} modelos`;
+
+        goBack();
+      } catch (e) {
+        showToast('Erro: ' + e.message, 'error');
+      } finally {
+        btn.innerHTML = '<i class="fa-solid fa-trash-can"></i> Excluir';
+      }
+    });
+
+    // ============ TOAST ============
+    function showToast(msg, type = 'success') {
+      const toast = document.getElementById('toast');
+      toast.className = `toast ${type}`;
+      toast.innerHTML = `<i class="fa-solid ${type === 'success' ? 'fa-circle-check' : 'fa-circle-exclamation'}"></i> ${msg}`;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 3000);
+    }
+
+    // ============ KEYBOARD SHORTCUTS ============
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        if (document.getElementById('deleteModal').classList.contains('active')) {
+          document.getElementById('deleteModal').classList.remove('active');
+        } else if (currentModel) {
+          goBack();
+        }
+      }
+      if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+        e.preventDefault();
+        document.getElementById('btnSave').click();
+      }
+    });
+
+    // ============ LOGOUT ============
+    document.getElementById('btnLogout').addEventListener('click', handleLogout);
+
+    // ============ INIT ============
+    checkSession();
+  </script>
+</body>
+</html>
