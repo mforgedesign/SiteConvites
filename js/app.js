@@ -1026,6 +1026,7 @@ const app = {
                 const r = await fetch(SUPABASE_CODE + '/' + slug + '/index.html');
                 let html = await r.text();
                 html = html.replace(new RegExp(OLD_KEY.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g'), NEW_KEY);
+                html = html.replace('<head>', '<head><base href="' + SUPABASE_CODE + '/' + slug + '/">');
                 html = html.replace('init();', 'window.__loadConfig().then(init).catch(init);');
                 frame.srcdoc = html;
             } catch(e) {
