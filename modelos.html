@@ -649,10 +649,19 @@
         // ============================
         let currentPreviewModel = null;
 
-        function openPreview(model) {
+        async function openPreview(model) {
             currentPreviewModel = model;
             document.getElementById('previewTitle').textContent = model.name;
-            document.getElementById('previewFrame').src = SUPABASE_CODE + '/' + sanitizeSlug(model.slug) + '/index.html';
+            const frame = document.getElementById('previewFrame');
+            const url = SUPABASE_CODE + '/' + sanitizeSlug(model.slug) + '/index.html';
+            try {
+                const r = await fetch(url);
+                const html = await r.text();
+                frame.srcdoc = html;
+            } catch (e) {
+                console.error('Error loading preview:', e);
+                frame.srcdoc = '<p style="padding:2rem;text-align:center;">Erro ao carregar prévia.</p>';
+            }
             document.getElementById('previewModal').classList.add('active');
             document.body.style.overflow = 'hidden';
             // Always mobile view
@@ -664,7 +673,8 @@
 
         function closePreview() {
             document.getElementById('previewModal').classList.remove('active');
-            document.getElementById('previewFrame').src = 'about:blank';
+            const frame = document.getElementById('previewFrame');
+            frame.srcdoc = '';
             document.body.style.overflow = '';
             currentPreviewModel = null;
         }
