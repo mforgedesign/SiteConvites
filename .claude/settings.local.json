@@ -1,0 +1,23 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(curl:*)",
+      "Bash(node:*)",
+      "Bash(DEST=\"/tmp/SiteConvites\" echo \"Total files \\(non-git\\):\" find \"$DEST\" -type f -not -path \"*/.git/*\")",
+      "Bash(wsl which:*)",
+      "Bash(wsl sudo:*)",
+      "Bash(wsl apt:*)",
+      "Bash(wsl bash:*)",
+      "Read(//c/tmp/**)",
+      "Bash(npm install:*)",
+      "Bash(mkdir -p /tmp/transfer)",
+      "Bash(npm init:*)",
+      "Bash(mkdir -p ~/transfer)",
+      "Read(//c/Users/Acer/**)",
+      "Bash(ssh -o StrictHostKeyChecking=no -o PasswordAuthentication=yes -o ConnectTimeout=10 -v claude@72.60.62.157 \"echo connected\")",
+      "Bash(ssh -o StrictHostKeyChecking=no -o BatchMode=yes -o ConnectTimeout=10 claude@72.60.62.157 \"echo test\")",
+      "Bash(ssh -o KexAlgorithms=+diffie-hellman-group14-sha256 -o StrictHostKeyChecking=no -o PreferredAuthentications=password -v claude@72.60.62.157 \"echo test\")",
+      "Bash(node -e \"require\\(''''./scp_transfer.js''''\\)\" --help)"
+    ]
+  }
+}
