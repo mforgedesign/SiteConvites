@@ -608,7 +608,6 @@
         // ============================
         const SUPABASE_URL = 'https://xchphsltccopelblbsyb.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhjaHBoc2x0Y2NvcGVsYmxic3liIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM2NTI1MjQsImV4cCI6MjA4OTIyODUyNH0.ZOtoygT-PZKcByjh2GEzKGX--6K1UqedvVqTlhCAko0';
-        const VPS_ASSETS = 'https://72.60.62.157:8443';
         const SUPABASE_ASSETS = SUPABASE_URL + '/storage/v1/object/public/modelos';
         const SUPABASE_CODE = SUPABASE_URL + '/storage/v1/object/public/modelos-code';
 
@@ -660,8 +659,6 @@
                 let html = await r.text();
                 // Replace old anon key in template with current one
                 html = html.replace(/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9\.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhjaHBoc2x0Y2NvcGVsYmxic3liIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDEyMDk0MTAsImV4cCI6MjA1Njc4NTQxMH0\.8e2V0H1xRJi_3w_GYWOWn8dWfAEcPqS8mPR3k5U0hMo/g, SUPABASE_ANON_KEY);
-                // Replace Supabase Storage asset URLs with VPS URLs
-                html = html.replace(/https:\/\/xchphsltccopelblbsyb\.supabase\.co\/storage\/v1\/object\/public\/modelos/g, VPS_ASSETS);
                 frame.srcdoc = html;
             } catch (e) {
                 console.error('Error loading preview:', e);
@@ -743,7 +740,7 @@
                         paletaCores: m.paleta_cores,
                         buttonColor: m.button_color || '#c9557c',
                         tags: buildTags(m.tipo),
-                        cover: VPS_ASSETS + '/' + sanitizeSlug(m.slug) + '/' + (m.capa_path || 'assets/capa.jpg'),
+                        cover: SUPABASE_ASSETS + '/' + sanitizeSlug(m.slug) + '/' + (m.capa_path || 'assets/capa.jpg'),
                         loaded: true
                     }));
                     slugs = models.map(m => m.slug);
