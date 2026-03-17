@@ -1022,11 +1022,18 @@ const app = {
             const OLD_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhjaHBoc2x0Y2NvcGVsYmxic3liIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDEyMDk0MTAsImV4cCI6MjA1Njc4NTQxMH0.8e2V0H1xRJi_3w_GYWOWn8dWfAEcPqS8mPR3k5U0hMo';
             const NEW_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhjaHBoc2x0Y2NvcGVsYmxic3liIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM2NTI1MjQsImV4cCI6MjA4OTIyODUyNH0.ZOtoygT-PZKcByjh2GEzKGX--6K1UqedvVqTlhCAko0';
             const slug = this.selectedModel.slug.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-zA-Z0-9\-_]/g, '-');
+            const SUPABASE_ASSETS = 'https://xchphsltccopelblbsyb.supabase.co/storage/v1/object/public/modelos';
             try {
                 const r = await fetch(SUPABASE_CODE + '/' + slug + '/index.html');
                 let html = await r.text();
                 html = html.replace(new RegExp(OLD_KEY.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g'), NEW_KEY);
-                html = html.replace('<head>', '<head><base href="' + SUPABASE_CODE + '/' + slug + '/">');
+                const assetFix = `<script>window.__SUPABASE_ASSETS='${SUPABASE_ASSETS}/${slug}';` +
+                  `window.assetUrl=function(p){return window.__SUPABASE_ASSETS+'/assets/'+(p||'').replace(/^assets\\//,'')};` +
+                  `document.addEventListener('DOMContentLoaded',function(){` +
+                  `document.querySelectorAll('img[src^="assets/"],video[src^="assets/"],audio[src^="assets/"],source[src^="assets/"]').forEach(function(el){` +
+                  `el.src=window.assetUrl(el.getAttribute('src'));});` +
+                  `});<\/script>`;
+                html = html.replace('</head>', assetFix + '</head>');
                 html = html.replace('init();', 'window.__loadConfig().then(init).catch(init);');
                 frame.srcdoc = html;
             } catch(e) {

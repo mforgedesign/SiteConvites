@@ -659,10 +659,16 @@
                 let html = await r.text();
                 // Replace old anon key in template with current one
                 html = html.replace(/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9\.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhjaHBoc2x0Y2NvcGVsYmxic3liIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDEyMDk0MTAsImV4cCI6MjA1Njc4NTQxMH0\.8e2V0H1xRJi_3w_GYWOWn8dWfAEcPqS8mPR3k5U0hMo/g, SUPABASE_ANON_KEY);
-                // Inject <base> tag so relative asset paths resolve to Supabase Storage
-                const baseHref = SUPABASE_CODE + '/' + sanitizeSlug(model.slug) + '/';
-                html = html.replace('<head>', '<head><base href="' + baseHref + '">');
-                // Inject __loadConfig() call before init() - templates define it but never call it
+                // Override __SUPABASE_ASSETS to point to correct bucket and inject asset URL fixer
+                const slug = sanitizeSlug(model.slug);
+                const assetFix = `<script>window.__SUPABASE_ASSETS='${SUPABASE_ASSETS}/${slug}';` +
+                  `window.assetUrl=function(p){return window.__SUPABASE_ASSETS+'/assets/'+(p||'').replace(/^assets\\//,'')};` +
+                  `document.addEventListener('DOMContentLoaded',function(){` +
+                  `document.querySelectorAll('img[src^="assets/"],video[src^="assets/"],audio[src^="assets/"],source[src^="assets/"]').forEach(function(el){` +
+                  `el.src=window.assetUrl(el.getAttribute('src'));});` +
+                  `});<\/script>`;
+                html = html.replace('</head>', assetFix + '</head>');
+                // Inject __loadConfig() call before init()
                 html = html.replace('init();', 'window.__loadConfig().then(init).catch(init);');
                 frame.srcdoc = html;
             } catch (e) {

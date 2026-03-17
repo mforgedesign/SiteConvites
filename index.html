@@ -165,7 +165,14 @@
             const r = await fetch(CODE_URL + '/modelo-cinderela/index.html');
             let html = await r.text();
             html = html.replace(new RegExp(OLD_KEY.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g'), NEW_KEY);
-            html = html.replace('<head>', '<head><base href="' + CODE_URL + '/modelo-cinderela/">');
+            const ASSETS_URL = SUPABASE_URL + '/storage/v1/object/public/modelos';
+            const assetFix = `<script>window.__SUPABASE_ASSETS='${ASSETS_URL}/modelo-cinderela';` +
+              `window.assetUrl=function(p){return window.__SUPABASE_ASSETS+'/assets/'+(p||'').replace(/^assets\\//,'')};` +
+              `document.addEventListener('DOMContentLoaded',function(){` +
+              `document.querySelectorAll('img[src^="assets/"],video[src^="assets/"],audio[src^="assets/"],source[src^="assets/"]').forEach(function(el){` +
+              `el.src=window.assetUrl(el.getAttribute('src'));});` +
+              `});<\/script>`;
+            html = html.replace('</head>', assetFix + '</head>');
             html = html.replace('init();', 'window.__loadConfig().then(init).catch(init);');
             document.getElementById('demoIframe').srcdoc = html;
         } catch(e) { console.error('Demo load error:', e); }
