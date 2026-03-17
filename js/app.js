@@ -1027,26 +1027,28 @@ const app = {
                 const r = await fetch(SUPABASE_CODE + '/' + slug + '/index.html');
                 let html = await r.text();
                 html = html.replace(new RegExp(OLD_KEY.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g'), NEW_KEY);
-                const ASSET_BASE = `${SUPABASE_ASSETS}/${slug}/assets/`;
-                const assetFix = `<script>window.__SUPABASE_ASSETS='${SUPABASE_ASSETS}/${slug}';` +
-                  `window.assetUrl=function(p){return window.__SUPABASE_ASSETS+'/assets/'+(p||'').replace(/^assets\\\\//,'')};` +
-                  `(function(){` +
-                  `var AB='${ASSET_BASE}';` +
-                  `function fix(v){return v&&typeof v==='string'&&v.startsWith('assets/')?AB+v.substring(7):v;}` +
-                  `var _sa=Element.prototype.setAttribute;` +
-                  `Element.prototype.setAttribute=function(n,v){if(n==='src'||n==='data-src'||n==='poster')v=fix(v);return _sa.call(this,n,v);};` +
-                  `var _ld=window.__loadConfig;` +
-                  `window.__loadConfig=async function(){` +
-                  `await _ld();` +
-                  `if(window.config){` +
-                  `['assets','imagens','backgrounds'].forEach(function(k){` +
-                  `if(window.config[k]&&typeof window.config[k]==='object'){` +
-                  `for(var p in window.config[k]){` +
-                  `if(typeof window.config[k][p]==='string')window.config[k][p]=fix(window.config[k][p]);` +
-                  `}}});` +
-                  `if(window.config.musica)window.config.musica=fix(window.config.musica);` +
-                  `}};` +
-                  `})();<\/script>`;
+                const ASSET_BASE = SUPABASE_ASSETS + '/' + slug + '/assets/';
+                const assetFix = '<script>' +
+                  "window.__SUPABASE_ASSETS='" + SUPABASE_ASSETS + '/' + slug + "';" +
+                  "window.assetUrl=function(p){return window.__SUPABASE_ASSETS+'/assets/'+(p||'').replace('assets/','')};" +
+                  "(function(){" +
+                  "var AB='" + ASSET_BASE + "';" +
+                  "function fix(v){return v&&typeof v==='string'&&v.indexOf('assets/')===0?AB+v.substring(7):v;}" +
+                  "var _sa=Element.prototype.setAttribute;" +
+                  "Element.prototype.setAttribute=function(n,v){if(n==='src'||n==='data-src'||n==='poster')v=fix(v);return _sa.call(this,n,v);};" +
+                  "var _ld=window.__loadConfig;" +
+                  "window.__loadConfig=async function(){" +
+                  "await _ld();" +
+                  "if(window.config){" +
+                  "['assets','imagens','backgrounds'].forEach(function(k){" +
+                  "if(window.config[k]&&typeof window.config[k]==='object'){" +
+                  "for(var p in window.config[k]){" +
+                  "if(typeof window.config[k][p]==='string')window.config[k][p]=fix(window.config[k][p]);" +
+                  "}}});" +
+                  "if(window.config.musica)window.config.musica=fix(window.config.musica);" +
+                  "}};" +
+                  "})();" +
+                  '<\/script>';
                 html = html.replace('</head>', assetFix + '</head>');
                 html = html.replace('init();', 'window.__loadConfig().then(init).catch(init);');
                 frame.srcdoc = html;
