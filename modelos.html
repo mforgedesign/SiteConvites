@@ -661,12 +661,28 @@
                 html = html.replace(/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9\.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhjaHBoc2x0Y2NvcGVsYmxic3liIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDEyMDk0MTAsImV4cCI6MjA1Njc4NTQxMH0\.8e2V0H1xRJi_3w_GYWOWn8dWfAEcPqS8mPR3k5U0hMo/g, SUPABASE_ANON_KEY);
                 // Override __SUPABASE_ASSETS to point to correct bucket and inject asset URL fixer
                 const slug = sanitizeSlug(model.slug);
+                const ASSET_BASE = `${SUPABASE_ASSETS}/${slug}/assets/`;
                 const assetFix = `<script>window.__SUPABASE_ASSETS='${SUPABASE_ASSETS}/${slug}';` +
-                  `window.assetUrl=function(p){return window.__SUPABASE_ASSETS+'/assets/'+(p||'').replace(/^assets\\//,'')};` +
-                  `document.addEventListener('DOMContentLoaded',function(){` +
-                  `document.querySelectorAll('img[src^="assets/"],video[src^="assets/"],audio[src^="assets/"],source[src^="assets/"]').forEach(function(el){` +
-                  `el.src=window.assetUrl(el.getAttribute('src'));});` +
-                  `});<\/script>`;
+                  `window.assetUrl=function(p){return window.__SUPABASE_ASSETS+'/assets/'+(p||'').replace(/^assets\\\\//,'')};` +
+                  `(function(){` +
+                  `var AB='${ASSET_BASE}';` +
+                  `function fix(v){return v&&typeof v==='string'&&v.startsWith('assets/')?AB+v.substring(7):v;}` +
+                  `var _sa=Element.prototype.setAttribute;` +
+                  `Element.prototype.setAttribute=function(n,v){if(n==='src'||n==='data-src'||n==='poster')v=fix(v);return _sa.call(this,n,v);};` +
+                  `var _ld=window.__loadConfig;` +
+                  `window.__loadConfig=async function(){` +
+                  `await _ld();` +
+                  `if(window.config){` +
+                  `['assets','imagens','backgrounds'].forEach(function(k){` +
+                  `if(window.config[k]&&typeof window.config[k]==='object'){` +
+                  `for(var p in window.config[k]){` +
+                  `if(typeof window.config[k][p]==='string')window.config[k][p]=fix(window.config[k][p]);` +
+                  `}}});` +
+                  `if(window.config.musica)window.config.musica=fix(window.config.musica);` +
+                  `}};` +
+                  `var _ie=HTMLImageElement.prototype.setAttribute;` +
+                  `HTMLImageElement.prototype.setAttribute=function(n,v){if(n==='src')v=fix(v);return _ie.call(this,n,v);};` +
+                  `})();<\/script>`;
                 html = html.replace('</head>', assetFix + '</head>');
                 // Inject __loadConfig() call before init()
                 html = html.replace('init();', 'window.__loadConfig().then(init).catch(init);');
