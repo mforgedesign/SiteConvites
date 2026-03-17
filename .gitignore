@@ -1,0 +1,16 @@
+# Assets - stored in Supabase Storage, not GitHub
+modelos/*/assets/
+Convite_Temp/
+assets/orcamento/
+orcamentos/assets/
+orcamentos/temp/
+temp/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+*.swp
+*.swo
+*~
