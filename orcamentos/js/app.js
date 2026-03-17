@@ -1033,8 +1033,13 @@ const app = {
                   "(function(){" +
                   "var AB='" + ASSET_BASE + "';" +
                   "function fix(v){return v&&typeof v==='string'&&v.indexOf('assets/')===0?AB+v.substring(7):v;}" +
+                  // Patch setAttribute
                   "var _sa=Element.prototype.setAttribute;" +
                   "Element.prototype.setAttribute=function(n,v){if(n==='src'||n==='data-src'||n==='poster')v=fix(v);return _sa.call(this,n,v);};" +
+                  // Patch .src property setter for img, video, source, audio
+                  "function patchSrc(Cls){var d=Object.getOwnPropertyDescriptor(Cls.prototype,'src');if(!d||!d.set)return;var _s=d.set;Object.defineProperty(Cls.prototype,'src',{set:function(v){_s.call(this,fix(v));},get:d.get,configurable:true});}" +
+                  "patchSrc(HTMLImageElement);patchSrc(HTMLVideoElement);patchSrc(HTMLSourceElement);patchSrc(HTMLAudioElement);" +
+                  // Patch __loadConfig to rewrite config asset paths
                   "var _ld=window.__loadConfig;" +
                   "window.__loadConfig=async function(){" +
                   "await _ld();" +
@@ -1042,7 +1047,9 @@ const app = {
                   "['assets','imagens','backgrounds'].forEach(function(k){" +
                   "if(window.config[k]&&typeof window.config[k]==='object'){" +
                   "for(var p in window.config[k]){" +
-                  "if(typeof window.config[k][p]==='string')window.config[k][p]=fix(window.config[k][p]);" +
+                  "var v=window.config[k][p];" +
+                  "if(typeof v==='string')window.config[k][p]=fix(v);" +
+                  "else if(Array.isArray(v))window.config[k][p]=v.map(function(x){return typeof x==='string'?fix(x):x;});" +
                   "}}});" +
                   "if(window.config.musica)window.config.musica=fix(window.config.musica);" +
                   "}};" +
