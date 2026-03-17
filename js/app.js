@@ -1019,6 +1019,7 @@ const app = {
         if (title) title.textContent = this.selectedModel.name;
         if (frame) {
             const SUPABASE_CODE = 'https://xchphsltccopelblbsyb.supabase.co/storage/v1/object/public/modelos-code';
+            const VPS_ASSETS = 'https://72.60.62.157:8443';
             const OLD_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhjaHBoc2x0Y2NvcGVsYmxic3liIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDEyMDk0MTAsImV4cCI6MjA1Njc4NTQxMH0.8e2V0H1xRJi_3w_GYWOWn8dWfAEcPqS8mPR3k5U0hMo';
             const NEW_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhjaHBoc2x0Y2NvcGVsYmxic3liIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM2NTI1MjQsImV4cCI6MjA4OTIyODUyNH0.ZOtoygT-PZKcByjh2GEzKGX--6K1UqedvVqTlhCAko0';
             const slug = this.selectedModel.slug.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-zA-Z0-9\-_]/g, '-');
@@ -1026,6 +1027,7 @@ const app = {
                 const r = await fetch(SUPABASE_CODE + '/' + slug + '/index.html');
                 let html = await r.text();
                 html = html.replace(new RegExp(OLD_KEY.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g'), NEW_KEY);
+                html = html.replace(/https:\/\/xchphsltccopelblbsyb\.supabase\.co\/storage\/v1\/object\/public\/modelos/g, VPS_ASSETS);
                 frame.srcdoc = html;
             } catch(e) {
                 console.error('Preview load error:', e);

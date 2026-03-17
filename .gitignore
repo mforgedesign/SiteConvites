@@ -1,10 +1,16 @@
-# Assets - stored in Supabase Storage, not GitHub
+# Assets - served from VPS, not GitHub
 modelos/*/assets/
 Convite_Temp/
 assets/orcamento/
 orcamentos/assets/
 orcamentos/temp/
 temp/
+public-assets/
+
+# Server files (VPS only)
+assets-server.js
+server-key.pem
+server-cert.pem
 
 # OS files
 .DS_Store
