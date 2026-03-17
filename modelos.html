@@ -659,6 +659,8 @@
                 let html = await r.text();
                 // Replace old anon key in template with current one
                 html = html.replace(/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9\.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhjaHBoc2x0Y2NvcGVsYmxic3liIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDEyMDk0MTAsImV4cCI6MjA1Njc4NTQxMH0\.8e2V0H1xRJi_3w_GYWOWn8dWfAEcPqS8mPR3k5U0hMo/g, SUPABASE_ANON_KEY);
+                // Inject __loadConfig() call before init() - templates define it but never call it
+                html = html.replace('init();', 'window.__loadConfig().then(init).catch(init);');
                 frame.srcdoc = html;
             } catch (e) {
                 console.error('Error loading preview:', e);
