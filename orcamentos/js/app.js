@@ -1026,10 +1026,14 @@ const app = {
                 const r = await fetch(SUPABASE_CODE + '/' + slug + '/index.html');
                 let html = await r.text();
                 html = html.replace(new RegExp(OLD_KEY.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g'), NEW_KEY);
-                const ASSET_BASE = SUPABASE_ASSETS + '/' + slug + '/assets/';
+                // Determine asset base based on model source
+                const isGit = typeof isGitHubModel === 'function' && isGitHubModel(this.selectedModel.slug);
+                const ASSET_BASE = isGit
+                  ? window.location.origin + '/SiteConvites/modelos/' + slug + '/assets/'
+                  : SUPABASE_ASSETS + '/' + slug + '/assets/';
                 const assetFix = '<script>' +
                   "window.__SUPABASE_ASSETS='" + SUPABASE_ASSETS + '/' + slug + "';" +
-                  "window.assetUrl=function(p){return window.__SUPABASE_ASSETS+'/assets/'+(p||'').replace('assets/','')};" +
+                  "window.assetUrl=function(p){return '" + ASSET_BASE + "'+(p||'').replace(/^assets\\//,'')};" +
                   "(function(){" +
                   "var AB='" + ASSET_BASE + "';" +
                   "function fix(v){return v&&typeof v==='string'&&v.indexOf('assets/')===0?AB+v.substring(7):v;}" +

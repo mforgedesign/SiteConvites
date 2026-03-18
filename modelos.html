@@ -39,6 +39,9 @@
     <!-- FontAwesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
+    <!-- Model source configuration (GitHub vs Supabase) -->
+    <script src="js/model_sources.js"></script>
+
     <style>
         /* Theme Variables */
         :root {
@@ -659,12 +662,15 @@
                 let html = await r.text();
                 // Replace old anon key in template with current one
                 html = html.replace(/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9\.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhjaHBoc2x0Y2NvcGVsYmxic3liIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDEyMDk0MTAsImV4cCI6MjA1Njc4NTQxMH0\.8e2V0H1xRJi_3w_GYWOWn8dWfAEcPqS8mPR3k5U0hMo/g, SUPABASE_ANON_KEY);
-                // Override __SUPABASE_ASSETS to point to correct bucket and inject asset URL fixer
+                // Determine asset base based on model source
                 const slug = sanitizeSlug(model.slug);
-                const ASSET_BASE = SUPABASE_ASSETS + '/' + slug + '/assets/';
+                const isGit = isGitHubModel(model.slug);
+                const ASSET_BASE = isGit
+                  ? window.location.origin + '/SiteConvites/modelos/' + slug + '/assets/'
+                  : SUPABASE_ASSETS + '/' + slug + '/assets/';
                 const assetFix = '<script>' +
                   "window.__SUPABASE_ASSETS='" + SUPABASE_ASSETS + '/' + slug + "';" +
-                  "window.assetUrl=function(p){return window.__SUPABASE_ASSETS+'/assets/'+(p||'').replace('assets/','')};" +
+                  "window.assetUrl=function(p){return '" + ASSET_BASE + "'+(p||'').replace(/^assets\\//,'')};" +
                   "(function(){" +
                   "var AB='" + ASSET_BASE + "';" +
                   "function fix(v){return v&&typeof v==='string'&&v.indexOf('assets/')===0?AB+v.substring(7):v;}" +
@@ -774,7 +780,7 @@
                         paletaCores: m.paleta_cores,
                         buttonColor: m.button_color || '#c9557c',
                         tags: buildTags(m.tipo),
-                        cover: SUPABASE_ASSETS + '/' + sanitizeSlug(m.slug) + '/' + (m.capa_path || 'assets/capa.jpg'),
+                        cover: getCoverUrl(m.slug, m.capa_path),
                         loaded: true
                     }));
                     slugs = models.map(m => m.slug);
