@@ -60,25 +60,25 @@ window.config = {
   // ARQUIVOS / ASSETS DO CONVITE (Caminhos)  
   // =========================  
   "assets": {
-    "capa": "assets/Capa.jpg",
+    "capa": "assets/capa.jpg",
     // Arquivo da capa principal do convite
 
     "aberturaSlides": [
-      "assets/Slide1.mp4",
-      "assets/Slide2.mp4",
+      "assets/slide1.mp4",
+      "assets/slide2.mp4",
       "assets/Slide3.mp4",
-      "assets/Slide4.mp4",
-      "assets/Slide5.mp4"
+      "assets/slide4.mp4",
+      "assets/slide5.mp4"
     ],
     // Lista de vídeos ou slides que compõem a abertura animada
 
-    "folhaVazia": "assets/Folha Preenchida.jpg",
+    "folhaVazia": "assets/folha_preenchida.jpg",
     // Arte da folha sem texto (base do convite)
 
-    "folhaPreenchida": "assets/Folha Preenchida.jpg",
+    "folhaPreenchida": "assets/folha_preenchida.jpg",
     // Arte da folha com o conteúdo do evento preenchido
 
-    "musica": "assets/Musica.mp3"
+    "musica": "assets/musica.mp3"
     // Arquivo de música usado no convite
   },
 
