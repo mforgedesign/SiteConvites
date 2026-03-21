@@ -123,6 +123,13 @@
 
             try {
                 const savedData = localStorage.getItem('quoteData');
+                
+                // Previne reenvio duplicado: se os dados já foram limpos pelo envio anterior, sai da tela
+                if (!savedData) {
+                    window.location.href = '../orcamentos/';
+                    return;
+                }
+                
                 const savedModel = localStorage.getItem('selectedModel');
                 
                 if (savedData) {
@@ -242,8 +249,18 @@
 
                 if (response.ok) {
                     showSuccess();
+                    
+                    // Limpa o carrinho de orçamentos do local storage após envio confirmado
+                    // Isso evita que um simples F5 ou restaurar abas envie a mesma mensagem novamente
+                    localStorage.removeItem('quoteData');
+                    
                     // Setup fallback silently in case the User's whatsapp failed specifically on the API side
                     setupFallbackBtn();
+                    
+                    // Redireciona para o formulário após 5 segundos, fechando o fluxo de compra
+                    setTimeout(() => {
+                        window.location.href = '../orcamentos/';
+                    }, 5000);
                 } else {
                     handleError('O servidor proxy retornou um erro.');
                 }
