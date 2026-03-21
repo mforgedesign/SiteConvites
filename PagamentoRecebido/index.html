@@ -135,10 +135,8 @@
                     const modelName = model && model.name ? model.name : 'Modelo não selecionado ou ignorado';
                     const modelSlug = model && model.slug ? model.slug : '';
                     
-                    const origin = window.location.origin;
-                    let basePath = window.location.pathname.replace('/PagamentoRecebido/', '').replace('/PagamentoRecebido', '').split('?')[0];
-                    if(basePath.endsWith('/index.html')) basePath = basePath.replace('/index.html', '');
-                    const modelLink = modelSlug ? origin + basePath + '/modelos/' + modelSlug + '/' : '';
+                    const siteRoot = new URL('../', window.location.href).href;
+                    const modelLink = modelSlug ? siteRoot + 'modelos.html?modelo=' + encodeURIComponent(modelSlug) : '';
 
                     summaryTexto += "*PEDIDO DE CONVITE DIGITAL*\n";
                     summaryTexto += "━━━━━━━━━━━━━━━━━━━━━━━━\n\n";
