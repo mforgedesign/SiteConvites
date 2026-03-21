@@ -1031,6 +1031,9 @@ const app = {
                 const ASSET_BASE = isGit
                   ? window.location.origin + '/SiteConvites/modelos/' + slug + '/assets/'
                   : SUPABASE_ASSETS + '/' + slug + '/assets/';
+                // Rewrite static HTML asset paths (src="assets/...", poster="assets/...", url(assets/...))
+                html = html.replace(/(["'])assets\//g, '$1' + ASSET_BASE);
+                html = html.replace(/(url\()assets\//g, '$1' + ASSET_BASE);
                 const assetFix = '<script>' +
                   "window.__SUPABASE_ASSETS='" + SUPABASE_ASSETS + '/' + slug + "';" +
                   "window.assetUrl=function(p){return '" + ASSET_BASE + "'+(p||'').replace(/^assets\\//,'')};" +
