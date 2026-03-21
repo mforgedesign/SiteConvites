@@ -1397,6 +1397,12 @@ const app = {
     },
 
     confirmOrder() {
+        // Verifica se um modelo foi selecionado
+        if (!this.selectedModel && !localStorage.getItem('selectedModel')) {
+            this.showNoModelWarning();
+            return;
+        }
+
         // Mostra modal de sinal antes de enviar para WhatsApp
         const modal = document.getElementById('confirm_order_modal');
         const box = document.getElementById('confirm_order_box');
@@ -1407,6 +1413,32 @@ const app = {
         if(box) {
             box.classList.remove('scale-95');
             box.classList.add('scale-100');
+        }
+    },
+
+    showNoModelWarning() {
+        const modal = document.getElementById('no_model_warning_modal');
+        const box = document.getElementById('no_model_warning_box');
+        if(modal) {
+            modal.classList.remove('opacity-0', 'pointer-events-none');
+            modal.classList.add('opacity-100');
+        }
+        if(box) {
+            box.classList.remove('scale-95');
+            box.classList.add('scale-100');
+        }
+    },
+
+    closeNoModelWarning() {
+        const modal = document.getElementById('no_model_warning_modal');
+        const box = document.getElementById('no_model_warning_box');
+        if(modal) {
+            modal.classList.add('opacity-0', 'pointer-events-none');
+            modal.classList.remove('opacity-100');
+        }
+        if(box) {
+            box.classList.add('scale-95');
+            box.classList.remove('scale-100');
         }
     },
 

@@ -1284,5 +1284,24 @@
         </div>
     </div>
 
+    <!-- Modal Aviso: Nenhum Modelo Selecionado -->
+    <div id="no_model_warning_modal" class="fixed inset-0 z-[120] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300">
+        <div class="bg-white dark:bg-gray-900 rounded-2xl w-full max-w-sm shadow-2xl p-6 relative transform scale-95 transition-transform duration-300 border border-gray-200 dark:border-gray-700" id="no_model_warning_box">
+            <div class="text-center">
+                <div class="w-14 h-14 rounded-full bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center mx-auto mb-4">
+                    <i class="fa-solid fa-exclamation-triangle text-2xl text-amber-500"></i>
+                </div>
+                <h3 class="text-lg font-black mb-2" style="color: var(--text-primary);">Modelo não selecionado</h3>
+                <p class="text-sm mb-6" style="color: var(--text-secondary);">Você ainda não escolheu um modelo para o seu convite. Escolha um modelo antes de finalizar o pedido.</p>
+                <a href="../modelos.html" class="block w-full bg-accent hover:bg-pink-700 text-white font-bold py-3 px-6 rounded-xl text-sm transition-transform hover:scale-105 active:scale-95 mb-3">
+                    <i class="fa-solid fa-palette mr-1"></i> Ver Modelos
+                </a>
+                <button onclick="app.closeNoModelWarning()" class="text-xs font-medium text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 transition-colors">
+                    Voltar
+                </button>
+            </div>
+        </div>
+    </div>
+
 </body>
 </html>
