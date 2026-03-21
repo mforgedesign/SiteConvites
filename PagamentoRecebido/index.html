@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pagamento Confirmado!</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0fdf4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            color: #1f2937;
+        }
+        .container {
+            text-align: center;
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            max-width: 500px;
+            width: 90%;
+        }
+        .success-icon {
+            color: #22c55e;
+            font-size: 64px;
+            margin-bottom: 20px;
+        }
+        h1 {
+            color: #15803d;
+            margin-bottom: 10px;
+        }
+        p {
+            color: #4b5563;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid #e5e7eb;
+            border-radius: 50%;
+            border-top-color: #22c55e;
+            animation: spin 1s ease-in-out infinite;
+            vertical-align: middle;
+            margin-right: 10px;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        .status-message {
+            font-size: 0.9em;
+            color: #6b7280;
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 6px;
+            background-color: #f3f4f6;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="success-icon">✓</div>
+        <h1>Pagamento Recebido!</h1>
+        <p>Recebemos o seu sinal com sucesso. Seu pedido já está na nossa fila de produção.</p>
+        
+        <p><strong>Em alguns instantes, você receberá uma confirmação com o resumo do seu pedido no seu WhatsApp.</strong></p>
+        
+        <div class="status-message" id="statusMessage">
+            <span class="loading" id="loadingSpinner"></span>
+            <span id="statusText">Avisando nossa equipe...</span>
+        </div>
+    </div>
+
+    <script>
+        // Função para notificar o backend
+        async function notifyBackend() {
+            // Tentativa de obter dados do cliente pela URL (se o Pagar.me ou MercadoPago enviar na querystring)
+            const urlParams = new URLSearchParams(window.location.search);
+            let clientPhone = urlParams.get('phone') || urlParams.get('telefone');
+            let orderId = urlParams.get('order_id') || urlParams.get('id');
+            let clientName = urlParams.get('name') || urlParams.get('nome');
+            let clientSummary = urlParams.get('summary') || urlParams.get('resumo') || '';
+
+            // Tentar recuperar do localStorage se não estiver na URL
+            if (!clientPhone || !clientName || !clientSummary) {
+                try {
+                    const savedData = localStorage.getItem('quoteData');
+                    if (savedData) {
+                        const parsed = JSON.parse(savedData);
+                        clientPhone = clientPhone || parsed.clientWhatsapp;
+                        clientName = clientName || parsed.clientName;
+                        
+                        // Reconstrói o resumo se ele não veio na URL
+                        if (!clientSummary) {
+                            let summaryLines = [];
+                            if (parsed.eventType) summaryLines.push(`*Evento:* ${parsed.eventType === 'outro' ? parsed.customEventType : parsed.eventType}`);
+                            if (parsed.eventName) summaryLines.push(`*Nome no Convite:* ${parsed.eventName}`);
+                            if (parsed.eventDate) summaryLines.push(`*Data:* ${parsed.eventDate}`);
+                            
+                            // Pacote Base
+                            if (parsed.basePackage) {
+                                const pkgName = parsed.basePackage === 85 ? 'Premium (Longa)' : (parsed.basePackage === 60 ? 'Simples (Curta)' : 'Sem Abertura');
+                                summaryLines.push(`*Pacote:* ${pkgName}`);
+                            }
+
+                            // Extras Selecionados
+                            if (parsed.extras && parsed.extras.length > 0) {
+                                summaryLines.push(`*Extras:* ${parsed.extras.join(', ')}`);
+                            }
+
+                            clientSummary = summaryLines.join('\n');
+                        }
+                    }
+                } catch (e) {
+                    console.error("Erro ao ler localStorage:", e);
+                }
+            }
+
+            const payload = {
+                phone: clientPhone,
+                orderId: orderId || 'N/A',
+                name: clientName || 'Cliente',
+                summary: clientSummary,
+                status: 'paid'
+            };
+
+            try {
+                // TODO: Substituir pela URL/IP da VPS com configuração de HTTPS
+                const response = await fetch('http://72.60.62.157:3000/webhook/pagamento', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(payload)
+                });
+
+                if (response.ok) {
+                    document.getElementById('loadingSpinner').style.display = 'none';
+                    document.getElementById('statusText').innerText = 'Equipe notificada! Verifique seu WhatsApp.';
+                    document.getElementById('statusText').style.color = '#15803d';
+                } else {
+                    handleError();
+                }
+            } catch (error) {
+                console.error('Erro ao notificar backend:', error);
+                handleError();
+            }
+        }
+
+        function handleError() {
+            document.getElementById('loadingSpinner').style.display = 'none';
+            document.getElementById('statusText').innerText = 'Seu pagamento foi confirmado, mas houve um atraso no WhatsApp. Nossa equipe já está ciente.';
+        }
+
+        // Executar a notificação assim que a página carregar
+        window.addEventListener('DOMContentLoaded', notifyBackend);
+    </script>
+</body>
+</html>

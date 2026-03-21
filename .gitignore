@@ -1,70 +1,15 @@
-# Assets Supabase (second half - served from Supabase Storage, not GitHub)
-modelos/Modelo-casamento-branco-dourado/assets/
-modelos/Morena-15Anos/assets/
-modelos/MorenaClarah15Anos/assets/
-modelos/Patrícia/assets/
-modelos/Rosely/assets/
-modelos/Sara15Anos-HP/assets/
-modelos/VanGogh-Júlia-15Anos/assets/
-modelos/VitoriaFabia-15Anos/assets/
-modelos/Yasmin15Anos-Ado/assets/
-modelos/YasminHabib15Anos/assets/
-modelos/modelo-Las-Vegas/assets/
-modelos/modelo-alicenopaisdasmaravilhas/assets/
-modelos/modelo-aniversario-sereia/assets/
-modelos/modelo-auroramalevola/assets/
-modelos/modelo-azul-floral/assets/
-modelos/modelo-azulcomamarelopastel/assets/
-modelos/modelo-bailedemascara/assets/
-modelos/modelo-bailedemascarapreta/assets/
-modelos/modelo-baileinverno-AberturaCurta/assets/
-modelos/modelo-brancodourado/assets/
-modelos/modelo-casamento-azul-branco/assets/
-modelos/modelo-casamento-minimalista/assets/
-modelos/modelo-casamentoazulebranco/assets/
-modelos/modelo-casamentominimalista/assets/
-modelos/modelo-cinderela/assets/
-modelos/modelo-coraline/assets/
-modelos/modelo-debutante-azul-floral/assets/
-modelos/modelo-debutante-enrolados/assets/
-modelos/modelo-debutante-rosa-azul/assets/
-modelos/modelo-debutante-rosa-gold/assets/
-modelos/modelo-debutante-verde-esmeralda/assets/
-modelos/modelo-enrolados-rapunzel/assets/
-modelos/modelo-formatura/assets/
-modelos/modelo-galo/assets/
-modelos/modelo-lilascomdourado/assets/
-modelos/modelo-lilascomdouradoerosa/assets/
-modelos/modelo-marromdourado/assets/
-modelos/modelo-noiteestrelada/assets/
-modelos/modelo-palmeiras/assets/
-modelos/modelo-portão-jardim/assets/
-modelos/modelo-rosadouradoespelho/assets/
-modelos/modelo-rosaprata/assets/
-modelos/modelo-rosegold/assets/
-modelos/modelo-roxoedourado/assets/
-modelos/modelo-tropical/assets/
-modelos/modelo-vitoriasecrets/assets/
+# Dependency
+node_modules/
 
-# Orçamento assets (served from GitHub, but excluded to keep repo lean - uncomment if needed)
-# assets/orcamento/
-# orcamentos/assets/
-
-# Temp / old
-orcamentos/temp/
-temp/
-public-assets/
-
-# Server files (legacy)
-assets-server.js
-server-key.pem
-server-cert.pem
-
-# OS files
+# OS-specific
 .DS_Store
 Thumbs.db
 
-# Editor files
-*.swp
-*.swo
-*~
+# Project Assets - Redundant (Stored in Supabase)
+# This prevents uploading ~600MB of media files to GitHub
+modelos/*/assets/
+
+# Scripts & Config
+.env
+scripts/test/
+*.log
