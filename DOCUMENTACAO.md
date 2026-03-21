@@ -5,15 +5,14 @@ Este projeto consiste em um sistema de convites digitais com checkout automatiza
 ## Arquitetura do Sistema
 O sistema opera em um modelo híbrido para otimizar custos e performance:
 - **Frontend (GitHub Pages)**: Hospeda a lógica do site principal e a página de sucesso (`/PagamentoRecebido`).
-- **Assets (Supabase Storage)**: Armazena mídias pesadas (MP4, MP3, GIFs) para manter o repositório leve.
+- **Ponte de Segurança (Supabase Edge Function)**: Atua como um Proxy HTTPS para encaminhar dados do frontend para o bot na VPS, evitando erros de segurança de "Mixed Content".
 - **Backend/Bot (VPS)**: Servidor Node.js dedicado ao processamento do bot de WhatsApp.
 
 ## Funcionalidades Principais
 
 ### 1. Página de Sucesso (`PagamentoRecebido/index.html`)
-- **Funcionamento**: Captura os dados do pedido (`quoteData`) diretamente do `localStorage` do navegador do cliente.
-- **Vantagem**: Permite um link de retorno único no Mercado Pago, sem necessidade de parâmetros complexos na URL.
-- **Integração**: Ao ser aberta, a página dispara uma requisição silenciosa para o bot na VPS.
+- **Funcionamento**: Captura os dados do pedido (`quoteData`) do `localStorage` e notifica o **Supabase Proxy** via HTTPS.
+- **Vantagem**: Contorna o bloqueio de "Mixed Content" do navegador e permite um link de retorno único no Mercado Pago.
 
 ### 2. Bot de WhatsApp (VPS)
 - **Localização**: `/root/whatsapp-bot` na VPS.

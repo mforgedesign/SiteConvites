@@ -1,167 +1,281 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <!-- v3: Fix Mixed Content via Supabase Proxy (Definitive) -->
+    <!-- v4: Styling + Detailed Summary + Fallback + UTF-8 Fix -->
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
     <title>Pagamento Confirmado!</title>
+    
+    <!-- Design System -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1a1a1a',
+                        secondary: '#2d2d2d',
+                        accent: '#e63946',
+                        'accent-light': '#f1faee'
+                    },
+                    animation: {
+                        'fade-in': 'fadeIn 0.5s ease-out forwards'
+                    },
+                    keyframes: {
+                        fadeIn: {
+                            '0%': { opacity: '0', transform: 'translateY(-5px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f0fdf4;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            margin: 0;
-            color: #1f2937;
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        .success-bg {
+            background: linear-gradient(135deg, #1f2937 0%, #111827 100%);
         }
-        .container {
-            text-align: center;
-            background: white;
-            padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            max-width: 500px;
-            width: 90%;
-        }
-        .success-icon {
-            color: #22c55e;
-            font-size: 64px;
-            margin-bottom: 20px;
-        }
-        h1 {
-            color: #15803d;
-            margin-bottom: 10px;
-        }
-        p {
-            color: #4b5563;
-            line-height: 1.6;
-            margin-bottom: 20px;
-        }
-        .loading {
+        .lds-ring {
             display: inline-block;
+            position: relative;
             width: 20px;
             height: 20px;
-            border: 3px solid #e5e7eb;
+        }
+        .lds-ring div {
+            box-sizing: border-box;
+            display: block;
+            position: absolute;
+            width: 16px;
+            height: 16px;
+            margin: 2px;
+            border: 2px solid #e63946;
             border-radius: 50%;
-            border-top-color: #22c55e;
-            animation: spin 1s ease-in-out infinite;
-            vertical-align: middle;
-            margin-right: 10px;
+            animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+            border-color: #e63946 transparent transparent transparent;
         }
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
-        .status-message {
-            font-size: 0.9em;
-            color: #6b7280;
-            margin-top: 20px;
-            padding: 10px;
-            border-radius: 6px;
-            background-color: #f3f4f6;
+        .lds-ring div:nth-child(1) { animation-delay: -0.45s; }
+        .lds-ring div:nth-child(2) { animation-delay: -0.3s; }
+        .lds-ring div:nth-child(3) { animation-delay: -0.15s; }
+        @keyframes lds-ring {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
         }
     </style>
 </head>
-<body>
-    <div class="container">
-        <div class="success-icon">✓</div>
-        <h1>Pagamento Recebido!</h1>
-        <p>Recebemos o seu sinal com sucesso. Seu pedido já está na nossa fila de produção.</p>
+<body class="success-bg min-h-screen flex items-center justify-center p-4">
+    <div class="bg-secondary rounded-2xl shadow-2xl w-full max-w-lg p-8 text-center border border-gray-700 relative overflow-hidden">
+        <!-- Decoration -->
+        <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-accent to-pink-500"></div>
         
-        <p><strong>Em alguns instantes, você receberá uma confirmação com o resumo do seu pedido no seu WhatsApp.</strong></p>
-        
-        <div class="status-message" id="statusMessage">
-            <span class="loading" id="loadingSpinner"></span>
-            <span id="statusText">Avisando nossa equipe...</span>
+        <div class="w-16 h-16 mx-auto bg-green-900/40 rounded-full flex items-center justify-center mb-6 shadow-inner border border-green-500/30">
+            <i class="fa-solid fa-check text-3xl text-green-400"></i>
         </div>
+        
+        <h1 class="text-3xl font-extrabold text-white mb-2">Pedido Recebido!</h1>
+        <p class="text-gray-300 mb-6 leading-relaxed">
+            Recebemos a confirmação do seu sinal. Seu pedido já está seguro na nossa fila de produção!
+        </p>
+        
+        <div class="bg-primary rounded-xl p-5 mb-6 border border-gray-700 shadow-sm relative overflow-hidden">
+            <div class="absolute top-0 left-0 w-1 h-full bg-accent"></div>
+            <p class="text-sm font-medium text-gray-300 mb-4 block">
+                Nossa equipe está sendo notificada e um <strong>Resumo Completo</strong> será enviado para o seu WhatsApp cadastrado.
+            </p>
+            
+            <div id="statusMessage" class="flex flex-col items-center justify-center gap-3">
+                <div class="flex items-center gap-3 text-accent font-semibold" id="loadingDiv">
+                    <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+                    <span>Processando envio...</span>
+                </div>
+                <span id="statusText" class="text-sm font-medium hidden"></span>
+            </div>
+            
+            <!-- Fallback Container (Hidden by default) -->
+            <div id="fallbackContainer" class="mt-4 hidden animate-fade-in">
+                <p class="text-xs text-red-400 mb-3 font-medium px-2" id="fallbackMsg">Tivemos um atraso ao tentar te enviar a mensagem automática.</p>
+                <a id="fallbackBtn" href="#" target="_blank" class="w-full bg-[#25D366] hover:bg-[#128C7E] text-white font-bold py-3 px-4 rounded-xl shadow border border-[#128C7E] transition-all flex items-center justify-center gap-2 hover:scale-[1.02]">
+                    <i class="fa-brands fa-whatsapp text-xl"></i>
+                    Confirmar Pedido no WhatsApp
+                </a>
+            </div>
+        </div>
+        
+        <button onclick="window.location.href='../'" class="text-sm text-gray-400 hover:text-accent transition-colors font-medium">
+            <i class="fa-solid fa-arrow-left mr-1"></i> Voltar ao site
+        </button>
     </div>
 
     <script>
-        // Função para notificar o backend
+        const formatter = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
+
         async function notifyBackend() {
-            // Tentativa de obter dados do cliente pela URL (se o Pagar.me ou MercadoPago enviar na querystring)
             const urlParams = new URLSearchParams(window.location.search);
             let clientPhone = urlParams.get('phone') || urlParams.get('telefone');
             let orderId = urlParams.get('order_id') || urlParams.get('id');
             let clientName = urlParams.get('name') || urlParams.get('nome');
-            let clientSummary = urlParams.get('summary') || urlParams.get('resumo') || '';
+            let summaryTexto = '';
 
-            // Tentar recuperar do localStorage se não estiver na URL
-            if (!clientPhone || !clientName || !clientSummary) {
-                try {
-                    const savedData = localStorage.getItem('quoteData');
-                    if (savedData) {
-                        const parsed = JSON.parse(savedData);
-                        clientPhone = clientPhone || parsed.clientWhatsapp;
-                        clientName = clientName || parsed.clientName;
+            try {
+                const savedData = localStorage.getItem('quoteData');
+                const savedModel = localStorage.getItem('selectedModel');
+                
+                if (savedData) {
+                    const parsed = JSON.parse(savedData);
+                    const model = savedModel ? JSON.parse(savedModel) : null;
+                    
+                    clientPhone = clientPhone || parsed.clientWhatsapp;
+                    clientName = clientName || parsed.clientName;
+                    
+                    const modelName = model && model.name ? model.name : 'Modelo não selecionado ou ignorado';
+                    const modelSlug = model && model.slug ? model.slug : '';
+                    
+                    const origin = window.location.origin;
+                    let basePath = window.location.pathname.replace('/PagamentoRecebido/', '').replace('/PagamentoRecebido', '').split('?')[0];
+                    if(basePath.endsWith('/index.html')) basePath = basePath.replace('/index.html', '');
+                    const modelLink = modelSlug ? origin + basePath + '/modelos/' + modelSlug + '/' : '';
+
+                    summaryTexto += "*PEDIDO DE CONVITE DIGITAL*\n";
+                    summaryTexto += "━━━━━━━━━━━━━━━━━━━━━━━━\n\n";
+                    
+                    summaryTexto += "*📋 MODELO ESCOLHIDO*\n";
+                    summaryTexto += `${modelName}\n`;
+                    if (modelLink) summaryTexto += `Link: ${modelLink}\n`;
+                    summaryTexto += "\n*FUNÇÕES SELECIONADAS:*\n";
+
+                    if (parsed.basePackage !== undefined) {
+                        let pkgName = '';
+                        if(parsed.basePackage === 85) pkgName = 'Abertura Premium (Longa)';
+                        else if(parsed.basePackage === 60) pkgName = 'Simples (Curta)';
+                        else if(parsed.basePackage === 0) pkgName = 'Sem Abertura (Layout Fixo)';
+                        else pkgName = 'Pacote Selecionado';
+                        summaryTexto += `- ${pkgName} (${formatter.format(parsed.basePackage)})\n`;
+                    }
+
+                    if(parsed.giftTipType && parsed.giftTipType !== 'none') {
+                        const giftMap = { 'simples': 'Sugestão de Presentes (Simples)', 'premium': 'Sugestão de Presentes (Premium)', 'inteligente': 'Aviso de Lista Inteligente', 'sua_lista': 'Link para Sua Lista' };
+                        summaryTexto += `- ${giftMap[parsed.giftTipType] || 'Sugestão de Presentes'}\n`;
+                    }
+
+                    if(parsed.rsvpType && parsed.rsvpType !== 'none') {
+                        const rsvpMap = { 'whatsapp': 'Confirmação via WhatsApp', 'formulario': 'RSVP em Formulário' };
+                        summaryTexto += `- ${rsvpMap[parsed.rsvpType] || 'Confirmação de Presença'}\n`;
+                    }
+
+                    if(parsed.manualType && parsed.manualType !== 'none') {
+                        summaryTexto += `- Manual do Convidado\n`;
+                    }
+
+                    if (parsed.extras && parsed.extras.length > 0) {
+                        parsed.extras.forEach(ext => {
+                            if(ext === 'musica') summaryTexto += `- Música do Convite\n`;
+                            else if(ext === 'cronometro') summaryTexto += `- Cronômetro Regressivo\n`;
+                            else if(ext === 'lembrete') summaryTexto += `- Lembrete\n`;
+                            else if(ext === 'savethedate') summaryTexto += `- Save The Date\n`;
+                            else if(ext === 'galeria') summaryTexto += `- Galeria de Fotos\n`;
+                            else summaryTexto += `- ${ext}\n`;
+                        });
+                    }
+
+                    const total = (parsed.basePackage || 0) + (parsed.giftTipExtra || 0) + (parsed.rsvpExtra || 0) + (parsed.manualExtra || 0) + (parsed.extrasExtra || 0);
+                    summaryTexto += `\n*💰 TOTAL: ${formatter.format(total)}*\n\n`;
+
+                    summaryTexto += "━━━━━━━━━━━━━━━━━━━━━━━━\n";
+                    summaryTexto += "*📝 DADOS DO EVENTO*\n";
+                    if(parsed.eventName) summaryTexto += `- Nome(s): ${parsed.eventName}\n`;
+                    if(parsed.eventType) summaryTexto += `- Tipo: ${parsed.eventType === 'outro' ? parsed.customEventType : parsed.eventType}\n`;
+                    if(parsed.eventTheme) summaryTexto += `- Tema: ${parsed.eventTheme}\n`;
+                    if(parsed.eventColorPalette) summaryTexto += `- Cores: ${parsed.eventColorPalette}\n`;
+                    if(parsed.eventDate) summaryTexto += `- Data: ${parsed.eventDate}\n`;
+                    if(parsed.eventTimeStart) summaryTexto += `- Horário: ${parsed.eventTimeStart}${parsed.eventTimeEnd ? ' às ' + parsed.eventTimeEnd : ''}\n`;
+                    if(parsed.eventLocation) summaryTexto += `- Endereço: ${parsed.eventLocation}\n`;
+                    if(parsed.clientWhatsapp) summaryTexto += `- WhatsApp Confirmação: ${parsed.clientWhatsapp}\n`;
+
+                    if(parsed.extras && parsed.extras.includes('musica') && parsed.musicCustomText) {
+                        summaryTexto += `- Link da Música: ${parsed.musicCustomText}\n`;
+                    }
+                    
+                    if(parsed.giftTipType !== 'none' || parsed.manualType !== 'none') {
+                        summaryTexto += `\n`;
+                        if(parsed.giftTipType !== 'none' && (parsed.giftCustomText || parsed.giftLinkUrl)) {
+                            summaryTexto += `*🎁 SUGESTÕES DE PRESENTES:*\n`;
+                            if(parsed.giftCustomText) summaryTexto += `${parsed.giftCustomText}\n`;
+                            if(parsed.giftLinkUrl) summaryTexto += `${parsed.giftLinkUrl}\n`;
+                        }
                         
-                        // Reconstrói o resumo se ele não veio na URL
-                        if (!clientSummary) {
-                            let summaryLines = [];
-                            if (parsed.eventType) summaryLines.push(`*Evento:* ${parsed.eventType === 'outro' ? parsed.customEventType : parsed.eventType}`);
-                            if (parsed.eventName) summaryLines.push(`*Nome no Convite:* ${parsed.eventName}`);
-                            if (parsed.eventDate) summaryLines.push(`*Data:* ${parsed.eventDate}`);
-                            
-                            // Pacote Base
-                            if (parsed.basePackage) {
-                                const pkgName = parsed.basePackage === 85 ? 'Premium (Longa)' : (parsed.basePackage === 60 ? 'Simples (Curta)' : 'Sem Abertura');
-                                summaryLines.push(`*Pacote:* ${pkgName}`);
-                            }
-
-                            // Extras Selecionados
-                            if (parsed.extras && parsed.extras.length > 0) {
-                                summaryLines.push(`*Extras:* ${parsed.extras.join(', ')}`);
-                            }
-
-                            clientSummary = summaryLines.join('\n');
+                        if(parsed.manualType !== 'none' && parsed.manualCustomText) {
+                            summaryTexto += `\n Manual\n`;
+                            summaryTexto += `${parsed.manualCustomText}\n`;
                         }
                     }
-                } catch (e) {
-                    console.error("Erro ao ler localStorage:", e);
+
+                    summaryTexto += `\n_Orçamento feito pelo site_\n`;
                 }
+            } catch (e) {
+                console.error("Erro ao ler localStorage:", e);
+                summaryTexto = urlParams.get('summary') || urlParams.get('resumo') || 'Erro ao gerar resumo.';
             }
 
+            window.clientFinalSummary = summaryTexto;
+            window.clientFinalName = clientName;
+
             const payload = {
-                phone: clientPhone,
+                phone: clientPhone || 'N/A',
                 orderId: orderId || 'N/A',
                 name: clientName || 'Cliente',
-                summary: clientSummary,
+                summary: summaryTexto,
                 status: 'paid'
             };
 
             try {
-                // Usando o Proxy de Supabase (HTTPS) para evitar erro de Mixed Content na GitHub Pages
                 const response = await fetch('https://xchphsltccopelblbsyb.supabase.co/functions/v1/whatsapp-proxy', {
                     method: 'POST',
                     headers: {
-                        'Content-Type': 'application/json'
+                        'Content-Type': 'application/json; charset=UTF-8',
+                        'Accept': 'application/json'
                     },
                     body: JSON.stringify(payload)
                 });
 
                 if (response.ok) {
-                    document.getElementById('loadingSpinner').style.display = 'none';
-                    document.getElementById('statusText').innerText = 'Equipe notificada! Verifique seu WhatsApp.';
-                    document.getElementById('statusText').style.color = '#15803d';
+                    showSuccess();
+                    // Setup fallback silently in case the User's whatsapp failed specifically on the API side
+                    setupFallbackBtn();
                 } else {
-                    handleError();
+                    handleError('O servidor proxy retornou um erro.');
                 }
             } catch (error) {
                 console.error('Erro ao notificar backend:', error);
-                handleError();
+                handleError('Falha na comunicação com o servidor principal.');
             }
         }
 
-        function handleError() {
-            document.getElementById('loadingSpinner').style.display = 'none';
-            document.getElementById('statusText').innerText = 'Seu pagamento foi confirmado, mas houve um atraso no WhatsApp. Nossa equipe já está ciente.';
+        function showSuccess() {
+            document.getElementById('loadingDiv').style.display = 'none';
+            const statusText = document.getElementById('statusText');
+            statusText.innerHTML = '<i class="fa-solid fa-check-circle text-green-400 mr-2 text-lg"></i><span class="text-green-300">Mensagem enviada com sucesso! Verifique seu WhatsApp.</span>';
+            statusText.style.display = 'flex';
+            statusText.className = "flex items-center justify-center text-sm font-medium animate-fade-in";
         }
 
-        // Executar a notificação assim que a página carregar
+        function handleError(msg) {
+            document.getElementById('loadingDiv').style.display = 'none';
+            document.getElementById('fallbackContainer').style.display = 'block';
+            if (msg) document.getElementById('fallbackMsg').innerText = `Aviso: ${msg}. Por favor, clique abaixo para enviar o pedido diretamente para nossa equipe.`;
+            setupFallbackBtn();
+        }
+
+        function setupFallbackBtn() {
+            let adminNumber = '5511939047235'; 
+            const finalWppUrl = `https://api.whatsapp.com/send?phone=${adminNumber}&text=${encodeURIComponent(window.clientFinalSummary)}`;
+            document.getElementById('fallbackBtn').href = finalWppUrl;
+        }
+
         window.addEventListener('DOMContentLoaded', notifyBackend);
     </script>
 </body>
