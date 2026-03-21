@@ -1028,10 +1028,15 @@ const app = {
                 html = html.replace(new RegExp(OLD_KEY.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g'), NEW_KEY);
                 // Determine asset base based on model source
                 const isGit = typeof isGitHubModel === 'function' && isGitHubModel(this.selectedModel.slug);
-                const ASSET_BASE = isGit
-                  ? window.location.origin + '/SiteConvites/modelos/' + slug + '/assets/'
-                  : SUPABASE_ASSETS + '/' + slug + '/assets/';
-                // Rewrite static HTML asset paths (src="assets/...", poster="assets/...", url(assets/...))
+                // Compute site root dynamically (works with custom domain or github.io)
+                const siteRoot = new URL('../', window.location.href).href;
+                const MODEL_BASE = isGit
+                  ? siteRoot + 'modelos/' + encodeURIComponent(this.selectedModel.slug) + '/'
+                  : SUPABASE_ASSETS + '/' + slug + '/';
+                const ASSET_BASE = MODEL_BASE + 'assets/';
+                // Inject <base> tag so ALL relative URLs resolve correctly in srcdoc
+                html = html.replace('<head>', '<head><base href="' + MODEL_BASE + '">');
+                // Also do static replacement as belt-and-suspenders
                 html = html.replace(/(["'])assets\//g, '$1' + ASSET_BASE);
                 html = html.replace(/(url\()assets\//g, '$1' + ASSET_BASE);
                 const assetFix = '<script>' +
@@ -1048,7 +1053,7 @@ const app = {
                   "patchSrc(HTMLImageElement);patchSrc(HTMLVideoElement);patchSrc(HTMLSourceElement);patchSrc(HTMLAudioElement);" +
                   // Patch __loadConfig to rewrite config asset paths
                   "var _ld=window.__loadConfig;" +
-                  "window.__loadConfig=async function(){" +
+                  "if(_ld){window.__loadConfig=async function(){" +
                   "await _ld();" +
                   "if(window.config){" +
                   "['assets','imagens','backgrounds'].forEach(function(k){" +
@@ -1059,11 +1064,11 @@ const app = {
                   "else if(Array.isArray(v))window.config[k][p]=v.map(function(x){return typeof x==='string'?fix(x):x;});" +
                   "}}});" +
                   "if(window.config.musica)window.config.musica=fix(window.config.musica);" +
-                  "}};" +
+                  "}};}" +
                   "})();" +
                   '<\/script>';
                 html = html.replace('</head>', assetFix + '</head>');
-                html = html.replace('init();', 'window.__loadConfig().then(init).catch(init);');
+                html = html.replace('init();', 'window.__loadConfig?window.__loadConfig().then(init).catch(init):init();');
                 frame.srcdoc = html;
             } catch(e) {
                 console.error('Preview load error:', e);
