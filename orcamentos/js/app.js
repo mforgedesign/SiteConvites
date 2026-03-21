@@ -58,6 +58,52 @@ const app = {
     
     currentModalPackage: null,
 
+    // Função auxiliar para injetar dinamicamente o campo de input diretamente embaixo do card selecionado
+    placeInputContainer(containerId, selectedCardId, maxColsDesktopMode) {
+        const container = document.getElementById(containerId);
+        const card = document.getElementById(selectedCardId);
+        if(!container || !card) return;
+        
+        const grid = card.parentElement;
+        
+        // Faz o container ocupar a largura inteira da grid (1 / -1 no CSS Grid)
+        container.style.gridColumn = '1 / -1';
+        container.classList.remove('max-w-lg', 'mx-auto', 'mt-4');
+        container.classList.add('mt-1', 'w-full', 'order-none');
+        
+        // Identificar quantos cards cabem por fileira na tela atual
+        const isDesktop = window.innerWidth >= 768;
+        let itemsPerRow = 1;
+        if (maxColsDesktopMode === 4) {
+             itemsPerRow = isDesktop ? 4 : 2;
+        } else if (maxColsDesktopMode === 2) {
+             itemsPerRow = isDesktop ? 2 : 1;
+        }
+        
+        // Achar o card selecionado
+        const cards = Array.from(grid.querySelectorAll('.package-card'));
+        const selectedIndex = cards.indexOf(card);
+        
+        // Achar qual eh o ultimo card NA MESMA FILEIRA do card selecionado
+        const targetRow = Math.floor(selectedIndex / itemsPerRow);
+        const lastIndexInRow = Math.min((targetRow + 1) * itemsPerRow - 1, cards.length - 1);
+        const insertAfterNode = cards[lastIndexInRow];
+        
+        // Inserir o container na grid, logo após essa fileira
+        if (insertAfterNode && insertAfterNode.nextSibling) {
+            grid.insertBefore(container, insertAfterNode.nextSibling);
+        } else {
+            grid.appendChild(container);
+        }
+        
+        // Rolar levemente a tela para garantir que o input fique visível no mobile
+        if (!isDesktop) {
+            setTimeout(() => {
+                container.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 100);
+        }
+    },
+
     init() {
         this.setupAutoSave();
 
@@ -594,11 +640,20 @@ const app = {
 
         // Mostrar o container correto
         if(type === 'simples' || type === 'premium') {
-            if(textContainer) textContainer.classList.remove('hidden');
+            if(textContainer) {
+                textContainer.classList.remove('hidden');
+                this.placeInputContainer('gift_text_input_container', `card_gift_${type}`, 4);
+            }
         } else if(type === 'inteligente') {
-            if(noticeContainer) noticeContainer.classList.remove('hidden');
+            if(noticeContainer) {
+                noticeContainer.classList.remove('hidden');
+                this.placeInputContainer('gift_inteligente_notice', `card_gift_${type}`, 4);
+            }
         } else if(type === 'sua_lista') {
-            if(linkContainer) linkContainer.classList.remove('hidden');
+            if(linkContainer) {
+                linkContainer.classList.remove('hidden');
+                this.placeInputContainer('gift_link_input_container', `card_gift_${type}`, 4);
+            }
         }
 
         this.quoteData.giftTipType = type;
@@ -781,6 +836,7 @@ const app = {
         if(manualInputContainer) {
             if(type === 'simples' || type === 'premium') {
                 manualInputContainer.classList.remove('hidden');
+                this.placeInputContainer('manual_text_input_container', `card_manual_${type}`, 2);
             } else {
                 manualInputContainer.classList.add('hidden');
             }
