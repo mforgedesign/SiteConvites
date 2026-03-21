@@ -130,8 +130,8 @@
             };
 
             try {
-                // TODO: Substituir pela URL/IP da VPS com configuração de HTTPS
-                const response = await fetch('http://72.60.62.157:3000/webhook/pagamento', {
+                // Usando o Proxy de Supabase (HTTPS) para evitar erro de Mixed Content na GitHub Pages
+                const response = await fetch('https://xchphsltccopelblbsyb.supabase.co/functions/v1/whatsapp-proxy', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
