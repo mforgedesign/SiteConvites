@@ -395,11 +395,8 @@
                     <!-- Opção 1: Simples -->
                     <div class="package-card relative overflow-visible flex flex-col items-center p-3 rounded-2xl glass-panel border-2 border-accent bg-pink-50 dark:bg-pink-900/10 cursor-pointer md:hover:border-accent group" onclick="app.selectGiftTip('simples')" id="card_gift_simples">
                         <div class="absolute top-1 right-1 w-6 h-6 md:w-8 md:h-8 bg-accent text-white rounded-full flex items-center justify-center opacity-0 scale-50 transition-all duration-300 z-10 shadow-md check-icon"><i class="fa-solid fa-check text-xs md:text-sm"></i></div>
-                        <div class="w-[75%] mx-auto aspect-[9/16] mb-2 rounded-lg bg-gray-100 overflow-hidden relative cursor-zoom-in group/media" onclick="event.stopPropagation(); app.previewMedia('temp/Print Lista de Presentes.png', 'image')">
-                            <div class="absolute top-2 right-2 w-6 h-6 md:w-8 md:h-8 bg-black/50 backdrop-blur-sm rounded-full flex items-center justify-center text-white opacity-80 md:opacity-0 md:group-hover/media:opacity-100 transition-opacity z-10 pointer-events-none border border-white/20">
-                                <i class="fa-solid fa-expand text-[10px] md:text-sm"></i>
-                            </div>
-                            <img src="temp/Print Lista de Presentes.png" class="absolute inset-0 w-full h-full object-cover">
+                        <div class="w-[75%] mx-auto aspect-[9/16] mb-2 rounded-lg bg-gray-100 dark:bg-gray-800 overflow-hidden relative flex items-center justify-center border border-green-100 dark:border-green-800">
+                            <i class="fa-solid fa-gift text-3xl md:text-4xl text-accent"></i>
                         </div>
                         <h3 class="font-bold text-xs md:text-sm text-center leading-tight mb-1" style="color: var(--text-primary);">Sugestões Simples</h3>
                         <p class="text-[9px] md:text-[10px] text-center mb-1 min-h-[28px]" style="color: var(--text-muted);">Uma lista em texto direto no convite com opção de Pix.</p>
@@ -494,7 +491,7 @@
                 </div>
 
                 <!-- Input Simples/Premium: campo de texto (aparece abaixo dos cards) -->
-                <div id="gift_text_input_container" class="hidden mt-4 max-w-lg mx-auto w-full glass-panel p-4 rounded-xl border border-accent/30 shadow-sm transition-all duration-300">
+                <div id="gift_text_input_container" class="mt-4 max-w-lg mx-auto w-full glass-panel p-4 rounded-xl border border-accent/30 shadow-sm transition-all duration-300">
                     <label class="block text-xs md:text-sm font-bold mb-2" style="color: var(--text-primary);">O que deseja escrever na lista?</label>
                     <textarea id="gift_custom_text" placeholder="Ex: Chave Pix: 11999999999, Calçados 39, Perfume Lily..." class="w-full form-input text-sm p-3 min-h-[80px]" style="border-color: var(--border-color);"></textarea>
                 </div>
@@ -652,11 +649,8 @@
                     <div class="package-card relative overflow-visible flex flex-col p-4 rounded-xl glass-panel border-2 border-accent bg-pink-50 dark:bg-pink-900/10 cursor-pointer group" onclick="app.selectManual('simples')" id="card_manual_simples">
                         <div class="absolute top-1 right-1 w-6 h-6 md:w-8 md:h-8 bg-accent text-white rounded-full flex items-center justify-center opacity-0 scale-50 transition-all duration-300 z-10 shadow-md check-icon"><i class="fa-solid fa-check text-xs md:text-sm"></i></div>
                         <div class="flex gap-4">
-                            <div class="w-20 md:w-28 shrink-0 aspect-[9/16] rounded-lg bg-gray-100 overflow-hidden relative border border-green-100 dark:border-green-800 flex items-center justify-center cursor-zoom-in group/media" onclick="event.stopPropagation(); app.previewMedia('temp/Print Manual.png', 'image')">
-                                <div class="absolute top-1 right-1 w-5 h-5 md:w-6 md:h-6 bg-black/50 backdrop-blur-sm rounded-full flex items-center justify-center text-white opacity-80 md:opacity-0 md:group-hover/media:opacity-100 transition-opacity z-10 pointer-events-none border border-white/20">
-                                    <i class="fa-solid fa-expand text-[8px] md:text-[10px]"></i>
-                                </div>
-                                <img src="temp/Print Manual.png" class="absolute inset-0 w-full h-full object-cover pointer-events-none">
+                            <div class="w-20 md:w-28 shrink-0 aspect-[9/16] rounded-lg bg-gray-100 dark:bg-gray-800 overflow-hidden relative border border-green-100 dark:border-green-800 flex items-center justify-center">
+                                <i class="fa-solid fa-book-open text-2xl md:text-3xl text-accent"></i>
                             </div>
                             <div class="flex flex-col flex-1">
                                 <h3 class="font-bold text-sm md:text-base leading-tight mb-1" style="color: var(--text-primary);">Simples</h3>
@@ -707,7 +701,7 @@
                 </div>
 
                 <!-- Input dinâmico do texto do Manual (aparece abaixo dos cards) -->
-                <div id="manual_text_input_container" class="hidden mt-4 max-w-lg mx-auto w-full glass-panel p-4 rounded-xl border border-accent/30 shadow-sm transition-all duration-300">
+                <div id="manual_text_input_container" class="mt-4 max-w-lg mx-auto w-full glass-panel p-4 rounded-xl border border-accent/30 shadow-sm transition-all duration-300">
                     <label class="block text-xs md:text-sm font-bold mb-2" style="color: var(--text-primary);">Quais informações deseja no Manual?</label>
                     <textarea id="manual_custom_text" placeholder="Exemplo: Dress Code - Usar Traje Esporte Fino" class="w-full form-input text-sm p-3 min-h-[100px]" style="border-color: var(--border-color);"></textarea>
                 </div>
