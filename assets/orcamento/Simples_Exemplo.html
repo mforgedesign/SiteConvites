@@ -4,182 +4,21 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sugestões de Presentes</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800&display=swap" rel="stylesheet">
     <style>
-        body {
-            font-family: 'Montserrat', sans-serif;
-            background-color: #000;
-            display: flex;
-            flex-direction: column;
-            width: 100vw;
-            height: 100vh;
-            margin: 0;
-            padding: 0;
-            overflow: hidden;
-        }
-
-        .modal-container {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            background-color: rgba(0, 0, 0, 0.95);
-        }
-
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1.25rem 1.5rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-            flex-shrink: 0;
-        }
-
-        .modal-header h2 {
-            color: white;
-            font-weight: 800;
-            font-size: 1.25rem;
-            margin: 0;
-        }
-
-        .modal-header .fa-xmark {
-            font-size: 1.5rem;
-            color: #ccc;
-            cursor: pointer;
-        }
-        
-        .modal-header .fa-xmark:hover {
-            color: white;
-        }
-
-        .modal-body {
-            padding: 1.5rem 1.5rem 3rem 1.5rem;
-            text-align: center;
-            color: white;
-            overflow-y: auto;
-            flex: 1;
-        }
-
-        .gift-icon {
-            color: #7b2cbf; /* Purple icon */
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-        }
-
-        .section-title {
-            font-weight: 800;
-            font-size: 1.15rem;
-            margin-bottom: 1.5rem;
-            text-transform: none;
-        }
-
-        .suggestions-list {
-            font-size: 0.9rem;
-            color: #ccc;
-            line-height: 1.6;
-            margin-bottom: 2rem;
-            font-weight: 400;
-        }
-
-        .pix-box {
-            background: transparent;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 10px;
-            padding: 1.25rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .pix-label {
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            color: #888;
-            margin-bottom: 0.5rem;
-            font-weight: 700;
-        }
-
-        .pix-key {
-            font-size: 1.3rem;
-            font-weight: 800;
-            color: white;
-            letter-spacing: 1px;
-        }
-
-        .btn-purple {
-            background-color: #6a1b9a;
-            color: white;
-            font-weight: 800;
-            text-transform: uppercase;
-            font-size: 0.75rem;
-            letter-spacing: 0.05em;
-            padding: 1rem;
-            border-radius: 8px;
-            width: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            border: none;
-            cursor: pointer;
-            transition: filter 0.2s;
-        }
-
-        .btn-purple:hover {
-            filter: brightness(1.2);
-        }
+        body { background-color: #000; color: white; margin: 0; padding: 1.5rem; }
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 4px; }
     </style>
 </head>
 <body>
-
-    <div class="modal-container">
-        <div class="modal-header">
-            <h2>Presentes</h2>
-            <i class="fa-solid fa-xmark text-white text-xl cursor-pointer"></i>
-        </div>
-        
-        <div class="modal-body">
-            <div class="gift-icon">
-                <i class="fa-solid fa-gift"></i>
-            </div>
-            
-            <h1 class="section-title">Sugestões de Presentes</h1>
-            
-            <div class="suggestions-list">
-                <p>Jóias Prata, Nike</p>
-                <p>Óculos de sol, Itens de praia</p>
-                <p>Itens do Flamengo</p>
-                <p>Itens da Farm, Sapato 35</p>
-                <p>Roupa P/PP (32, 34, 36)</p>
-                <p>O Boticário, Itens para cabelo cacheado</p>
-                <p>Perfume, Body Splash</p>
-                <p>Itens de Academia / Muay Thai</p>
-            </div>
-
-            <div class="pix-box">
-                <div class="pix-label">Chave PIX (NUBANK)</div>
-                <div class="pix-key" id="pixKey">21982635083</div>
-            </div>
-
-            <button class="btn-purple" onclick="copyPix()">
-                <span id="btnText">COPIAR CHAVE PIX</span>
-                <i class="fa-regular fa-copy"></i>
-            </button>
-        </div>
+    <div class="flex justify-between items-center mb-6">
+        <h2 class="text-xl font-bold">Presentes</h2>
+        <i class="fa-solid fa-xmark text-white text-2xl cursor-pointer" onclick="window.parent.postMessage('closeModal', '*')"></i>
     </div>
-
-    <script>
-        function copyPix() {
-            const key = document.getElementById('pixKey').innerText;
-            navigator.clipboard.writeText(key).then(() => {
-                const btnText = document.getElementById('btnText');
-                const originalText = btnText.innerText;
-                btnText.innerText = 'COPIADO!';
-                setTimeout(() => {
-                    btnText.innerText = originalText;
-                }, 2000);
-            });
-        }
-    </script>
+    
+    <!-- Arte importada de Convite_Temp/config.js para Presentes Grátis Simples -->
+    <div class="text-left"><div class="grid grid-cols-2 gap-3 mb-6"><div class="bg-white/5 p-3 rounded-xl border border-white/10 flex items-center gap-3 hover:bg-white/10 transition-all hover:scale-105"><i class="fa-regular fa-gem text-white text-xl drop-shadow-md"></i><span class="text-[10px] sm:text-xs leading-tight font-medium">Jóias Prata,<br>Nike</span></div><div class="bg-white/5 p-3 rounded-xl border border-white/10 flex items-center gap-3 hover:bg-white/10 transition-all hover:scale-105"><i class="fa-solid fa-glasses text-white text-xl drop-shadow-md"></i><span class="text-[10px] sm:text-xs leading-tight font-medium">Óculos de Sol,<br>Itens de Praia</span></div><div class="bg-white/5 p-3 rounded-xl border border-white/10 flex items-center gap-3 hover:bg-white/10 transition-all hover:scale-105"><i class="fa-solid fa-shirt text-white text-xl drop-shadow-md"></i><span class="text-[10px] sm:text-xs leading-tight font-medium">Roupas P/PP<br>(32, 34, 36)</span></div><div class="bg-white/5 p-3 rounded-xl border border-white/10 flex items-center gap-3 hover:bg-white/10 transition-all hover:scale-105"><i class="fa-solid fa-shoe-prints text-white text-xl drop-shadow-md"></i><span class="text-[10px] sm:text-xs leading-tight font-medium">Itens da Farm,<br>Sapato 35</span></div><div class="bg-white/5 p-3 rounded-xl border border-white/10 flex items-center gap-3 hover:bg-white/10 transition-all hover:scale-105"><i class="fa-solid fa-spray-can-sparkles text-white text-xl drop-shadow-md"></i><span class="text-[10px] sm:text-xs leading-tight font-medium">Perfume,<br>Body Splash</span></div><div class="bg-white/5 p-3 rounded-xl border border-white/10 flex items-center gap-3 hover:bg-white/10 transition-all hover:scale-105"><i class="fa-solid fa-spa text-white text-xl drop-shadow-md"></i><span class="text-[10px] sm:text-xs leading-tight font-medium">O Boticário,<br>Cabelos Cachos</span></div><div class="bg-white/5 p-3 rounded-xl border border-white/10 flex items-center gap-3 hover:bg-white/10 transition-all hover:scale-105"><i class="fa-solid fa-futbol text-white text-xl drop-shadow-md"></i><span class="text-[10px] sm:text-xs leading-tight font-medium">Itens do<br>Flamengo</span></div><div class="bg-white/5 p-3 rounded-xl border border-white/10 flex items-center gap-3 hover:bg-white/10 transition-all hover:scale-105"><i class="fa-solid fa-dumbbell text-white text-xl drop-shadow-md"></i><span class="text-[10px] sm:text-xs leading-tight font-medium">Academia /<br>Muay Thai</span></div></div><div class="bg-black/40 p-4 rounded-xl border border-white/20 mb-4 text-center relative overflow-hidden"><div class="absolute inset-0 bg-white/5 animate-pulse"></div><p class="text-[10px] text-stone-300 mb-1 uppercase tracking-widest relative z-10">Chave PIX (Telefone)</p><p class="font-bold text-xl text-white select-all tracking-wider relative z-10">11939047235</p></div><button onclick="navigator.clipboard.writeText('11939047235'); alert('Chave Pix copiada!');" class="w-full bg-gradient-to-r from-blue-700 to-blue-900 hover:brightness-110 text-white font-bold py-3.5 rounded-xl transition-all shadow-[0_0_15px_rgba(12,43,113,0.4)] flex items-center justify-center gap-2 uppercase text-xs tracking-widest relative overflow-hidden group"><span class="relative z-10 flex items-center gap-2">Copiar Chave Pix <i class="fa-regular fa-copy group-hover:scale-110 transition-transform"></i></span><div class="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div></button></div>
 </body>
 </html>

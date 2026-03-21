@@ -874,23 +874,19 @@ const app = {
         }
 
         if(type === 'simples') {
-            contentBox.className = "relative w-full max-w-md bg-white dark:bg-gray-800 rounded-2xl shadow-2xl p-6 md:p-8 transform transition-all duration-300 scale-100";
+            // Usa iframe para isolar o CSS escuro e seguir a identidade real do convite
+            contentBox.className = "relative w-full max-w-[400px] h-[600px] max-h-[90vh] rounded-xl shadow-2xl overflow-hidden transition-all duration-300 scale-100 bg-black/95 border border-white/20";
+            
             contentBox.innerHTML = `
-                <div class="flex justify-between items-center border-b border-gray-100 dark:border-gray-700 pb-4 mb-5">
-                    <h3 class="text-xl font-bold gradient-text">Manual do Convidado</h3>
-                    <button type="button" onclick="app.closeModal()" class="w-8 h-8 rounded-full bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 flex items-center justify-center transition-colors text-gray-500 dark:text-gray-300">
-                        <i class="fa-solid fa-xmark"></i>
-                    </button>
-                </div>
-                <div class="space-y-4 text-sm md:text-base leading-relaxed" style="color: var(--text-secondary);">
-                    <p><i class="fa-solid fa-clock text-accent w-5"></i> <strong>A Pontualidade é um Carinho:</strong> Sua presença desde o primeiro instante é fundamental para que não perca nenhum detalhe da nossa história. Por favor, chegue no horário combinado.</p>
-                    <p><i class="fa-solid fa-calendar-check text-accent w-5"></i> <strong>Confirmação de Presença:</strong> Para que possamos preparar tudo com perfeição e amor, pedimos a gentileza de confirmar sua vinda até 15 dias antes do evento.</p>
-                    <p><i class="fa-solid fa-heart text-accent w-5"></i> <strong>Celebre Conosco:</strong> Deixe a alegria guiar a sua noite! Estamos ansiosos para criar memórias inesquecíveis e celebrar este capítulo tão especial ao seu lado.</p>
-                    <p><i class="fa-solid fa-cake-candles text-accent w-5"></i> <strong>Um Doce Encontro:</strong> Não se despeça sem nos presentear com um abraço apertado e saborear uma fatia do nosso bolo. Queremos compartilhar cada segundo de felicidade com você.</p>
-                </div>
-                <button type="button" onclick="app.closeModal()" class="mt-6 w-full bg-accent hover:bg-pink-700 text-white font-semibold py-3 rounded-xl shadow-md transition-all">
-                    Entendi
-                </button>
+                <iframe id="manual_iframe" src="assets/orcamento/Manual_Exemplo.html" class="w-full h-full border-0 outline-none block" title="Manual do Convidado" onload="
+                    try {
+                        const doc = this.contentWindow.document;
+                        const btn = doc.querySelector('.fa-xmark');
+                        if(btn) {
+                            btn.onclick = function() { window.parent.postMessage('closeModal', '*'); };
+                        }
+                    } catch(e) {}
+                "></iframe>
             `;
         } else if(type === 'premium') {
             contentBox.className = "relative max-w-[90vw] max-h-[90vh] rounded-xl shadow-2xl overflow-hidden transition-all duration-300 scale-100 bg-transparent";
