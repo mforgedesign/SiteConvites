@@ -593,9 +593,14 @@
             </button>
             <div class="text-right">
                 <h2 id="previewTitle" class="text-white font-semibold text-xs sm:text-sm truncate max-w-[140px] sm:max-w-none leading-tight mb-1"></h2>
-                <button onclick="chooseFromPreview()" class="px-3 py-1.5 rounded-lg text-xs bg-accent hover:bg-accent/90 text-white font-semibold transition-colors">
-                    <i class="fa-solid fa-check mr-1"></i> Escolher
-                </button>
+                <div class="flex items-center gap-2">
+                    <button onclick="copyModelLink()" id="copyLinkBtn" class="px-3 py-1.5 rounded-lg text-xs bg-gray-700/80 hover:bg-gray-600 border border-gray-600 text-white font-medium transition-colors flex items-center gap-1.5" title="Copiar link direto para este modelo">
+                        <i class="fa-solid fa-link"></i> <span class="hidden sm:inline">Copiar Link</span>
+                    </button>
+                    <button onclick="chooseFromPreview()" class="px-3 py-1.5 rounded-lg text-xs bg-accent hover:bg-accent/90 text-white font-semibold transition-colors flex items-center gap-1.5">
+                        <i class="fa-solid fa-check"></i> Escolher
+                    </button>
+                </div>
             </div>
         </div>
         <div class="preview-modal-body" onclick="closePreview()">
@@ -752,6 +757,30 @@
         function chooseFromPreview() {
             if (currentPreviewModel) {
                 selectModel(currentPreviewModel.slug);
+            }
+        }
+
+        function copyModelLink() {
+            if (currentPreviewModel) {
+                const url = new URL(window.location.href);
+                url.searchParams.set('modelo', currentPreviewModel.slug);
+                navigator.clipboard.writeText(url.href).then(() => {
+                    const btn = document.getElementById('copyLinkBtn');
+                    const originalHTML = btn.innerHTML;
+                    btn.innerHTML = '<i class="fa-solid fa-check"></i> <span class="hidden sm:inline">Copiado!</span>';
+                    btn.classList.replace('bg-gray-700/80', 'bg-green-600');
+                    btn.classList.replace('hover:bg-gray-600', 'hover:bg-green-700');
+                    btn.classList.replace('border-gray-600', 'border-green-600');
+                    setTimeout(() => {
+                        btn.innerHTML = originalHTML;
+                        btn.classList.replace('bg-green-600', 'bg-gray-700/80');
+                        btn.classList.replace('hover:bg-green-700', 'hover:bg-gray-600');
+                        btn.classList.replace('border-green-600', 'border-gray-600');
+                    }, 2000);
+                }).catch(err => {
+                    console.error('Failed to copy', err);
+                    alert('Erro ao copiar link. Copie manualmente: ' + url.href);
+                });
             }
         }
 
@@ -1162,7 +1191,17 @@
         // INIT & POLLING
         // ============================
         initCoverObserver();
-        loadModels();
+        loadModels().then(() => {
+            // Se houver um parametro 'modelo' na URL, abre automaticamente a prévia correspondente
+            const params = new URLSearchParams(window.location.search);
+            const modeloSlug = params.get('modelo');
+            if (modeloSlug) {
+                const modelToOpen = models.find(m => m.slug === modeloSlug);
+                if (modelToOpen) {
+                    setTimeout(() => openPreview(modelToOpen), 300);
+                }
+            }
+        });
 
         // Poll for model changes every 15 seconds
         setInterval(async () => {
