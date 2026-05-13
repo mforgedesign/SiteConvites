@@ -1,1307 +1,386 @@
 <!DOCTYPE html>
-<html lang="pt-BR" class="scroll-smooth">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Monte seu Orçamento</title>
-    
-    <!-- Fonts -->
+    <title>Orçamento — Convites Premium</title>
+    <meta name="description" content="Monte o orçamento do seu convite digital premium personalizado. Valor fixo R$80 com tudo incluso.">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
-    
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Outfit', 'sans-serif'],
-                    },
-                    colors: {
-                        dark: '#0a0a0a',
-                        primary: '#ffffff',
-                        accent: '#c9557c',
-                        'accent-light': '#e8a0b8',
-                    }
-                }
-            }
-        }
-    </script>
-    
-    <link rel="stylesheet" href="css/style.css?v=2">
-    <style>
-        .package-card.border-accent .check-icon {
-            opacity: 1 !important;
-            transform: scale(1) !important;
-        }
-        /* Critical layout - loads before Tailwind CDN */
-        body { display: flex; flex-direction: column; }
-        main { flex: 1; min-height: 0; display: flex; flex-direction: column; overflow: hidden; }
-        .step-window { flex-direction: column; }
-        #step-1 > div:first-child { flex: 1; min-height: 0; display: flex; flex-direction: column; justify-content: center; }
-    </style>
-    <!-- FontAwesome para ícones rápidos -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
 </head>
-<body class="antialiased flex flex-col" style="height: 100dvh;">
+<body>
 
-    <!-- Header Simples -->
-    <header class="glass-panel sticky top-0 z-40 px-3 py-2 md:p-4" style="border-bottom: 1px solid var(--border-color);">
-        <div class="max-w-3xl md:max-w-5xl lg:max-w-6xl xl:max-w-7xl mx-auto flex items-center justify-between">
-            <h1 class="font-bold text-base md:text-xl tracking-tight text-accent">Convites <span class="text-gray-500 text-xs md:text-sm font-medium">Premium</span></h1>
-            
-            <!-- Indicador de Passos -->
-            <div class="flex items-center">
-                <div id="step-indicator-icons" class="flex items-center gap-1.5 overflow-x-auto hidden-scrollbar py-1">
-                    <button type="button" id="step-dot-1" onclick="app.goToStep(1)" class="shrink-0 w-7 h-7 md:w-8 md:h-8 rounded-full flex items-center justify-center transition-all bg-accent text-white shadow-sm" title="Contato">
-                        <i class="fa-solid fa-user text-[11px] md:text-xs"></i>
-                    </button>
-                    <button type="button" id="step-dot-2" onclick="app.goToStep(2)" class="shrink-0 w-7 h-7 md:w-8 md:h-8 rounded-full flex items-center justify-center transition-all border border-gray-300 text-gray-400 hover:border-accent hover:text-accent" title="Modelo">
-                        <i class="fa-solid fa-envelope text-[11px] md:text-xs"></i>
-                    </button>
-                    <button type="button" id="step-dot-3" onclick="app.goToStep(3)" class="shrink-0 w-7 h-7 md:w-8 md:h-8 rounded-full flex items-center justify-center transition-all border border-gray-300 text-gray-400 hover:border-accent hover:text-accent" title="Evento">
-                        <i class="fa-solid fa-pencil text-[11px] md:text-xs"></i>
-                    </button>
-                    <button type="button" id="step-dot-4" onclick="app.goToStep(4)" class="shrink-0 w-7 h-7 md:w-8 md:h-8 rounded-full flex items-center justify-center transition-all border border-gray-300 text-gray-400 hover:border-accent hover:text-accent" title="Presentes">
-                        <i class="fa-solid fa-gift text-[11px] md:text-xs"></i>
-                    </button>
-                    <button type="button" id="step-dot-5" onclick="app.goToStep(5)" class="shrink-0 w-7 h-7 md:w-8 md:h-8 rounded-full flex items-center justify-center transition-all border border-gray-300 text-gray-400 hover:border-accent hover:text-accent" title="Confirmação">
-                        <i class="fa-solid fa-clipboard-check text-[11px] md:text-xs"></i>
-                    </button>
-                    <button type="button" id="step-dot-6" onclick="app.goToStep(6)" class="shrink-0 w-7 h-7 md:w-8 md:h-8 rounded-full flex items-center justify-center transition-all border border-gray-300 text-gray-400 hover:border-accent hover:text-accent" title="Manual">
-                        <i class="fa-solid fa-book text-[11px] md:text-xs"></i>
-                    </button>
-                    <button type="button" id="step-dot-7" onclick="app.goToStep(7)" class="shrink-0 w-7 h-7 md:w-8 md:h-8 rounded-full flex items-center justify-center transition-all border border-gray-300 text-gray-400 hover:border-accent hover:text-accent" title="Extras">
-                        <i class="fa-solid fa-star text-[11px] md:text-xs"></i>
-                    </button>
-                    <button type="button" id="step-dot-8" onclick="app.goToStep(8)" class="shrink-0 w-7 h-7 md:w-8 md:h-8 rounded-full flex items-center justify-center transition-all border border-gray-300 text-gray-400 hover:border-accent hover:text-accent" title="Resumo">
-                        <i class="fa-solid fa-clipboard-list text-[11px] md:text-xs"></i>
-                    </button>
-                </div>
-                <!-- Theme Toggle -->
-                <button onclick="app.toggleTheme()" class="theme-toggle hidden" title="Alternar tema" style="width: 32px; height: 32px;">
-                    <svg id="sunIcon" class="w-4 h-4 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-                    </svg>
-                    <svg id="moonIcon" class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
-                    </svg>
-                </button>
-            </div>
-        </div>
-    </header>
-
-    <!-- Floating Clear Cache Button -->
-    <div class="fixed top-20 right-4 z-50">
-        <button type="button" onclick="app.clearData()" class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-[2px] border border-gray-200 dark:border-gray-700 text-[10px] text-gray-500 hover:text-red-500 dark:text-gray-400 dark:hover:text-red-400 px-3 py-1.5 rounded-full shadow-sm transition-colors flex items-center gap-1.5 cursor-pointer font-medium opacity-60 hover:opacity-100">
-            <i class="fa-solid fa-trash-can"></i> Limpar Dados
-        </button>
+<!-- POPUP -->
+<div id="identify-popup">
+    <div class="popup-card">
+        <h2>Nos diga quem é você!</h2>
+        <p class="subtitle">Queremos te oferecer uma experiência personalizada</p>
+        <input type="text" id="popup-name" class="popup-input" placeholder="Seu nome?">
+        <input type="tel" id="popup-phone" class="popup-input" placeholder="Seu WhatsApp?">
+        <button id="popup-btn">Valores de Convite</button>
     </div>
+</div>
 
-    <!-- Container Principal do Fluxo -->
-    <main class="flex-1 w-full max-w-3xl md:max-w-5xl lg:max-w-6xl xl:max-w-7xl mx-auto px-4 py-2 md:py-3 flex flex-col overflow-hidden" style="min-height: 0;">
-        
-        <!-- ============================================== -->
-        <!-- JANELA 1: Contato                              -->
-        <!-- ============================================== -->
-        <section id="step-1" class="step-window active flex flex-col">
-            <div class="flex-1 flex flex-col overflow-y-auto hidden-scrollbar py-2 w-full" style="min-height: 0;">
-                <div class="text-center mb-3 md:mb-5">
-                    <h2 class="text-2xl md:text-3xl font-bold gradient-text mb-1">Monte seu Orçamento</h2>
-                    <p class="text-sm md:text-base" style="color: var(--text-secondary);">Escolha as funções que você quer no seu convite e preencha os dados!</p>
-                </div>
+<!-- HEADER -->
+<header class="site-header">
+    <div class="header-inner">
+        <h1 style="font-weight:700;font-size:1.1rem;color:var(--accent);">Convites <span style="color:var(--text-muted);font-size:0.75rem;font-weight:500;">Premium</span></h1>
+        <span class="total-value" style="font-weight:800;font-size:1.1rem;color:var(--accent);">R$ 80,00</span>
+    </div>
+</header>
 
-                <div class="glass-panel p-5 md:p-8 rounded-2xl shadow-sm">
-                    <p class="text-sm md:text-base font-medium mb-5 md:mb-6 text-center" style="color: var(--text-primary);">Para que possamos confirmar seu orçamento diretamente no seu WhatsApp, informe:</p>
-                    
-                    <div class="space-y-4 md:space-y-5">
-                        <div>
-                            <label for="client_name" class="block text-xs md:text-sm font-bold text-black dark:text-gray-100 mb-1">Seu Nome</label>
-                            <input type="text" id="client_name" placeholder="Ex: Maria Silva" class="form-input" style="padding: 12px 16px;" required>
-                        </div>
-                        
-                        <div>
-                            <label for="client_whatsapp" class="block text-xs md:text-sm font-bold text-black dark:text-gray-100 mb-1">Nº WhatsApp</label>
-                            <input type="tel" id="client_whatsapp" placeholder="(00) 00000-0000" class="form-input" style="padding: 12px 16px;" required>
-                        </div>
-                    </div>
-                </div>
+<!-- SEÇÃO 1: VALOR DO CONVITE -->
+<section class="page-section" id="section-valor">
+    <h2 class="section-title">Valor do Convite</h2>
+    <p class="section-subtitle">Tudo o que você precisa em um só convite</p>
+    <div class="price-hero">
+        <div class="price-label">A partir de</div>
+        <div class="price">R$ 80</div>
+        <div class="price-label" style="margin-top:0.25rem;">Convite Digital Premium Completo</div>
+    </div>
+    <p style="text-align:center;font-size:0.8rem;font-weight:600;color:var(--accent);margin-bottom:1rem;">
+        <i class="fa-solid fa-gift"></i> Tudo isso já vem incluso:
+    </p>
+    <div class="included-grid">
+        <div class="included-item"><i class="fa-solid fa-music"></i><span>Música Personalizada</span></div>
+        <div class="included-item"><i class="fa-solid fa-cube"></i><span>Abertura 3D Animada</span></div>
+        <div class="included-item"><i class="fa-solid fa-location-dot"></i><span>Local no Mapa</span></div>
+        <div class="included-item"><i class="fa-solid fa-check-to-slot"></i><span>Confirmação de Presença</span></div>
+        <div class="included-item"><i class="fa-solid fa-book-open"></i><span>Manual do Convidado</span></div>
+        <div class="included-item"><i class="fa-solid fa-gift"></i><span>Sugestão de Presentes</span></div>
+        <div class="included-item"><i class="fa-solid fa-hand-pointer"></i><span>Botões Interativos</span></div>
+        <div class="included-item"><i class="fa-solid fa-envelope-open-text"></i><span>Envelope Animado</span></div>
+    </div>
+    <button class="btn-personalize" id="btn-personalize"><i class="fa-solid fa-wand-magic-sparkles"></i> Personalize seu Convite!</button>
+</section>
+
+<!-- SEÇÃO 2: PERSONALIZAÇÃO -->
+<section class="page-section" id="section-personalize">
+    <h2 class="section-title">Personalize seu Convite</h2>
+    <p class="section-subtitle">Selecione as opções que deseja. Clique para selecionar ou desmarcar.</p>
+
+    <!-- TIPO DE ABERTURA -->
+    <div class="card-group-title"><i class="fa-solid fa-clapperboard"></i> Tipo de Abertura</div>
+    <div class="option-cards" id="cards-abertura">
+        <div class="option-card selected" data-group="abertura" data-value="longa" onclick="app.selectOption('abertura','longa')">
+            <div class="card-check"><i class="fa-solid fa-check"></i></div>
+            <div class="card-thumb"><video src="assets/orcamento/Exemplo%20Abertura%20Longa.mp4" muted loop playsinline autoplay></video></div>
+            <div class="card-info">
+                <div class="card-title">Abertura Longa</div>
+                <div class="card-subtitle">Animação 3D completa e imersiva</div>
+                <button class="card-how" onclick="event.stopPropagation();app.howItWorks('abertura-longa')"><i class="fa-solid fa-circle-info"></i> Como funciona?</button>
             </div>
-
-            <!-- Nav Bottom -->
-            <div class="step-nav">
-                <button type="button" onclick="app.goToStep(2)" class="btn-next w-full">
-                    Escolher Valor do Convite <i class="fa-solid fa-arrow-right"></i>
-                </button>
-            </div>
-        </section>
-
-
-        <!-- ============================================== -->
-        <!-- JANELA 2: Valor Base                           -->
-        <!-- ============================================== -->
-        <section id="step-2" class="step-window hidden flex flex-col">
-            <div class="flex-1 flex flex-col overflow-y-auto py-2 hidden-scrollbar w-full" style="min-height: 0;">
-            <div class="mb-1 md:mb-3">
-                <h2 class="text-2xl md:text-3xl font-bold mb-1" style="color: var(--text-primary);">Valor Base do Convite</h2>
-                <p class="text-sm md:text-base leading-snug mb-3 mx-1" style="color: var(--text-secondary);">A diferença de valor dos nossos convites está apenas no tipo de abertura. Abaixo, escolha qual tipo de abertura você deseja colocar em seu convite.</p>
-                
-                <div class="glass-panel p-2 md:p-3 rounded-lg md:rounded-xl flex items-start gap-2 mt-1" style="border-color: rgba(201,85,124,0.3); background: rgba(201,85,124,0.05);">
-                    <i class="fa-solid fa-gift text-accent mt-0.5 text-xs md:text-sm"></i>
-                    <p class="text-xs md:text-base leading-snug" style="color: var(--text-secondary);">
-                        <span class="font-semibold text-accent">Já incluso:</span> Música, Botões Interativos (Local no Mapa, Confirmar Presença, Manual do Convidado e Sugestão de Presentes), abertura do envelope em 3D animado.
-                    </p>
-                </div>
-            </div>
-
-            <div class="grid grid-cols-3 gap-1.5 md:gap-4 w-full max-w-3xl mx-auto px-1 md:px-2 pt-1 pb-4">
-                
-                <!-- Opção 1 -->
-                <div class="package-card relative overflow-visible flex flex-col items-center p-1.5 md:p-4 rounded-xl md:rounded-2xl transition-all glass-panel group border-2 border-transparent cursor-pointer md:hover:border-accent" onclick="app.openModal('base')" id="card_pkg_35">
-                    <div class="absolute top-1 right-1 w-6 h-6 md:w-8 md:h-8 bg-accent text-white rounded-full flex items-center justify-center opacity-0 scale-50 transition-all duration-300 z-10 shadow-md check-icon"><i class="fa-solid fa-check text-xs md:text-sm"></i></div>
-                    
-                    <!-- Thumbnail -->
-                    <div class="w-full aspect-[9/16] mb-1 md:mb-3 rounded-lg md:rounded-xl bg-gray-100 overflow-hidden relative cursor-zoom-in group/media" onclick="event.stopPropagation(); app.previewMedia('assets/orcamento/Exemplo sem Abertura.mp4', 'video')">
-                         <div class="absolute inset-0 bg-gradient-to-br from-gray-200 to-gray-300 animate-pulse -z-10"></div>
-                         <div class="absolute top-2 right-2 w-6 h-6 md:w-8 md:h-8 bg-black/50 backdrop-blur-sm rounded-full flex items-center justify-center text-white opacity-80 md:opacity-0 md:group-hover/media:opacity-100 transition-opacity z-10 pointer-events-none border border-white/20">
-                             <i class="fa-solid fa-expand text-[10px] md:text-sm"></i>
-                         </div>
-                         <video class="w-full h-full object-cover pointer-events-none" muted loop playsinline preload="metadata">
-                             <source src="assets/orcamento/Exemplo sem Abertura.mp4" type="video/mp4">
-                         </video>
-                    </div>
-                    
-                    <div class="text-center w-full flex-shrink-0">
-                        <h3 class="font-bold text-[10px] md:text-sm leading-tight" style="color: var(--text-primary);">Sem Abertura</h3>
-                        <span class="text-xs md:text-lg font-black text-accent block">R$ 35</span>
-                        
-                        <div class="w-full mt-1" onclick="event.stopPropagation()">
-                            <input type="radio" id="pkg_35" name="base_value" value="35" class="peer sr-only" onchange="app.updateTotal()">
-                            <label for="pkg_35" class="btn-eu-quero w-full block py-1 md:py-2 rounded-md md:rounded-lg border-2 border-accent bg-white dark:bg-gray-800 text-[9px] md:text-sm font-bold text-gray-700 dark:text-gray-200 cursor-pointer peer-checked:bg-accent peer-checked:border-accent peer-checked:text-white transition-all hover:bg-pink-50 dark:hover:bg-gray-700">
-                                <span class="unselected-text">Eu Quero</span>
-                                <span class="selected-text hidden"><i class="fa-solid fa-check"></i></span>
-                            </label>
-                            <button type="button" class="text-[8px] md:text-xs text-accent mt-0.5 font-medium hover:underline w-full text-center" onclick="app.openModal('base')">Ver + Informações</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Opção 2 -->
-                <div class="package-card relative overflow-visible flex flex-col items-center p-1.5 pt-3 md:p-4 md:pt-5 rounded-xl md:rounded-2xl transition-all glass-panel group border-2 border-transparent cursor-pointer md:hover:border-accent" onclick="app.openModal('simples')" id="card_pkg_60">
-                    <div class="absolute top-1 right-1 w-6 h-6 md:w-8 md:h-8 bg-accent text-white rounded-full flex items-center justify-center opacity-0 scale-50 transition-all duration-300 z-20 shadow-md check-icon"><i class="fa-solid fa-check text-xs md:text-sm"></i></div>
-                    <div class="absolute -top-2 left-1/2 -translate-x-1/2 bg-accent text-white text-[7px] md:text-[10px] px-1.5 md:px-2 py-0.5 rounded-full uppercase font-bold tracking-wider whitespace-nowrap z-20 shadow-sm border border-white dark:border-gray-800">
-                        ⭐ Top
-                    </div>
-                    
-                    <!-- Thumbnail -->
-                    <div class="w-full aspect-[9/16] mb-1 md:mb-3 rounded-lg md:rounded-xl bg-gray-100 overflow-hidden relative cursor-zoom-in group/media" onclick="event.stopPropagation(); app.previewMedia('assets/orcamento/Exemplo Abertura Curta.mp4', 'video')">
-                         <div class="absolute inset-0 bg-gradient-to-br from-pink-200 to-pink-300 animate-pulse -z-10"></div>
-                         <div class="absolute top-2 right-2 w-6 h-6 md:w-8 md:h-8 bg-black/50 backdrop-blur-sm rounded-full flex items-center justify-center text-white opacity-80 md:opacity-0 md:group-hover/media:opacity-100 transition-opacity z-10 pointer-events-none border border-white/20">
-                             <i class="fa-solid fa-expand text-[10px] md:text-sm"></i>
-                         </div>
-                         <video class="w-full h-full object-cover pointer-events-none" muted loop playsinline preload="metadata">
-                             <source src="assets/orcamento/Exemplo Abertura Curta.mp4" type="video/mp4">
-                         </video>
-                    </div>
-                    
-                    <div class="text-center w-full flex-shrink-0">
-                        <h3 class="font-bold text-[10px] md:text-sm leading-tight" style="color: var(--text-primary);">Padrão <span class="font-normal text-[8px] md:text-[10px]">(Curta)</span></h3>
-                        <span class="text-xs md:text-lg font-black text-accent block">R$ 60</span>
-                        
-                        <div class="w-full mt-1" onclick="event.stopPropagation()">
-                            <input type="radio" id="pkg_60" name="base_value" value="60" class="peer sr-only" onchange="app.updateTotal()" checked>
-                            <label for="pkg_60" class="btn-eu-quero w-full block py-1 md:py-2 rounded-md md:rounded-lg border-2 border-accent bg-white dark:bg-gray-800 text-[9px] md:text-sm font-bold text-gray-700 dark:text-gray-200 cursor-pointer peer-checked:bg-accent peer-checked:border-accent peer-checked:text-white transition-all hover:bg-pink-50 dark:hover:bg-gray-700">
-                                <span class="unselected-text">Eu Quero</span>
-                                <span class="selected-text hidden"><i class="fa-solid fa-check"></i></span>
-                            </label>
-                            <button type="button" class="text-[8px] md:text-xs text-accent mt-0.5 font-medium hover:underline w-full text-center" onclick="app.openModal('simples')">Ver + Informações</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Opção 3 -->
-                <div class="package-card relative overflow-visible flex flex-col items-center p-1.5 md:p-4 rounded-xl md:rounded-2xl transition-all glass-panel group border-2 border-transparent cursor-pointer md:hover:border-accent" onclick="app.openModal('premium')" id="card_pkg_85">
-                    <div class="absolute top-1 right-1 w-6 h-6 md:w-8 md:h-8 bg-accent text-white rounded-full flex items-center justify-center opacity-0 scale-50 transition-all duration-300 z-10 shadow-md check-icon"><i class="fa-solid fa-check text-xs md:text-sm"></i></div>
-                    
-                    <!-- Thumbnail -->
-                    <div class="w-full aspect-[9/16] mb-1 md:mb-3 rounded-lg md:rounded-xl bg-gray-100 overflow-hidden relative cursor-zoom-in group/media" onclick="event.stopPropagation(); app.previewMedia('assets/orcamento/Exemplo Abertura Longa.mp4', 'video')">
-                         <div class="absolute inset-0 bg-gradient-to-br from-purple-200 to-purple-300 animate-pulse -z-10"></div>
-                         <div class="absolute top-2 right-2 w-6 h-6 md:w-8 md:h-8 bg-black/50 backdrop-blur-sm rounded-full flex items-center justify-center text-white opacity-80 md:opacity-0 md:group-hover/media:opacity-100 transition-opacity z-10 pointer-events-none border border-white/20">
-                             <i class="fa-solid fa-expand text-[10px] md:text-sm"></i>
-                         </div>
-                         <video class="w-full h-full object-cover pointer-events-none" muted loop playsinline preload="metadata">
-                             <source src="assets/orcamento/Exemplo Abertura Longa.mp4" type="video/mp4">
-                         </video>
-                    </div>
-                    
-                    <div class="text-center w-full flex-shrink-0">
-                        <h3 class="font-bold text-[10px] md:text-sm leading-tight" style="color: var(--text-primary);">Premium <span class="font-normal text-[8px] md:text-[10px]">(Longa)</span></h3>
-                        <span class="text-xs md:text-lg font-black text-accent block">R$ 85</span>
-                        <p class="text-[7px] md:text-[9px] text-accent font-bold leading-tight">✨ Inclui foto</p>
-                        
-                        <div class="w-full mt-1" onclick="event.stopPropagation()">
-                            <input type="radio" id="pkg_85" name="base_value" value="85" class="peer sr-only" onchange="app.updateTotal()">
-                            <label for="pkg_85" class="btn-eu-quero w-full block py-1 md:py-2 rounded-md md:rounded-lg border-2 border-accent bg-white dark:bg-gray-800 text-[9px] md:text-sm font-bold text-gray-700 dark:text-gray-200 cursor-pointer peer-checked:bg-accent peer-checked:border-accent peer-checked:text-white transition-all hover:bg-pink-50 dark:hover:bg-gray-700">
-                                <span class="unselected-text">Eu Quero</span>
-                                <span class="selected-text hidden"><i class="fa-solid fa-check"></i></span>
-                            </label>
-                            <button type="button" class="text-[8px] md:text-xs text-accent mt-0.5 font-medium hover:underline w-full text-center" onclick="app.openModal('premium')">Ver + Informações</button>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-
-            <p class="text-center text-xs md:text-base text-gray-400 italic mt-2">*À seguir, vamos apresentar mais opções para você incrementar seu convite.</p>
-            </div>
-
-            <!-- Nav Bottom -->
-            <div class="step-nav">
-                <button type="button" onclick="app.goToStep(1)" class="btn-back">
-                    <i class="fa-solid fa-arrow-left"></i> Voltar
-                </button>
-                <button type="button" onclick="app.goToStep(3)" class="btn-next">
-                    Preencher Dados <i class="fa-solid fa-arrow-right"></i>
-                </button>
-            </div>
-        </section>
-
-
-        <!-- ============================================== -->
-        <!-- JANELA 3: Detalhes do Convite                  -->
-        <!-- ============================================== -->
-        <section id="step-3" class="step-window hidden flex flex-col">
-            <div class="flex-1 flex flex-col overflow-y-auto py-4 hidden-scrollbar w-full" style="min-height: 0;">
-                <div class="mb-2 md:mb-4">
-                    <h2 class="text-2xl md:text-3xl font-bold mb-1" style="color: var(--text-primary);">Informações do Convite</h2>
-                    <p class="text-sm md:text-base" style="color: var(--text-muted);">Nos conte os dizeres e detalhes do seu evento.</p>
-                </div>
-
-                <div class="glass-panel p-4 md:p-6 rounded-xl md:rounded-2xl shadow-sm flex flex-col gap-3 md:gap-4">
-                
-                    <!-- Tipo de Evento -->
-                    <div>
-                        <label class="block text-xs md:text-sm font-bold text-black dark:text-gray-100 mb-1">Tipo de Evento</label>
-                        <div class="grid grid-cols-4 gap-1.5 md:gap-3">
-                            <label class="cursor-pointer">
-                                <input type="radio" name="event_type" value="aniversario" class="peer sr-only" onchange="app.toggleAgeField()" checked>
-                                <div class="event-type-btn text-center py-2 md:p-3 rounded-lg md:rounded-xl border font-medium text-[10px] md:text-sm transition-all peer-checked:bg-accent peer-checked:!text-white peer-checked:border-accent" style="border-color: var(--border-color); color: var(--text-primary);">
-                                    Aniversário
-                                </div>
-                            </label>
-                            <label class="cursor-pointer">
-                                <input type="radio" name="event_type" value="casamento" class="peer sr-only" onchange="app.toggleAgeField()">
-                                <div class="event-type-btn text-center py-2 md:p-3 rounded-lg md:rounded-xl border font-medium text-[10px] md:text-sm transition-all peer-checked:bg-accent peer-checked:!text-white peer-checked:border-accent" style="border-color: var(--border-color); color: var(--text-primary);">
-                                    Casamento
-                                </div>
-                            </label>
-                            <label class="cursor-pointer">
-                                <input type="radio" name="event_type" value="formatura" class="peer sr-only" onchange="app.toggleAgeField()">
-                                <div class="event-type-btn text-center py-2 md:p-3 rounded-lg md:rounded-xl border font-medium text-[10px] md:text-sm transition-all peer-checked:bg-accent peer-checked:!text-white peer-checked:border-accent" style="border-color: var(--border-color); color: var(--text-primary);">
-                                    Formatura
-                                </div>
-                            </label>
-                            <label class="cursor-pointer">
-                                <input type="radio" name="event_type" value="outro" class="peer sr-only" onchange="app.toggleAgeField()">
-                                <div class="event-type-btn text-center py-2 md:p-3 rounded-lg md:rounded-xl border font-medium text-[10px] md:text-sm transition-all peer-checked:bg-accent peer-checked:!text-white peer-checked:border-accent" style="border-color: var(--border-color); color: var(--text-primary);">
-                                    Outro
-                                </div>
-                            </label>
-                        </div>
-                    </div>
-
-                    <!-- Campo customizado (aparece só no "Outro") -->
-                    <div id="custom_event_container" class="overflow-hidden transition-all duration-300 ease-in-out" style="max-height: 0; opacity: 0;">
-                        <label for="custom_event_type" class="block text-xs md:text-sm font-bold text-black dark:text-gray-100 mb-1">Qual o tipo de evento?</label>
-                        <input type="text" id="custom_event_type" placeholder="Ex: Chá de bebê, Batizado..." class="form-input text-sm" style="padding: 12px 16px;">
-                    </div>
-
-                    <!-- Nomes e Idade -->
-                    <div class="grid grid-cols-[1fr_80px] md:grid-cols-[1fr_120px] gap-2 md:gap-4">
-                        <div>
-                            <label id="event_name_label" for="event_name" class="block text-xs md:text-sm font-bold text-black dark:text-gray-100 mb-1">Nome do Aniversariante</label>
-                            <input type="text" id="event_name" placeholder="Ex: Maria" class="form-input text-sm" style="padding: 12px 16px;">
-                        </div>
-                        <div id="age_container" class="transition-all duration-300">
-                            <label for="event_age" class="block text-xs md:text-sm font-bold text-black dark:text-gray-100 mb-1">Idade</label>
-                            <input type="number" id="event_age" placeholder="15" class="form-input text-sm" style="padding: 12px 16px;">
-                        </div>
-                    </div>
-
-                    <!-- Data e Hora -->
-                    <div class="grid grid-cols-3 gap-2 md:gap-4">
-                        <div>
-                            <label for="event_date" class="block text-xs md:text-sm font-bold text-black dark:text-gray-100 mb-1">Data</label>
-                            <input type="date" id="event_date" class="form-input text-sm" style="padding: 10px 12px;">
-                        </div>
-                        <div>
-                            <label for="event_time_start" class="block text-xs md:text-sm font-bold text-black dark:text-gray-100 mb-1">Início</label>
-                            <input type="time" id="event_time_start" class="form-input text-sm" style="padding: 10px 12px;">
-                        </div>
-                        <div>
-                            <label for="event_time_end" class="block text-xs md:text-sm font-bold text-black dark:text-gray-100 mb-1">Término</label>
-                            <input type="time" id="event_time_end" class="form-input text-sm" style="padding: 10px 12px;">
-                        </div>
-                    </div>
-
-                    <!-- Local -->
-                    <div>
-                        <label for="event_location" class="block text-xs md:text-sm font-bold text-black dark:text-gray-100 mb-1">Local / Endereço</label>
-                        <input type="text" id="event_location" placeholder="Link do Maps ou endereço" class="form-input text-sm" style="padding: 12px 16px;">
-                    </div>
-
-                    <!-- Tema e Cores -->
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-2 md:gap-4">
-                        <div>
-                            <label for="event_theme" class="block text-xs md:text-sm font-bold text-black dark:text-gray-100 mb-1">Tema do Convite</label>
-                            <input type="text" id="event_theme" placeholder="Ex: Borboletas, Floral..." class="form-input text-sm" style="padding: 12px 16px;">
-                        </div>
-                        <div>
-                            <label for="event_colors" class="block text-xs md:text-sm font-bold text-black dark:text-gray-100 mb-1">Paleta de Cores</label>
-                            <input type="text" id="event_colors" placeholder="Ex: Rosa bebê e Dourado" class="form-input text-sm" style="padding: 12px 16px;">
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Nav Bottom -->
-            <div class="step-nav">
-                <button type="button" onclick="app.goToStep(2)" class="btn-back">
-                    <i class="fa-solid fa-arrow-left"></i> Voltar
-                </button>
-                <button type="button" onclick="app.goToStep(4)" class="btn-next">
-                    Avançar <i class="fa-solid fa-arrow-right"></i>
-                </button>
-            </div>
-        </section>
-
-        <!-- ============================================== -->
-        <!-- JANELA 4: Dicas de Presente                   -->
-        <!-- ============================================== -->
-        <section id="step-4" class="step-window hidden flex flex-col">
-            <div class="flex-1 flex flex-col overflow-y-auto custom-scrollbar pt-2" style="min-height: 0;">
-                <div class="text-center mb-4 md:mb-6">
-                    <div class="inline-flex items-center justify-center w-10 h-10 md:w-16 md:h-16 rounded-full bg-pink-100 text-accent mb-3 md:mb-4 shadow-inner">
-                        <i class="fa-solid fa-gift text-xl md:text-3xl"></i>
-                    </div>
-                    <h2 class="text-2xl md:text-4xl font-black mb-2 md:mb-3 gradient-text">Dica de Presente</h2>
-                    <p class="text-sm md:text-base font-medium max-w-xl mx-auto px-4" style="color: var(--text-secondary);">Que tipo de botão de Dica de Presente você quer?</p>
-                </div>
-
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mb-4">
-                    <!-- Opção 1: Simples -->
-                    <div class="package-card relative overflow-visible flex flex-col items-center p-3 rounded-2xl glass-panel border-2 border-accent bg-pink-50 dark:bg-pink-900/10 cursor-pointer md:hover:border-accent group" onclick="app.selectGiftTip('simples')" id="card_gift_simples">
-                        <div class="absolute top-1 right-1 w-6 h-6 md:w-8 md:h-8 bg-accent text-white rounded-full flex items-center justify-center opacity-0 scale-50 transition-all duration-300 z-10 shadow-md check-icon"><i class="fa-solid fa-check text-xs md:text-sm"></i></div>
-                        <div class="w-[75%] mx-auto aspect-[9/16] mb-2 rounded-lg bg-gray-100 dark:bg-gray-800 overflow-hidden relative border border-green-100 dark:border-green-800 cursor-zoom-in group/media" onclick="event.stopPropagation(); app.previewMedia('assets/orcamento/Print%20Lista%20de%20Presentes.png', 'image')">
-                            <div class="absolute top-2 right-2 w-6 h-6 md:w-8 md:h-8 bg-black/50 backdrop-blur-sm rounded-full flex items-center justify-center text-white opacity-80 md:opacity-0 md:group-hover/media:opacity-100 transition-opacity z-10 pointer-events-none border border-white/20">
-                                <i class="fa-solid fa-expand text-[10px] md:text-sm"></i>
-                            </div>
-                            <img src="assets/orcamento/Print%20Lista%20de%20Presentes.png" class="absolute inset-0 w-full h-full object-cover pointer-events-none">
-                        </div>
-                        <h3 class="font-bold text-xs md:text-sm text-center leading-tight mb-1" style="color: var(--text-primary);">Sugestões Simples</h3>
-                        <p class="text-[9px] md:text-[10px] text-center mb-1 min-h-[28px]" style="color: var(--text-muted);">Uma lista em texto direto no convite com opção de Pix.</p>
-                        <span class="text-[10px] md:text-xs text-green-600 font-bold mb-2">Grátis</span>
-                        
-                        <input type="radio" name="gift_tip" value="simples" class="sr-only" checked>
-                        
-                        <div class="flex flex-col w-full gap-1 mt-auto">
-                            <button type="button" class="w-full py-1.5 rounded-lg bg-accent text-white text-[10px] md:text-xs font-bold shadow-md transform transition-transform md:group-hover:scale-105" onclick="event.stopPropagation(); app.selectGiftTip('simples')">
-                                Eu Quero
-                            </button>
-                            <button type="button" class="w-full py-1 rounded-lg border border-accent text-accent text-[9px] md:text-[10px] font-bold hover:bg-accent/10 transition-colors" onclick="event.stopPropagation(); app.showGiftExample('simples')">
-                                Ver Exemplo
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Opção 2: Premium -->
-                    <div class="package-card relative overflow-visible flex flex-col items-center p-3 rounded-2xl glass-panel border-2 border-transparent cursor-pointer md:hover:border-accent group" onclick="app.selectGiftTip('premium')" id="card_gift_premium">
-                        <div class="absolute top-1 right-1 w-6 h-6 md:w-8 md:h-8 bg-accent text-white rounded-full flex items-center justify-center opacity-0 scale-50 transition-all duration-300 z-10 shadow-md check-icon"><i class="fa-solid fa-check text-xs md:text-sm"></i></div>
-                        <div class="w-[75%] mx-auto aspect-[9/16] mb-2 rounded-lg bg-gray-100 overflow-hidden relative cursor-zoom-in group/media" onclick="event.stopPropagation(); app.previewMedia('assets/orcamento/Premium.jpg', 'image')">
-                            <div class="absolute top-2 right-2 w-6 h-6 md:w-8 md:h-8 bg-black/50 backdrop-blur-sm rounded-full flex items-center justify-center text-white opacity-80 md:opacity-0 md:group-hover/media:opacity-100 transition-opacity z-10 pointer-events-none border border-white/20">
-                                <i class="fa-solid fa-expand text-[10px] md:text-sm"></i>
-                            </div>
-                            <img src="assets/orcamento/Premium.jpg" class="absolute inset-0 w-full h-full object-cover pointer-events-none">
-                        </div>
-                        <h3 class="font-bold text-xs md:text-sm text-center leading-tight mb-1" style="color: var(--text-primary);">Sugestões Premium</h3>
-                        <p class="text-[9px] md:text-[10px] text-center mb-1 min-h-[28px]" style="color: var(--text-muted);">Uma imagem bela e personalizada com as sugestões.</p>
-                        <span class="text-[10px] md:text-xs text-accent font-bold mb-2">+ R$ 10</span>
-                        
-                        <input type="radio" name="gift_tip" value="premium" class="sr-only">
-                        
-                        <div class="flex flex-col w-full gap-1 mt-auto">
-                            <button type="button" class="w-full py-1.5 rounded-lg bg-accent text-white text-[10px] md:text-xs font-bold shadow-md transform transition-transform md:group-hover:scale-105" onclick="event.stopPropagation(); app.selectGiftTip('premium')">
-                                Eu Quero
-                            </button>
-                            <button type="button" class="w-full py-1 rounded-lg border border-accent text-accent text-[9px] md:text-[10px] font-bold hover:bg-accent/10 transition-colors" onclick="event.stopPropagation(); app.showGiftExample('premium')">
-                                Ver Exemplo
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Opção 3: Inteligente -->
-                    <div class="package-card relative overflow-visible flex flex-col items-center p-3 rounded-2xl glass-panel border-2 border-transparent cursor-pointer md:hover:border-accent group" onclick="app.selectGiftTip('inteligente')" id="card_gift_inteligente">
-                        <div class="absolute top-1 right-1 w-6 h-6 md:w-8 md:h-8 bg-accent text-white rounded-full flex items-center justify-center opacity-0 scale-50 transition-all duration-300 z-10 shadow-md check-icon"><i class="fa-solid fa-check text-xs md:text-sm"></i></div>
-                        <div class="w-[75%] mx-auto aspect-[9/16] mb-2 rounded-lg bg-gray-100 overflow-hidden relative border border-blue-100 dark:border-blue-800 cursor-zoom-in group/media" onclick="event.stopPropagation(); app.previewMedia('assets/orcamento/Lista%20Inteligente.mp4', 'video')">
-                            <div class="absolute top-2 right-2 w-6 h-6 md:w-8 md:h-8 bg-black/50 backdrop-blur-sm rounded-full flex items-center justify-center text-white opacity-80 md:opacity-0 md:group-hover/media:opacity-100 transition-opacity z-10 pointer-events-none border border-white/20">
-                                <i class="fa-solid fa-expand text-[10px] md:text-sm"></i>
-                            </div>
-                            <video src="assets/orcamento/Lista%20Inteligente.mp4" class="absolute inset-0 w-full h-full object-cover pointer-events-none" loop muted playsinline preload="metadata"></video>
-                        </div>
-                        <h3 class="font-bold text-xs md:text-sm text-center leading-tight mb-1" style="color: var(--text-primary);">Lista Inteligente</h3>
-                        <p class="text-[9px] md:text-[10px] text-center mb-1 min-h-[28px]" style="color: var(--text-muted);">Mini-site com fotos e preços. O dinheiro vai pro seu Pix.</p>
-                        <span class="text-[10px] md:text-xs text-accent font-bold mb-2">+ R$ 25</span>
-                        
-                        <input type="radio" name="gift_tip" value="inteligente" class="sr-only">
-                        
-                        <div class="flex flex-col w-full gap-1 mt-auto">
-                            <button type="button" class="w-full py-1.5 rounded-lg bg-accent text-white text-[10px] md:text-xs font-bold shadow-md transform transition-transform md:group-hover:scale-105" onclick="event.stopPropagation(); app.selectGiftTip('inteligente')">
-                                Eu Quero
-                            </button>
-                            <button type="button" class="w-full py-1 rounded-lg border border-accent text-accent text-[9px] md:text-[10px] font-bold hover:bg-accent/10 transition-colors" onclick="event.stopPropagation(); app.showGiftExample('inteligente')">
-                                Ver Exemplo
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Opção 4: Sua Lista -->
-                    <div class="package-card relative overflow-visible flex flex-col items-center p-3 rounded-2xl glass-panel border-2 border-transparent cursor-pointer md:hover:border-accent group" onclick="app.selectGiftTip('sua_lista')" id="card_gift_sua_lista">
-                        <div class="absolute top-1 right-1 w-6 h-6 md:w-8 md:h-8 bg-accent text-white rounded-full flex items-center justify-center opacity-0 scale-50 transition-all duration-300 z-10 shadow-md check-icon"><i class="fa-solid fa-check text-xs md:text-sm"></i></div>
-                        <div class="w-[75%] mx-auto aspect-[9/16] mb-2 rounded-lg bg-gray-100 overflow-hidden relative border border-purple-100 dark:border-purple-800 cursor-zoom-in group/media" onclick="event.stopPropagation(); app.previewMedia('assets/orcamento/Exemplo%20Link%20Lista.jpg', 'image')">
-                            <div class="absolute top-2 right-2 w-6 h-6 md:w-8 md:h-8 bg-black/50 backdrop-blur-sm rounded-full flex items-center justify-center text-white opacity-80 md:opacity-0 md:group-hover/media:opacity-100 transition-opacity z-10 pointer-events-none border border-white/20">
-                                <i class="fa-solid fa-expand text-[10px] md:text-sm"></i>
-                            </div>
-                            <img src="assets/orcamento/Exemplo%20Link%20Lista.jpg" class="absolute inset-0 w-full h-full object-cover pointer-events-none">
-                        </div>
-                        <h3 class="font-bold text-xs md:text-sm text-center leading-tight mb-1" style="color: var(--text-primary);">Sua Lista</h3>
-                        <p class="text-[9px] md:text-[10px] text-center mb-1 min-h-[28px]" style="color: var(--text-muted);">Botão que direciona para sua lista em outra loja.</p>
-                        <span class="text-[10px] md:text-xs text-green-600 font-bold mb-2">Grátis</span>
-                        
-                        <input type="radio" name="gift_tip" value="sua_lista" class="sr-only">
-                        
-                        <div class="flex flex-col w-full gap-1 mt-auto">
-                            <button type="button" class="w-full py-1.5 rounded-lg bg-accent text-white text-[10px] md:text-xs font-bold shadow-md transform transition-transform md:group-hover:scale-105" onclick="event.stopPropagation(); app.selectGiftTip('sua_lista')">
-                                Eu Quero
-                            </button>
-                            <button type="button" class="w-full py-1 rounded-lg border border-accent text-accent text-[9px] md:text-[10px] font-bold hover:bg-accent/10 transition-colors" onclick="event.stopPropagation(); app.showGiftExample('sua_lista')">
-                                Ver Exemplo
-                            </button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Input Simples/Premium: campo de texto (aparece abaixo dos cards) -->
-                <div id="gift_text_input_container" class="mt-4 max-w-lg mx-auto w-full glass-panel p-4 rounded-xl border border-accent/30 shadow-sm transition-all duration-300">
-                    <label class="block text-xs md:text-sm font-bold mb-2" style="color: var(--text-primary);">O que deseja escrever na lista?</label>
-                    <textarea id="gift_custom_text" placeholder="Ex: Chave Pix: 11999999999, Calçados 39, Perfume Lily..." class="w-full form-input text-sm p-3 min-h-[80px]" style="border-color: var(--border-color);"></textarea>
-                </div>
-
-                <!-- Input Inteligente: aviso WhatsApp (aparece logo abaixo da fileira 2) -->
-                <div id="gift_inteligente_notice" class="hidden mt-1 mb-3 max-w-lg mx-auto w-full glass-panel p-4 rounded-xl border border-accent/30 shadow-sm transition-all duration-300">
-                    <p class="text-xs md:text-sm italic text-center" style="color: var(--text-muted);"><i class="fa-brands fa-whatsapp text-green-600 mr-1"></i> *Entraremos em contato via WhatsApp para coletar cada um dos itens da lista.</p>
-                </div>
-
-                <!-- Input Sua Lista: campo de link (aparece logo abaixo da fileira 2) -->
-                <div id="gift_link_input_container" class="hidden mt-1 mb-3 max-w-lg mx-auto w-full glass-panel p-4 rounded-xl border border-accent/30 shadow-sm transition-all duration-300">
-                    <label class="block text-xs md:text-sm font-bold mb-2" style="color: var(--text-primary);">Link da sua lista externa</label>
-                    <input type="url" id="gift_link_url" placeholder="Ex: https://www.amazon.com.br/hz/wishlist/..." class="w-full form-input text-sm p-3" style="border-color: var(--border-color);">
-                </div>
-
-                <div class="flex justify-center mb-6">
-                    <button type="button" onclick="app.noGiftTip()" class="flex items-center gap-2 text-gray-500 hover:text-accent transition-colors font-semibold text-sm">
-                        <i class="fa-solid fa-xmark"></i> Não quero Dica de Presente
-                    </button>
-                </div>
-            </div>
-
-            <!-- Nav Bottom -->
-            <div class="step-nav mt-2 md:mt-4">
-                <button type="button" onclick="app.goToStep(3)" class="btn-back">
-                    <i class="fa-solid fa-arrow-left"></i> Voltar
-                </button>
-                <button type="button" onclick="app.goToStep(5)" class="btn-next text-xs">
-                    RSVP (Confirmação) <i class="fa-solid fa-arrow-right"></i>
-                </button>
-            </div>
-        </section>
-
-        <!-- ============================================== -->
-        <!-- JANELA 5: Confirmação de Presença (RSVP)       -->
-        <!-- ============================================== -->
-        <section id="step-5" class="step-window hidden flex flex-col">
-            <div class="text-center mb-4 md:mb-6 pt-2 md:pt-4">
-                <div class="inline-flex items-center justify-center w-10 h-10 md:w-16 md:h-16 rounded-full bg-pink-100 text-accent mb-3 md:mb-4 shadow-inner">
-                    <i class="fa-solid fa-clipboard-check text-xl md:text-3xl"></i>
-                </div>
-                <h2 class="text-2xl md:text-4xl font-black mb-2 md:mb-3 gradient-text">RSVP (Confirmação)</h2>
-                <p class="text-sm md:text-base font-medium max-w-xl mx-auto px-4" style="color: var(--text-secondary);">
-                    A confirmação de presença irá te ajudar a organizar melhor a sua festa!
-                </p>
-            </div>
-
-            <div class="flex-1 overflow-y-auto custom-scrollbar px-1 pt-2">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-lg md:max-w-none mx-auto w-full">
-                    
-                    <!-- Opção 1: WhatsApp -->
-                    <div class="package-card relative overflow-visible flex flex-col p-4 rounded-xl glass-panel border-2 border-accent bg-pink-50 dark:bg-pink-900/10 cursor-pointer group" onclick="app.selectRSVP('whatsapp')" id="card_rsvp_whatsapp">
-                        <div class="absolute top-1 right-1 w-6 h-6 md:w-8 md:h-8 bg-accent text-white rounded-full flex items-center justify-center opacity-0 scale-50 transition-all duration-300 z-10 shadow-md check-icon"><i class="fa-solid fa-check text-xs md:text-sm"></i></div>
-                        <div class="flex gap-4">
-                            <div class="w-20 md:w-28 shrink-0 aspect-square rounded-lg bg-gray-100 overflow-hidden relative border border-green-100 dark:border-green-800 flex items-center justify-center cursor-zoom-in group/media" onclick="event.stopPropagation(); app.previewMedia('assets/orcamento/Confirmar%20Whatsapp.png', 'image')">
-                                <div class="absolute top-1 right-1 w-5 h-5 md:w-6 md:h-6 bg-black/50 backdrop-blur-sm rounded-full flex items-center justify-center text-white opacity-80 md:opacity-0 md:group-hover/media:opacity-100 transition-opacity z-10 pointer-events-none border border-white/20">
-                                    <i class="fa-solid fa-expand text-[8px] md:text-[10px]"></i>
-                                </div>
-                                <img src="assets/orcamento/Confirmar%20Whatsapp.png" class="absolute inset-0 w-full h-full object-cover pointer-events-none">
-                            </div>
-                            <div class="flex flex-col flex-1">
-                                <h3 class="font-bold text-sm md:text-base leading-tight mb-1" style="color: var(--text-primary);">RSVP (Confirmação) WhatsApp</h3>
-                                <p class="text-[10px] md:text-xs mb-2" style="color: var(--text-muted);">Ao clicar no botão, o convidado irá preencher nome e será redirecionado ao seu Whatsapp.</p>
-                                <span class="text-xs text-green-600 font-bold mt-auto">Grátis</span>
-                            </div>
-                        </div>
-                        <input type="radio" name="rsvp_type" value="whatsapp" class="sr-only" checked>
-                        
-                        <div class="flex gap-2 mt-4">
-                            <button type="button" class="flex-1 py-1.5 rounded-lg bg-accent text-white text-xs font-bold shadow-sm" onclick="event.stopPropagation(); app.selectRSVP('whatsapp')">
-                                Eu Quero
-                            </button>
-                            <button type="button" class="flex-1 py-1.5 rounded-lg border border-accent text-accent text-xs font-bold hover:bg-accent/10 transition-colors" onclick="event.stopPropagation(); app.showRSVPExample('whatsapp')">
-                                Ver Exemplo
-                            </button>
-                        </div>
-                        
-                        <!-- Input dinâmico do WhatsApp -->
-                        <div id="rsvp_whatsapp_input_container" class="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700 transition-all duration-300">
-                            <label class="block text-xs font-bold mb-1 uppercase tracking-wider" style="color: var(--text-secondary);">As confirmações devem ser enviadas para qual número? <span class="text-red-500">*</span></label>
-                            <input type="tel" id="rsvp_dest_number" placeholder="(DDD) 99999-9999" class="w-full bg-white dark:bg-gray-800 border-2 rounded-xl p-3 text-sm focus:border-accent focus:outline-none transition-colors" style="border-color: var(--border-color); color: var(--text-primary);" onclick="event.stopPropagation();">
-                        </div>
-                    </div>
-
-                    <!-- Opção 2: Formulário Inteligente -->
-                    <div class="package-card relative overflow-visible flex flex-col p-4 rounded-xl glass-panel border-2 border-transparent cursor-pointer md:hover:border-accent group transition-all" onclick="app.selectRSVP('formulario')" id="card_rsvp_formulario">
-                        <div class="absolute top-1 right-1 w-6 h-6 md:w-8 md:h-8 bg-accent text-white rounded-full flex items-center justify-center opacity-0 scale-50 transition-all duration-300 z-10 shadow-md check-icon"><i class="fa-solid fa-check text-xs md:text-sm"></i></div>
-                        <div class="flex gap-4">
-                            <div class="w-20 md:w-28 shrink-0 aspect-square rounded-lg bg-gray-100 overflow-hidden relative border border-purple-100 dark:border-purple-800 flex items-center justify-center cursor-zoom-in group/media" onclick="event.stopPropagation(); app.previewMedia('assets/orcamento/Formulário%20inteligente.mp4', 'video')">
-                                <div class="absolute top-1 right-1 w-5 h-5 md:w-6 md:h-6 bg-black/50 backdrop-blur-sm rounded-full flex items-center justify-center text-white opacity-80 md:opacity-0 md:group-hover/media:opacity-100 transition-opacity z-10 pointer-events-none border border-white/20">
-                                    <i class="fa-solid fa-expand text-[8px] md:text-[10px]"></i>
-                                </div>
-                                <video src="assets/orcamento/Formulário%20inteligente.mp4" class="absolute inset-0 w-full h-full object-cover pointer-events-none" autoplay loop muted playsinline></video>
-                            </div>
-                            <div class="flex flex-col flex-1">
-                                <h3 class="font-bold text-sm md:text-base leading-tight mb-1" style="color: var(--text-primary);">Formulário Inteligente</h3>
-                                <p class="text-[10px] md:text-xs mb-2" style="color: var(--text-muted);">Ao clicar no botão, o convidado irá ver uma nova página onde poderá preencher os dados que você quiser. As confirmações ficarão todas organizadas em uma planilha inteligente que só você terá acesso, onde poderá ver a lista de convidados confirmados e até mesmo imprimir caso queira ter controle.</p>
-                                <span class="text-xs text-accent font-bold mt-auto">+ R$ 10,00</span>
-                            </div>
-                        </div>
-                        <input type="radio" name="rsvp_type" value="formulario" class="sr-only">
-                        
-                        <div class="flex gap-2 mt-4">
-                            <button type="button" class="flex-1 py-1.5 rounded-lg bg-accent text-white text-xs font-bold shadow-sm" onclick="event.stopPropagation(); app.selectRSVP('formulario')">
-                                Eu Quero
-                            </button>
-                            <button type="button" class="flex-1 py-1.5 rounded-lg border border-accent text-accent text-xs font-bold hover:bg-accent/10 transition-colors" onclick="event.stopPropagation(); app.showRSVPExample('formulario')">
-                                Ver Exemplo
-                            </button>
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="flex justify-center mt-6 mb-2">
-                    <button type="button" onclick="app.noRSVP()" class="flex items-center gap-2 text-gray-500 hover:text-accent transition-colors font-semibold text-sm">
-                        <i class="fa-solid fa-xmark"></i> Não quero Confirmação
-                    </button>
-                </div>
-            </div>
-
-            <!-- Nav Bottom -->
-            <div class="step-nav mt-2 md:mt-4">
-                <button type="button" onclick="app.goToStep(4)" class="btn-back">
-                    <i class="fa-solid fa-arrow-left"></i> Voltar
-                </button>
-                <button type="button" onclick="app.goToStep(6)" class="btn-next">
-                    Manual do Convidado <i class="fa-solid fa-arrow-right"></i>
-                </button>
-            </div>
-            </div>
-        </section>
-
-        <!-- ============================================== -->
-        <!-- PASSO 6: MANUAL DO CONVIDADO                   -->
-        <!-- ============================================== -->
-        <section id="step-6" class="step-window hidden flex flex-col">
-            
-            <!-- Header do Passo -->
-            <div class="text-center mb-4 md:mb-6 pt-4 md:pt-8">
-                <div class="inline-flex items-center justify-center w-10 h-10 md:w-16 md:h-16 rounded-full bg-pink-100 text-accent mb-3 md:mb-4 shadow-inner">
-                    <i class="fa-solid fa-book-open text-xl md:text-3xl"></i>
-                </div>
-                <h2 class="text-2xl md:text-4xl font-black mb-2 md:mb-3 gradient-text">Manual do Convidado</h2>
-                <p class="text-sm md:text-base font-medium max-w-xl mx-auto px-4" style="color: var(--text-secondary);">
-                    Que tipo de Manual do convidado você gostaria de incluir?
-                </p>
-            </div>
-
-            <!-- Opções de Manual -->
-            <div class="flex-1 overflow-y-auto px-2 md:px-4 pb-4 hidden-scrollbar scroll-smooth">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-lg md:max-w-none mx-auto w-full">
-                    
-                    <!-- Opção 1: Simples -->
-                    <div class="package-card relative overflow-visible flex flex-col p-4 rounded-xl glass-panel border-2 border-accent bg-pink-50 dark:bg-pink-900/10 cursor-pointer group" onclick="app.selectManual('simples')" id="card_manual_simples">
-                        <div class="absolute top-1 right-1 w-6 h-6 md:w-8 md:h-8 bg-accent text-white rounded-full flex items-center justify-center opacity-0 scale-50 transition-all duration-300 z-10 shadow-md check-icon"><i class="fa-solid fa-check text-xs md:text-sm"></i></div>
-                        <div class="flex gap-4">
-                            <div class="w-20 md:w-28 shrink-0 aspect-[9/16] rounded-lg bg-gray-100 dark:bg-gray-800 overflow-hidden relative border border-green-100 dark:border-green-800 flex items-center justify-center cursor-zoom-in group/media" onclick="event.stopPropagation(); app.previewMedia('assets/orcamento/Print%20Manual.png', 'image')">
-                                <div class="absolute top-1 right-1 w-5 h-5 md:w-6 md:h-6 bg-black/50 backdrop-blur-sm rounded-full flex items-center justify-center text-white opacity-80 md:opacity-0 md:group-hover/media:opacity-100 transition-opacity z-10 pointer-events-none border border-white/20">
-                                    <i class="fa-solid fa-expand text-[8px] md:text-[10px]"></i>
-                                </div>
-                                <img src="assets/orcamento/Print%20Manual.png" class="absolute inset-0 w-full h-full object-cover pointer-events-none">
-                            </div>
-                            <div class="flex flex-col flex-1">
-                                <h3 class="font-bold text-sm md:text-base leading-tight mb-1" style="color: var(--text-primary);">Simples</h3>
-                                <p class="text-[10px] md:text-xs mb-2" style="color: var(--text-muted);">Informações escritas diretamente na tela.</p>
-                                <span class="text-xs text-green-600 font-bold mt-auto">Grátis</span>
-                            </div>
-                        </div>
-                        <input type="radio" name="manual_type" value="simples" class="sr-only" checked>
-                        
-                        <div class="flex gap-2 mt-4">
-                            <button type="button" class="flex-1 py-1.5 rounded-lg bg-accent text-white text-xs font-bold shadow-sm" onclick="event.stopPropagation(); app.selectManual('simples')">
-                                Eu Quero
-                            </button>
-                            <button type="button" class="flex-1 py-1.5 rounded-lg border border-accent text-accent text-xs font-bold hover:bg-accent/10 transition-colors" onclick="event.stopPropagation(); app.showManualExample('simples')">
-                                Ver Exemplo
-                            </button>
-                        </div>
-                    </div>
-
-                    <!-- Opção 2: Premium -->
-                    <div class="package-card relative overflow-visible flex flex-col p-4 rounded-xl glass-panel border-2 border-transparent cursor-pointer md:hover:border-accent group transition-all" onclick="app.selectManual('premium')" id="card_manual_premium">
-                        <div class="absolute top-1 right-1 w-6 h-6 md:w-8 md:h-8 bg-accent text-white rounded-full flex items-center justify-center opacity-0 scale-50 transition-all duration-300 z-10 shadow-md check-icon"><i class="fa-solid fa-check text-xs md:text-sm"></i></div>
-                        <div class="flex gap-4">
-                            <div class="w-20 md:w-28 shrink-0 aspect-[9/16] rounded-lg bg-gray-100 overflow-hidden relative border border-purple-100 dark:border-purple-800 flex items-center justify-center cursor-zoom-in group/media" onclick="event.stopPropagation(); app.previewMedia('assets/orcamento/Premium.jpg', 'image')">
-                                <div class="absolute top-1 right-1 w-5 h-5 md:w-6 md:h-6 bg-black/50 backdrop-blur-sm rounded-full flex items-center justify-center text-white opacity-80 md:opacity-0 md:group-hover/media:opacity-100 transition-opacity z-10 pointer-events-none border border-white/20">
-                                    <i class="fa-solid fa-expand text-[8px] md:text-[10px]"></i>
-                                </div>
-                                <img src="assets/orcamento/Premium.jpg" class="absolute inset-0 w-full h-full object-cover pointer-events-none">
-                            </div>
-                            <div class="flex flex-col flex-1">
-                                <h3 class="font-bold text-sm md:text-base leading-tight mb-1" style="color: var(--text-primary);">Premium</h3>
-                                <p class="text-[10px] md:text-xs mb-2" style="color: var(--text-muted);">O botão abre uma imagem personalizada e trabalhada de forma elegante.</p>
-                                <span class="text-xs text-accent font-bold mt-auto">+ R$ 10,00</span>
-                            </div>
-                        </div>
-                        <input type="radio" name="manual_type" value="premium" class="sr-only">
-                        
-                        <div class="flex gap-2 mt-4">
-                            <button type="button" class="flex-1 py-1.5 rounded-lg bg-accent text-white text-xs font-bold shadow-sm" onclick="event.stopPropagation(); app.selectManual('premium')">
-                                Eu Quero
-                            </button>
-                            <button type="button" class="flex-1 py-1.5 rounded-lg border border-accent text-accent text-xs font-bold hover:bg-accent/10 transition-colors" onclick="event.stopPropagation(); app.showManualExample('premium')">
-                                Ver Exemplo
-                            </button>
-                        </div>
-                    </div>
-
-                </div>
-
-                <!-- Input dinâmico do texto do Manual (aparece abaixo dos cards) -->
-                <div id="manual_text_input_container" class="mt-4 max-w-lg mx-auto w-full glass-panel p-4 rounded-xl border border-accent/30 shadow-sm transition-all duration-300">
-                    <label class="block text-xs md:text-sm font-bold mb-2" style="color: var(--text-primary);">Quais informações deseja no Manual?</label>
-                    <textarea id="manual_custom_text" placeholder="Exemplo: Dress Code - Usar Traje Esporte Fino" class="w-full form-input text-sm p-3 min-h-[100px]" style="border-color: var(--border-color);"></textarea>
-                </div>
-
-                <!-- Botão Não Quero Manual -->
-                <div class="flex justify-center mt-4 mb-2">
-                    <button type="button" onclick="app.noManual()" class="flex items-center gap-2 text-gray-500 hover:text-accent transition-colors font-semibold text-sm">
-                        <i class="fa-solid fa-xmark"></i> Não quero Manual
-                    </button>
-                </div>
-            </div>
-
-            <!-- Nav Bottom -->
-            <div class="step-nav mt-2 md:mt-4">
-                <button type="button" onclick="app.goToStep(5)" class="btn-back">
-                    <i class="fa-solid fa-arrow-left"></i> Voltar
-                </button>
-                <button type="button" onclick="app.goToStep(7)" class="btn-next">
-                    Funções Extras <i class="fa-solid fa-arrow-right"></i>
-                </button>
-            </div>
-        </section>
-
-        <!-- ============================================== -->
-        <!-- PASSO 7: FUNÇÕES EXTRAS                        -->
-        <!-- ============================================== -->
-        <section id="step-7" class="step-window hidden flex flex-col">
-            <!-- Header do Passo -->
-            <div class="text-center mb-4 md:mb-6 pt-4 md:pt-8">
-                <div class="inline-flex items-center justify-center w-10 h-10 md:w-16 md:h-16 rounded-full bg-pink-100 text-accent mb-3 md:mb-4 shadow-inner">
-                    <i class="fa-solid fa-wand-magic-sparkles text-xl md:text-3xl"></i>
-                </div>
-                <h2 class="text-2xl md:text-4xl font-black mb-2 md:mb-3 gradient-text">Funções Extras</h2>
-                <p class="text-sm md:text-base font-medium max-w-xl mx-auto px-4" style="color: var(--text-secondary);">
-                    Dê um toque especial ao seu convite selecionando quantas opções quiser.
-                </p>
-            </div>
-
-            <!-- Opções Extras -->
-            <div class="flex-1 overflow-y-auto px-2 md:px-4 pb-4 hidden-scrollbar scroll-smooth">
-                <div class="flex flex-col gap-4 max-w-lg md:max-w-none mx-auto w-full">
-                    
-                    <div class="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mb-2">
-                        <!-- Galeria de Fotos -->
-                        <div class="package-card relative overflow-visible flex flex-col items-center p-3 rounded-2xl glass-panel border-2 border-transparent cursor-pointer md:hover:border-accent group" onclick="app.toggleExtra('galeria')" id="card_extra_galeria">
-                            <div class="absolute top-1 right-1 w-6 h-6 md:w-8 md:h-8 bg-accent text-white rounded-full flex items-center justify-center opacity-0 scale-50 transition-all duration-300 z-10 shadow-md check-icon"><i class="fa-solid fa-check text-xs md:text-sm"></i></div>
-                            <div class="w-[75%] mx-auto aspect-[9/16] mb-2 rounded-lg bg-gray-100 dark:bg-gray-800 overflow-hidden relative flex items-center justify-center border border-gray-200 dark:border-gray-700">
-                                <i class="fa-solid fa-images text-3xl md:text-4xl text-accent"></i>
-                            </div>
-                            <h3 class="font-bold text-xs md:text-sm text-center leading-tight mb-1" style="color: var(--text-primary);">Galeria de Fotos</h3>
-                            <span class="text-[10px] md:text-xs text-accent font-bold mb-2">+ R$ 10,00</span>
-                            
-                            <input type="checkbox" name="extras" value="galeria" class="sr-only">
-                            
-                            <div class="flex flex-col w-full gap-1 mt-auto">
-                                <button type="button" class="btn-eu-quero w-full py-1.5 rounded-lg bg-white dark:bg-gray-800 border-2 border-accent text-accent text-[10px] md:text-xs font-bold shadow-md transition-all group-hover:bg-accent/10" onclick="event.stopPropagation(); app.toggleExtra('galeria')">
-                                    <span class="unselected-text">Eu Quero</span>
-                                    <span class="selected-text hidden">Adicionado</span>
-                                </button>
-                                <button type="button" class="w-full py-1 rounded-lg border border-transparent text-accent text-[9px] md:text-[10px] font-bold hover:underline transition-colors block text-center" onclick="event.stopPropagation(); app.showExtraInfo('galeria')">
-                                    Ver + Informações
-                                </button>
-                            </div>
-                        </div>
-
-                        <!-- Cronômetro -->
-                        <div class="package-card relative overflow-visible flex flex-col items-center p-3 rounded-2xl glass-panel border-2 border-transparent cursor-pointer md:hover:border-accent group" onclick="app.toggleExtra('cronometro')" id="card_extra_cronometro">
-                            <div class="absolute top-1 right-1 w-6 h-6 md:w-8 md:h-8 bg-accent text-white rounded-full flex items-center justify-center opacity-0 scale-50 transition-all duration-300 z-10 shadow-md check-icon"><i class="fa-solid fa-check text-xs md:text-sm"></i></div>
-                            <div class="w-[75%] mx-auto aspect-[9/16] mb-2 rounded-lg bg-gray-100 overflow-hidden relative border border-gray-200 dark:border-gray-700 cursor-zoom-in group/media" onclick="event.stopPropagation(); app.previewMedia('assets/orcamento/Exemplo Contagem Regressiva2.jpg', 'image')">
-                                <div class="absolute top-2 right-2 w-6 h-6 md:w-8 md:h-8 bg-black/50 backdrop-blur-sm rounded-full flex items-center justify-center text-white opacity-80 md:opacity-0 md:group-hover/media:opacity-100 transition-opacity z-10 pointer-events-none border border-white/20">
-                                    <i class="fa-solid fa-expand text-[10px] md:text-sm"></i>
-                                </div>
-                                <img src="assets/orcamento/Exemplo Contagem Regressiva2.jpg" class="absolute inset-0 w-full h-full object-cover pointer-events-none">
-                            </div>
-                            <h3 class="font-bold text-xs md:text-sm text-center leading-tight mb-1" style="color: var(--text-primary);">Cronômetro</h3>
-                            <span class="text-[10px] md:text-xs text-green-600 font-bold mb-2">Grátis</span>
-                            
-                            <input type="checkbox" name="extras" value="cronometro" class="sr-only">
-                            
-                            <div class="flex flex-col w-full gap-1 mt-auto">
-                                <button type="button" class="btn-eu-quero w-full py-1.5 rounded-lg bg-white dark:bg-gray-800 border-2 border-accent text-accent text-[10px] md:text-xs font-bold shadow-md transition-all group-hover:bg-accent/10" onclick="event.stopPropagation(); app.toggleExtra('cronometro')">
-                                    <span class="unselected-text">Eu Quero</span>
-                                    <span class="selected-text hidden">Adicionado</span>
-                                </button>
-                                <button type="button" class="w-full py-1 rounded-lg border border-transparent text-accent text-[9px] md:text-[10px] font-bold hover:underline transition-colors block text-center" onclick="event.stopPropagation(); app.showExtraInfo('cronometro')">
-                                    Ver + Informações
-                                </button>
-                            </div>
-                        </div>
-
-                        <!-- Lembrete -->
-                        <div class="package-card relative overflow-visible flex flex-col items-center p-3 rounded-2xl glass-panel border-2 border-transparent cursor-pointer md:hover:border-accent group" onclick="app.toggleExtra('lembrete')" id="card_extra_lembrete">
-                            <div class="absolute top-1 right-1 w-6 h-6 md:w-8 md:h-8 bg-accent text-white rounded-full flex items-center justify-center opacity-0 scale-50 transition-all duration-300 z-10 shadow-md check-icon"><i class="fa-solid fa-check text-xs md:text-sm"></i></div>
-                            <div class="w-[75%] mx-auto aspect-[9/16] mb-2 rounded-lg bg-gray-100 overflow-hidden relative border border-gray-200 dark:border-gray-700 cursor-zoom-in group/media" onclick="event.stopPropagation(); app.previewMedia('assets/orcamento/Lembrete.jpg', 'image')">
-                                <div class="absolute top-2 right-2 w-6 h-6 md:w-8 md:h-8 bg-black/50 backdrop-blur-sm rounded-full flex items-center justify-center text-white opacity-80 md:opacity-0 md:group-hover/media:opacity-100 transition-opacity z-10 pointer-events-none border border-white/20">
-                                    <i class="fa-solid fa-expand text-[10px] md:text-sm"></i>
-                                </div>
-                                <img src="assets/orcamento/Lembrete.jpg" class="absolute inset-0 w-full h-full object-cover pointer-events-none">
-                            </div>
-                            <h3 class="font-bold text-xs md:text-sm text-center leading-tight mb-1" style="color: var(--text-primary);">Lembrete</h3>
-                            <span class="text-[10px] md:text-xs text-accent font-bold mb-2">+ R$ 25,00</span>
-                            
-                            <input type="checkbox" name="extras" value="lembrete" class="sr-only">
-                            
-                            <div class="flex flex-col w-full gap-1 mt-auto">
-                                <button type="button" class="btn-eu-quero w-full py-1.5 rounded-lg bg-white dark:bg-gray-800 border-2 border-accent text-accent text-[10px] md:text-xs font-bold shadow-md transition-all group-hover:bg-accent/10" onclick="event.stopPropagation(); app.toggleExtra('lembrete')">
-                                    <span class="unselected-text">Eu Quero</span>
-                                    <span class="selected-text hidden">Adicionado</span>
-                                </button>
-                                <button type="button" class="w-full py-1 rounded-lg border border-transparent text-accent text-[9px] md:text-[10px] font-bold hover:underline transition-colors block text-center" onclick="event.stopPropagation(); app.showExtraInfo('lembrete')">
-                                    Ver + Informações
-                                </button>
-                            </div>
-                        </div>
-
-                        <!-- Save The Date -->
-                        <div class="package-card relative overflow-visible flex flex-col items-center p-3 rounded-2xl glass-panel border-2 border-transparent cursor-pointer md:hover:border-accent group" onclick="app.toggleExtra('savethedate')" id="card_extra_savethedate">
-                            <div class="absolute top-1 right-1 w-6 h-6 md:w-8 md:h-8 bg-accent text-white rounded-full flex items-center justify-center opacity-0 scale-50 transition-all duration-300 z-10 shadow-md check-icon"><i class="fa-solid fa-check text-xs md:text-sm"></i></div>
-                            <div class="w-[75%] mx-auto aspect-[9/16] mb-2 rounded-lg bg-gray-100 overflow-hidden relative border border-gray-200 dark:border-gray-700 cursor-zoom-in group/media" onclick="event.stopPropagation(); app.previewMedia('assets/orcamento/Exemplo Save The Date.jpg', 'image')">
-                                <div class="absolute top-2 right-2 w-6 h-6 md:w-8 md:h-8 bg-black/50 backdrop-blur-sm rounded-full flex items-center justify-center text-white opacity-80 md:opacity-0 md:group-hover/media:opacity-100 transition-opacity z-10 pointer-events-none border border-white/20">
-                                    <i class="fa-solid fa-expand text-[10px] md:text-sm"></i>
-                                </div>
-                                <img src="assets/orcamento/Exemplo Save The Date.jpg" class="absolute inset-0 w-full h-full object-cover pointer-events-none">
-                            </div>
-                            <h3 class="font-bold text-xs md:text-sm text-center leading-tight mb-1" style="color: var(--text-primary);">Save The Date</h3>
-                            <span class="text-[10px] md:text-xs text-accent font-bold mb-2">+ R$ 25,00</span>
-                            
-                            <input type="checkbox" name="extras" value="savethedate" class="sr-only">
-                            
-                            <div class="flex flex-col w-full gap-1 mt-auto">
-                                <button type="button" class="btn-eu-quero w-full py-1.5 rounded-lg bg-white dark:bg-gray-800 border-2 border-accent text-accent text-[10px] md:text-xs font-bold shadow-md transition-all group-hover:bg-accent/10" onclick="event.stopPropagation(); app.toggleExtra('savethedate')">
-                                    <span class="unselected-text">Eu Quero</span>
-                                    <span class="selected-text hidden">Adicionado</span>
-                                </button>
-                                <button type="button" class="w-full py-1 rounded-lg border border-transparent text-accent text-[9px] md:text-[10px] font-bold hover:underline transition-colors block text-center" onclick="event.stopPropagation(); app.showExtraInfo('savethedate')">
-                                    Ver + Informações
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Música (pré-selecionado) -->
-                    <div class="package-card relative overflow-visible flex flex-col p-4 rounded-xl glass-panel border-2 border-accent bg-pink-50 dark:bg-pink-900/10 cursor-pointer group mt-2" onclick="app.toggleExtra('musica')" id="card_extra_musica">
-                        <div class="absolute top-1 right-1 w-6 h-6 md:w-8 md:h-8 bg-accent text-white rounded-full flex items-center justify-center opacity-0 scale-50 transition-all duration-300 z-10 shadow-md check-icon"><i class="fa-solid fa-check text-xs md:text-sm"></i></div>
-                        <div class="flex gap-4 items-center">
-                            <div class="w-16 h-16 md:w-20 md:h-20 shrink-0 rounded-full bg-pink-100 dark:bg-pink-900/20 overflow-hidden relative border border-pink-200 dark:border-pink-700 flex items-center justify-center">
-                                <i class="fa-solid fa-music text-2xl md:text-3xl text-accent"></i>
-                            </div>
-                            <div class="flex flex-col flex-1">
-                                <h3 class="font-bold text-sm md:text-base leading-tight mb-1" style="color: var(--text-primary);">Música do Convite</h3>
-                                <p class="text-[10px] md:text-xs mb-2" style="color: var(--text-muted);">Você pode escolher uma música para o seu convite se quiser trocar a padrão.</p>
-                                <span class="text-xs text-green-600 font-bold mt-auto">Grátis</span>
-                            </div>
-                        </div>
-                        <input type="checkbox" name="extras" value="musica" class="sr-only" checked>
-                        
-                        <div class="flex gap-2 mt-4">
-                            <button type="button" class="btn-eu-quero flex-1 py-1.5 rounded-lg bg-accent border-2 border-accent text-white text-xs font-bold shadow-sm transition-all" onclick="event.stopPropagation(); app.toggleExtra('musica')">
-                                <span class="unselected-text hidden">Eu Quero</span>
-                                <span class="selected-text">Adicionado</span>
-                            </button>
-                            <button type="button" class="flex-1 py-1.5 rounded-lg border border-transparent text-accent text-xs font-bold hover:underline transition-colors block text-center" onclick="event.stopPropagation(); app.showExtraInfo('musica')">
-                                Ver + Informações
-                            </button>
-                        </div>
-
-                        <!-- Input dinâmico de Música (visível por padrão) -->
-                        <div id="music_input_container" class="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700 transition-all duration-300" onclick="event.stopPropagation();">
-                            <label class="block text-xs md:text-sm font-bold mb-1" style="color: var(--text-primary);">Qual música você deseja?</label>
-                            <input type="text" id="music_link" placeholder="Nome da música ou Link do Youtube" class="w-full bg-white dark:bg-gray-800 border-2 rounded-xl p-3 text-sm focus:border-accent focus:outline-none transition-colors mb-2" style="border-color: var(--border-color); color: var(--text-primary);">
-                            <p class="text-[10px] md:text-xs text-gray-500 italic">*Caso deixe em branco, usaremos a música do modelo que você selecionou.</p>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-
-            <!-- Nav Bottom -->
-            <div class="step-nav mt-2 md:mt-4">
-                <button type="button" onclick="app.goToStep(6)" class="btn-back">
-                    <i class="fa-solid fa-arrow-left"></i> Voltar
-                </button>
-                <button type="button" onclick="app.finishQuote()" class="btn-next">
-                    Finalizar <i class="fa-solid fa-check"></i>
-                </button>
-            </div>
-        </section>
-        <!-- ============================================== -->
-        <!-- PASSO 8: RESUMO / FINALIZAÇÃO                  -->
-        <!-- ============================================== -->
-        <section id="step-8" class="step-window hidden flex flex-col">
-            
-            <!-- Header do Passo -->
-            <div class="text-center mb-4 md:mb-6 pt-4 md:pt-8 w-full">
-                <div class="inline-flex items-center justify-center w-10 h-10 md:w-16 md:h-16 rounded-full bg-pink-100 text-accent mb-3 md:mb-4 shadow-inner">
-                    <i class="fa-solid fa-clipboard-list text-xl md:text-3xl"></i>
-                </div>
-                <h2 class="text-2xl md:text-4xl font-black mb-2 md:mb-3 gradient-text">Resumo do Pedido</h2>
-                <p class="text-sm md:text-base font-medium w-full mx-auto px-4" style="color: var(--text-secondary);">
-                    Confira todos os dados antes de confirmar.
-                </p>
-            </div>
-
-            <!-- Conteúdo scrollável -->
-            <div class="flex-1 w-full overflow-y-auto px-1 md:px-4 pb-4 hidden-scrollbar scroll-smooth">
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 lg:gap-6 w-full h-full">
-
-                        <!-- ===== COLUNA ESQUERDA (2/3): DADOS PRINCIPAIS ===== -->
-                        <div class="col-span-1 md:col-span-2 flex flex-col gap-4 w-full">
-
-                        <!-- ======= DADOS PESSOAIS ======= -->
-                    <div class="glass-panel rounded-xl p-4 border" style="border-color: var(--border-color);">
-                        <h3 class="text-xs font-bold uppercase tracking-wider mb-3 flex items-center gap-2" style="color: var(--text-muted);">
-                            <i class="fa-solid fa-user text-accent"></i> Dados Pessoais
-                        </h3>
-                        <div class="flex flex-col gap-3">
-                            <div>
-                                <label class="text-[10px] font-semibold uppercase mb-1 block" style="color: var(--text-muted);">Seu Nome</label>
-                                <input type="text" id="summary_name" class="w-full form-input text-sm p-2 rounded-lg" style="border-color: var(--border-color);" oninput="document.getElementById('client_name').value = this.value; if(app.syncInputsToData) app.syncInputsToData();">
-                            </div>
-                            <div>
-                                <label class="text-[10px] font-semibold uppercase mb-1 block" style="color: var(--text-muted);">WhatsApp</label>
-                                <input type="text" id="summary_whatsapp" class="w-full form-input text-sm p-2 rounded-lg" style="border-color: var(--border-color);" oninput="document.getElementById('client_whatsapp').value = this.value; if(app.syncInputsToData) app.syncInputsToData();">
-                            </div>
-                        </div>
-                    </div>
-
-                        <!-- ======= DADOS DO EVENTO ======= -->
-                    <div class="glass-panel rounded-xl p-4 border" style="border-color: var(--border-color);">
-                        <h3 class="text-xs font-bold uppercase tracking-wider mb-3 flex items-center gap-2" style="color: var(--text-muted);">
-                            <i class="fa-solid fa-calendar-days text-accent"></i> Dados do Evento
-                        </h3>
-                        <div class="flex flex-col gap-3">
-                            <div>
-                                <label class="text-[10px] font-semibold uppercase mb-1 block" style="color: var(--text-muted);">Tipo de Evento</label>
-                                <select id="summary_event_type_select" class="w-full form-input text-sm p-2 rounded-lg" style="border-color: var(--border-color);" onchange="app.syncFromSummary('event_type', this.value)">
-                                    <option value="aniversario">Aniversário</option>
-                                    <option value="casamento">Casamento</option>
-                                    <option value="formatura">Formatura</option>
-                                    <option value="outro">Outro</option>
-                                </select>
-                            </div>
-                            <div id="summary_custom_event_type_row" style="display: none;">
-                                <label class="text-[10px] font-semibold uppercase mb-1 block" style="color: var(--text-muted);">Dizeres do Evento</label>
-                                <input type="text" id="summary_custom_event_type" class="w-full form-input text-sm p-2 rounded-lg" style="border-color: var(--border-color);" oninput="document.getElementById('custom_event_type').value = this.value; if(app.syncInputsToData) app.syncInputsToData();">
-                            </div>
-                            <div>
-                                <label class="text-[10px] font-semibold uppercase mb-1 block" style="color: var(--text-muted);">Nome no Convite</label>
-                                <input type="text" id="summary_event_name" class="w-full form-input text-sm p-2 rounded-lg" style="border-color: var(--border-color);" oninput="document.getElementById('event_name').value = this.value; if(app.syncInputsToData) app.syncInputsToData();">
-                            </div>
-                            <div class="grid grid-cols-2 gap-2" id="summary_age_date_row">
-                                <div id="summary_age_row">
-                                    <label class="text-[10px] font-semibold uppercase mb-1 block" style="color: var(--text-muted);">Idade</label>
-                                    <input type="text" id="summary_event_age" class="w-full form-input text-sm p-2 rounded-lg" style="border-color: var(--border-color);" oninput="document.getElementById('event_age').value = this.value; if(app.syncInputsToData) app.syncInputsToData();">
-                                </div>
-                                <div>
-                                    <label class="text-[10px] font-semibold uppercase mb-1 block" style="color: var(--text-muted);">Data</label>
-                                    <input type="date" id="summary_event_date" class="w-full form-input text-sm p-2 rounded-lg" style="border-color: var(--border-color);" onchange="document.getElementById('event_date').value = this.value; if(app.syncInputsToData) app.syncInputsToData();">
-                                </div>
-                            </div>
-                            <div class="grid grid-cols-2 gap-2">
-                                <div>
-                                    <label class="text-[10px] font-semibold uppercase mb-1 block" style="color: var(--text-muted);">Início</label>
-                                    <input type="time" id="summary_event_time" class="w-full form-input text-sm p-2 rounded-lg" style="border-color: var(--border-color);" onchange="document.getElementById('event_time_start').value = this.value; if(app.syncInputsToData) app.syncInputsToData();">
-                                </div>
-                                <div>
-                                    <label class="text-[10px] font-semibold uppercase mb-1 block" style="color: var(--text-muted);">Término</label>
-                                    <input type="time" id="summary_event_time_end" class="w-full form-input text-sm p-2 rounded-lg" style="border-color: var(--border-color);" onchange="document.getElementById('event_time_end').value = this.value; if(app.syncInputsToData) app.syncInputsToData();">
-                                </div>
-                            </div>
-                            <div>
-                                <label class="text-[10px] font-semibold uppercase mb-1 block" style="color: var(--text-muted);">Local</label>
-                                <input type="text" id="summary_event_location" class="w-full form-input text-sm p-2 rounded-lg" style="border-color: var(--border-color);" oninput="document.getElementById('event_location').value = this.value; if(app.syncInputsToData) app.syncInputsToData();">
-                            </div>
-                            <div class="grid grid-cols-2 gap-2">
-                                <div>
-                                    <label class="text-[10px] font-semibold uppercase mb-1 block" style="color: var(--text-muted);">Tema do Convite</label>
-                                    <input type="text" id="summary_event_theme" class="w-full form-input text-sm p-2 rounded-lg" style="border-color: var(--border-color);" oninput="document.getElementById('event_theme').value = this.value; if(app.syncInputsToData) app.syncInputsToData();">
-                                </div>
-                                <div>
-                                    <label class="text-[10px] font-semibold uppercase mb-1 block" style="color: var(--text-muted);">Paleta de Cores</label>
-                                    <input type="text" id="summary_event_colors" class="w-full form-input text-sm p-2 rounded-lg" style="border-color: var(--border-color);" oninput="document.getElementById('event_colors').value = this.value; if(app.syncInputsToData) app.syncInputsToData();">
-                                </div>
-                            </div>
-                        </div>
-                    </div> <!-- /FIM DADOS DO EVENTO -->
-
-                    </div> <!-- /FIM DA COLUNA ESQUERDA -->
-
-                    <!-- ===== COLUNA DIREITA (1/3): CARRINHO & FUNÇÕES ===== -->
-                    <div class="col-span-1 flex flex-col gap-4 w-full">
-
-                        <!-- ======= MODELO ESCOLHIDO ======= -->
-                        <div class="glass-panel rounded-xl p-4 border" style="border-color: var(--border-color);">
-                            <h3 class="text-xs font-bold uppercase tracking-wider mb-3 flex items-center gap-2" style="color: var(--text-muted);">
-                                <i class="fa-solid fa-palette text-accent"></i> Modelo Escolhido
-                            </h3>
-                            <div class="flex items-center gap-3" id="summary_model_container">
-                                <div id="summary_model_thumb" class="w-14 h-20 rounded-lg bg-gray-100 dark:bg-gray-800 border border-dashed flex items-center justify-center" style="border-color: var(--border-color);">
-                                    <i class="fa-solid fa-image text-gray-300 dark:text-gray-600"></i>
-                                </div>
-                                <div class="flex flex-col gap-2 w-full">
-                                    <p class="text-sm font-bold truncate" style="color: var(--text-primary);" id="summary_model_name_display">Modelo Selecionado</p>
-                                    <div class="relative w-full">
-                                        <select id="summary_package_select" class="w-full text-[11px] md:text-xs font-medium cursor-pointer truncate bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-md py-1.5 pl-2 pr-7 outline-none focus:border-accent focus:ring-1 focus:ring-accent appearance-none" style="color: var(--text-primary);" onchange="app.syncFromSummary('package', this.value)">
-                                            <option value="35">Sem Abertura (R$ 35)</option>
-                                            <option value="60">Abertura Padrão (R$ 60)</option>
-                                            <option value="85">Abertura Premium (R$ 85)</option>
-                                        </select>
-                                        <div class="absolute right-2 top-1/2 -translate-y-1/2 pointer-events-none text-gray-400 font-bold">
-                                            <i class="fa-solid fa-chevron-down text-[10px]"></i>
-                                        </div>
-                                    </div>
-                                    <div class="flex items-center gap-3">
-                                        <button class="text-[10px] font-bold text-accent hover:underline" onclick="app.showModelPreview()">
-                                            <i class="fa-solid fa-eye mr-0.5"></i> Visualizar
-                                        </button>
-                                        <button class="text-[10px] font-bold text-gray-500 hover:text-accent hover:underline" onclick="app.changeModel()">
-                                            <i class="fa-solid fa-exchange-alt mr-0.5"></i> Trocar Modelo
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- ======= FUNÇÕES SELECIONADAS ======= -->
-                        <div class="glass-panel rounded-xl p-4 border" style="border-color: var(--border-color);">
-                            <h3 class="text-xs font-bold uppercase tracking-wider mb-3 flex items-center gap-2" style="color: var(--text-muted);">
-                                <i class="fa-solid fa-puzzle-piece text-accent"></i> Funções Selecionadas
-                            </h3>
-                            <div class="flex flex-col gap-2" id="summary_features_list">
-                                <!-- Populated by JS -->
-                            </div>
-                        </div>
-
-                        <!-- ======= DETALHES ADICIONAIS ======= -->
-                        <div class="glass-panel rounded-xl p-4 border" id="summary_details_section" style="border-color: var(--border-color);">
-                            <h3 class="text-xs font-bold uppercase tracking-wider mb-3 flex items-center gap-2" style="color: var(--text-muted);">
-                                <i class="fa-solid fa-pen text-accent"></i> Detalhes Adicionais
-                            </h3>
-                            <div class="flex flex-col gap-3" id="summary_details_list">
-                                <!-- Populated by JS -->
-                            </div>
-                        </div>
-
-                        <!-- ======= RESUMO DE VALORES ======= -->
-                        <div class="glass-panel rounded-xl p-4 border" style="border-color: var(--border-color);">
-                            <h3 class="text-xs font-bold uppercase tracking-wider mb-3 flex items-center gap-2" style="color: var(--text-muted);">
-                                <i class="fa-solid fa-receipt text-accent"></i> Resumo de Valores
-                            </h3>
-                            <div class="flex flex-col gap-1.5 text-sm" id="summary_pricing">
-                                <!-- Populated by JS -->
-                            </div>
-                            <div class="border-t mt-3 pt-3 flex justify-between items-center" style="border-color: var(--border-color);">
-                                <span class="font-black text-base" style="color: var(--text-primary);">Total</span>
-                                <span class="font-black text-xl text-accent" id="summary_total">R$ 0,00</span>
-                            </div>
-                        </div>
-
-                    </div> <!-- /FIM DA COLUNA DIREITA -->
-
-                </div> <!-- /Grid Cols -->
-            </div> <!-- /Flex-1 Overflow -->
-    </section> <!-- /Step Window -->
-
-    </main>
-
-        <footer class="fixed bottom-0 left-0 w-full glass-panel border-t shadow-[0_-4px_20px_rgba(0,0,0,0.05)] z-50 transition-colors duration-300" style="border-color: var(--border-color); background: var(--bg-primary);">
-        <div class="max-w-3xl md:max-w-5xl lg:max-w-6xl xl:max-w-7xl mx-auto px-3 md:px-4 py-2 md:py-4 h-[60px] md:h-[88px] flex items-center">
-            
-            <!-- Conteúdo Padrão (Passos 1 a 7) -->
-            <div id="standard_footer_content" class="w-full flex justify-between items-center">
-                <!-- Valor Total -->
-                <div class="flex flex-col justify-center">
-                    <span class="text-[10px] md:text-xs font-semibold uppercase tracking-wider mb-0.5" style="color: var(--text-secondary);">Total</span>
-                    <span class="text-xl md:text-3xl font-black text-accent leading-none" id="total_footer">R$ 60,00</span>
-                </div>
-
-                <!-- Divisor na versão mobile (opcional) -->
-                <div class="h-10 w-px mx-2 md:mx-6 hidden sm:block" style="background: var(--border-color);"></div>
-
-                <!-- Modelo Selecionado (do localStorage) -->
-                <div id="selected_model_section" class="hidden items-center gap-2 md:gap-3 ml-auto">
-                    <div class="flex flex-col items-end text-right">
-                        <span class="text-[10px] md:text-xs font-medium" style="color: var(--text-secondary);" id="selected_model_name">Modelo</span>
-                        <div class="flex items-center gap-2 mt-0.5">
-                            <button class="text-[10px] md:text-xs font-bold text-accent hover:underline" onclick="app.showModelPreview()">
-                                <i class="fa-solid fa-eye mr-0.5"></i> Visualizar
-                            </button>
-                            <span class="text-gray-300">|</span>
-                            <button class="text-[10px] md:text-xs font-bold text-gray-500 hover:text-accent hover:underline" onclick="app.changeModel()">
-                                <i class="fa-solid fa-exchange-alt mr-0.5"></i> Trocar
-                            </button>
-                        </div>
-                    </div>
-                    <div class="relative cursor-pointer" onclick="app.showModelPreview()">
-                        <img id="selected_model_thumb" src="" alt="Modelo" class="w-[36px] h-[52px] md:w-[48px] md:h-[68px] rounded-lg object-cover shadow-sm border border-gray-200 dark:border-gray-700">
-                        <div class="absolute -top-1 -right-1 bg-accent text-white w-4 h-4 md:w-5 md:h-5 rounded-full flex items-center justify-center shadow-sm border border-white dark:border-gray-900 z-10">
-                             <i class="fa-solid fa-check text-[6px] md:text-[8px]"></i>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Miniatura do Modelo (estado sem seleção) -->
-                <div id="no_model_section" class="flex items-center gap-2 md:gap-4 ml-auto">
-                    <div class="flex flex-col items-end text-right">
-                        <span class="text-[10px] md:text-xs font-medium" style="color: var(--text-secondary);" id="model_status_text">Nenhum Modelo Escolhido</span>
-                        <button class="text-[11px] md:text-sm font-bold text-accent hover:underline mt-0.5" id="model_action_text" onclick="app.toggleModelSelection()">Escolher Modelo</button>
-                    </div>
-
-                    <div class="relative group cursor-pointer" onclick="app.toggleModelSelection()">
-                        <div id="no_model_thumb" class="w-[36px] h-[52px] md:w-[48px] md:h-[68px] rounded-lg border-2 border-dashed flex items-center justify-center transition-all md:group-hover:border-accent" style="background: var(--bg-secondary); border-color: var(--border-color);">
-                            <i class="fa-solid fa-plus text-gray-400 md:group-hover:text-accent text-xs md:text-base"></i>
-                        </div>
-                        <img id="active_model_thumb" src="" alt="Modelo" class="hidden w-[36px] h-[52px] md:w-[48px] md:h-[68px] rounded-lg object-cover shadow-sm border border-gray-200 dark:border-gray-700">
-                        <div class="absolute -top-2 -right-2 bg-accent text-white w-5 h-5 md:w-6 md:h-6 rounded-full flex items-center justify-center shadow-sm border border-white dark:border-gray-900 z-10 transition-transform hover:scale-110">
-                             <i id="model_action_icon" class="fa-solid fa-plus text-[8px] md:text-[10px]"></i>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Conteúdo de Resumo (Passo 8) -->
-            <div id="summary_footer_content" class="w-full flex justify-between items-center hidden">
-                <div class="flex items-center gap-4">
-                    <button type="button" onclick="app.goToStep(7)" class="flex flex-col items-center justify-center p-2 rounded-xl border border-gray-200 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
-                        <i class="fa-solid fa-arrow-left text-xs mb-1" style="color: var(--text-secondary);"></i>
-                        <span class="text-[9px] font-bold uppercase tracking-tighter" style="color: var(--text-muted);">Voltar</span>
-                    </button>
-                    <div class="h-10 w-px bg-gray-200 dark:bg-gray-700"></div>
-                    <div class="flex flex-col justify-center">
-                        <span class="text-[10px] md:text-xs font-semibold uppercase tracking-wider mb-0.5" style="color: var(--text-secondary);">Total do Pedido</span>
-                        <span class="text-xl md:text-3xl font-black text-accent leading-none" id="footer_total_summary">R$ 60,00</span>
-                    </div>
-                </div>
-
-                <button type="button" onclick="app.confirmOrder()" class="bg-green-600 hover:bg-green-700 text-white font-bold py-2 px-4 rounded-lg flex items-center gap-1.5 shadow transition-transform hover:scale-105 active:scale-95 text-xs md:text-sm">
-                    <i class="fa-brands fa-whatsapp text-sm"></i> Confirmar Pedido
-                </button>
-            </div>
-
         </div>
-    </footer>
-
-    <script src="../js/model_sources.js"></script>
-    <script src="js/app.js"></script>
-
-    <!-- Modal de Informações -->
-    <div id="info_modal" class="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300">
-        <div class="bg-white dark:bg-gray-800 rounded-2xl w-full max-w-md shadow-2xl overflow-hidden transform scale-95 transition-transform duration-300" id="modal_content_box">
-            
-            <div class="relative w-full aspect-[9/16] max-h-[40vh] bg-gray-100 flex items-center justify-center overflow-hidden">
-                <video id="modal_video" class="w-full h-full object-cover" muted loop playsinline autoplay>
-                    <source src="" type="video/mp4">
-                </video>
-                <button onclick="app.closeModal()" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-black/50 text-white flex items-center justify-center hover:bg-accent transition-colors z-10 shadow-sm backdrop-blur-md">
-                    <i class="fa-solid fa-xmark"></i>
-                </button>
+        <div class="option-card" data-group="abertura" data-value="curta" onclick="app.selectOption('abertura','curta')">
+            <div class="card-check"><i class="fa-solid fa-check"></i></div>
+            <div class="card-thumb"><video src="assets/orcamento/Exemplo%20Abertura%20Curta.mp4" muted loop playsinline autoplay></video></div>
+            <div class="card-info">
+                <div class="card-title">Abertura Curta</div>
+                <div class="card-subtitle">Animação rápida e direta</div>
+                <button class="card-how" onclick="event.stopPropagation();app.howItWorks('abertura-curta')"><i class="fa-solid fa-circle-info"></i> Como funciona?</button>
             </div>
-            
-            <div class="p-5 md:p-6">
-                <div class="flex justify-between items-start mb-2">
-                    <h3 id="modal_title" class="text-xl font-bold" style="color: var(--text-primary);">Título do Pacote</h3>
-                    <span id="modal_price" class="text-lg font-black text-accent">R$ 0</span>
-                </div>
-                
-                <p id="modal_desc" class="text-sm md:text-base mb-6 leading-relaxed" style="color: var(--text-secondary);">Descrição detalhada do pacote aqui. O cliente poderá ler com calma sobre o que está comprando.</p>
-                
-                <button type="button" onclick="app.selectFromModal()" class="w-full bg-accent hover:bg-pink-700 text-white font-semibold py-3 rounded-xl shadow-md transition-all flex items-center justify-center gap-2">
-                    <i class="fa-solid fa-check"></i> Eu Quero Este!
-                </button>
+        </div>
+        <div class="option-card" data-group="abertura" data-value="sem" onclick="app.selectOption('abertura','sem')">
+            <div class="card-check"><i class="fa-solid fa-check"></i></div>
+            <div class="card-thumb"><video src="assets/orcamento/Exemplo%20sem%20Abertura.mp4" muted loop playsinline autoplay></video></div>
+            <div class="card-info">
+                <div class="card-title">Sem Abertura</div>
+                <div class="card-subtitle">Convite abre direto no conteúdo</div>
+                <button class="card-how" onclick="event.stopPropagation();app.howItWorks('abertura-sem')"><i class="fa-solid fa-circle-info"></i> Como funciona?</button>
             </div>
         </div>
     </div>
 
-    <!-- Modal Exemplo RSVP WhatsApp (Legado) -->
-    <div id="rsvp_example_modal" class="fixed inset-0 z-[110] flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300">
-        <div class="bg-stone-900 rounded-2xl w-full max-w-md shadow-2xl p-6 relative transform scale-95 transition-transform duration-300 border border-stone-700" id="rsvp_example_box">
-            <button onclick="app.closeRSVPModal()" class="absolute top-4 right-4 text-stone-400 hover:text-white transition-colors">
-                <i class="fa-solid fa-xmark text-xl"></i>
-            </button>
-            
-            <h3 class="text-xl font-bold text-white mb-6 pr-6">Confirme sua presença</h3>
-            
-            <div class="text-left space-y-4">
-                <div>
-                    <label class="block text-stone-300 text-xs font-bold mb-1 uppercase">Seu Nome Completo *</label>
-                    <input type="text" class="w-full bg-black/40 border border-stone-500/50 rounded p-2 text-white focus:border-green-500 focus:outline-none placeholder-stone-400" placeholder="Ex: Maria Silva" readonly>
-                </div>
-                <div>
-                    <label class="block text-stone-300 text-xs font-bold mb-1 uppercase">Seu WhatsApp *</label>
-                    <input type="tel" class="w-full bg-black/40 border border-stone-500/50 rounded p-2 text-white focus:border-green-500 focus:outline-none placeholder-stone-400" placeholder="(DDD) 99999-9999" readonly>
-                </div>
-                <div>
-                    <label class="block text-stone-300 text-xs font-bold mb-1 uppercase">Total de Acompanhantes</label>
-                    <div class="flex items-center gap-3">
-                        <button class="w-10 h-10 bg-stone-700/80 rounded text-white font-bold pointer-events-none">-</button>
-                        <span class="text-white font-bold text-xl w-8 text-center drop-shadow-md">0</span>
-                        <button class="w-10 h-10 bg-stone-700/80 rounded text-white font-bold pointer-events-none">+</button>
-                    </div>
-                </div>
-                <div class="flex items-center gap-2 mt-2">
-                    <input type="checkbox" class="w-4 h-4 rounded bg-black/40 border-stone-500 text-green-500 pointer-events-none">
-                    <label class="text-stone-200 text-xs select-none drop-shadow">Vou sozinho(a) / Sem acompanhantes</label>
-                </div>
-                <button class="w-full bg-green-600 text-white font-bold py-3 rounded-lg mt-4 shadow-lg flex items-center justify-center gap-2 pointer-events-none opacity-90">
-                    Confirmar no WhatsApp <i class="fa-solid fa-paper-plane"></i>
-                </button>
+    <!-- CONFIRMAÇÃO DE PRESENÇA -->
+    <div class="card-group-title"><i class="fa-solid fa-check-to-slot"></i> Confirmação de Presença</div>
+    <div class="option-cards" id="cards-rsvp">
+        <div class="option-card selected" data-group="rsvp" data-value="whatsapp" onclick="app.selectOption('rsvp','whatsapp')">
+            <div class="card-check"><i class="fa-solid fa-check"></i></div>
+            <div class="card-thumb"><video src="assets/orcamento/Exemplo%20Confirmar%20Whatsapp.mp4" muted loop playsinline autoplay></video></div>
+            <div class="card-info">
+                <div class="card-title">WhatsApp Simples</div>
+                <div class="card-subtitle">Convidado preenche nome e vai pro seu WhatsApp</div>
+                <div class="card-price free">Grátis</div>
+                <button class="card-how" onclick="event.stopPropagation();app.howItWorks('rsvp-whatsapp')"><i class="fa-solid fa-circle-info"></i> Como funciona?</button>
             </div>
-            
-            <div class="absolute inset-0 z-10 flex items-center justify-center bg-black/40 backdrop-blur-[1px] rounded-2xl" onclick="app.closeRSVPModal()">
-                <div class="bg-black/80 text-white px-4 py-2 rounded-lg font-bold shadow-lg">Modo de Visualização</div>
+        </div>
+        <div class="option-card" data-group="rsvp" data-value="formulario" onclick="app.selectOption('rsvp','formulario')">
+            <div class="card-check"><i class="fa-solid fa-check"></i></div>
+            <div class="card-thumb"><video src="assets/orcamento/Formul%C3%A1rio%20inteligente.mp4" muted loop playsinline autoplay></video></div>
+            <div class="card-info">
+                <div class="card-title">Formulário Inteligente</div>
+                <div class="card-subtitle">Planilha organizada com todos os convidados</div>
+                <div class="card-price paid">+ R$ 10,00</div>
+                <button class="card-how" onclick="event.stopPropagation();app.howItWorks('rsvp-formulario')"><i class="fa-solid fa-circle-info"></i> Como funciona?</button>
             </div>
+        </div>
+        <div class="option-card" data-group="rsvp" data-value="none" onclick="app.selectOption('rsvp','none')">
+            <div class="card-check"><i class="fa-solid fa-check"></i></div>
+            <div class="card-icon-thumb"><i class="fa-solid fa-xmark"></i></div>
+            <div class="card-info">
+                <div class="card-title">Não quero</div>
+                <div class="card-subtitle">Sem confirmação de presença</div>
+                <div class="card-price free">—</div>
+            </div>
+        </div>
+        <div class="conditional-field" id="field-rsvp-whatsapp">
+            <label>Número para receber confirmações</label>
+            <input type="tel" id="rsvp-number" placeholder="(00) 00000-0000">
         </div>
     </div>
 
-    <!-- Modal Genérico de Preview (Lightbox) -->
-    <div id="media_preview_modal" class="fixed inset-0 z-[120] flex items-center justify-center p-4 bg-black/90 backdrop-blur-md opacity-0 pointer-events-none transition-opacity duration-300" onclick="app.closeMediaPreview()">
-        <button onclick="app.closeMediaPreview()" class="absolute top-4 right-4 text-white hover:text-accent font-black transition-colors z-10 p-2 md:p-4 bg-black/50 rounded-full border border-white/20">
-            <i class="fa-solid fa-xmark text-xl md:text-3xl"></i>
-        </button>
-        <div id="media_preview_container" class="relative w-full max-w-5xl max-h-screen flex items-center justify-center transform scale-95 transition-transform duration-300 pointer-events-auto" onclick="event.stopPropagation()">
-            <!-- JS vai jogar o img ou video aqui -->
+    <!-- DICA DE PRESENTE -->
+    <div class="card-group-title"><i class="fa-solid fa-gift"></i> Dica de Presente</div>
+    <div class="option-cards" id="cards-gift">
+        <div class="option-card selected" data-group="gift" data-value="simples" onclick="app.selectOption('gift','simples')">
+            <div class="card-check"><i class="fa-solid fa-check"></i></div>
+            <div class="card-thumb"><img src="assets/orcamento/Simples.png" alt="Simples"></div>
+            <div class="card-info">
+                <div class="card-title">Sugestões Simples</div>
+                <div class="card-subtitle">Lista em texto direto no convite com Pix</div>
+                <div class="card-price free">Grátis</div>
+                <button class="card-how" onclick="event.stopPropagation();app.howItWorks('gift-simples')"><i class="fa-solid fa-circle-info"></i> Como funciona?</button>
+            </div>
+        </div>
+        <div class="option-card" data-group="gift" data-value="premium" onclick="app.selectOption('gift','premium')">
+            <div class="card-check"><i class="fa-solid fa-check"></i></div>
+            <div class="card-thumb"><img src="assets/orcamento/Premium.jpg" alt="Premium"></div>
+            <div class="card-info">
+                <div class="card-title">Sugestões Premium</div>
+                <div class="card-subtitle">Imagem personalizada elegante</div>
+                <div class="card-price paid">+ R$ 10,00</div>
+                <button class="card-how" onclick="event.stopPropagation();app.howItWorks('gift-premium')"><i class="fa-solid fa-circle-info"></i> Como funciona?</button>
+            </div>
+        </div>
+        <div class="option-card" data-group="gift" data-value="inteligente" onclick="app.selectOption('gift','inteligente')">
+            <div class="card-check"><i class="fa-solid fa-check"></i></div>
+            <div class="card-thumb"><video src="assets/orcamento/Lista%20Inteligente.mp4" muted loop playsinline autoplay></video></div>
+            <div class="card-info">
+                <div class="card-title">Lista Inteligente</div>
+                <div class="card-subtitle">Mini-site com fotos, preços e Pix</div>
+                <div class="card-price paid">+ R$ 25,00</div>
+                <button class="card-how" onclick="event.stopPropagation();app.howItWorks('gift-inteligente')"><i class="fa-solid fa-circle-info"></i> Como funciona?</button>
+            </div>
+        </div>
+        <div class="option-card" data-group="gift" data-value="sua_lista" onclick="app.selectOption('gift','sua_lista')">
+            <div class="card-check"><i class="fa-solid fa-check"></i></div>
+            <div class="card-thumb"><img src="assets/orcamento/Exemplo%20Link%20Lista.jpg" alt="Sua Lista"></div>
+            <div class="card-info">
+                <div class="card-title">Sua Lista</div>
+                <div class="card-subtitle">Botão para lista em outra loja</div>
+                <div class="card-price free">Grátis</div>
+                <button class="card-how" onclick="event.stopPropagation();app.howItWorks('gift-sua_lista')"><i class="fa-solid fa-circle-info"></i> Como funciona?</button>
+            </div>
+        </div>
+        <div class="option-card" data-group="gift" data-value="none" onclick="app.selectOption('gift','none')">
+            <div class="card-check"><i class="fa-solid fa-check"></i></div>
+            <div class="card-icon-thumb"><i class="fa-solid fa-xmark"></i></div>
+            <div class="card-info">
+                <div class="card-title">Não quero</div>
+                <div class="card-subtitle">Sem dica de presentes</div>
+                <div class="card-price free">—</div>
+            </div>
+        </div>
+        <div class="conditional-field" id="field-gift-text">
+            <label>O que deseja na lista de presentes?</label>
+            <textarea id="gift-text" rows="3" placeholder="Ex: Chave Pix: 11999999999, Calçados 39, Perfume Lily..."></textarea>
+        </div>
+        <div class="conditional-field hidden" id="field-gift-link">
+            <label>Link da sua lista externa</label>
+            <input type="url" id="gift-link" placeholder="Ex: https://www.amazon.com.br/hz/wishlist/...">
+        </div>
+        <div class="conditional-field hidden" id="field-gift-notice">
+            <p style="font-size:0.8rem;color:var(--text-muted);text-align:center;margin:0;"><i class="fa-brands fa-whatsapp" style="color:#16a34a;margin-right:0.25rem;"></i> Entraremos em contato via WhatsApp para coletar cada item da lista.</p>
         </div>
     </div>
 
-    <!-- Modal de Preview do Modelo Selecionado -->
-    <div id="model_preview_modal" class="fixed inset-0 z-[130] hidden">
-        <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" onclick="app.closeModelPreview()"></div>
-        <div class="relative w-full h-full flex flex-col">
-            <div class="bg-slate-900/95 backdrop-blur border-b border-white/10 px-4 py-3 flex items-center justify-between z-10">
-                <div class="flex items-center gap-3">
-                    <button onclick="app.closeModelPreview()" class="text-slate-400 hover:text-white transition-colors px-2 py-1 flex items-center gap-2">
-                        <i class="fa-solid fa-xmark text-xl"></i>
-                        <span class="text-xs font-medium">Fechar Visualização</span>
-                    </button>
-                    <h2 id="model_preview_title" class="text-white font-semibold text-sm md:text-base truncate max-w-[200px] md:max-w-none">Modelo</h2>
-                </div>
-                <div class="flex items-center gap-2">
-                    <button onclick="app.togglePreviewDevice('mobile')" id="preview_btn_mobile" class="px-3 py-1.5 rounded text-sm bg-accent text-white transition-colors">
-                        <i class="fa-solid fa-mobile-screen"></i> <span class="hidden sm:inline">Mobile</span>
-                    </button>
-                    <button onclick="app.togglePreviewDevice('desktop')" id="preview_btn_desktop" class="px-3 py-1.5 rounded text-sm bg-slate-700 text-slate-300 hover:bg-slate-600 transition-colors">
-                        <i class="fa-solid fa-desktop"></i> <span class="hidden sm:inline">Desktop</span>
-                    </button>
-                </div>
+    <!-- MANUAL -->
+    <div class="card-group-title"><i class="fa-solid fa-book-open"></i> Manual do Convidado</div>
+    <div class="option-cards" id="cards-manual">
+        <div class="option-card selected" data-group="manual" data-value="simples" onclick="app.selectOption('manual','simples')">
+            <div class="card-check"><i class="fa-solid fa-check"></i></div>
+            <div class="card-thumb"><img src="assets/orcamento/Exemplo%20Manual%20do%20Convidado.jpg" alt="Manual Simples"></div>
+            <div class="card-info">
+                <div class="card-title">Simples</div>
+                <div class="card-subtitle">Informações escritas direto na tela</div>
+                <div class="card-price free">Grátis</div>
+                <button class="card-how" onclick="event.stopPropagation();app.howItWorks('manual-simples')"><i class="fa-solid fa-circle-info"></i> Como funciona?</button>
             </div>
-            <div class="flex-1 flex items-center justify-center p-4 overflow-hidden bg-black/50">
-                <div id="model_preview_container" class="bg-black rounded-xl overflow-hidden shadow-2xl transition-all duration-300" style="width:390px;height:844px;max-height:85vh;">
-                    <iframe id="model_preview_frame" class="w-full h-full"></iframe>
-                </div>
+        </div>
+        <div class="option-card" data-group="manual" data-value="premium" onclick="app.selectOption('manual','premium')">
+            <div class="card-check"><i class="fa-solid fa-check"></i></div>
+            <div class="card-thumb"><img src="assets/orcamento/Manual%20Premium.jpg" alt="Manual Premium"></div>
+            <div class="card-info">
+                <div class="card-title">Premium</div>
+                <div class="card-subtitle">Imagem personalizada elegante</div>
+                <div class="card-price paid">+ R$ 10,00</div>
+                <button class="card-how" onclick="event.stopPropagation();app.howItWorks('manual-premium')"><i class="fa-solid fa-circle-info"></i> Como funciona?</button>
             </div>
+        </div>
+        <div class="option-card" data-group="manual" data-value="none" onclick="app.selectOption('manual','none')">
+            <div class="card-check"><i class="fa-solid fa-check"></i></div>
+            <div class="card-icon-thumb"><i class="fa-solid fa-xmark"></i></div>
+            <div class="card-info">
+                <div class="card-title">Não quero</div>
+                <div class="card-subtitle">Sem manual do convidado</div>
+                <div class="card-price free">—</div>
+            </div>
+        </div>
+        <div class="conditional-field" id="field-manual-text">
+            <label>Quais informações no Manual?</label>
+            <textarea id="manual-text" rows="3" placeholder="Ex: Dress Code - Traje Esporte Fino, Estacionamento na Rua X..."></textarea>
         </div>
     </div>
 
-    <!-- Modal Confirmação de Pedido -->
-    <div id="confirm_order_modal" class="fixed inset-0 z-[120] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300">
-        <div class="bg-white dark:bg-gray-900 rounded-2xl w-full max-w-sm shadow-2xl p-6 relative transform scale-95 transition-transform duration-300 border border-gray-200 dark:border-gray-700" id="confirm_order_box">
-            <div class="text-center">
-                <div class="w-14 h-14 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center mx-auto mb-4">
-                    <i class="fa-solid fa-check text-2xl text-green-600"></i>
-                </div>
-                <h3 class="text-lg font-black mb-2" style="color: var(--text-primary);">Quase lá!</h3>
-                <p class="text-sm mb-1" style="color: var(--text-secondary);">Trabalhamos com um sinal de</p>
-                <p class="text-2xl font-black text-accent mb-3">R$ 20,00</p>
-                <p class="text-xs mb-6" style="color: var(--text-muted);">para colocar seu convite em nossa fila de produção.</p>
-                <a href="https://mpago.la/1wvHN6p" target="_blank" class="block w-full bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-xl text-sm transition-transform hover:scale-105 active:scale-95 mb-3">
-                    <i class="fa-solid fa-credit-card mr-1"></i> Pagamento
-                </a>
-                <button onclick="app.closeConfirmModal()" class="text-xs font-medium text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 transition-colors">
-                    Voltar
-                </button>
+    <!-- EXTRAS -->
+    <div class="card-group-title"><i class="fa-solid fa-star"></i> Extras</div>
+    <div class="option-cards" id="cards-extras">
+        <div class="option-card" data-extra="musica" onclick="app.toggleExtra('musica')">
+            <div class="card-check"><i class="fa-solid fa-check"></i></div>
+            <div class="card-icon-thumb"><i class="fa-solid fa-music"></i></div>
+            <div class="card-info">
+                <div class="card-title">Música</div>
+                <div class="card-subtitle">Escolha a música do convite</div>
+                <div class="card-price free">Grátis</div>
+                <button class="card-how" onclick="event.stopPropagation();app.howItWorks('extra-musica')"><i class="fa-solid fa-circle-info"></i> Como funciona?</button>
+            </div>
+        </div>
+        <div class="conditional-field" id="field-music-text">
+            <label>Qual música deseja?</label>
+            <input type="text" id="music-text" placeholder="Nome da música ou link do YouTube">
+            <p style="font-size:0.65rem;color:var(--text-muted);margin-top:0.375rem;font-style:italic;">*Se deixar em branco, usaremos a música padrão do modelo.</p>
+        </div>
+        <div class="option-card" data-extra="cronometro" onclick="app.toggleExtra('cronometro')">
+            <div class="card-check"><i class="fa-solid fa-check"></i></div>
+            <div class="card-thumb"><img src="assets/orcamento/Exemplo%20Contagem%20Regressiva.jpg" alt="Cronômetro"></div>
+            <div class="card-info">
+                <div class="card-title">Cronômetro</div>
+                <div class="card-subtitle">Contagem regressiva até a festa</div>
+                <div class="card-price free">Grátis</div>
+                <button class="card-how" onclick="event.stopPropagation();app.howItWorks('extra-cronometro')"><i class="fa-solid fa-circle-info"></i> Como funciona?</button>
+            </div>
+        </div>
+        <div class="option-card" data-extra="galeria" onclick="app.toggleExtra('galeria')">
+            <div class="card-check"><i class="fa-solid fa-check"></i></div>
+            <div class="card-icon-thumb"><i class="fa-solid fa-images"></i></div>
+            <div class="card-info">
+                <div class="card-title">Galeria de Fotos</div>
+                <div class="card-subtitle">Carrossel com até 15 fotos</div>
+                <div class="card-price paid">+ R$ 10,00</div>
+                <button class="card-how" onclick="event.stopPropagation();app.howItWorks('extra-galeria')"><i class="fa-solid fa-circle-info"></i> Como funciona?</button>
+            </div>
+        </div>
+        <div class="option-card" data-extra="lembrete" onclick="app.toggleExtra('lembrete')">
+            <div class="card-check"><i class="fa-solid fa-check"></i></div>
+            <div class="card-thumb"><img src="assets/orcamento/Lembrete.jpg" alt="Lembrete"></div>
+            <div class="card-info">
+                <div class="card-title">Lembrete</div>
+                <div class="card-subtitle">Aviso dias antes do evento</div>
+                <div class="card-price paid">+ R$ 25,00</div>
+                <button class="card-how" onclick="event.stopPropagation();app.howItWorks('extra-lembrete')"><i class="fa-solid fa-circle-info"></i> Como funciona?</button>
+            </div>
+        </div>
+        <div class="option-card" data-extra="savethedate" onclick="app.toggleExtra('savethedate')">
+            <div class="card-check"><i class="fa-solid fa-check"></i></div>
+            <div class="card-thumb"><img src="assets/orcamento/Exemplo%20Save%20The%20Date.jpg" alt="Save The Date"></div>
+            <div class="card-info">
+                <div class="card-title">Save The Date</div>
+                <div class="card-subtitle">Imagem elegante para antecipar</div>
+                <div class="card-price paid">+ R$ 25,00</div>
+                <button class="card-how" onclick="event.stopPropagation();app.howItWorks('extra-savethedate')"><i class="fa-solid fa-circle-info"></i> Como funciona?</button>
+            </div>
+        </div>
+        <div class="option-card" data-extra="photo" onclick="app.togglePhoto()">
+            <div class="card-check"><i class="fa-solid fa-check"></i></div>
+            <div class="card-icon-thumb"><i class="fa-solid fa-camera"></i></div>
+            <div class="card-info">
+                <div class="card-title">Foto na Abertura</div>
+                <div class="card-subtitle">Sua foto na animação de abertura</div>
+                <div class="card-price free">Grátis</div>
+                <button class="card-how" onclick="event.stopPropagation();app.howItWorks('extra-photo')"><i class="fa-solid fa-circle-info"></i> Como funciona?</button>
             </div>
         </div>
     </div>
+</section>
 
-    <!-- Modal Aviso: Nenhum Modelo Selecionado -->
-    <div id="no_model_warning_modal" class="fixed inset-0 z-[120] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300">
-        <div class="bg-white dark:bg-gray-900 rounded-2xl w-full max-w-sm shadow-2xl p-6 relative transform scale-95 transition-transform duration-300 border border-gray-200 dark:border-gray-700" id="no_model_warning_box">
-            <div class="text-center">
-                <div class="w-14 h-14 rounded-full bg-amber-100 dark:bg-amber-900/30 flex items-center justify-center mx-auto mb-4">
-                    <i class="fa-solid fa-exclamation-triangle text-2xl text-amber-500"></i>
-                </div>
-                <h3 class="text-lg font-black mb-2" style="color: var(--text-primary);">Modelo não selecionado</h3>
-                <p class="text-sm mb-6" style="color: var(--text-secondary);">Você ainda não escolheu um modelo para o seu convite. Escolha um modelo antes de finalizar o pedido.</p>
-                <a href="../modelos.html" class="block w-full bg-accent hover:bg-pink-700 text-white font-bold py-3 px-6 rounded-xl text-sm transition-transform hover:scale-105 active:scale-95 mb-3">
-                    <i class="fa-solid fa-palette mr-1"></i> Ver Modelos
-                </a>
-                <button onclick="app.closeNoModelWarning()" class="text-xs font-medium text-gray-500 hover:text-gray-700 dark:hover:text-gray-300 transition-colors">
-                    Voltar
-                </button>
-            </div>
+<!-- SEÇÃO 3: DADOS DO EVENTO -->
+<section class="page-section" id="section-evento">
+    <h2 class="section-title">Dados do Evento</h2>
+    <p class="section-subtitle">Informe os detalhes para seu convite</p>
+    <div class="form-group">
+        <label>Tipo de Evento</label>
+        <div class="event-type-grid">
+            <button type="button" class="evt-type-btn active" data-type="aniversario">Aniversário</button>
+            <button type="button" class="evt-type-btn" data-type="casamento">Casamento</button>
+            <button type="button" class="evt-type-btn" data-type="formatura">Formatura</button>
+            <button type="button" class="evt-type-btn" data-type="outro">Outro</button>
         </div>
     </div>
+    <div class="form-group" id="custom-event-wrap" style="display:none;">
+        <label>Qual o tipo de evento?</label>
+        <input type="text" id="custom-event-type" class="form-control" placeholder="Ex: Chá de bebê, Batizado...">
+    </div>
+    <div class="form-group" id="formacao-wrap" style="display:none;">
+        <label>Formação</label>
+        <input type="text" id="event-formacao" class="form-control" placeholder="Ex: Odontologia, Enfermagem, etc...">
+    </div>
+    <div class="form-row form-row-name-age form-group">
+        <div><label id="event-name-label">Nome do Aniversariante</label><input type="text" id="event-name" class="form-control" placeholder="Ex: Maria"></div>
+        <div id="age-wrap"><label>Idade</label><input type="number" id="event-age" class="form-control" placeholder="15"></div>
+    </div>
+    <div class="form-row form-row-3 form-group">
+        <div><label>Data</label><input type="date" id="event-date" class="form-control"></div>
+        <div><label>Início</label><input type="time" id="event-time-start" class="form-control"></div>
+        <div><label>Término (Opcional)</label><input type="time" id="event-time-end" class="form-control"></div>
+    </div>
+    <div class="form-group"><label>Local / Endereço</label><input type="text" id="event-location" class="form-control" placeholder="Link do Maps ou endereço"></div>
+    <div class="form-row form-row-2 form-group">
+        <div><label>Tema do Convite</label><input type="text" id="event-theme" class="form-control" placeholder="Ex: Borboletas, Floral..."></div>
+        <div><label>Paleta de Cores</label><input type="text" id="event-colors" class="form-control" placeholder="Ex: Rosa bebê e Dourado"></div>
+    </div>
+</section>
 
+<!-- SEÇÃO 4: RESUMO -->
+<section class="page-section" id="section-summary">
+    <h2 class="section-title">Resumo do Orçamento</h2>
+    <p class="section-subtitle">Confira tudo antes de confirmar</p>
+    <div class="summary-card">
+        <h3><i class="fa-solid fa-receipt"></i> Itens Selecionados</h3>
+        <div id="summary-items"></div>
+        <div class="summary-total">
+            <span class="label">Total</span>
+            <span class="value total-value">R$ 80,00</span>
+        </div>
+    </div>
+    <button class="btn-whatsapp" onclick="app.confirmOrder()"><i class="fa-brands fa-whatsapp"></i> Confirmar no WhatsApp</button>
+</section>
+
+<!-- MODAL: Como funciona? -->
+<div class="modal-overlay" id="how-modal" onclick="app.closeHowModal()">
+    <div class="modal-box" onclick="event.stopPropagation()">
+        <h3 id="how-modal-title">Título</h3>
+        <div class="modal-media" id="how-modal-media"></div>
+        <p id="how-modal-desc">Descrição</p>
+        <button class="modal-close" onclick="app.closeHowModal()">Entendi</button>
+    </div>
+</div>
+
+<!-- MODAL: Confirmação -->
+<div class="modal-overlay" id="confirm-modal" onclick="app.closeConfirmModal()">
+    <div class="modal-box confirm-modal-content" onclick="event.stopPropagation()">
+        <div class="icon-circle"><i class="fa-solid fa-paper-plane"></i></div>
+        <h3>Quase lá!</h3>
+        <p class="signal-desc">Trabalhamos com um sinal de</p>
+        <div class="signal-price">R$ 20,00</div>
+        <p class="signal-desc">para colocar seu convite em nossa <strong>Fila de Produção</strong>.<br><br>Ao clicar abaixo, você será direcionado ao WhatsApp com o resumo do seu orçamento. O link de pagamento do sinal estará na mensagem.</p>
+        <button class="btn-confirm-wpp" onclick="app.sendToWhatsApp()"><i class="fa-brands fa-whatsapp"></i> Enviar no WhatsApp</button>
+        <button class="btn-cancel" onclick="app.closeConfirmModal()">Voltar</button>
+    </div>
+</div>
+
+<script src="js/app.js"></script>
 </body>
 </html>
