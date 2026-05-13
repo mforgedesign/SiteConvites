@@ -107,6 +107,10 @@
                 <button class="card-how" onclick="event.stopPropagation();app.howItWorks('rsvp-whatsapp')"><i class="fa-solid fa-circle-info"></i> Como funciona?</button>
             </div>
         </div>
+        <div class="conditional-field" id="field-rsvp-whatsapp">
+            <label>Número para receber confirmações</label>
+            <input type="tel" id="rsvp-number" placeholder="(00) 00000-0000">
+        </div>
         <div class="option-card" data-group="rsvp" data-value="formulario" onclick="app.selectOption('rsvp','formulario')">
             <div class="card-check"><i class="fa-solid fa-check"></i></div>
             <div class="card-thumb"><video src="assets/orcamento/Formul%C3%A1rio%20inteligente.mp4" muted loop playsinline autoplay></video></div>
@@ -126,10 +130,6 @@
                 <div class="card-price free">—</div>
             </div>
         </div>
-        <div class="conditional-field" id="field-rsvp-whatsapp">
-            <label>Número para receber confirmações</label>
-            <input type="tel" id="rsvp-number" placeholder="(00) 00000-0000">
-        </div>
     </div>
 
     <!-- DICA DE PRESENTE -->
@@ -144,6 +144,10 @@
                 <div class="card-price free">Grátis</div>
                 <button class="card-how" onclick="event.stopPropagation();app.howItWorks('gift-simples')"><i class="fa-solid fa-circle-info"></i> Como funciona?</button>
             </div>
+        </div>
+        <div class="conditional-field" id="field-gift-text">
+            <label>O que deseja na lista de presentes?</label>
+            <textarea id="gift-text" rows="3" placeholder="Ex: Chave Pix: 11999999999, Calçados 39, Perfume Lily..."></textarea>
         </div>
         <div class="option-card" data-group="gift" data-value="premium" onclick="app.selectOption('gift','premium')">
             <div class="card-check"><i class="fa-solid fa-check"></i></div>
@@ -165,6 +169,9 @@
                 <button class="card-how" onclick="event.stopPropagation();app.howItWorks('gift-inteligente')"><i class="fa-solid fa-circle-info"></i> Como funciona?</button>
             </div>
         </div>
+        <div class="conditional-field hidden" id="field-gift-notice">
+            <p style="font-size:0.8rem;color:var(--text-muted);text-align:center;margin:0;"><i class="fa-brands fa-whatsapp" style="color:#16a34a;margin-right:0.25rem;"></i> Entraremos em contato via WhatsApp para coletar cada item da lista.</p>
+        </div>
         <div class="option-card" data-group="gift" data-value="sua_lista" onclick="app.selectOption('gift','sua_lista')">
             <div class="card-check"><i class="fa-solid fa-check"></i></div>
             <div class="card-thumb"><img src="assets/orcamento/Exemplo%20Link%20Lista.jpg" alt="Sua Lista"></div>
@@ -175,6 +182,10 @@
                 <button class="card-how" onclick="event.stopPropagation();app.howItWorks('gift-sua_lista')"><i class="fa-solid fa-circle-info"></i> Como funciona?</button>
             </div>
         </div>
+        <div class="conditional-field hidden" id="field-gift-link">
+            <label>Link da sua lista externa</label>
+            <input type="url" id="gift-link" placeholder="Ex: https://www.amazon.com.br/hz/wishlist/...">
+        </div>
         <div class="option-card" data-group="gift" data-value="none" onclick="app.selectOption('gift','none')">
             <div class="card-check"><i class="fa-solid fa-check"></i></div>
             <div class="card-icon-thumb"><i class="fa-solid fa-xmark"></i></div>
@@ -183,17 +194,6 @@
                 <div class="card-subtitle">Sem dica de presentes</div>
                 <div class="card-price free">—</div>
             </div>
-        </div>
-        <div class="conditional-field" id="field-gift-text">
-            <label>O que deseja na lista de presentes?</label>
-            <textarea id="gift-text" rows="3" placeholder="Ex: Chave Pix: 11999999999, Calçados 39, Perfume Lily..."></textarea>
-        </div>
-        <div class="conditional-field hidden" id="field-gift-link">
-            <label>Link da sua lista externa</label>
-            <input type="url" id="gift-link" placeholder="Ex: https://www.amazon.com.br/hz/wishlist/...">
-        </div>
-        <div class="conditional-field hidden" id="field-gift-notice">
-            <p style="font-size:0.8rem;color:var(--text-muted);text-align:center;margin:0;"><i class="fa-brands fa-whatsapp" style="color:#16a34a;margin-right:0.25rem;"></i> Entraremos em contato via WhatsApp para coletar cada item da lista.</p>
         </div>
     </div>
 
@@ -209,6 +209,10 @@
                 <div class="card-price free">Grátis</div>
                 <button class="card-how" onclick="event.stopPropagation();app.howItWorks('manual-simples')"><i class="fa-solid fa-circle-info"></i> Como funciona?</button>
             </div>
+        </div>
+        <div class="conditional-field" id="field-manual-text">
+            <label>Quais informações no Manual?</label>
+            <textarea id="manual-text" rows="3" placeholder="Ex: Dress Code - Traje Esporte Fino, Estacionamento na Rua X..."></textarea>
         </div>
         <div class="option-card" data-group="manual" data-value="premium" onclick="app.selectOption('manual','premium')">
             <div class="card-check"><i class="fa-solid fa-check"></i></div>
@@ -228,10 +232,6 @@
                 <div class="card-subtitle">Sem manual do convidado</div>
                 <div class="card-price free">—</div>
             </div>
-        </div>
-        <div class="conditional-field" id="field-manual-text">
-            <label>Quais informações no Manual?</label>
-            <textarea id="manual-text" rows="3" placeholder="Ex: Dress Code - Traje Esporte Fino, Estacionamento na Rua X..."></textarea>
         </div>
     </div>
 

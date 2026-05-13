@@ -384,7 +384,7 @@ const app = {
             'gift-simples': { title: 'Sugestões Simples', desc: 'Uma lista em texto direto no convite com opção de Pix. Você nos envia o que quer escrever e nós colocamos no convite.', media: base+'Simples.png' },
             'gift-premium': { title: 'Sugestões Premium', desc: 'Uma imagem bela e personalizada com as sugestões de presente. Design elegante que combina com o convite.', media: base+'Premium.jpg' },
             'gift-inteligente': { title: 'Lista Inteligente', desc: 'Mini-site com fotos e preços dos presentes. O dinheiro vai direto pro seu Pix. Entraremos em contato via WhatsApp para montar a lista.', media: base+'Lista%20Inteligente.mp4' },
-            'gift-sua_lista': { title: 'Sua Lista', desc: 'Botão que redireciona para sua lista de presentes em outra loja (Amazon, Magalu, etc). Você nos envia o link.', media: base+'Exemplo%20Link%20Lista.jpg' },
+            'gift-sua_lista': { title: 'Sua Lista', desc: 'Botão que redireciona para sua lista de presentes em outra loja. Você nos envia o link.<br><br><strong>Crie sua lista em uma dessas lojas:</strong><div style="display:flex;flex-direction:column;gap:0.5rem;margin-top:0.75rem;"><a href="https://listas.extra.com.br/" target="_blank" style="display:block;text-align:center;padding:0.6rem 1rem;border-radius:0.5rem;background:rgba(201,85,124,0.1);color:#c9557c;font-weight:600;font-size:0.85rem;text-decoration:none;border:1px solid rgba(201,85,124,0.2);">🛒 Lista Extra</a><a href="https://especiais.magazineluiza.com.br/listas-magalu/" target="_blank" style="display:block;text-align:center;padding:0.6rem 1rem;border-radius:0.5rem;background:rgba(201,85,124,0.1);color:#c9557c;font-weight:600;font-size:0.85rem;text-decoration:none;border:1px solid rgba(201,85,124,0.2);">🏬 Lista Magalu</a><a href="https://temfestinha.com/" target="_blank" style="display:block;text-align:center;padding:0.6rem 1rem;border-radius:0.5rem;background:rgba(201,85,124,0.1);color:#c9557c;font-weight:600;font-size:0.85rem;text-decoration:none;border:1px solid rgba(201,85,124,0.2);">🎉 Tem Festinha</a></div>', media: base+'Exemplo%20Link%20Lista.jpg' },
             'manual-simples': { title: 'Manual Simples', desc: 'Informações escritas diretamente na tela do convite. Dress code, estacionamento, e qualquer instrução para seus convidados.', media: base+'Exemplo%20Manual%20do%20Convidado.jpg' },
             'manual-premium': { title: 'Manual Premium', desc: 'O botão abre uma imagem personalizada e trabalhada de forma elegante com as informações do manual.', media: base+'Manual%20Premium.jpg' },
             'extra-galeria': { title: 'Galeria de Fotos', desc: 'Botão que abre um carrossel de fotos selecionadas por você (até 15 fotos).' },
@@ -399,7 +399,7 @@ const app = {
         if (!item) return;
 
         document.getElementById('how-modal-title').textContent = item.title;
-        document.getElementById('how-modal-desc').textContent = item.desc;
+        document.getElementById('how-modal-desc').innerHTML = item.desc;
 
         const mediaBox = document.getElementById('how-modal-media');
         mediaBox.innerHTML = '';
