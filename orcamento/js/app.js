@@ -365,7 +365,8 @@ const app = {
         if (this.data.eventColors) msg += `• Paleta: ${this.data.eventColors}\n`;
 
         msg += `\n💰 *VALOR TOTAL: ${fmt.format(total)}*\n\n`;
-        msg += `Trabalhamos com um sinal de R$20 para colocar seu convite em nossa Fila de Produção.`;
+        msg += `Trabalhamos com um sinal de R$20 para colocar seu convite em nossa Fila de Produção.\n\n`;
+        msg += `Clique em enviar para poder acessar o link de pagamento👉`;
 
         const url = `https://wa.me/5511939047235?text=${encodeURIComponent(msg)}`;
         window.open(url, '_blank');
