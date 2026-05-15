@@ -1,11 +1,5 @@
 // orcamento/js/app.js — Página A/B Test (Rolagem)
 
-const SUPABASE_URL = 'https://xchphsltccopelblbsyb.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhjaHBoc2x0Y2NvcGVsYmxic3liIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM2NTI1MjQsImV4cCI6MjA4OTIyODUyNH0.ZOtoygT-PZKcByjh2GEzKGX--6K1UqedvVqTlhCAko0';
-const SUPABASE_ASSETS = SUPABASE_URL + '/storage/v1/object/public/modelos';
-const SUPABASE_CODE = SUPABASE_URL + '/storage/v1/object/public/modelos-code';
-function sanitizeSlug(s) { return s.normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-zA-Z0-9\-_]/g,'-'); }
-
 const app = {
     baseValue: 80,
     data: {
@@ -331,15 +325,7 @@ const app = {
         msg += `• WhatsApp: ${this.data.clientWhatsapp}\n\n`;
 
         msg += `🎉 *CONVITE DIGITAL*\n`;
-        msg += `• Convite Premium — ${fmt.format(80)}\n`;
-        const selModel = JSON.parse(localStorage.getItem('selectedModel') || 'null');
-        if (selModel) {
-            const siteOrigin = window.location.origin;
-            const modelLink = siteOrigin + '/modelos.html?modelo=' + encodeURIComponent(selModel.slug);
-            msg += `• Modelo: ${selModel.name}\n`;
-            msg += `  ↳ Ver: ${modelLink}\n`;
-        }
-        msg += `\n`;
+        msg += `• Convite Premium — ${fmt.format(80)}\n\n`;
 
         msg += `🎨 *PERSONALIZAÇÃO*\n`;
         msg += `• Abertura: ${aberturaMap[this.data.aberturaType] || 'Longa'}\n`;
@@ -430,58 +416,6 @@ const app = {
 
     closeHowModal() {
         document.getElementById('how-modal').classList.remove('active');
-    },
-
-    // ==================== MODELO ESCOLHIDO ====================
-    loadSelectedModel() {
-        const raw = localStorage.getItem('selectedModel');
-        if (!raw) return;
-        try {
-            const m = JSON.parse(raw);
-            if (!m || !m.slug) return;
-            document.getElementById('modelo-empty').style.display = 'none';
-            const chosen = document.getElementById('modelo-chosen');
-            chosen.style.display = 'flex';
-            // Thumb
-            const thumbEl = document.getElementById('modelo-thumb');
-            const slug = sanitizeSlug(m.slug);
-            const coverUrl = m.capa && m.capa.startsWith('http') ? m.capa : SUPABASE_ASSETS + '/' + slug + '/' + (m.capa || 'assets/capa.webp').replace(/^\//, '');
-            thumbEl.innerHTML = `<img src="${coverUrl}" alt="${m.name}" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 300 400%22%3E%3Crect fill=%22%23e5e7eb%22 width=%22300%22 height=%22400%22/%3E%3Ctext fill=%22%239ca3af%22 x=%22150%22 y=%22200%22 text-anchor=%22middle%22 font-size=%2214%22%3ESem capa%3C/text%3E%3C/svg%3E';">`;
-            // Info
-            document.getElementById('modelo-name').textContent = m.name;
-            const descParts = [m.tema, m.paletaCores].filter(Boolean);
-            document.getElementById('modelo-desc').textContent = descParts.join(' • ') || m.tipo || '';
-        } catch(e) { console.error('Erro ao carregar modelo:', e); }
-    },
-
-    async previewModelo() {
-        const raw = localStorage.getItem('selectedModel');
-        if (!raw) return;
-        const m = JSON.parse(raw);
-        const slug = sanitizeSlug(m.slug);
-        const codeUrl = SUPABASE_CODE + '/' + slug + '/index.html';
-        document.getElementById('modelo-preview-title').textContent = m.name;
-        const frame = document.getElementById('modelo-preview-frame');
-        try {
-            const r = await fetch(codeUrl);
-            let html = await r.text();
-            const MODEL_BASE = SUPABASE_ASSETS + '/' + slug + '/';
-            const ASSET_BASE = MODEL_BASE + 'assets/';
-            html = html.replace('<head>', '<head><base href="' + MODEL_BASE + '">');
-            html = html.replace(/(["'])assets\//g, '$1' + ASSET_BASE);
-            html = html.replace(/(url\()assets\//g, '$1' + ASSET_BASE);
-            frame.srcdoc = html;
-        } catch(e) {
-            frame.srcdoc = '<p style="padding:2rem;text-align:center;color:#999;">Erro ao carregar prévia.</p>';
-        }
-        document.getElementById('modelo-preview-modal').classList.add('active');
-        document.body.style.overflow = 'hidden';
-    },
-
-    closeModeloPreview() {
-        document.getElementById('modelo-preview-modal').classList.remove('active');
-        document.getElementById('modelo-preview-frame').srcdoc = '';
-        document.body.style.overflow = '';
     },
 
     closeConfirmModal() {
@@ -575,7 +509,6 @@ const app = {
 
         this.updateTotal();
         this.buildSummary();
-        this.loadSelectedModel();
 
         // Scroll to personalize
         document.getElementById('btn-personalize')?.addEventListener('click', () => {

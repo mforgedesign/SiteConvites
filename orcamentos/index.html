@@ -57,6 +57,42 @@
     <button class="btn-personalize" id="btn-personalize"><i class="fa-solid fa-wand-magic-sparkles"></i> Personalize seu Convite!</button>
 </section>
 
+<!-- SEÇÃO 1.5: MODELO ESCOLHIDO -->
+<section class="page-section" id="section-modelo">
+    <h2 class="section-title">Modelo Escolhido</h2>
+    <!-- Estado: nenhum modelo selecionado -->
+    <div id="modelo-empty" class="modelo-empty-state">
+        <i class="fa-solid fa-palette"></i>
+        <p>Você ainda não escolheu um modelo</p>
+        <a href="../modelos.html" class="btn-ver-modelos"><i class="fa-solid fa-eye"></i> Ver Lista de Modelos</a>
+    </div>
+    <!-- Estado: modelo selecionado -->
+    <div id="modelo-chosen" class="modelo-chosen-card" style="display:none;">
+        <div class="modelo-chosen-thumb" id="modelo-thumb"></div>
+        <div class="modelo-chosen-info">
+            <div class="modelo-chosen-name" id="modelo-name"></div>
+            <div class="modelo-chosen-desc" id="modelo-desc"></div>
+            <div class="modelo-chosen-actions">
+                <button class="btn-preview-modelo" onclick="app.previewModelo()"><i class="fa-solid fa-eye"></i> Visualizar</button>
+                <a href="../modelos.html" class="btn-trocar-modelo"><i class="fa-solid fa-arrows-rotate"></i> Trocar</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Preview Modal do Modelo (iframe) -->
+<div class="modal-overlay" id="modelo-preview-modal" onclick="app.closeModeloPreview()" style="z-index:1100;">
+    <div class="modelo-preview-wrap" onclick="event.stopPropagation()">
+        <div class="modelo-preview-header">
+            <span id="modelo-preview-title"></span>
+            <button onclick="app.closeModeloPreview()" class="modelo-preview-close"><i class="fa-solid fa-xmark"></i> Fechar</button>
+        </div>
+        <div class="modelo-preview-body">
+            <iframe id="modelo-preview-frame" style="border:none;width:100%;height:100%;"></iframe>
+        </div>
+    </div>
+</div>
+
 <!-- SEÇÃO 2: PERSONALIZAÇÃO -->
 <section class="page-section" id="section-personalize">
     <h2 class="section-title">Personalize seu Convite</h2>
