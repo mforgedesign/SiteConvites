@@ -465,13 +465,53 @@ const app = {
         try {
             const r = await fetch(codeUrl);
             let html = await r.text();
-            const MODEL_BASE = SUPABASE_ASSETS + '/' + slug + '/';
+            // Replace old anon key with current one
+            html = html.replace(/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9\.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhjaHBoc2x0Y2NvcGVsYmxic3liIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDEyMDk0MTAsImV4cCI6MjA1Njc4NTQxMH0\.8e2V0H1xRJi_3w_GYWOWn8dWfAEcPqS8mPR3k5U0hMo/g, SUPABASE_ANON_KEY);
+            // Determine asset base
+            const isGit = typeof isGitHubModel === 'function' && isGitHubModel(m.slug);
+            const siteRoot = new URL('..', window.location.href).href;
+            const MODEL_BASE = isGit
+              ? siteRoot + 'modelos/' + encodeURIComponent(m.slug) + '/'
+              : SUPABASE_ASSETS + '/' + slug + '/';
             const ASSET_BASE = MODEL_BASE + 'assets/';
+            // Inject <base> tag
             html = html.replace('<head>', '<head><base href="' + MODEL_BASE + '">');
+            // Static asset replacement
             html = html.replace(/(["'])assets\//g, '$1' + ASSET_BASE);
             html = html.replace(/(url\()assets\//g, '$1' + ASSET_BASE);
+            // Inject runtime asset fix script
+            const assetFix = '<script>' +
+              "window.__SUPABASE_ASSETS='" + SUPABASE_ASSETS + '/' + slug + "';" +
+              "window.assetUrl=function(p){return '" + ASSET_BASE + "'+(p||'').replace(/^assets\\//,'')};" +
+              "(function(){" +
+              "var AB='" + ASSET_BASE + "';" +
+              "function fix(v){return v&&typeof v==='string'&&v.indexOf('assets/')===0?AB+v.substring(7):v;}" +
+              "var _sa=Element.prototype.setAttribute;" +
+              "Element.prototype.setAttribute=function(n,v){if(n==='src'||n==='data-src'||n==='poster')v=fix(v);return _sa.call(this,n,v);};" +
+              "function patchSrc(Cls){var d=Object.getOwnPropertyDescriptor(Cls.prototype,'src');if(!d||!d.set)return;var _s=d.set;Object.defineProperty(Cls.prototype,'src',{set:function(v){_s.call(this,fix(v));},get:d.get,configurable:true});}" +
+              "patchSrc(HTMLImageElement);patchSrc(HTMLVideoElement);patchSrc(HTMLSourceElement);patchSrc(HTMLAudioElement);" +
+              "var _ld=window.__loadConfig;" +
+              "if(_ld){window.__loadConfig=async function(){" +
+              "await _ld();" +
+              "if(window.config){" +
+              "['assets','imagens','backgrounds'].forEach(function(k){" +
+              "if(window.config[k]&&typeof window.config[k]==='object'){" +
+              "for(var p in window.config[k]){" +
+              "var v=window.config[k][p];" +
+              "if(typeof v==='string')window.config[k][p]=fix(v);" +
+              "else if(Array.isArray(v))window.config[k][p]=v.map(function(x){return typeof x==='string'?fix(x):x;});" +
+              "}}});" +
+              "if(window.config.musica)window.config.musica=fix(window.config.musica);" +
+              "}};" +
+              "}" +
+              "})();" +
+              '<\/script>';
+            html = html.replace('</head>', assetFix + '</head>');
+            // Chain __loadConfig before init()
+            html = html.replace('init();', 'window.__loadConfig?window.__loadConfig().then(init).catch(init):init();');
             frame.srcdoc = html;
         } catch(e) {
+            console.error('Error loading preview:', e);
             frame.srcdoc = '<p style="padding:2rem;text-align:center;color:#999;">Erro ao carregar prévia.</p>';
         }
         document.getElementById('modelo-preview-modal').classList.add('active');
