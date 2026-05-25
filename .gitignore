@@ -5,9 +5,7 @@ node_modules/
 .DS_Store
 Thumbs.db
 
-# Project Assets - Redundant (Stored in Supabase)
-# This prevents uploading ~600MB of media files to GitHub
-modelos/*/assets/
+
 
 # Scripts & Config
 .env
