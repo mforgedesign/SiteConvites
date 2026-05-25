@@ -612,13 +612,6 @@
 
     <script>
         // ============================
-        // SUPABASE CONFIG
-        // ============================
-        const SUPABASE_URL = 'https://xchphsltccopelblbsyb.supabase.co';
-        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhjaHBoc2x0Y2NvcGVsYmxic3liIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM2NTI1MjQsImV4cCI6MjA4OTIyODUyNH0.ZOtoygT-PZKcByjh2GEzKGX--6K1UqedvVqTlhCAko0';
-        const SUPABASE_ASSETS = SUPABASE_URL + '/storage/v1/object/public/modelos';
-        const SUPABASE_CODE = SUPABASE_URL + '/storage/v1/object/public/modelos-code';
-
         // Sanitize slug for Storage paths (remove accents)
         function sanitizeSlug(slug) {
             return slug.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-zA-Z0-9\-_]/g, '-');
@@ -661,28 +654,25 @@
             currentPreviewModel = model;
             document.getElementById('previewTitle').textContent = model.name;
             const frame = document.getElementById('previewFrame');
-            const url = SUPABASE_CODE + '/' + sanitizeSlug(model.slug) + '/index.html';
+            const siteRoot = new URL('.', window.location.href).href;
+            const url = siteRoot + 'modelos/' + encodeURIComponent(model.slug) + '/index.html';
             try {
                 const r = await fetch(url);
                 let html = await r.text();
-                // Replace old anon key in template with current one
-                html = html.replace(/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9\.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhjaHBoc2x0Y2NvcGVsYmxic3liIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDEyMDk0MTAsImV4cCI6MjA1Njc4NTQxMH0\.8e2V0H1xRJi_3w_GYWOWn8dWfAEcPqS8mPR3k5U0hMo/g, SUPABASE_ANON_KEY);
-                // Determine asset base based on model source
+                
                 const slug = sanitizeSlug(model.slug);
-                const isGit = isGitHubModel(model.slug);
-                // Compute site root dynamically (works with custom domain or github.io)
-                const siteRoot = new URL('.', window.location.href).href;
-                const MODEL_BASE = isGit
-                  ? siteRoot + 'modelos/' + encodeURIComponent(model.slug) + '/'
-                  : SUPABASE_ASSETS + '/' + slug + '/';
+                const MODEL_BASE = siteRoot + 'modelos/' + encodeURIComponent(model.slug) + '/';
                 const ASSET_BASE = MODEL_BASE + 'assets/';
+                
                 // Inject <base> tag so ALL relative URLs resolve correctly in srcdoc
                 html = html.replace('<head>', '<head><base href="' + MODEL_BASE + '">');
+                
                 // Also do static replacement as belt-and-suspenders
                 html = html.replace(/(["'])assets\//g, '$1' + ASSET_BASE);
                 html = html.replace(/(url\()assets\//g, '$1' + ASSET_BASE);
+                
                 const assetFix = '<script>' +
-                  "window.__SUPABASE_ASSETS='" + SUPABASE_ASSETS + '/' + slug + "';" +
+                  "window.__SUPABASE_ASSETS='';" +
                   "window.assetUrl=function(p){return '" + ASSET_BASE + "'+(p||'').replace(/^assets\\//,'')};" +
                   "(function(){" +
                   "var AB='" + ASSET_BASE + "';" +
@@ -693,10 +683,9 @@
                   // Patch .src property setter for img, video, source, audio
                   "function patchSrc(Cls){var d=Object.getOwnPropertyDescriptor(Cls.prototype,'src');if(!d||!d.set)return;var _s=d.set;Object.defineProperty(Cls.prototype,'src',{set:function(v){_s.call(this,fix(v));},get:d.get,configurable:true});}" +
                   "patchSrc(HTMLImageElement);patchSrc(HTMLVideoElement);patchSrc(HTMLSourceElement);patchSrc(HTMLAudioElement);" +
-                  // Patch __loadConfig to rewrite config asset paths
-                  "var _ld=window.__loadConfig;" +
-                  "if(_ld){window.__loadConfig=async function(){" +
-                  "await _ld();" +
+                  // Patch __loadConfig to use inline config and rewrite config asset paths
+                  "window.__loadConfig=async function(){" +
+                  "if(window.__INLINE_CONFIG)window.config=window.__INLINE_CONFIG;" +
                   "if(window.config){" +
                   "['assets','imagens','backgrounds'].forEach(function(k){" +
                   "if(window.config[k]&&typeof window.config[k]==='object'){" +
@@ -706,7 +695,8 @@
                   "else if(Array.isArray(v))window.config[k][p]=v.map(function(x){return typeof x==='string'?fix(x):x;});" +
                   "}}});" +
                   "if(window.config.musica)window.config.musica=fix(window.config.musica);" +
-                  "}};}" +
+                  "}" +
+                  "};" +
                   "})();" +
                   '<\/script>';
                 html = html.replace('</head>', assetFix + '</head>');
@@ -798,17 +788,15 @@
         let coverObserver = null;
         let lastModelosJson = '';
 
-        // Load models from Supabase DB
+        // Load models from local modelos.json
         async function discoverSlugs() {
             try {
-                const r = await fetch(SUPABASE_URL + '/rest/v1/modelos?select=slug,name,tipo,tema,paleta_cores,button_color,capa_path,idade&order=name', {
-                    headers: { 'apikey': SUPABASE_ANON_KEY }
-                });
+                const r = await fetch('modelos.json');
                 const data = await r.json();
                 const newJson = JSON.stringify(data);
                 if (newJson !== lastModelosJson) {
                     lastModelosJson = newJson;
-                    // Preencher models diretamente com dados do DB
+                    // Preencher models diretamente com dados do JSON
                     models = data.map(m => ({
                         slug: m.slug,
                         name: m.name || formatSlug(m.slug),
@@ -825,7 +813,7 @@
                 }
                 return false;
             } catch (e) {
-                console.error('Error loading models from Supabase:', e);
+                console.error('Error loading models from modelos.json:', e);
                 return false;
             }
         }

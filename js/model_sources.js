@@ -23,28 +23,15 @@ const GITHUB_ASSET_MODELS = [
 ];
 
 function isGitHubModel(slug) {
-  // Normalize for comparison
-  const normalized = slug.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-  return GITHUB_ASSET_MODELS.some(m => {
-    const mNorm = m.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
-    return mNorm === normalized || m === slug;
-  });
+  return true;
 }
 
 function getAssetBaseUrl(slug) {
-  if (isGitHubModel(slug)) {
-    // GitHub: relative path from modelos/{slug}/assets/
-    return 'modelos/' + slug + '/assets/';
-  }
-  // Supabase: absolute URL
-  const safeSlug = slug.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-zA-Z0-9\-_]/g, '-');
-  return 'https://xchphsltccopelblbsyb.supabase.co/storage/v1/object/public/modelos/' + safeSlug + '/assets/';
+  // GitHub: relative path from modelos/{slug}/assets/
+  return 'modelos/' + slug + '/assets/';
 }
 
 function getCoverUrl(slug, capaPath) {
   const base = getAssetBaseUrl(slug);
-  if (isGitHubModel(slug)) {
-    return base + (capaPath || 'capa.jpg').replace('assets/', '');
-  }
   return base + (capaPath || 'capa.jpg').replace('assets/', '');
 }

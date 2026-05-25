@@ -1,9 +1,6 @@
 // orcamento/js/app.js — Página A/B Test (Rolagem)
 
-const SUPABASE_URL = 'https://xchphsltccopelblbsyb.supabase.co';
-const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhjaHBoc2x0Y2NvcGVsYmxic3liIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM2NTI1MjQsImV4cCI6MjA4OTIyODUyNH0.ZOtoygT-PZKcByjh2GEzKGX--6K1UqedvVqTlhCAko0';
-const SUPABASE_ASSETS = SUPABASE_URL + '/storage/v1/object/public/modelos';
-const SUPABASE_CODE = SUPABASE_URL + '/storage/v1/object/public/modelos-code';
+
 function sanitizeSlug(s) { return s.normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-zA-Z0-9\-_]/g,'-'); }
 
 const app = {
@@ -445,7 +442,12 @@ const app = {
             // Thumb
             const thumbEl = document.getElementById('modelo-thumb');
             const slug = sanitizeSlug(m.slug);
-            const coverUrl = m.capa && m.capa.startsWith('http') ? m.capa : SUPABASE_ASSETS + '/' + slug + '/' + (m.capa || 'assets/capa.webp').replace(/^\//, '');
+            const siteRoot = new URL('..', window.location.href).href;
+            const coverUrl = m.capa && m.capa.startsWith('http')
+              ? m.capa
+              : (m.capa && m.capa.startsWith('modelos/')
+                ? siteRoot + m.capa
+                : siteRoot + 'modelos/' + slug + '/' + (m.capa || 'assets/capa.jpg').replace(/^\//, ''));
             thumbEl.innerHTML = `<img src="${coverUrl}" alt="${m.name}" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 300 400%22%3E%3Crect fill=%22%23e5e7eb%22 width=%22300%22 height=%22400%22/%3E%3Ctext fill=%22%239ca3af%22 x=%22150%22 y=%22200%22 text-anchor=%22middle%22 font-size=%2214%22%3ESem capa%3C/text%3E%3C/svg%3E';">`;
             // Info
             document.getElementById('modelo-name').textContent = m.name;
@@ -459,29 +461,28 @@ const app = {
         if (!raw) return;
         const m = JSON.parse(raw);
         const slug = sanitizeSlug(m.slug);
-        const codeUrl = SUPABASE_CODE + '/' + slug + '/index.html';
+        const siteRoot = new URL('..', window.location.href).href;
+        const codeUrl = siteRoot + 'modelos/' + encodeURIComponent(m.slug) + '/index.html';
         document.getElementById('modelo-preview-title').textContent = m.name;
         const frame = document.getElementById('modelo-preview-frame');
         try {
             const r = await fetch(codeUrl);
             let html = await r.text();
-            // Replace old anon key with current one
-            html = html.replace(/eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9\.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhjaHBoc2x0Y2NvcGVsYmxic3liIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDEyMDk0MTAsImV4cCI6MjA1Njc4NTQxMH0\.8e2V0H1xRJi_3w_GYWOWn8dWfAEcPqS8mPR3k5U0hMo/g, SUPABASE_ANON_KEY);
+            
             // Determine asset base
-            const isGit = typeof isGitHubModel === 'function' && isGitHubModel(m.slug);
-            const siteRoot = new URL('..', window.location.href).href;
-            const MODEL_BASE = isGit
-              ? siteRoot + 'modelos/' + encodeURIComponent(m.slug) + '/'
-              : SUPABASE_ASSETS + '/' + slug + '/';
+            const MODEL_BASE = siteRoot + 'modelos/' + encodeURIComponent(m.slug) + '/';
             const ASSET_BASE = MODEL_BASE + 'assets/';
+            
             // Inject <base> tag
             html = html.replace('<head>', '<head><base href="' + MODEL_BASE + '">');
+            
             // Static asset replacement
             html = html.replace(/(["'])assets\//g, '$1' + ASSET_BASE);
             html = html.replace(/(url\()assets\//g, '$1' + ASSET_BASE);
+            
             // Inject runtime asset fix script
             const assetFix = '<script>' +
-              "window.__SUPABASE_ASSETS='" + SUPABASE_ASSETS + '/' + slug + "';" +
+              "window.__SUPABASE_ASSETS='';" +
               "window.assetUrl=function(p){return '" + ASSET_BASE + "'+(p||'').replace(/^assets\\//,'')};" +
               "(function(){" +
               "var AB='" + ASSET_BASE + "';" +
@@ -490,9 +491,8 @@ const app = {
               "Element.prototype.setAttribute=function(n,v){if(n==='src'||n==='data-src'||n==='poster')v=fix(v);return _sa.call(this,n,v);};" +
               "function patchSrc(Cls){var d=Object.getOwnPropertyDescriptor(Cls.prototype,'src');if(!d||!d.set)return;var _s=d.set;Object.defineProperty(Cls.prototype,'src',{set:function(v){_s.call(this,fix(v));},get:d.get,configurable:true});}" +
               "patchSrc(HTMLImageElement);patchSrc(HTMLVideoElement);patchSrc(HTMLSourceElement);patchSrc(HTMLAudioElement);" +
-              "var _ld=window.__loadConfig;" +
-              "if(_ld){window.__loadConfig=async function(){" +
-              "await _ld();" +
+              "window.__loadConfig=async function(){" +
+              "if(window.__INLINE_CONFIG)window.config=window.__INLINE_CONFIG;" +
               "if(window.config){" +
               "['assets','imagens','backgrounds'].forEach(function(k){" +
               "if(window.config[k]&&typeof window.config[k]==='object'){" +
@@ -502,8 +502,8 @@ const app = {
               "else if(Array.isArray(v))window.config[k][p]=v.map(function(x){return typeof x==='string'?fix(x):x;});" +
               "}}});" +
               "if(window.config.musica)window.config.musica=fix(window.config.musica);" +
-              "}};" +
               "}" +
+              "};" +
               "})();" +
               '<\/script>';
             html = html.replace('</head>', assetFix + '</head>');

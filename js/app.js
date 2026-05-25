@@ -1018,22 +1018,25 @@ const app = {
 
         if (title) title.textContent = this.selectedModel.name;
         if (frame) {
-            const SUPABASE_CODE = 'https://xchphsltccopelblbsyb.supabase.co/storage/v1/object/public/modelos-code';
-            const OLD_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhjaHBoc2x0Y2NvcGVsYmxic3liIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDEyMDk0MTAsImV4cCI6MjA1Njc4NTQxMH0.8e2V0H1xRJi_3w_GYWOWn8dWfAEcPqS8mPR3k5U0hMo';
-            const NEW_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhjaHBoc2x0Y2NvcGVsYmxic3liIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM2NTI1MjQsImV4cCI6MjA4OTIyODUyNH0.ZOtoygT-PZKcByjh2GEzKGX--6K1UqedvVqTlhCAko0';
             const slug = this.selectedModel.slug.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-zA-Z0-9\-_]/g, '-');
-            const SUPABASE_ASSETS = 'https://xchphsltccopelblbsyb.supabase.co/storage/v1/object/public/modelos';
             try {
-                const r = await fetch(SUPABASE_CODE + '/' + slug + '/index.html');
+                const siteRoot = new URL('.', window.location.href).href;
+                const codeUrl = siteRoot + 'modelos/' + encodeURIComponent(this.selectedModel.slug) + '/index.html';
+                const r = await fetch(codeUrl);
                 let html = await r.text();
-                html = html.replace(new RegExp(OLD_KEY.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'), 'g'), NEW_KEY);
-                // Determine asset base based on model source
-                const isGit = typeof isGitHubModel === 'function' && isGitHubModel(this.selectedModel.slug);
-                const ASSET_BASE = isGit
-                  ? window.location.origin + '/SiteConvites/modelos/' + slug + '/assets/'
-                  : SUPABASE_ASSETS + '/' + slug + '/assets/';
+                
+                const MODEL_BASE = siteRoot + 'modelos/' + encodeURIComponent(this.selectedModel.slug) + '/';
+                const ASSET_BASE = MODEL_BASE + 'assets/';
+                
+                // Inject <base> tag so ALL relative URLs resolve correctly in srcdoc
+                html = html.replace('<head>', '<head><base href="' + MODEL_BASE + '">');
+                
+                // Static replacement
+                html = html.replace(/(["'])assets\//g, '$1' + ASSET_BASE);
+                html = html.replace(/(url\()assets\//g, '$1' + ASSET_BASE);
+                
                 const assetFix = '<script>' +
-                  "window.__SUPABASE_ASSETS='" + SUPABASE_ASSETS + '/' + slug + "';" +
+                  "window.__SUPABASE_ASSETS='';" +
                   "window.assetUrl=function(p){return '" + ASSET_BASE + "'+(p||'').replace(/^assets\\//,'')};" +
                   "(function(){" +
                   "var AB='" + ASSET_BASE + "';" +
@@ -1044,10 +1047,9 @@ const app = {
                   // Patch .src property setter for img, video, source, audio
                   "function patchSrc(Cls){var d=Object.getOwnPropertyDescriptor(Cls.prototype,'src');if(!d||!d.set)return;var _s=d.set;Object.defineProperty(Cls.prototype,'src',{set:function(v){_s.call(this,fix(v));},get:d.get,configurable:true});}" +
                   "patchSrc(HTMLImageElement);patchSrc(HTMLVideoElement);patchSrc(HTMLSourceElement);patchSrc(HTMLAudioElement);" +
-                  // Patch __loadConfig to rewrite config asset paths
-                  "var _ld=window.__loadConfig;" +
+                  // Patch __loadConfig
                   "window.__loadConfig=async function(){" +
-                  "await _ld();" +
+                  "if(window.__INLINE_CONFIG)window.config=window.__INLINE_CONFIG;" +
                   "if(window.config){" +
                   "['assets','imagens','backgrounds'].forEach(function(k){" +
                   "if(window.config[k]&&typeof window.config[k]==='object'){" +
@@ -1057,7 +1059,8 @@ const app = {
                   "else if(Array.isArray(v))window.config[k][p]=v.map(function(x){return typeof x==='string'?fix(x):x;});" +
                   "}}});" +
                   "if(window.config.musica)window.config.musica=fix(window.config.musica);" +
-                  "}};" +
+                  "}" +
+                  "};" +
                   "})();" +
                   '<\/script>';
                 html = html.replace('</head>', assetFix + '</head>');

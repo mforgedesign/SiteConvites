@@ -27,6 +27,7 @@ O projeto opera em um ecossistema dividido em 3 camadas (Frontend, Middleware Su
   - *Truque técnico:* Como o `srcdoc` perde a URL base para ler caminhos relativos (imagens, CSS), injetamos via JavaScript uma tag `<base href="...">` no `<head>`.
   - *URL Dinâmica:* O código usa `new URL('.', window.location.href)` para descobrir se o cliente está acessando via domínio customizado (raiz) ou via GitHub Pages (`/SiteConvites/`), impedindo erros 404 estáticos.
 - **Deep Linking:** Se a página for acessada via `pedidos.mforge.com.br/modelos.html?modelo=Lucca-Astronauta`, o script intercepta a query (`?modelo=`) logo após criar a lista, e abre o popup de preview automaticamente. Há também um botão "Copiar Link" dentro do Modal de preview.
+- **Nota de Atualização:** Os dados e assets de todos os modelos foram migrados para hospedagem local no GitHub, eliminando a dependência do Supabase para esta finalidade. Veja os detalhes no [Changelog - Migração de Modelos para GitHub Pages](file:///C:/Users/Acer/Documents/Novo%20Site%20v7/changelog_2026-05-25_11-05_migracao_modelos_para_github.md).
 
 ### Fluxo de Pagamento (`orcamentos/index.html` -> `PagamentoRecebido/index.html`)
 - O orçamento é preenchido e salvo no `localStorage` sob a chave `quoteData`.
