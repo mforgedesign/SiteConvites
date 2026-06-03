@@ -167,6 +167,7 @@ const app = {
         let extrasVal = 0;
         this.data.extras.forEach(e => {
             if (e === 'galeria') extrasVal += 10;
+            else if (e === 'playlist') extrasVal += 10;
             else if (e === 'lembrete') extrasVal += 25;
             else if (e === 'savethedate') extrasVal += 25;
         });
@@ -359,6 +360,7 @@ const app = {
         }
         if (this.data.extras.includes('cronometro')) msg += `• Cronômetro — Grátis\n`;
         if (this.data.extras.includes('galeria')) msg += `• Galeria de Fotos — ${fmt.format(10)}\n`;
+        if (this.data.extras.includes('playlist')) msg += `• Playlist dos Convidados — ${fmt.format(10)}\n`;
         if (this.data.extras.includes('lembrete')) msg += `• Lembrete — ${fmt.format(25)}\n`;
         if (this.data.extras.includes('savethedate')) msg += `• Save The Date — ${fmt.format(25)}\n`;
         if (this.data.includePhoto) msg += `• Foto na Abertura — Grátis\n`;
@@ -399,6 +401,7 @@ const app = {
             'manual-simples': { title: 'Manual Simples', desc: 'Informações escritas diretamente na tela do convite. Dress code, estacionamento, e qualquer instrução para seus convidados.', media: base+'Exemplo%20Manual%20do%20Convidado.jpg' },
             'manual-premium': { title: 'Manual Premium', desc: 'O botão abre uma imagem personalizada e trabalhada de forma elegante com as informações do manual.', media: base+'Manual%20Premium.jpg' },
             'extra-galeria': { title: 'Galeria de Fotos', desc: 'Botão que abre um carrossel de fotos selecionadas por você (até 15 fotos).' },
+            'extra-playlist': { title: 'Playlist dos Convidados', desc: 'Uma função onde o convidado poderá sugerir uma música para jogar/tocar no dia da festa, tornando a comemoração ainda mais interativa e animada!' },
             'extra-cronometro': { title: 'Cronômetro', desc: 'Contagem regressiva no topo do convite mostrando meses, dias, horas, minutos e segundos até a festa.', media: base+'Exemplo%20Contagem%20Regressiva.jpg' },
             'extra-lembrete': { title: 'Lembrete', desc: 'Um aviso para ser enviado poucos dias antes do evento, garantindo que os convidados estarão preparados.', media: base+'Lembrete.jpg' },
             'extra-savethedate': { title: 'Save The Date', desc: 'Imagem estática elegante com a data da festa, na mesma paleta visual do convite. Perfeita para enviar antes dos convites oficiais.', media: base+'Exemplo%20Save%20The%20Date.jpg' },
@@ -531,6 +534,40 @@ const app = {
     // ==================== PERSISTÊNCIA ====================
     save() {
         localStorage.setItem('orcamentoAB', JSON.stringify(this.data));
+        
+        // Sincronizar com quoteData para a tela de Sucesso do Mercado Pago (PagamentoRecebido/index.html)
+        try {
+            const quoteData = {
+                clientName: this.data.clientName || '',
+                clientWhatsapp: this.data.clientWhatsapp || '',
+                basePackage: this.data.baseValue || 0,
+                giftTipType: this.data.giftType || 'none',
+                giftTipExtra: this.data.giftExtra || 0,
+                giftCustomText: this.data.giftText || '',
+                giftLinkUrl: this.data.giftLink || '',
+                rsvpType: this.data.rsvpType || 'none',
+                rsvpExtra: this.data.rsvpExtra || 0,
+                rsvpWhatsapp: this.data.rsvpWhatsapp || '',
+                manualType: this.data.manualType || 'none',
+                manualExtra: this.data.manualExtra || 0,
+                manualCustomText: this.data.manualText || '',
+                extras: this.data.extras || [],
+                extrasExtra: this.data.extrasExtra || 0,
+                eventName: this.data.eventName || '',
+                eventType: this.data.eventType || '',
+                customEventType: this.data.customEventType || '',
+                eventTheme: this.data.eventTheme || '',
+                eventColorPalette: this.data.eventColors || '',
+                eventDate: this.data.eventDate || '',
+                eventTimeStart: this.data.eventTimeStart || '',
+                eventTimeEnd: this.data.eventTimeEnd || '',
+                eventLocation: this.data.eventLocation || '',
+                musicCustomText: this.data.musicText || ''
+            };
+            localStorage.setItem('quoteData', JSON.stringify(quoteData));
+        } catch (e) {
+            console.error("Erro ao sincronizar com quoteData:", e);
+        }
     },
 
     load() {

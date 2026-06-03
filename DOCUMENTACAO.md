@@ -70,3 +70,4 @@ O projeto opera em um ecossistema dividido em 3 camadas (Frontend, Middleware Su
 
 ---
 *Atualizado massivamente em 21/03/2026 após consolidação de domínio web e VPS.*
+*Modificado em 03/06/2026 16:16:* Adição da feature Playlist dos Convidados aos Extras e sincronização com quoteData. Detalhes em [Changelog - Playlist Convidados nos Extras](file:///C:/Users/Acer/Documents/Novo%20Site%20v7/changelog_2026-06-03_16-16_adicionado_extra_playlist_convidados_orcamento.md).

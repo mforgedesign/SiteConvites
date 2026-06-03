@@ -466,6 +466,7 @@ const app = {
             if(checkbox.checked) {
                 selectedExtras.push(checkbox.value);
                 if(checkbox.value === 'galeria') extrasExtra += 10;
+                else if(checkbox.value === 'playlist') extrasExtra += 10;
                 else if(checkbox.value === 'savethedate') extrasExtra += 25;
                 else if(checkbox.value === 'lembrete') extrasExtra += 25;
             }
@@ -1192,6 +1193,7 @@ const app = {
         extrasContainer.className = 'grid grid-cols-2 gap-2 mt-3';
         this.addSummaryExtraToggle(extrasContainer, 'fa-music', 'Música', 0, 'musica', this.quoteData.extras.includes('musica'));
         this.addSummaryExtraToggle(extrasContainer, 'fa-images', 'Galeria', 10, 'galeria', this.quoteData.extras.includes('galeria'));
+        this.addSummaryExtraToggle(extrasContainer, 'fa-compact-disc', 'Playlist', 10, 'playlist', this.quoteData.extras.includes('playlist'));
         this.addSummaryExtraToggle(extrasContainer, 'fa-clock', 'Cronômetro', 0, 'cronometro', this.quoteData.extras.includes('cronometro'));
         this.addSummaryExtraToggle(extrasContainer, 'fa-bell', 'Lembrete', 25, 'lembrete', this.quoteData.extras.includes('lembrete'));
         this.addSummaryExtraToggle(extrasContainer, 'fa-calendar-check', 'Save Date', 25, 'savethedate', this.quoteData.extras.includes('savethedate'));
@@ -1247,6 +1249,7 @@ const app = {
         
         // Extras individuais
         if(this.quoteData.extras.includes('galeria')) this.addSummaryPrice(pricingList, 'Galeria de Fotos', 10);
+        if(this.quoteData.extras.includes('playlist')) this.addSummaryPrice(pricingList, 'Playlist dos Convidados', 10);
         if(this.quoteData.extras.includes('savethedate')) this.addSummaryPrice(pricingList, 'Save the Date', 25);
         if(this.quoteData.extras.includes('lembrete')) this.addSummaryPrice(pricingList, 'Lembrete', 25);
 
