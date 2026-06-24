@@ -1,5 +1,14 @@
 # Documentação Completa do Projeto: Site Convites & VPS Bot
 
+## Modelos em Galeria Grid (2026-06-24)
+
+- `modelos.html` nao usa mais carrosseis horizontais para exibir os modelos.
+- Cada secao de modelos renderiza uma `<div class="models-gallery-grid">`.
+- No mobile, o grid usa 2 colunas.
+- Em telas maiores, o grid usa `repeat(auto-fill, minmax(...))` para distribuir os cards conforme a largura disponivel.
+- Foram removidos da pagina os controles de seta, `scrollCarousel()` e `enableDragScroll()`.
+- Changelog relacionado: `changelog_2026-06-24_13-25_modelos_galeria_grid.md`.
+
 Este documento serve como o "Cérebro do Projeto", aglutinando todos os detalhes arquiteturais, de fluxo e infraestrutura descobertos ou construídos. **Sempre leia este documento primeiro ao perder contexto.**
 
 ---

@@ -140,18 +140,10 @@
             border-radius: 16px;
             overflow: hidden;
             transition: all 0.3s ease;
-            flex-shrink: 0;
-            width: 180px;
+            width: 100%;
             display: flex;
             flex-direction: column;
-            height: 345px;
-        }
-
-        @media (min-width: 768px) {
-            .model-card {
-                width: 200px;
-                height: 365px;
-            }
+            min-height: 0;
         }
 
         .model-card:hover {
@@ -243,66 +235,25 @@
             font-size: 0.875rem;
         }
 
-        /* Carousel */
-        .carousel-container {
-            position: relative;
-        }
-
-        .carousel-track {
-            display: flex;
+        /* Model gallery */
+        .models-gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
             gap: 1rem;
-            overflow-x: auto;
-            scroll-snap-type: x mandatory;
-            scroll-behavior: smooth;
+            align-items: start;
             padding: 0.5rem 0;
-            scrollbar-width: none;
-            -ms-overflow-style: none;
-            cursor: grab;
         }
 
-        .carousel-track::-webkit-scrollbar {
-            display: none;
+        @media (min-width: 640px) {
+            .models-gallery-grid {
+                grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+            }
         }
 
-        .carousel-track>* {
-            scroll-snap-align: start;
-        }
-
-        .carousel-arrow {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 40px;
-            height: 40px;
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            z-index: 10;
-            box-shadow: 0 4px 12px var(--shadow-color);
-        }
-
-        .carousel-arrow:hover {
-            background: #c9557c;
-            color: white;
-            border-color: #c9557c;
-        }
-
-        .carousel-arrow.left {
-            left: 0;
-        }
-
-        .carousel-arrow.right {
-            right: 0;
-        }
-
-        .carousel-arrow svg {
-            width: 20px;
-            height: 20px;
+        @media (min-width: 1024px) {
+            .models-gallery-grid {
+                grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+            }
         }
 
         /* Notice Bar */
@@ -1014,36 +965,15 @@
 
             sectionEl.innerHTML = `
                 <h2 class="section-title">${section.title} <span class="text-sm font-normal text-gray-400">(${sectionModels.length})</span></h2>
-                <div class="carousel-container">
-                    <button class="carousel-arrow left" onclick="scrollCarousel(this, -1)">
-                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-                        </svg>
-                    </button>
-                    <div class="carousel-track"></div>
-                    <button class="carousel-arrow right" onclick="scrollCarousel(this, 1)">
-                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                        </svg>
-                    </button>
-                </div>
+                <div class="models-gallery-grid"></div>
             `;
 
-            const track = sectionEl.querySelector('.carousel-track');
+            const track = sectionEl.querySelector('.models-gallery-grid');
             sectionModels.forEach(model => {
                 track.appendChild(createModelCard(model, model.slug === selectedModelSlug));
             });
 
             return sectionEl;
-        }
-
-        // ============================
-        // SCROLL CAROUSEL
-        // ============================
-        function scrollCarousel(button, direction) {
-            const track = button.parentElement.querySelector('.carousel-track');
-            const scrollAmount = 220 * direction;
-            track.scrollBy({ left: scrollAmount, behavior: 'smooth' });
         }
 
         // ============================
@@ -1077,8 +1007,6 @@
                 }
             });
 
-            // Enable drag scroll on new carousels
-            setTimeout(enableDragScroll, 100);
         }
 
         // ============================
@@ -1122,58 +1050,6 @@
             renderModels(e.target.value);
             updateSuggestionButtons(e.target.value);
         });
-
-        // ============================
-        // DRAG SCROLL
-        // ============================
-        function enableDragScroll() {
-            document.querySelectorAll('.carousel-track').forEach(track => {
-                if (track.dataset.dragEnabled) return;
-                track.dataset.dragEnabled = 'true';
-
-                let isDown = false;
-                let startX;
-                let scrollLeft;
-
-                track.addEventListener('mousedown', (e) => {
-                    if (e.target.closest('button')) return;
-                    isDown = true;
-                    track.style.cursor = 'grabbing';
-                    startX = e.pageX - track.offsetLeft;
-                    scrollLeft = track.scrollLeft;
-                });
-
-                track.addEventListener('mouseleave', () => {
-                    isDown = false;
-                    track.style.cursor = 'grab';
-                });
-
-                track.addEventListener('mouseup', () => {
-                    isDown = false;
-                    track.style.cursor = 'grab';
-                });
-
-                track.addEventListener('mousemove', (e) => {
-                    if (!isDown) return;
-                    e.preventDefault();
-                    const x = e.pageX - track.offsetLeft;
-                    const walk = (x - startX) * 1.5;
-                    track.scrollLeft = scrollLeft - walk;
-                });
-
-                // Touch support
-                track.addEventListener('touchstart', (e) => {
-                    startX = e.touches[0].pageX - track.offsetLeft;
-                    scrollLeft = track.scrollLeft;
-                }, { passive: true });
-
-                track.addEventListener('touchmove', (e) => {
-                    const x = e.touches[0].pageX - track.offsetLeft;
-                    const walk = (x - startX) * 1.5;
-                    track.scrollLeft = scrollLeft - walk;
-                }, { passive: true });
-            });
-        }
 
         // ============================
         // INIT & POLLING
