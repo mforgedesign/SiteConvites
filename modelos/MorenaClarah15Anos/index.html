@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pt-BR">
 
 <head>
@@ -22,54 +22,7 @@
         href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><path d='M64 112c-8.8 0-16 7.2-16 16v22.1L220.5 291.7c20.7 17 50.4 17 71.1 0L464 150.1V128c0-8.8-7.2-16-16-16H64zM48 212.2V384c0 8.8 7.2 16 16 16H448c8.8 0 16-7.2 16-16V212.2L322 328.8c-38.4 31.5-93.7 31.5-132 0L48 212.2zM0 128C0 92.7 28.7 64 64 64H448c35.3 0 64 28.7 64 64V384c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V128z'/></svg>">
 
     <!-- CSS / Libraries / Config -->
-    
-    <!-- Supabase Config (injected) -->
-    <script>
-      window.__SUPABASE_URL = 'https://xchphsltccopelblbsyb.supabase.co';
-      window.__SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InhjaHBoc2x0Y2NvcGVsYmxic3liIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM2NTI1MjQsImV4cCI6MjA4OTIyODUyNH0.ZOtoygT-PZKcByjh2GEzKGX--6K1UqedvVqTlhCAko0';
-      window.__SUPABASE_ASSETS = 'https://xchphsltccopelblbsyb.supabase.co/storage/v1/object/public/modelos';
-      window.__MODEL_SLUG = 'MorenaClarah15Anos';
-      window.__CONFIG_LOADED = false;
-
-      // Helper para URLs de assets
-      window.assetUrl = function(path) {
-        if (!path) return '';
-        // Remove prefixo "assets/" duplicado se houver
-        const cleanPath = path.replace(/^assets\//, '');
-        return window.__SUPABASE_ASSETS + '/' + window.__MODEL_SLUG + '/assets/' + cleanPath;
-      };
-
-      // Carregar config do Supabase de forma assíncrona
-      
-      // INLINE CONFIG (fallback when Supabase anon key is invalid)
-      window.__INLINE_CONFIG = {"assets":{"capa":"assets/capa.jpg","musica":"assets/musica.mp3","aberturaSlides":["assets/slide1.mp4"],"folhaPreenchida":"assets/folha_preenchida.jpg"},"botoes":[{"icone":"fa-solid fa-location-dot","titulo":"Como Chegar","conteudo":"https://maps.app.goo.gl/apshuicUt4GEB1UW7","tipoAcao":"Link","tipoVisual":"css"},{"icone":"fa-solid fa-gift","titulo":"Dicas de\nPresente","conteudo":"<div class=\"text-left\"><div class=\"grid grid-cols-2 gap-3 mb-6\"><div class=\"bg-white/5 p-3 rounded-xl border border-white/10 flex items-center gap-3 hover:bg-white/10 transition-all hover:scale-105\"><i class=\"fa-regular fa-gem text-white text-xl drop-shadow-md\"></i><span class=\"text-[10px] sm:text-xs leading-tight font-medium\">Jóias Prata,<br>Nike</span></div><div class=\"bg-white/5 p-3 rounded-xl border border-white/10 flex items-center gap-3 hover:bg-white/10 transition-all hover:scale-105\"><i class=\"fa-solid fa-glasses text-white text-xl drop-shadow-md\"></i><span class=\"text-[10px] sm:text-xs leading-tight font-medium\">Óculos de Sol,<br>Itens de Praia</span></div><div class=\"bg-white/5 p-3 rounded-xl border border-white/10 flex items-center gap-3 hover:bg-white/10 transition-all hover:scale-105\"><i class=\"fa-solid fa-shirt text-white text-xl drop-shadow-md\"></i><span class=\"text-[10px] sm:text-xs leading-tight font-medium\">Roupas P/PP<br>(32, 34, 36)</span></div><div class=\"bg-white/5 p-3 rounded-xl border border-white/10 flex items-center gap-3 hover:bg-white/10 transition-all hover:scale-105\"><i class=\"fa-solid fa-shoe-prints text-white text-xl drop-shadow-md\"></i><span class=\"text-[10px] sm:text-xs leading-tight font-medium\">Itens da Farm,<br>Sapato 35</span></div><div class=\"bg-white/5 p-3 rounded-xl border border-white/10 flex items-center gap-3 hover:bg-white/10 transition-all hover:scale-105\"><i class=\"fa-solid fa-spray-can-sparkles text-white text-xl drop-shadow-md\"></i><span class=\"text-[10px] sm:text-xs leading-tight font-medium\">Perfume,<br>Body Splash</span></div><div class=\"bg-white/5 p-3 rounded-xl border border-white/10 flex items-center gap-3 hover:bg-white/10 transition-all hover:scale-105\"><i class=\"fa-solid fa-spa text-white text-xl drop-shadow-md\"></i><span class=\"text-[10px] sm:text-xs leading-tight font-medium\">O Boticário,<br>Cabelos Cachos</span></div><div class=\"bg-white/5 p-3 rounded-xl border border-white/10 flex items-center gap-3 hover:bg-white/10 transition-all hover:scale-105\"><i class=\"fa-solid fa-futbol text-white text-xl drop-shadow-md\"></i><span class=\"text-[10px] sm:text-xs leading-tight font-medium\">Itens do<br>Flamengo</span></div><div class=\"bg-white/5 p-3 rounded-xl border border-white/10 flex items-center gap-3 hover:bg-white/10 transition-all hover:scale-105\"><i class=\"fa-solid fa-dumbbell text-white text-xl drop-shadow-md\"></i><span class=\"text-[10px] sm:text-xs leading-tight font-medium\">Academia /<br>Muay Thai</span></div></div><div class=\"bg-black/40 p-4 rounded-xl border border-white/20 mb-4 text-center relative overflow-hidden\"><div class=\"absolute inset-0 bg-white/5 animate-pulse\"></div><p class=\"text-[10px] text-stone-300 mb-1 uppercase tracking-widest relative z-10\">Chave PIX (Telefone)</p><p class=\"font-bold text-xl text-white select-all tracking-wider relative z-10\">11988509403</p></div><button onclick=\"navigator.clipboard.writeText('11988509403'); alert('Chave Pix copiada!');\" class=\"w-full bg-gradient-to-r from-[var(--button-color)] to-blue-800 hover:brightness-110 text-white font-bold py-3.5 rounded-xl transition-all shadow-[0_0_15px_rgba(12,43,113,0.4)] flex items-center justify-center gap-2 uppercase text-xs tracking-widest relative overflow-hidden group\"><span class=\"relative z-10 flex items-center gap-2\">Copiar Chave Pix <i class=\"fa-regular fa-copy group-hover:scale-110 transition-transform\"></i></span><div class=\"absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300\"></div></button></div>","tipoAcao":"PopupHtml","tipoVisual":"css"},{"icone":"fa-solid fa-book-open","titulo":"Manual do\nConvidado","conteudo":"<div class=\"space-y-3\"><div class=\"flex gap-4 items-center bg-white/5 p-4 rounded-xl border border-white/10 hover:bg-white/10 transition-colors group\"><div class=\"w-12 h-12 rounded-full bg-white/10 flex items-center justify-center shrink-0 border border-white/20 shadow-[0_0_10px_rgba(255,255,255,0.1)] group-hover:bg-white/20 transition-colors\"><i class=\"fa-regular fa-clock text-white text-xl\"></i></div><div><h3 class=\"font-bold text-white text-sm mb-0.5 tracking-wide\">A Pontualidade é um Carinho</h3><p class=\"text-xs text-stone-300 leading-relaxed\">Chegue no horário combinado para não perder nenhum detalhe da nossa mágica história.</p></div></div><div class=\"flex gap-4 items-center bg-white/5 p-4 rounded-xl border border-white/10 hover:bg-white/10 transition-colors group\"><div class=\"w-12 h-12 rounded-full bg-white/10 flex items-center justify-center shrink-0 border border-white/20 shadow-[0_0_10px_rgba(255,255,255,0.1)] group-hover:bg-white/20 transition-colors\"><i class=\"fa-regular fa-calendar-check text-white text-xl\"></i></div><div><h3 class=\"font-bold text-white text-sm mb-0.5 tracking-wide\">Confirmação de Presença</h3><p class=\"text-xs text-stone-300 leading-relaxed\">Confirme sua vinda até 15 dias antes, para que possamos preparar tudo com muito amor.</p></div></div><div class=\"flex gap-4 items-center bg-white/5 p-4 rounded-xl border border-white/10 hover:bg-white/10 transition-colors group\"><div class=\"w-12 h-12 rounded-full bg-white/10 flex items-center justify-center shrink-0 border border-white/20 shadow-[0_0_10px_rgba(255,255,255,0.1)] group-hover:bg-white/20 transition-colors\"><i class=\"fa-solid fa-heart text-white text-xl animate-pulse\"></i></div><div><h3 class=\"font-bold text-white text-sm mb-0.5 tracking-wide\">Celebre Conosco</h3><p class=\"text-xs text-stone-300 leading-relaxed\">Deixe a alegria guiar a sua noite! Estamos ansiosos para criar memórias inesquecíveis.</p></div></div><div class=\"flex gap-4 items-center bg-white/5 p-4 rounded-xl border border-white/10 hover:bg-white/10 transition-colors group\"><div class=\"w-12 h-12 rounded-full bg-white/10 flex items-center justify-center shrink-0 border border-white/20 shadow-[0_0_10px_rgba(255,255,255,0.1)] group-hover:bg-white/20 transition-colors\"><i class=\"fa-solid fa-cake-candles text-white text-xl\"></i></div><div><h3 class=\"font-bold text-white text-sm mb-0.5 tracking-wide\">Um Doce Encontro</h3><p class=\"text-xs text-stone-300 leading-relaxed\">Não se despeça sem nos presentear com um abraço e saborear uma fatia do nosso bolo.</p></div></div></div>","tipoAcao":"PopupHtml","tipoVisual":"css"},{"icone":"fa-solid fa-check","titulo":"Confirmar\nPresença","tipoAcao":"RSVP","whatsapp":"5511988509403","rsvpConfig":{"exibirNome":true,"exibirWhatsapp":false,"exibirAcompanhantes":false},"tipoVisual":"css"}],"config":{"brilhos":{"centro":true,"direito":true,"esquerdo":true},"buttonSize":1,"buttonColor":"#b7747b","shadowStyle":"linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0) 100%)","isButtonFilled":true,"exibirMarcaDagua":false},"evento":{"data":"2026-03-21","hora":"18:00","nome":"Morena Clarah","tipo":"Aniversário","idade":"15","endereco":""},"upsell":{"lembrete":true,"saveTheDate":false,"galeriaFotos":false},"convite":{"seo":{"ogTitle":"Você está convidado!","pageTitle":"Convite: Aniversário","ogDescription":"Embarque nessa noite mágica. Clique para ver os detalhes."},"slug":"MorenaClarah15Anos","tema":"","musica":"assets/musica.mp3","paletaCores":"","tipoAbertura":"longa","particulasAbertura":true}};
-      // Use inline config immediately
-      window.config = window.__INLINE_CONFIG;
-      window.__CONFIG_LOADED = true;
-
-      window.__loadConfig = async function() {
-        try {
-          const res = await fetch(
-            window.__SUPABASE_URL + '/rest/v1/modelos?slug=eq.' + window.__MODEL_SLUG + '&select=config_json',
-            { headers: { 'apikey': window.__SUPABASE_ANON_KEY } }
-          );
-          const data = await res.json();
-          if (data && data[0] && data[0].config_json) {
-            window.config = data[0].config_json;
-            window.__CONFIG_LOADED = true;
-            // Dispara evento para código que depende do config
-            window.dispatchEvent(new Event('configLoaded'));
-          } else {
-            console.warn('Config não encontrado no Supabase para:', window.__MODEL_SLUG);
-            window.dispatchEvent(new Event('configError'));
-          }
-        } catch (e) {
-          console.error('Erro ao carregar config:', e);
-          window.dispatchEvent(new Event('configError'));
-        }
-      };
-    </script>
-
+    <script src="config.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&display=swap" rel="stylesheet">
@@ -175,6 +128,79 @@
             border-radius: 10px;
         }
 
+        .button-gallery-shell {
+            position: relative;
+            width: min(94vw, 520px);
+            height: min(86vh, 780px);
+            border-radius: 18px;
+            overflow: hidden;
+            background: rgba(0, 0, 0, 0.38);
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            box-shadow: 0 20px 70px rgba(0, 0, 0, 0.55);
+        }
+
+        .button-gallery-close {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            z-index: 5;
+            width: 40px;
+            height: 40px;
+            border-radius: 999px;
+            background: rgba(0, 0, 0, 0.55);
+            color: #fff;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .button-gallery-track {
+            height: 100%;
+            display: flex;
+            overflow-x: auto;
+            overflow-y: hidden;
+            direction: rtl;
+            scroll-snap-type: x mandatory;
+            scrollbar-width: none;
+        }
+
+        .button-gallery-track::-webkit-scrollbar {
+            display: none;
+        }
+
+        .button-gallery-slide {
+            position: relative;
+            min-width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            scroll-snap-align: center;
+            direction: ltr;
+            overflow: hidden;
+        }
+
+        .button-gallery-slide::before {
+            content: "";
+            position: absolute;
+            inset: -28px;
+            background-image: var(--gallery-bg);
+            background-size: cover;
+            background-position: center;
+            filter: blur(24px) saturate(0.85) brightness(0.62);
+            transform: scale(1.08);
+        }
+
+        .button-gallery-slide img {
+            position: relative;
+            z-index: 1;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            padding: 18px;
+        }
+
         /* Loading Screen */
         #loader {
             position: fixed;
@@ -253,6 +279,101 @@
 
         .opening-particles.ativo {
             opacity: 1;
+        }
+
+        /* Photo Gallery Popup */
+        .gallery-modal {
+            position: fixed;
+            inset: 0;
+            background-color: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(8px);
+            z-index: 300;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            padding: 1rem;
+        }
+        .gallery-modal.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .gallery-container {
+            position: relative;
+            max-width: 90vw;
+            max-height: 85vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .gallery-image {
+            max-width: 90vw;
+            max-height: 80vh;
+            object-fit: contain;
+            border-radius: 12px;
+            box-shadow: 0 8px 40px rgba(0,0,0,0.6);
+            transition: opacity 0.3s ease;
+        }
+        .gallery-close {
+            position: absolute;
+            top: -14px;
+            right: -14px;
+            z-index: 310;
+            background: rgba(0,0,0,0.7);
+            border: 1px solid rgba(255,255,255,0.3);
+            color: white;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: all 0.2s ease;
+        }
+        .gallery-close:hover {
+            background: rgba(255,255,255,0.2);
+            transform: scale(1.1);
+        }
+        .gallery-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 310;
+            background: rgba(0,0,0,0.5);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: white;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.2s ease;
+        }
+        .gallery-arrow:hover {
+            background: rgba(255,255,255,0.15);
+        }
+        .gallery-arrow.left { left: -56px; }
+        .gallery-arrow.right { right: -56px; }
+        @media (max-width: 600px) {
+            .gallery-arrow.left { left: 8px; }
+            .gallery-arrow.right { right: 8px; }
+            .gallery-arrow { background: rgba(0,0,0,0.7); }
+        }
+        .gallery-counter {
+            position: absolute;
+            bottom: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: rgba(255,255,255,0.6);
+            font-size: 0.75rem;
+            font-family: 'Montserrat', sans-serif;
         }
     </style>
 </head>
@@ -360,7 +481,7 @@
             </div>
 
             <!-- Click to interact (hidden until preload finishes) -->
-            <div id="dicaInteractionContainer" class="absolute z-10 flex flex-col items-center gap-1 animate-pulse" style="opacity: 0; pointer-events: none; transition: opacity 0.6s ease;">
+            <div id="dicaInteractionContainer" class="absolute z-10 flex flex-col items-center gap-1 animate-pulse" style="display: none; opacity: 0; pointer-events: none; transition: opacity 0.6s ease;">
                 <div class="flex items-center gap-3">
                     <span class="texto-capa text-2xl font-bold uppercase tracking-widest">Clique</span>
                     <i class="fa-solid fa-hand-pointer text-4xl text-white drop-shadow-lg animar-clique"></i>
@@ -419,6 +540,33 @@
         </div>
     </div>
 
+    <!-- Popup Galeria por Botao -->
+    <div id="buttonGalleryModal" class="modal" onclick="closeModal('buttonGalleryModal')">
+        <div class="button-gallery-shell" onclick="event.stopPropagation()">
+            <button onclick="closeModal('buttonGalleryModal')" class="button-gallery-close">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+            <div id="buttonGalleryTrack" class="button-gallery-track"></div>
+        </div>
+    </div>
+
+    <!-- Popup Galeria de Fotos -->
+    <div id="galleryModal" class="gallery-modal" onclick="closeGallery()">
+        <div class="gallery-container" onclick="event.stopPropagation()">
+            <button class="gallery-close" onclick="closeGallery()">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <button class="gallery-arrow left" onclick="galleryPrev()">
+                <i class="fa-solid fa-chevron-left"></i>
+            </button>
+            <img id="galleryImage" class="gallery-image" src="" alt="Foto">
+            <button class="gallery-arrow right" onclick="galleryNext()">
+                <i class="fa-solid fa-chevron-right"></i>
+            </button>
+            <div class="gallery-counter" id="galleryCounter">1 / 1</div>
+        </div>
+    </div>
+
     <!-- MAIN SCRIPT LOGIC -->
     <script>
         let config = null;
@@ -433,6 +581,10 @@
         let currentSlideIndex = 0;
         let slideTimer = null;
         let isTransitioning = false;
+        let openingAssetsReady = false;
+        let openingPreloadFailed = false;
+        let backgroundMediaUrl = '';
+        const preloadedAssetUrls = new Map();
 
         // Script to fix window inner height on iOS
         function setViewportHeight() {
@@ -531,15 +683,18 @@
             // Música
             if (config.assets.musica) {
                 audio.src = config.assets.musica;
+                audio.load();
             }
 
             // Background Media
-            const bgMediaUrl = config.assets.folhaVazia || config.assets.folhaPreenchida;
-            if (bgMediaUrl) {
-                if (bgMediaUrl.endsWith('.mp4')) {
-                    fundoTelaVideo.src = bgMediaUrl;
+            backgroundMediaUrl = config.assets.folhaPreenchida || config.assets.folhaVazia || '';
+            if (backgroundMediaUrl) {
+                if (isVideoAsset(backgroundMediaUrl)) {
+                    fundoTelaVideo.src = backgroundMediaUrl;
+                    fundoTelaVideo.preload = 'auto';
+                    fundoTelaVideo.load();
                 } else {
-                    fundoTelaImg.src = bgMediaUrl;
+                    fundoTelaImg.src = backgroundMediaUrl;
                 }
             }
 
@@ -555,12 +710,18 @@
             // Render Buttons based on config arrays
             renderButtons(config.botoes || []);
 
-            // Timer
-            if (config.evento.data && (config.upsell.lembrete !== false)) {
+            // Photo Gallery
+            if (config.upsell && config.upsell.galeriaFotos && config.assets.fotos && config.assets.fotos.length > 0) {
+                galleryPhotos = config.assets.fotos;
+            }
+
+            // Timer: cronometro (grátis)
+            const hasCronometro = config.config.cronometro === true;
+            if (config.evento.data && hasCronometro) {
                 setupCountdown();
             }
 
-            // Interaction Event (will be enabled after preload finishes)
+            // Interaction is guarded by openingAssetsReady and visually enabled after preload finishes.
             capa.addEventListener('click', startSequence);
 
             // Watermark (Pagamento Pendente)
@@ -602,6 +763,8 @@
                     anchor.target = "_blank";
                 } else if (btn.tipoAcao === 'PopupImagem') {
                     anchor.onclick = (e) => { e.preventDefault(); openImageModal(btn.conteudo); };
+                } else if (btn.tipoAcao === 'Galeria') {
+                    anchor.onclick = (e) => { e.preventDefault(); openButtonGalleryModal(btn.conteudo); };
                 } else if (btn.tipoAcao === 'PopupHtml') {
                     anchor.onclick = (e) => { e.preventDefault(); openHtmlModal(btn); };
                 } else if (btn.tipoAcao === 'RSVP') {
@@ -703,23 +866,98 @@
         // ==========================================
         // ASSET PRELOADER
         // ==========================================
+        function isVideoAsset(url) {
+            return /\.(mp4|webm|mov)(\?|#|$)/i.test(String(url || ''));
+        }
+
+        function resolvePreloadedUrl(url) {
+            return preloadedAssetUrls.get(url) || url;
+        }
+
+        function markPreloadBlocked(preloaderSlow, message) {
+            openingPreloadFailed = true;
+            if (preloaderSlow) {
+                preloaderSlow.textContent = message || 'Não foi possível carregar todos os arquivos. Verifique a conexão e recarregue.';
+                preloaderSlow.style.opacity = '1';
+            }
+        }
+
+        function revealInteractionAfterPreload(preloaderUI, dicaContainer) {
+            if (preloaderUI) {
+                preloaderUI.style.opacity = '0';
+            }
+
+            setTimeout(() => {
+                if (preloaderUI) {
+                    preloaderUI.style.display = 'none';
+                }
+                if (!dicaContainer) return;
+                dicaContainer.style.display = 'flex';
+                requestAnimationFrame(() => {
+                    dicaContainer.style.opacity = '1';
+                    dicaContainer.style.pointerEvents = 'auto';
+                });
+            }, 650);
+        }
+
+        function preloadImageAsset(url) {
+            return new Promise((resolve, reject) => {
+                const img = new Image();
+                img.onload = () => resolve(url);
+                img.onerror = () => reject(new Error(`Falha ao carregar imagem: ${url}`));
+                img.src = url;
+            });
+        }
+
+        async function preloadVideoAsset(url) {
+            const response = await fetch(url, { cache: 'force-cache' });
+            if (!response.ok) {
+                throw new Error(`Falha ao carregar vídeo: ${url}`);
+            }
+            const blob = await response.blob();
+            if (!blob || blob.size === 0) {
+                throw new Error(`Vídeo vazio: ${url}`);
+            }
+            const objectUrl = URL.createObjectURL(blob);
+            preloadedAssetUrls.set(url, objectUrl);
+            return objectUrl;
+        }
+
         function preloadAllSlides() {
             const preloaderUI = document.getElementById('preloaderUI');
             const preloaderBar = document.getElementById('preloaderBar');
             const preloaderSlow = document.getElementById('preloaderSlow');
             const dicaContainer = document.getElementById('dicaInteractionContainer');
 
-            if (slideAssets.length === 0) {
-                // No slides to preload — show interact button immediately
-                preloaderUI.style.opacity = '0';
-                setTimeout(() => { preloaderUI.style.display = 'none'; }, 500);
-                dicaContainer.style.opacity = '1';
-                dicaContainer.style.pointerEvents = 'auto';
+            openingAssetsReady = false;
+            openingPreloadFailed = false;
+
+            // Build unified list of assets to preload before interaction.
+            const assetsToLoad = [];
+
+            if (config.assets.capa) {
+                assetsToLoad.push({ url: config.assets.capa, type: 'image' });
+            }
+
+            slideAssets.forEach(url => {
+                assetsToLoad.push({ url, type: isVideoAsset(url) ? 'video' : 'image' });
+            });
+
+            if (backgroundMediaUrl) {
+                assetsToLoad.push({
+                    url: backgroundMediaUrl,
+                    type: isVideoAsset(backgroundMediaUrl) ? 'video' : 'image'
+                });
+            }
+
+            if (assetsToLoad.length === 0) {
+                openingAssetsReady = true;
+                revealInteractionAfterPreload(preloaderUI, dicaContainer);
                 return;
             }
 
             let loaded = 0;
-            const total = slideAssets.length;
+            const total = assetsToLoad.length;
 
             // Show slow connection warning after 5s
             const slowTimer = setTimeout(() => {
@@ -733,31 +971,23 @@
 
                 if (loaded >= total) {
                     clearTimeout(slowTimer);
-                    // All assets loaded — fade out loader, show interact button
-                    preloaderUI.style.opacity = '0';
-                    setTimeout(() => {
-                        preloaderUI.style.display = 'none';
-                        dicaContainer.style.opacity = '1';
-                        dicaContainer.style.pointerEvents = 'auto';
-                    }, 500);
+                    openingAssetsReady = true;
+                    revealInteractionAfterPreload(preloaderUI, dicaContainer);
                 }
             }
 
-            slideAssets.forEach(url => {
-                const isVideo = url.endsWith('.mp4') || url.endsWith('.webm');
-                if (isVideo) {
-                    // Preload video by fetching blob into cache
-                    fetch(url)
-                        .then(r => r.blob())
-                        .then(() => onAssetLoaded())
-                        .catch(() => onAssetLoaded()); // count as loaded even if failed
-                } else {
-                    // Preload image
-                    const img = new Image();
-                    img.onload = onAssetLoaded;
-                    img.onerror = onAssetLoaded;
-                    img.src = url;
-                }
+            assetsToLoad.forEach(asset => {
+                const preload = asset.type === 'video'
+                    ? preloadVideoAsset(asset.url)
+                    : preloadImageAsset(asset.url);
+
+                preload
+                    .then(onAssetLoaded)
+                    .catch((err) => {
+                        console.warn(err);
+                        clearTimeout(slowTimer);
+                        markPreloadBlocked(preloaderSlow);
+                    });
             });
         }
 
@@ -766,9 +996,9 @@
         // ==========================================
         function startSequence() {
             if (iniciouInteracao) return;
+            if (!openingAssetsReady || openingPreloadFailed) return;
             iniciouInteracao = true;
 
-            capa.classList.add('invisivel');
             btnMute.classList.remove('invisivel');
 
             if (audio && config.assets.musica) {
@@ -777,20 +1007,28 @@
             }
 
             if (fundoTelaVideo && fundoTelaVideo.src) {
+                const preloadedBgUrl = resolvePreloadedUrl(backgroundMediaUrl);
+                if (preloadedBgUrl && fundoTelaVideo.src !== preloadedBgUrl) {
+                    fundoTelaVideo.src = preloadedBgUrl;
+                    fundoTelaVideo.load();
+                }
                 fundoTelaVideo.play().catch(e => console.log("Bg play failed"));
             }
 
             if (config.convite.tipoAbertura === 'nenhuma' || slideAssets.length === 0) {
+                capa.classList.add('invisivel');
                 irParaLoop();
             } else {
                 // Only show "Pular" if there are 2+ slides (meaningful sequence)
-                if (slideAssets.length > 0) btnPular.classList.remove('invisivel');
+                if (slideAssets.length > 1) btnPular.classList.remove('invisivel');
                 
                 if (config.convite.particulasAbertura) {
                     startOpeningParticles();
                 }
 
-                playSlide(0);
+                playSlide(0, () => {
+                    capa.classList.add('invisivel');
+                });
             }
         }
 
@@ -802,31 +1040,39 @@
 
             currentSlideIndex = index;
             const slideUrl = slideAssets[index];
-            const isVideo = slideUrl.endsWith('.mp4') || slideUrl.endsWith('.webm');
+            const playableUrl = resolvePreloadedUrl(slideUrl);
+            const isVideo = isVideoAsset(slideUrl);
 
             // Clean up both elements
             videoAbertura.onended = null;
             videoAbertura.oncanplay = null;
+            videoAbertura.onloadeddata = null;
             videoAbertura.ontimeupdate = null;
             videoAbertura.classList.add('invisivel');
             imgAbertura.classList.add('invisivel');
             clearTimeout(slideTimer);
 
             if (isVideo) {
-                videoAbertura.src = slideUrl;
-                
+                if (videoAbertura.getAttribute('src') !== playableUrl) {
+                    videoAbertura.src = playableUrl;
+                }
+                videoAbertura.preload = 'auto';
+                 
                 // Use 'playing' event — fires only when the first frame is actually visible
                 let readyFired = false;
-                videoAbertura.oncanplay = () => {
+                const showAndPlay = () => {
                     videoAbertura.oncanplay = null;
-                    // INSTANT show — bypass .camada CSS transition
+                    videoAbertura.onloadeddata = null;
+                    try { videoAbertura.currentTime = 0; } catch (e) { }
                     videoAbertura.style.transition = 'none';
                     videoAbertura.classList.remove('invisivel');
                     videoAbertura.offsetHeight; // force reflow
                     videoAbertura.style.transition = '';
                     videoAbertura.play().catch(e => console.warn("Play blocked:", e));
                 };
-                
+                videoAbertura.onloadeddata = showAndPlay;
+                videoAbertura.oncanplay = showAndPlay;
+                 
                 videoAbertura.addEventListener('playing', function onPlaying() {
                     videoAbertura.removeEventListener('playing', onPlaying);
                     if (readyFired) return;
@@ -844,7 +1090,7 @@
                     // Multiple slides — transition to next slide
                     videoAbertura.ontimeupdate = () => {
                         if (transitionTriggered) return;
-                        if (videoAbertura.duration > 0 && videoAbertura.currentTime >= videoAbertura.duration - 0.8) {
+                        if (videoAbertura.duration > 0 && videoAbertura.currentTime >= videoAbertura.duration - 0.65) {
                             transitionTriggered = true;
                             videoAbertura.ontimeupdate = null;
                             triggerTransition(index + 1);
@@ -859,28 +1105,16 @@
                     };
                 } else {
                     // Last or only slide — go to main loop when done
-                    // timeupdate fallback in case onended doesn't fire
-                    let loopTriggered = false;
-                    videoAbertura.ontimeupdate = () => {
-                        if (loopTriggered) return;
-                        if (videoAbertura.duration > 0 && videoAbertura.currentTime >= videoAbertura.duration - 0.5) {
-                            loopTriggered = true;
-                            videoAbertura.ontimeupdate = null;
-                            videoAbertura.onended = null;
-                            irParaLoop();
-                        }
-                    };
                     videoAbertura.onended = () => {
-                        if (!loopTriggered) {
-                            loopTriggered = true;
-                            videoAbertura.ontimeupdate = null;
-                            videoAbertura.onended = null;
-                            irParaLoop();
-                        }
+                        videoAbertura.onended = null;
+                        irParaLoop();
                     };
-                    }
-                
+                }
+                 
                 videoAbertura.load();
+                if (videoAbertura.readyState >= 3) {
+                    setTimeout(showAndPlay, 0);
+                }
             } else {
                 const img = imgAbertura;
                 img.onload = () => {
@@ -889,7 +1123,7 @@
                     if (onReady) { onReady(); onReady = null; }
                     img.onload = null;
                 };
-                img.src = slideUrl;
+                img.src = playableUrl;
                 
                 // If image is cached, onload may not fire
                 if (img.complete) {
@@ -1142,15 +1376,6 @@
 
             stopOpeningParticles();
 
-            // Clear sparkle canvas and hide transition overlay
-            const sparkleCanvas = document.getElementById('sparkleCanvas');
-            if (sparkleCanvas) {
-                const sCtx = sparkleCanvas.getContext('2d');
-                sCtx.clearRect(0, 0, sparkleCanvas.width, sparkleCanvas.height);
-            }
-            const slideTransEl = document.getElementById('slideTransition');
-            if (slideTransEl) slideTransEl.classList.remove('active');
-
             btnPular.classList.add('invisivel');
             videoAbertura.classList.add('invisivel');
             imgAbertura.classList.add('invisivel');
@@ -1222,6 +1447,19 @@
             if (!src) return;
             document.getElementById('popupImageImg').src = src;
             document.getElementById('popupImage').classList.add('active');
+        }
+
+        function openButtonGalleryModal(items) {
+            const photos = Array.isArray(items) ? items.filter(Boolean) : [];
+            if (!photos.length) return;
+            const track = document.getElementById('buttonGalleryTrack');
+            track.innerHTML = photos.map((src, index) => `
+                <div class="button-gallery-slide" style="--gallery-bg: url('${src.replace(/'/g, "\\'")}')">
+                    <img src="${src}" alt="Foto ${index + 1}" loading="eager">
+                </div>
+            `).join('');
+            track.scrollLeft = track.scrollWidth;
+            document.getElementById('buttonGalleryModal').classList.add('active');
         }
 
         function closeModal(id) {
@@ -1340,6 +1578,53 @@
                 };
             }
         }
+
+        // ==========================================
+        // PHOTO GALLERY
+        // ==========================================
+        let galleryPhotos = [];
+        let galleryIndex = 0;
+
+        function openGallery() {
+            if (!galleryPhotos.length) return;
+            galleryIndex = 0;
+            updateGalleryImage();
+            document.getElementById('galleryModal').classList.add('active');
+        }
+
+        function closeGallery() {
+            document.getElementById('galleryModal').classList.remove('active');
+        }
+
+        function galleryNext() {
+            galleryIndex = (galleryIndex + 1) % galleryPhotos.length;
+            updateGalleryImage();
+        }
+
+        function galleryPrev() {
+            galleryIndex = (galleryIndex - 1 + galleryPhotos.length) % galleryPhotos.length;
+            updateGalleryImage();
+        }
+
+        function updateGalleryImage() {
+            const img = document.getElementById('galleryImage');
+            img.style.opacity = '0';
+            setTimeout(() => {
+                img.src = galleryPhotos[galleryIndex];
+                img.onload = () => { img.style.opacity = '1'; };
+            }, 150);
+            document.getElementById('galleryCounter').textContent =
+                `${galleryIndex + 1} / ${galleryPhotos.length}`;
+        }
+
+        // Keyboard navigation for gallery
+        document.addEventListener('keydown', (e) => {
+            const modal = document.getElementById('galleryModal');
+            if (!modal.classList.contains('active')) return;
+            if (e.key === 'ArrowRight') galleryNext();
+            else if (e.key === 'ArrowLeft') galleryPrev();
+            else if (e.key === 'Escape') closeGallery();
+        });
 
         // ==========================================
         // COUNTDOWN
