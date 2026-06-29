@@ -1,0 +1,21 @@
+{
+  "url": "https://clique-e-abra.mforge.com.br/Sarah-Vieira-15Anos",
+  "publishedAt": "2026-06-29T17:10:36.965Z",
+  "deployCommit": "016b023fd33f86e453f276acbd98029fc2161a23",
+  "githubActionsRun": {
+    "id": 28389486801,
+    "name": "pages build and deployment",
+    "url": "https://github.com/mforgedesign/convitesmforge/actions/runs/28389486801",
+    "status": "completed",
+    "conclusion": "success",
+    "deployJob": {
+      "id": 84112725540,
+      "name": "deploy",
+      "status": "completed",
+      "conclusion": "success",
+      "startedAt": "2026-06-29T17:08:44Z",
+      "completedAt": "2026-06-29T17:10:24Z",
+      "url": "https://github.com/mforgedesign/convitesmforge/actions/runs/28389486801/job/84112725540"
+    }
+  }
+}
