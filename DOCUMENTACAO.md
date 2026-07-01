@@ -92,3 +92,9 @@ Os configs publicados precisam referenciar arquivos presentes na própria pasta 
 O modelo `modelo-tropical` voltou a usar seus assets locais originais: capa, vídeo de abertura, folha em vídeo, música, brilhos e SVGs de botão. Os arquivos foram recuperados do histórico anterior ao commit que os removeu durante a migração para Supabase. O catálogo aponta novamente para `assets/capa.jpg`.
 
 Detalhes em `changelog_2026-07-01_10-45_restaurar_assets_modelo_tropical.md`.
+
+### Assets finais e nome visual do modelo Sarah (01/07/2026)
+
+O modelo `modelo-Sarah-Vieira-15Anos` usa as versões finais atuais de `cover.jpg` e `slide1.mp4` da pasta de Produção. Seu nome no catálogo é `Floral e Azul com Branco e Prata`, seguindo a regra `Tema e Paleta` em vez do nome da pessoa.
+
+Detalhes em `changelog_2026-07-01_12-10_sarah_assets_nome_visual.md`.
