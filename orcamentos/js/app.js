@@ -1,673 +1,913 @@
-// orcamento/js/app.js — Página A/B Test (Rolagem)
-
-
-function sanitizeSlug(s) { return s.normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-zA-Z0-9\-_]/g,'-'); }
-
-const app = {
-    baseValue: 80,
-    data: {
-        clientName: '',
-        clientWhatsapp: '',
-        // Personalização
-        aberturaType: 'longa', // longa | curta | sem
-        rsvpType: 'whatsapp', // whatsapp | formulario | none
-        rsvpExtra: 0,
-        rsvpWhatsapp: '',
-        giftType: 'simples', // simples | premium | inteligente | sua_lista | none
-        giftExtra: 0,
-        giftText: '',
-        giftLink: '',
-        manualType: 'simples', // simples | premium | none
-        manualExtra: 0,
-        manualText: '',
-        // Extras (checkboxes)
-        extras: ['musica'],
-        extrasExtra: 0,
-        musicText: '',
-        includePhoto: false,
-        photoExtra: 0,
-        // Evento
-        eventType: 'aniversario',
-        customEventType: '',
-        eventName: '',
-        eventAge: '',
-        eventDate: '',
-        eventTimeStart: '',
-        eventTimeEnd: '',
-        eventLocation: '',
-        eventTheme: '',
-        eventColors: '',
-        eventFormacao: ''
-    },
-
-    // ==================== POPUP ====================
-    initPopup() {
-        const nameInput = document.getElementById('popup-name');
-        const phoneInput = document.getElementById('popup-phone');
-        const btn = document.getElementById('popup-btn');
-
-        const checkFields = () => {
-            const nameOk = nameInput.value.trim().length >= 2;
-            const phoneOk = phoneInput.value.replace(/\D/g, '').length >= 10;
-            if (nameOk && phoneOk) {
-                btn.classList.add('visible');
-            } else {
-                btn.classList.remove('visible');
-            }
-        };
-
-        nameInput.addEventListener('input', checkFields);
-        phoneInput.addEventListener('input', () => {
-            this.maskPhone(phoneInput);
-            checkFields();
-        });
-
-        btn.addEventListener('click', () => {
-            this.data.clientName = nameInput.value.trim();
-            this.data.clientWhatsapp = phoneInput.value.trim();
-            document.getElementById('identify-popup').classList.add('hidden');
-            this.save();
-        });
-    },
-
-    maskPhone(input) {
-        let v = input.value.replace(/\D/g, '');
-        if (v.length > 11) v = v.slice(0, 11);
-        if (v.length > 6) v = `(${v.slice(0,2)}) ${v.slice(2,7)}-${v.slice(7)}`;
-        else if (v.length > 2) v = `(${v.slice(0,2)}) ${v.slice(2)}`;
-        input.value = v;
-    },
-
-    // ==================== SELEÇÃO DE CARDS ====================
-    // Radio groups: só um selecionado por grupo
-    selectOption(group, value) {
-        const cards = document.querySelectorAll(`[data-group="${group}"]`);
-        cards.forEach(c => c.classList.remove('selected'));
-
-        if (this.data[group + 'Type'] === value) {
-            // Toggle off
-            this.data[group + 'Type'] = 'none';
-            this.data[group + 'Extra'] = 0;
-        } else {
-            const card = document.querySelector(`[data-group="${group}"][data-value="${value}"]`);
-            if (card) card.classList.add('selected');
-            this.data[group + 'Type'] = value;
-            this.data[group + 'Extra'] = this.getPriceFor(group, value);
-        }
-
-        if (group !== 'abertura') this.updateConditionalFields(group);
-        this.updateTotal();
-        this.save();
-    },
-
-    getPriceFor(group, value) {
-        const prices = {
-            abertura: { longa: 0, curta: 0, sem: 0 },
-            rsvp: { whatsapp: 0, formulario: 10 },
-            gift: { simples: 0, premium: 10, inteligente: 25, sua_lista: 0 },
-            manual: { simples: 0, premium: 10 }
-        };
-        return (prices[group] && prices[group][value]) || 0;
-    },
-
-    updateConditionalFields(group) {
-        if (group === 'rsvp') {
-            const f = document.getElementById('field-rsvp-whatsapp');
-            f.classList.toggle('hidden', this.data.rsvpType !== 'whatsapp');
-        }
-        if (group === 'gift') {
-            document.getElementById('field-gift-text').classList.toggle('hidden',
-                !['simples', 'premium'].includes(this.data.giftType));
-            document.getElementById('field-gift-link').classList.toggle('hidden',
-                this.data.giftType !== 'sua_lista');
-            document.getElementById('field-gift-notice').classList.toggle('hidden',
-                this.data.giftType !== 'inteligente');
-        }
-        if (group === 'manual') {
-            document.getElementById('field-manual-text').classList.toggle('hidden',
-                !['simples', 'premium'].includes(this.data.manualType));
-        }
-    },
-
-    // Extras (checkboxes — independentes)
-    toggleExtra(value) {
-        const card = document.querySelector(`[data-extra="${value}"]`);
-        if (!card) return;
-
-        const idx = this.data.extras.indexOf(value);
-        if (idx >= 0) {
-            this.data.extras.splice(idx, 1);
-            card.classList.remove('selected');
-        } else {
-            this.data.extras.push(value);
-            card.classList.add('selected');
-        }
-
-        // Música field
-        if (value === 'musica') {
-            document.getElementById('field-music-text').classList.toggle('hidden',
-                !this.data.extras.includes('musica'));
-        }
-
-        this.updateTotal();
-        this.save();
-    },
-
-    togglePhoto() {
-        this.data.includePhoto = !this.data.includePhoto;
-        const card = document.querySelector('[data-extra="photo"]');
-        if (card) card.classList.toggle('selected', this.data.includePhoto);
-        this.data.photoExtra = 0;
-        this.updateTotal();
-        this.save();
-    },
-
-    // ==================== CÁLCULO DE TOTAL ====================
-    updateTotal() {
-        let extrasVal = 0;
-        this.data.extras.forEach(e => {
-            if (e === 'galeria') extrasVal += 10;
-            else if (e === 'playlist') extrasVal += 10;
-            else if (e === 'lembrete') extrasVal += 25;
-            else if (e === 'savethedate') extrasVal += 25;
-        });
-        this.data.extrasExtra = extrasVal;
-
-        const rsvpExtra = this.getPriceFor('rsvp', this.data.rsvpType);
-        const giftExtra = this.getPriceFor('gift', this.data.giftType);
-        const manualExtra = this.getPriceFor('manual', this.data.manualType);
-        this.data.rsvpExtra = rsvpExtra;
-        this.data.giftExtra = giftExtra;
-        this.data.manualExtra = manualExtra;
-
-        const total = this.baseValue + rsvpExtra + giftExtra + manualExtra + extrasVal + this.data.photoExtra;
-
-        const fmt = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
-        document.querySelectorAll('.total-value').forEach(el => el.textContent = fmt.format(total));
-    },
-
-    getTotal() {
-        return this.baseValue + this.data.rsvpExtra + this.data.giftExtra +
-               this.data.manualExtra + this.data.extrasExtra + this.data.photoExtra;
-    },
-
-    // ==================== EVENTO ====================
-    initEventForm() {
-        document.querySelectorAll('.evt-type-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                document.querySelectorAll('.evt-type-btn').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                this.data.eventType = btn.dataset.type;
-                this.updateEventFields();
-                this.save();
-            });
-        });
-    },
-
-    updateEventFields() {
-        const t = this.data.eventType;
-        const ageWrap = document.getElementById('age-wrap');
-        const nameLabel = document.getElementById('event-name-label');
-        const nameInput = document.getElementById('event-name');
-        const customWrap = document.getElementById('custom-event-wrap');
-
-        if (ageWrap) ageWrap.style.display = t === 'aniversario' ? '' : 'none';
-        if (customWrap) customWrap.style.display = t === 'outro' ? '' : 'none';
-        const formacaoWrap = document.getElementById('formacao-wrap');
-        if (formacaoWrap) formacaoWrap.style.display = t === 'formatura' ? '' : 'none';
-
-        if (nameLabel && nameInput) {
-            const labels = { aniversario: 'Nome do Aniversariante', casamento: 'Nome do Casal', formatura: 'Nome do Formando', outro: 'Nome' };
-            const ph = { aniversario: 'Ex: Maria', casamento: 'Ex: Maria e João', formatura: 'Ex: João', outro: 'Ex: Maria' };
-            nameLabel.textContent = labels[t] || 'Nome';
-            nameInput.placeholder = ph[t] || 'Ex: Maria';
-        }
-    },
-
-    // ==================== RESUMO ====================
-    buildSummary() {
-        const list = document.getElementById('summary-items');
-        if (!list) return;
-        list.innerHTML = '';
-        const fmt = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
-
-        const addRow = (label, value, isFree) => {
-            const row = document.createElement('div');
-            row.className = 'summary-row';
-            row.innerHTML = `<span class="label">${label}</span><span class="value ${isFree ? 'free' : ''}">${isFree ? 'Grátis' : fmt.format(value)}</span>`;
-            list.appendChild(row);
-        };
-
-        addRow('Convite Digital Premium', 80, false);
-
-        // Abertura
-        const aberturaLabels = { longa: 'Abertura Longa', curta: 'Abertura Curta', sem: 'Sem Abertura' };
-        addRow(aberturaLabels[this.data.aberturaType] || 'Abertura Longa', 0, true);
-
-        // RSVP
-        const rsvpLabels = { whatsapp: 'Confirmação: WhatsApp Simples', formulario: 'Confirmação: Formulário Inteligente' };
-        if (this.data.rsvpType !== 'none') {
-            addRow(rsvpLabels[this.data.rsvpType] || 'Confirmação', this.data.rsvpExtra, this.data.rsvpExtra === 0);
-        }
-
-        // Gift
-        const giftLabels = { simples: 'Presentes: Sugestões Simples', premium: 'Presentes: Sugestões Premium', inteligente: 'Presentes: Lista Inteligente', sua_lista: 'Presentes: Sua Lista' };
-        if (this.data.giftType !== 'none') {
-            addRow(giftLabels[this.data.giftType] || 'Presentes', this.data.giftExtra, this.data.giftExtra === 0);
-        }
-
-        // Manual
-        const manualLabels = { simples: 'Manual: Simples', premium: 'Manual: Premium' };
-        if (this.data.manualType !== 'none') {
-            addRow(manualLabels[this.data.manualType] || 'Manual', this.data.manualExtra, this.data.manualExtra === 0);
-        }
-
-        // Extras
-        if (this.data.extras.includes('musica')) addRow('Música Personalizada', 0, true);
-        if (this.data.extras.includes('cronometro')) addRow('Cronômetro', 0, true);
-        if (this.data.extras.includes('galeria')) addRow('Galeria de Fotos', 10, false);
-        if (this.data.extras.includes('lembrete')) addRow('Lembrete', 25, false);
-        if (this.data.extras.includes('savethedate')) addRow('Save The Date', 25, false);
-        if (this.data.includePhoto) addRow('Foto na Abertura', 0, true);
-
-        this.updateTotal();
-    },
-
-    // ==================== WHATSAPP ====================
-    syncFormData() {
-        this.data.rsvpWhatsapp = document.getElementById('rsvp-number')?.value || '';
-        this.data.giftText = document.getElementById('gift-text')?.value || '';
-        this.data.giftLink = document.getElementById('gift-link')?.value || '';
-        this.data.manualText = document.getElementById('manual-text')?.value || '';
-        this.data.musicText = document.getElementById('music-text')?.value || '';
-        this.data.eventName = document.getElementById('event-name')?.value || '';
-        this.data.eventAge = document.getElementById('event-age')?.value || '';
-        this.data.eventDate = document.getElementById('event-date')?.value || '';
-        this.data.eventTimeStart = document.getElementById('event-time-start')?.value || '';
-        this.data.eventTimeEnd = document.getElementById('event-time-end')?.value || '';
-        this.data.eventLocation = document.getElementById('event-location')?.value || '';
-        this.data.eventTheme = document.getElementById('event-theme')?.value || '';
-        this.data.eventColors = document.getElementById('event-colors')?.value || '';
-        this.data.customEventType = document.getElementById('custom-event-type')?.value || '';
-        this.data.eventFormacao = document.getElementById('event-formacao')?.value || '';
-    },
-
-    confirmOrder() {
-        this.syncFormData();
-        this.buildSummary();
-
-        if (!this.data.eventName.trim()) {
-            alert('Por favor, preencha pelo menos o Nome no convite.');
-            document.getElementById('event-name')?.focus();
-            return;
-        }
-
-        // Show confirm modal
-        document.getElementById('confirm-modal').classList.add('active');
-    },
-
-    sendToWhatsApp() {
-        this.syncFormData();
-        const fmt = new Intl.NumberFormat('pt-BR', { style: 'currency', currency: 'BRL' });
-        const total = this.getTotal();
-
-        const typeMap = { aniversario: 'Aniversário', casamento: 'Casamento', formatura: 'Formatura', outro: 'Outro' };
-        const aberturaMap = { longa: 'Abertura Longa', curta: 'Abertura Curta', sem: 'Sem Abertura' };
-        const rsvpMap = { whatsapp: 'WhatsApp Simples', formulario: 'Formulário Inteligente', none: 'Não incluir' };
-        const giftMap = { simples: 'Sugestões Simples', premium: 'Sugestões Premium', inteligente: 'Lista Inteligente', sua_lista: 'Sua Lista', none: 'Não incluir' };
-        const manualMap = { simples: 'Simples', premium: 'Premium', none: 'Não incluir' };
-
-        let msg = `⚠️ *PAGAMENTO DE SINAL*\n`;
-        msg += `Pagamento de Sinal de R$20 deve ser feito no link abaixo e comprovante deve ser enviado aqui na conversa:\n`;
-        msg += `🔗 https://mpago.la/1wvHN6p\n\n`;
-        msg += `─────────────────────\n`;
-        msg += `📋 *RESUMO DO ORÇAMENTO*\n`;
-        msg += `─────────────────────\n\n`;
-
-        msg += `👤 *DADOS DO CLIENTE*\n`;
-        msg += `• Nome: ${this.data.clientName}\n`;
-        msg += `• WhatsApp: ${this.data.clientWhatsapp}\n\n`;
-
-        msg += `🎉 *CONVITE DIGITAL*\n`;
-        msg += `• Convite Premium — ${fmt.format(80)}\n`;
-        const selModel = JSON.parse(localStorage.getItem('selectedModel') || 'null');
-        if (selModel) {
-            const siteOrigin = window.location.origin;
-            const modelLink = siteOrigin + '/modelos.html?modelo=' + encodeURIComponent(selModel.slug);
-            msg += `• Modelo: ${selModel.name}\n`;
-            msg += `  ↳ Ver: ${modelLink}\n`;
-        }
-        msg += `\n`;
-
-        msg += `🎨 *PERSONALIZAÇÃO*\n`;
-        msg += `• Abertura: ${aberturaMap[this.data.aberturaType] || 'Longa'}\n`;
-        if (this.data.rsvpType !== 'none') {
-            msg += `• Confirmação: ${rsvpMap[this.data.rsvpType]} — ${this.data.rsvpExtra === 0 ? 'Grátis' : fmt.format(this.data.rsvpExtra)}\n`;
-            if (this.data.rsvpType === 'whatsapp' && this.data.rsvpWhatsapp) msg += `  ↳ Número: ${this.data.rsvpWhatsapp}\n`;
-        }
-        if (this.data.giftType !== 'none') {
-            msg += `• Presentes: ${giftMap[this.data.giftType]} — ${this.data.giftExtra === 0 ? 'Grátis' : fmt.format(this.data.giftExtra)}\n`;
-            if (this.data.giftText) msg += `  ↳ Texto: ${this.data.giftText}\n`;
-            if (this.data.giftLink) msg += `  ↳ Link: ${this.data.giftLink}\n`;
-        }
-        if (this.data.manualType !== 'none') {
-            msg += `• Manual: ${manualMap[this.data.manualType]} — ${this.data.manualExtra === 0 ? 'Grátis' : fmt.format(this.data.manualExtra)}\n`;
-            if (this.data.manualText) msg += `  ↳ Info: ${this.data.manualText}\n`;
-        }
-        if (this.data.extras.includes('musica')) {
-            msg += `• Música: Inclusa — Grátis\n`;
-            if (this.data.musicText) msg += `  ↳ ${this.data.musicText}\n`;
-        }
-        if (this.data.extras.includes('cronometro')) msg += `• Cronômetro — Grátis\n`;
-        if (this.data.extras.includes('galeria')) msg += `• Galeria de Fotos — ${fmt.format(10)}\n`;
-        if (this.data.extras.includes('playlist')) msg += `• Playlist dos Convidados — ${fmt.format(10)}\n`;
-        if (this.data.extras.includes('lembrete')) msg += `• Lembrete — ${fmt.format(25)}\n`;
-        if (this.data.extras.includes('savethedate')) msg += `• Save The Date — ${fmt.format(25)}\n`;
-        if (this.data.includePhoto) msg += `• Foto na Abertura — Grátis\n`;
-
-        msg += `\n📅 *DADOS DO EVENTO*\n`;
-        const evtType = this.data.eventType === 'outro' ? this.data.customEventType : typeMap[this.data.eventType];
-        msg += `• Tipo: ${evtType}\n`;
-        msg += `• Nome: ${this.data.eventName}\n`;
-        if (this.data.eventType === 'aniversario' && this.data.eventAge) msg += `• Idade: ${this.data.eventAge}\n`;
-        if (this.data.eventType === 'formatura' && this.data.eventFormacao) msg += `• Formação: ${this.data.eventFormacao}\n`;
-        if (this.data.eventDate) msg += `• Data: ${this.data.eventDate}\n`;
-        if (this.data.eventTimeStart) msg += `• Horário: ${this.data.eventTimeStart}${this.data.eventTimeEnd ? ' às ' + this.data.eventTimeEnd : ''}\n`;
-        if (this.data.eventLocation) msg += `• Local: ${this.data.eventLocation}\n`;
-        if (this.data.eventTheme) msg += `• Tema: ${this.data.eventTheme}\n`;
-        if (this.data.eventColors) msg += `• Paleta: ${this.data.eventColors}\n`;
-
-        msg += `\n💰 *VALOR TOTAL: ${fmt.format(total)}*\n\n`;
-        msg += `Trabalhamos com um sinal de R$20 para colocar seu convite em nossa Fila de Produção.\n\n`;
-        msg += `Clique em enviar para poder acessar o link de pagamento👉`;
-
-        const url = `https://wa.me/5511939047235?text=${encodeURIComponent(msg)}`;
-        window.open(url, '_blank');
-    },
-
-    // ==================== MODAL "COMO FUNCIONA" ====================
-    howItWorks(type) {
-        const base = 'assets/orcamento/';
-        const info = {
-            'abertura-longa': { title: 'Abertura Longa', desc: 'Animação 3D completa com transições cinematográficas. Dura cerca de 8 segundos e cria uma experiência imersiva antes do convite aparecer.', media: base+'Exemplo%20Abertura%20Longa.mp4' },
-            'abertura-curta': { title: 'Abertura Curta', desc: 'Animação rápida de 3 segundos. Ideal para quem quer um visual bonito mas direto ao ponto.', media: base+'Exemplo%20Abertura%20Curta.mp4' },
-            'abertura-sem': { title: 'Sem Abertura', desc: 'O convite abre direto no conteúdo, sem animação prévia. O convidado vê tudo de primeira.', media: base+'Exemplo%20sem%20Abertura.mp4' },
-            'rsvp-whatsapp': { title: 'Confirmação WhatsApp', desc: 'Ao clicar no botão de confirmação, o convidado preenche nome e é redirecionado ao seu WhatsApp automaticamente. Simples e rápido!', media: base+'Exemplo%20Confirmar%20Whatsapp.mp4' },
-            'rsvp-formulario': { title: 'Formulário Inteligente', desc: 'O convidado preenche um formulário completo com nome, acompanhantes e outros dados. Todas as confirmações ficam organizadas em uma planilha inteligente.', media: base+'Formul%C3%A1rio%20inteligente.mp4' },
-            'gift-simples': { title: 'Sugestões Simples', desc: 'Uma lista em texto direto no convite com opção de Pix. Você nos envia o que quer escrever e nós colocamos no convite.', media: base+'Simples.png' },
-            'gift-premium': { title: 'Sugestões Premium', desc: 'Uma imagem bela e personalizada com as sugestões de presente. Design elegante que combina com o convite.', media: base+'Premium.jpg' },
-            'gift-inteligente': { title: 'Lista Inteligente', desc: 'Mini-site com fotos e preços dos presentes. O dinheiro vai direto pro seu Pix. Entraremos em contato via WhatsApp para montar a lista.', media: base+'Lista%20Inteligente.mp4' },
-            'gift-sua_lista': { title: 'Sua Lista', desc: 'Botão que redireciona para sua lista de presentes em outra loja. Você nos envia o link.<br><br><strong>Crie sua lista em uma dessas lojas:</strong><div style="display:flex;flex-direction:column;gap:0.5rem;margin-top:0.75rem;"><a href="https://listas.extra.com.br/" target="_blank" style="display:block;text-align:center;padding:0.6rem 1rem;border-radius:0.5rem;background:rgba(201,85,124,0.1);color:#c9557c;font-weight:600;font-size:0.85rem;text-decoration:none;border:1px solid rgba(201,85,124,0.2);">🛒 Lista Extra</a><a href="https://especiais.magazineluiza.com.br/listas-magalu/" target="_blank" style="display:block;text-align:center;padding:0.6rem 1rem;border-radius:0.5rem;background:rgba(201,85,124,0.1);color:#c9557c;font-weight:600;font-size:0.85rem;text-decoration:none;border:1px solid rgba(201,85,124,0.2);">🏬 Lista Magalu</a><a href="https://temfestinha.com/" target="_blank" style="display:block;text-align:center;padding:0.6rem 1rem;border-radius:0.5rem;background:rgba(201,85,124,0.1);color:#c9557c;font-weight:600;font-size:0.85rem;text-decoration:none;border:1px solid rgba(201,85,124,0.2);">🎉 Tem Festinha</a></div>', media: base+'Exemplo%20Link%20Lista.jpg' },
-            'manual-simples': { title: 'Manual Simples', desc: 'Informações escritas diretamente na tela do convite. Dress code, estacionamento, e qualquer instrução para seus convidados.', media: base+'Exemplo%20Manual%20do%20Convidado.jpg' },
-            'manual-premium': { title: 'Manual Premium', desc: 'O botão abre uma imagem personalizada e trabalhada de forma elegante com as informações do manual.', media: base+'Manual%20Premium.jpg' },
-            'extra-galeria': { title: 'Galeria de Fotos', desc: 'Botão que abre um carrossel de fotos selecionadas por você (até 15 fotos).' },
-            'extra-playlist': { title: 'Playlist dos Convidados', desc: 'Uma função onde o convidado poderá sugerir uma música para jogar/tocar no dia da festa, tornando a comemoração ainda mais interativa e animada!' },
-            'extra-cronometro': { title: 'Cronômetro', desc: 'Contagem regressiva no topo do convite mostrando meses, dias, horas, minutos e segundos até a festa.', media: base+'Exemplo%20Contagem%20Regressiva.jpg' },
-            'extra-lembrete': { title: 'Lembrete', desc: 'Um aviso para ser enviado poucos dias antes do evento, garantindo que os convidados estarão preparados.', media: base+'Lembrete.jpg' },
-            'extra-savethedate': { title: 'Save The Date', desc: 'Imagem estática elegante com a data da festa, na mesma paleta visual do convite. Perfeita para enviar antes dos convites oficiais.', media: base+'Exemplo%20Save%20The%20Date.jpg' },
-            'extra-musica': { title: 'Música do Convite', desc: 'Escolha qualquer música para tocar no seu convite. Envie o link do YouTube ou o nome da música.' },
-            'extra-photo': { title: 'Foto na Abertura', desc: 'Uma foto sua ou do aniversariante aparece na animação de abertura do convite, tornando-o ainda mais especial e personalizado.' }
-        };
-
-        const item = info[type];
-        if (!item) return;
-
-        document.getElementById('how-modal-title').textContent = item.title;
-        document.getElementById('how-modal-desc').innerHTML = item.desc;
-
-        const mediaBox = document.getElementById('how-modal-media');
-        mediaBox.innerHTML = '';
-        if (item.media) {
-            if (item.media.endsWith('.mp4')) {
-                mediaBox.innerHTML = `<video src="${item.media}" autoplay loop muted playsinline></video>`;
-            } else {
-                mediaBox.innerHTML = `<img src="${item.media}" alt="${item.title}">`;
-            }
-        }
-
-        document.getElementById('how-modal').classList.add('active');
-    },
-
-    closeHowModal() {
-        document.getElementById('how-modal').classList.remove('active');
-    },
-
-    // ==================== MODELO ESCOLHIDO ====================
-    loadSelectedModel() {
-        const raw = localStorage.getItem('selectedModel');
-        if (!raw) return;
-        try {
-            const m = JSON.parse(raw);
-            if (!m || !m.slug) return;
-            document.getElementById('modelo-empty').style.display = 'none';
-            const chosen = document.getElementById('modelo-chosen');
-            chosen.style.display = 'flex';
-            // Thumb
-            const thumbEl = document.getElementById('modelo-thumb');
-            const slug = sanitizeSlug(m.slug);
-            const siteRoot = new URL('..', window.location.href).href;
-            const coverUrl = m.capa && m.capa.startsWith('http')
-              ? m.capa
-              : (m.capa && m.capa.startsWith('modelos/')
-                ? siteRoot + m.capa
-                : siteRoot + 'modelos/' + slug + '/' + (m.capa || 'assets/capa.jpg').replace(/^\//, ''));
-            thumbEl.innerHTML = `<img src="${coverUrl}" alt="${m.name}" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 300 400%22%3E%3Crect fill=%22%23e5e7eb%22 width=%22300%22 height=%22400%22/%3E%3Ctext fill=%22%239ca3af%22 x=%22150%22 y=%22200%22 text-anchor=%22middle%22 font-size=%2214%22%3ESem capa%3C/text%3E%3C/svg%3E';">`;
-            // Info
-            document.getElementById('modelo-name').textContent = m.name;
-            const descParts = [m.tema, m.paletaCores].filter(Boolean);
-            document.getElementById('modelo-desc').textContent = descParts.join(' • ') || m.tipo || '';
-        } catch(e) { console.error('Erro ao carregar modelo:', e); }
-    },
-
-    async previewModelo() {
-        const raw = localStorage.getItem('selectedModel');
-        if (!raw) return;
-        const m = JSON.parse(raw);
-        const slug = sanitizeSlug(m.slug);
-        const siteRoot = new URL('..', window.location.href).href;
-        const codeUrl = siteRoot + 'modelos/' + encodeURIComponent(m.slug) + '/index.html';
-        document.getElementById('modelo-preview-title').textContent = m.name;
-        const frame = document.getElementById('modelo-preview-frame');
-        try {
-            const r = await fetch(codeUrl);
-            let html = await r.text();
-            
-            // Determine asset base
-            const MODEL_BASE = siteRoot + 'modelos/' + encodeURIComponent(m.slug) + '/';
-            const ASSET_BASE = MODEL_BASE + 'assets/';
-            
-            // Inject <base> tag
-            html = html.replace('<head>', '<head><base href="' + MODEL_BASE + '">');
-            
-            // Static asset replacement
-            html = html.replace(/(["'])assets\//g, '$1' + ASSET_BASE);
-            html = html.replace(/(url\()assets\//g, '$1' + ASSET_BASE);
-            
-            // Inject runtime asset fix script
-            const assetFix = '<script>' +
-              "window.__SUPABASE_ASSETS='';" +
-              "window.assetUrl=function(p){return '" + ASSET_BASE + "'+(p||'').replace(/^assets\\//,'')};" +
-              "(function(){" +
-              "var AB='" + ASSET_BASE + "';" +
-              "function fix(v){return v&&typeof v==='string'&&v.indexOf('assets/')===0?AB+v.substring(7):v;}" +
-              "var _sa=Element.prototype.setAttribute;" +
-              "Element.prototype.setAttribute=function(n,v){if(n==='src'||n==='data-src'||n==='poster')v=fix(v);return _sa.call(this,n,v);};" +
-              "function patchSrc(Cls){var d=Object.getOwnPropertyDescriptor(Cls.prototype,'src');if(!d||!d.set)return;var _s=d.set;Object.defineProperty(Cls.prototype,'src',{set:function(v){_s.call(this,fix(v));},get:d.get,configurable:true});}" +
-              "patchSrc(HTMLImageElement);patchSrc(HTMLVideoElement);patchSrc(HTMLSourceElement);patchSrc(HTMLAudioElement);" +
-              "window.__loadConfig=async function(){" +
-              "if(window.__INLINE_CONFIG)window.config=window.__INLINE_CONFIG;" +
-              "if(window.config){" +
-              "['assets','imagens','backgrounds'].forEach(function(k){" +
-              "if(window.config[k]&&typeof window.config[k]==='object'){" +
-              "for(var p in window.config[k]){" +
-              "var v=window.config[k][p];" +
-              "if(typeof v==='string')window.config[k][p]=fix(v);" +
-              "else if(Array.isArray(v))window.config[k][p]=v.map(function(x){return typeof x==='string'?fix(x):x;});" +
-              "}}});" +
-              "if(window.config.musica)window.config.musica=fix(window.config.musica);" +
-              "}" +
-              "};" +
-              "})();" +
-              '<\/script>';
-            html = html.replace('</head>', assetFix + '</head>');
-            // Chain __loadConfig before init()
-            html = html.replace('init();', 'window.__loadConfig?window.__loadConfig().then(init).catch(init):init();');
-            frame.srcdoc = html;
-        } catch(e) {
-            console.error('Error loading preview:', e);
-            frame.srcdoc = '<p style="padding:2rem;text-align:center;color:#999;">Erro ao carregar prévia.</p>';
-        }
-        document.getElementById('modelo-preview-modal').classList.add('active');
-        document.body.style.overflow = 'hidden';
-    },
-
-    closeModeloPreview() {
-        document.getElementById('modelo-preview-modal').classList.remove('active');
-        document.getElementById('modelo-preview-frame').srcdoc = '';
-        document.body.style.overflow = '';
-    },
-
-    closeConfirmModal() {
-        document.getElementById('confirm-modal').classList.remove('active');
-    },
-
-    // ==================== PERSISTÊNCIA ====================
-    save() {
-        localStorage.setItem('orcamentoAB', JSON.stringify(this.data));
-        
-        // Sincronizar com quoteData para a tela de Sucesso do Mercado Pago (PagamentoRecebido/index.html)
-        try {
-            const quoteData = {
-                clientName: this.data.clientName || '',
-                clientWhatsapp: this.data.clientWhatsapp || '',
-                basePackage: this.data.baseValue || 0,
-                giftTipType: this.data.giftType || 'none',
-                giftTipExtra: this.data.giftExtra || 0,
-                giftCustomText: this.data.giftText || '',
-                giftLinkUrl: this.data.giftLink || '',
-                rsvpType: this.data.rsvpType || 'none',
-                rsvpExtra: this.data.rsvpExtra || 0,
-                rsvpWhatsapp: this.data.rsvpWhatsapp || '',
-                manualType: this.data.manualType || 'none',
-                manualExtra: this.data.manualExtra || 0,
-                manualCustomText: this.data.manualText || '',
-                extras: this.data.extras || [],
-                extrasExtra: this.data.extrasExtra || 0,
-                eventName: this.data.eventName || '',
-                eventType: this.data.eventType || '',
-                customEventType: this.data.customEventType || '',
-                eventTheme: this.data.eventTheme || '',
-                eventColorPalette: this.data.eventColors || '',
-                eventDate: this.data.eventDate || '',
-                eventTimeStart: this.data.eventTimeStart || '',
-                eventTimeEnd: this.data.eventTimeEnd || '',
-                eventLocation: this.data.eventLocation || '',
-                musicCustomText: this.data.musicText || ''
-            };
-            localStorage.setItem('quoteData', JSON.stringify(quoteData));
-        } catch (e) {
-            console.error("Erro ao sincronizar com quoteData:", e);
-        }
-    },
-
-    load() {
-        const saved = localStorage.getItem('orcamentoAB');
-        if (saved) {
-            try {
-                const parsed = JSON.parse(saved);
-                this.data = { ...this.data, ...parsed };
-                return true;
-            } catch (e) { return false; }
-        }
-        return false;
-    },
-
-    restoreUI() {
-        // Popup
-        if (this.data.clientName && this.data.clientWhatsapp) {
-            document.getElementById('identify-popup').classList.add('hidden');
-        }
-
-        // Radio groups
-        ['abertura', 'rsvp', 'gift', 'manual'].forEach(group => {
-            const val = this.data[group + 'Type'];
-            document.querySelectorAll(`[data-group="${group}"]`).forEach(c => c.classList.remove('selected'));
-            if (val && val !== 'none') {
-                const card = document.querySelector(`[data-group="${group}"][data-value="${val}"]`);
-                if (card) card.classList.add('selected');
-            }
-            if (group !== 'abertura') this.updateConditionalFields(group);
-        });
-
-        // Extras
-        this.data.extras.forEach(e => {
-            const card = document.querySelector(`[data-extra="${e}"]`);
-            if (card) card.classList.add('selected');
-        });
-        if (this.data.includePhoto) {
-            const card = document.querySelector('[data-extra="photo"]');
-            if (card) card.classList.add('selected');
-        }
-
-        // Music field
-        document.getElementById('field-music-text').classList.toggle('hidden',
-            !this.data.extras.includes('musica'));
-
-        // Text fields
-        const bindings = {
-            'rsvp-number': 'rsvpWhatsapp', 'gift-text': 'giftText', 'gift-link': 'giftLink',
-            'manual-text': 'manualText', 'music-text': 'musicText',
-            'event-name': 'eventName', 'event-age': 'eventAge', 'event-date': 'eventDate',
-            'event-time-start': 'eventTimeStart', 'event-time-end': 'eventTimeEnd',
-            'event-location': 'eventLocation', 'event-theme': 'eventTheme',
-            'event-colors': 'eventColors', 'custom-event-type': 'customEventType',
-            'event-formacao': 'eventFormacao'
-        };
-        for (const [id, key] of Object.entries(bindings)) {
-            const el = document.getElementById(id);
-            if (el && this.data[key]) el.value = this.data[key];
-        }
-
-        // Event type
-        document.querySelectorAll('.evt-type-btn').forEach(b => {
-            b.classList.toggle('active', b.dataset.type === this.data.eventType);
-        });
-        this.updateEventFields();
-    },
-
-    // ==================== INIT ====================
-    init() {
-        this.initPopup();
-        this.initEventForm();
-
-        // Auto-save on all inputs
-        document.querySelectorAll('input, textarea, select').forEach(el => {
-            el.addEventListener('input', () => { this.syncFormData(); this.save(); });
-            el.addEventListener('change', () => { this.syncFormData(); this.save(); });
-        });
-
-        if (this.load()) {
-            this.restoreUI();
-        }
-
-        this.updateTotal();
-        this.buildSummary();
-        this.loadSelectedModel();
-
-        // Scroll to personalize
-        document.getElementById('btn-personalize')?.addEventListener('click', () => {
-            document.getElementById('section-personalize')?.scrollIntoView({ behavior: 'smooth' });
-        });
-
-        // Intersection observer to rebuild summary when visible
-        const summarySection = document.getElementById('section-summary');
-        if (summarySection) {
-            const obs = new IntersectionObserver(entries => {
-                if (entries[0].isIntersecting) { this.syncFormData(); this.buildSummary(); }
-            }, { threshold: 0.1 });
-            obs.observe(summarySection);
-        }
-    }
+const $ = (selector, root = document) => root.querySelector(selector);
+
+const els = {
+  welcome: $("#welcome"),
+  chat: $("#chat-app"),
+  start: $("#start-chat"),
+  messages: $("#messages"),
+  composer: $("#composer"),
+  input: $("#message-input"),
+  send: $("#send-button"),
+  total: $("#total-price"),
+  progressBar: $("#progress-bar"),
+  progressLabel: $("#progress-label"),
+  progressNumber: $("#progress-number"),
+  restart: $("#restart"),
+  help: $("#help-button"),
+  moreIndicator: $("#more-indicator"),
+  assetModal: $("#asset-modal"),
+  assetModalContent: $("#asset-modal-content"),
+  assetModalClose: $("#asset-modal-close"),
+  assetModalSelect: $("#asset-modal-select")
 };
 
-document.addEventListener('DOMContentLoaded', () => app.init());
+const state = {
+  step: "name",
+  name: "",
+  total: 80,
+  selectedModel: false,
+  selectedModelData: null,
+  modelMode: "none",
+  modelBrief: "",
+  modelCustomization: "",
+  event: {},
+  choices: {},
+  giftDetails: "",
+  manualDetails: "",
+  notes: "",
+  pending: [],
+  editing: false
+};
+
+const STORAGE_KEY = "susie_budget_state";
+const FIRST_ACCESS_KEY = "susie_budget_first_access_date";
+const today = new Date().toISOString().slice(0, 10);
+if (!localStorage.getItem(FIRST_ACCESS_KEY)) localStorage.setItem(FIRST_ACCESS_KEY, today);
+const isFirstAccessDay = localStorage.getItem(FIRST_ACCESS_KEY) === today;
+
+const placeholders = {
+  name: ["Luiz Fernando", "Samantha", "Kelly Vieira", "Lívia Maia", "Sarah Vieira"],
+  modelBrief: ["Floral Azul com Turquesa", "Moana Baby Rosé e Azul", "Baile de Inverno Azul, Dourado e Rosé"]
+};
+
+const GIFT_PLACEHOLDER = `Exemplo de presentes:
+- Sapatos 36
+- Vestidos M
+- Maquiagem
+- Jóias Prata
+- Livros
+- Pelúcias
+- Chave Pix 12345678910`;
+
+const MANUAL_TEMPLATE = `Exemplo de Manual:
+Chegue no horário: Sua presença pontual é muito importante para nós.
+Confirme sua presença: Por favor, confirme presença pelo menos 15 dias antes do evento.
+Convidado não convida!
+Divirta-se bastante! Estamos ansiosos para celebrar este momento especial com você.
+Não vá embora sem me dar um abraço e comer um pedaço do bolo: Queremos compartilhar cada instante com você.`;
+
+let placeholderTimer;
+let placeholderIndex = 0;
+let countdownTimer;
+let activeAssetCard = null;
+
+function now() {
+  return new Intl.DateTimeFormat("pt-BR", { hour: "2-digit", minute: "2-digit" }).format(new Date());
+}
+
+function hasContentBelow() {
+  return els.messages.scrollHeight - els.messages.scrollTop - els.messages.clientHeight > 8;
+}
+
+function updateMoreIndicator() {
+  els.moreIndicator.hidden = !hasContentBelow();
+}
+
+function positionNewMessage(row, preferStart = false) {
+  requestAnimationFrame(() => {
+    const isLong = row.offsetHeight > els.messages.clientHeight * 0.62;
+    if (preferStart || isLong) {
+      els.messages.scrollTo({ top: Math.max(0, row.offsetTop - els.messages.offsetTop - 8), behavior: "smooth" });
+    } else {
+      els.messages.scrollTo({ top: els.messages.scrollHeight, behavior: "smooth" });
+    }
+    setTimeout(updateMoreIndicator, 360);
+  });
+}
+
+function setProgress(number, label) {
+  els.progressBar.style.width = `${Math.round((number / 17) * 100)}%`;
+  els.progressLabel.textContent = label;
+  els.progressNumber.textContent = `${number} de 17`;
+}
+
+function setInput(enabled, examples = [], fallback = "Escolha uma opção acima para continuar") {
+  clearInterval(placeholderTimer);
+  els.input.disabled = !enabled;
+  els.send.disabled = !enabled;
+  els.input.value = "";
+  if (!enabled) els.composer.classList.remove("composer-expanded");
+  els.input.placeholder = fallback;
+  if (!enabled || !examples.length) return;
+  placeholderIndex = 0;
+  els.input.placeholder = `Ex.: ${examples[0]}`;
+  placeholderTimer = setInterval(() => {
+    placeholderIndex = (placeholderIndex + 1) % examples.length;
+    els.input.placeholder = `Ex.: ${examples[placeholderIndex]}`;
+  }, 2100);
+  setTimeout(() => els.input.focus(), 50);
+}
+
+function message(content, who = "susie") {
+  const row = document.createElement("div");
+  row.className = `message-row ${who}`;
+  row.innerHTML = who === "susie"
+    ? `<span class="mini-avatar">S</span><div class="bubble">${content}<span class="message-time">${now()}</span></div>`
+    : `<div class="bubble">${content}<span class="message-time">${now()}</span></div>`;
+  els.messages.appendChild(row);
+  positionNewMessage(row, who === "susie");
+  return row;
+}
+
+function choices(items) {
+  const group = document.createElement("div");
+  group.className = "choices";
+  items.forEach(item => {
+    if (item.hint) {
+      const hint = document.createElement("div");
+      hint.className = "choice-hint";
+      hint.innerHTML = item.label;
+      group.appendChild(hint);
+      return;
+    }
+    const button = document.createElement("button");
+    button.className = `choice ${item.className || ""}`;
+    button.innerHTML = item.label;
+    button.addEventListener("click", () => {
+      if (!item.keepEnabled) group.querySelectorAll("button").forEach(btn => btn.disabled = true);
+      item.action();
+    });
+    group.appendChild(button);
+  });
+  els.messages.appendChild(group);
+  updateMoreIndicator();
+}
+
+function phaseTitle(title, icon = "✦") {
+  return `<h3 class="phase-title"><span>${icon}</span>${title}</h3>`;
+}
+
+function escapeHtml(value = "") {
+  return String(value).replace(/[&<>"']/g, char => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[char]);
+}
+
+function assetSelectionMarkup(selection) {
+  if (!selection) return "";
+  return `<label class="asset-select"><input type="radio" name="asset-${selection.group}" aria-label="Selecionar ${selection.label}"><span>Selecionar</span></label>`;
+}
+
+function assetData(selection) {
+  if (!selection) return "";
+  return ` data-select-group="${selection.group}" data-select-value="${selection.value}" data-select-label="${selection.label}"`;
+}
+
+function assetImage(src, label, selection = null) {
+  return `<figure class="asset-card" role="button" tabindex="0" data-preview-type="image" data-preview-src="${src}" data-preview-label="${label}"${assetData(selection)}><img src="${src}" alt="${label}" loading="lazy"><figcaption>${label}</figcaption>${assetSelectionMarkup(selection)}</figure>`;
+}
+
+function assetVideo(src, label, selection = null) {
+  return `<figure class="asset-card" role="button" tabindex="0" data-preview-type="video" data-preview-src="${src}" data-preview-label="${label}"${assetData(selection)}><video src="${src}" muted loop autoplay playsinline controls preload="auto"></video><figcaption>${label}</figcaption>${assetSelectionMarkup(selection)}</figure>`;
+}
+
+function assetStrip(items) {
+  return `<div class="asset-strip">${items.join("")}</div>`;
+}
+
+function missingPreview(label) {
+  return `<div class="missing-preview"><span>Imagem pendente</span><strong>${label}</strong><small>Envie este asset para substituirmos o placeholder.</small></div>`;
+}
+
+function openingAssets() {
+  return assetStrip([
+    assetVideo("assets/orcamento/Exemplo Abertura Longa.mp4", "Abertura Longa", { group: "opening", value: "long", label: "Abertura Longa" }),
+    assetVideo("assets/orcamento/Exemplo Abertura Curta.mp4", "Abertura Curta", { group: "opening", value: "short", label: "Abertura Curta" })
+  ]);
+}
+
+async function susie(content, delay = 380) {
+  const typing = $("#typing-template").content.cloneNode(true);
+  els.messages.appendChild(typing);
+  els.messages.scrollTo({ top: els.messages.scrollHeight, behavior: "smooth" });
+  await new Promise(resolve => setTimeout(resolve, delay));
+  $(".typing-row", els.messages)?.remove();
+  message(content);
+}
+
+function user(text) {
+  message(text, "user");
+}
+
+function addPrice(amount) {
+  state.total += amount;
+  els.total.textContent = `R$ ${state.total}`;
+  els.total.classList.add("bump");
+  setTimeout(() => els.total.classList.remove("bump"), 280);
+}
+
+function persist() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+}
+
+function calculateTotal() {
+  const c = state.choices;
+  let total = 80;
+  if (state.modelMode === "new") total += 10;
+  if (c.modelCustomization) total += 10;
+  if (c.visualIdentity === "include") total += 50;
+  if (c.openingPhoto === "include") total += 5;
+  if (c.rsvp === "smart_form") total += 5;
+  if (c.gifts === "premium") total += 5;
+  if (c.gifts === "smart_list") total += 15;
+  if (c.manual === "premium") total += 5;
+  if (c.gallery === "include") total += 5;
+  if (c.reminder === "include") total += 15;
+  if (c.saveTheDate === "simple" && !isFirstAccessDay) total += 15;
+  if (c.saveTheDate === "premium") total += 50;
+  if (c.photoQrCode === "include") total += 35;
+  if (c.guestPlaylist === "include") total += 5;
+  state.total = total;
+  els.total.textContent = `R$ ${total}`;
+  els.total.classList.add("bump");
+  setTimeout(() => els.total.classList.remove("bump"), 280);
+  persist();
+}
+
+function setChoice(key, value) {
+  state.choices[key] = value;
+  calculateTotal();
+}
+
+async function begin() {
+  els.welcome.hidden = true;
+  els.chat.hidden = false;
+  state.step = "name";
+  setProgress(1, "Vamos começar");
+  setInput(true, placeholders.name, "Como você se chama?");
+  await susie("Olá! Eu sou a <strong>Susie</strong> e vou te ajudar a criar o seu convite rapidinho! Como você se chama?", 520);
+}
+
+async function submitName() {
+  const value = els.input.value.trim();
+  if (value.length < 2) return;
+  state.name = value;
+  persist();
+  user(value);
+  setInput(false);
+  await susie(`Muito bem, <strong>${value}</strong>! Nossos convites custam R$80 e já incluem música, abertura 3D animada e botões clicáveis. Vou te explicar tudo bem fácil e rápido ✨`);
+  await modelStep();
+}
+
+async function modelStep() {
+  state.step = "model";
+  setProgress(2, "Escolha do modelo");
+  const selected = JSON.parse(localStorage.getItem("selectedModel") || "null");
+  if (selected) {
+    state.selectedModel = true;
+    state.selectedModelData = selected;
+    state.modelMode = "selected";
+    persist();
+    const cover = selected.capa ? `../${selected.capa}` : `../modelos/${encodeURIComponent(selected.slug)}/assets/capa.jpg`;
+    await susie(`${phaseTitle("Modelo", "◇")}Pra começar, vejo que você escolheu um lindo modelo para inspirar seu convite!
+      <div class="model-preview"><img src="${cover}" alt="Capa do modelo escolhido"><div><strong>${selected.name || selected.slug}</strong><small>${selected.tema || ""}</small></div></div>
+      Você quer mudar alguma coisa?`);
+    choices([
+      { label: "Trocar Modelo", action: chooseExistingModel },
+      { label: "Trocar Cores ou Tema <span class='choice-price'>+R$10</span>", action: customizeModel },
+      { label: "Confirmar Modelo", action: () => { user("Confirmar Modelo"); if (state.editing) { state.editing = false; finalStep(); } else eventStep(); } }
+    ]);
+    return;
+  }
+  await susie(`${phaseTitle("Modelo", "◇")}Pra começar, você já deu uma olhada em nossos modelos?`);
+  choices([
+    { label: "✦ Escolher Modelo<small>Ver nossa coleção completa</small>", action: chooseExistingModel },
+    { label: "Criar um novo <span class='choice-price'>+R$10</span>", action: createNewModel },
+    { label: "Não encontrei o que eu quero", action: noModelFound }
+  ]);
+}
+
+async function chooseExistingModel() {
+  user("Escolher Modelo");
+  state.step = "model";
+  persist();
+  window.location.href = "../modelos.html";
+}
+
+async function noModelFound() {
+  user("Não encontrei o modelo que eu quero");
+  await susie("Sem problemas! Podemos criar um novo modelo do jeitinho que você imaginou.");
+  choices([{ label: "Quero criar um novo <span class='choice-price'>+R$10</span>", action: createNewModel }, { label: "Voltar e escolher modelo", action: chooseExistingModel }]);
+}
+
+async function createNewModel() {
+  user("Quero criar um novo (+R$10)");
+  state.modelMode = "new";
+  calculateTotal();
+  state.step = "modelBrief";
+  await susie("Muito bem! Vamos criar um convite do zero para você. Quais cores e tema você tem em mente?");
+  setInput(true, placeholders.modelBrief, "Conte as cores e o tema");
+}
+
+async function customizeModel() {
+  user("Trocar cores ou tema do modelo (+R$10)");
+  state.choices.modelCustomization = true;
+  calculateTotal();
+  state.step = "modelBrief";
+  await susie("Perfeito! Me conte o que você quer mudar nas cores ou no tema.");
+  setInput(true, ["Trocar prata por dourado", "Paleta rosé e lilás", "Manter as cores e trocar o tema"]);
+}
+
+async function submitModelBrief() {
+  const value = els.input.value.trim();
+  if (!value) return;
+  user(value);
+  if (state.modelMode === "new") state.modelBrief = value;
+  else state.modelCustomization = value;
+  persist();
+  setInput(false);
+  await susie("Já anotei essa inspiração. Vai ficar lindo!");
+  if (state.editing) { state.editing = false; finalStep(); }
+  else eventStep();
+}
+
+async function eventStep() {
+  state.step = "event";
+  setInput(false);
+  setProgress(3, "Dados do evento");
+  const customizationValue = state.modelCustomization || "";
+  const themeFields = state.choices.modelCustomization
+    ? `<div class="field field-wide"><label>Tema e paleta solicitados</label><input name="themePalette" value="${escapeHtml(customizationValue)}"></div>`
+    : `<div class="field"><label>Tema</label><input name="theme" placeholder="Ex.: Jardim encantado"></div>
+       <div class="field"><label>Paleta de cores</label><input name="palette" placeholder="Ex.: Rosé e dourado"></div>`;
+  await susie(`${phaseTitle("Dados do Evento", "✎")}Agora vou anotar os dados principais do evento. Preencha o que você souber; o que faltar poderá virar pendência no resumo.
+    <form class="mini-form" id="event-form">
+      <div class="field"><label>Tipo de evento</label><select name="type"><option>Aniversário</option><option>15 anos</option><option>Casamento</option><option>Formatura</option><option>Outro</option></select></div>
+      <div class="field"><label>Nome principal</label><input name="eventName" placeholder="Ex.: Lívia Maia"></div>
+      <div class="field"><label>Idade, se aplicável</label><input name="age" type="number" min="0" placeholder="Ex.: 15"></div>
+      <div class="field"><label>Data</label><input name="date" type="date"></div>
+      <div class="field"><label>Horário de início</label><input name="time" type="time"></div>
+      <div class="field"><label>Horário de término</label><input name="endTime" type="time"></div>
+      <div class="field field-wide"><label>Local</label><input name="location" placeholder="Espaço, salão ou endereço"></div>
+      ${themeFields}
+      <button class="form-button" type="submit">Salvar dados e continuar</button>
+    </form>`, 420);
+  $("#event-form").addEventListener("submit", submitEvent);
+}
+
+async function submitEvent(event) {
+  event.preventDefault();
+  const data = new FormData(event.currentTarget);
+  state.event = Object.fromEntries(data.entries());
+  state.pending = [];
+  [["eventName","Nome do evento"],["date","Data"],["time","Horário"],["location","Local"]].forEach(([key, label]) => {
+    if (!state.event[key]) state.pending.push(label);
+  });
+  persist();
+  const parts = [data.get("type"), data.get("eventName"), data.get("date")].filter(Boolean);
+  event.currentTarget.querySelectorAll("input,select,button").forEach(el => el.disabled = true);
+  user(parts.length ? parts.join(" · ") : "Prefiro completar esses dados depois");
+  if (state.editing) { state.editing = false; await finalStep(); }
+  else await identityStep();
+}
+
+async function identityStep() {
+  state.step = "identity";
+  setProgress(4, "Toques especiais");
+  await susie(`${phaseTitle("Identidade Visual", "✦")}Que tal deixar todo o visual da festa combinando com o convite? Nós podemos montar toda a Identidade Visual pra você! ✨
+    <div class="preview-card">
+      <div class="preview-visual">Identidade Visual</div>
+      <div class="preview-body"><p>Uma direção visual completa para convite, festa e lembrancinhas.</p>
+        <div class="deliverables"><span>Paleta de cores</span><span>Logo em 4K</span><span>Elementos PNG</span><span>Tipografia</span><span>Rótulos e Tags para você imprimir</span><span>Arte do cardápio para você imprimir</span><span>Logo vetorizada</span></div>
+      </div>
+    </div>`);
+  choices([
+    { label: "Incluir Identidade Visual <span class='choice-price'>+R$50</span>", action: () => openingStep(true) },
+    { label: "Agora não", action: () => openingStep(false) }
+  ]);
+}
+
+async function openingStep(includeIdentity) {
+  user(includeIdentity ? "Incluir Identidade Visual (+R$50)" : "Agora não");
+  setChoice("visualIdentity", includeIdentity ? "include" : "none");
+  if (state.editing) { state.editing = false; return finalStep(); }
+  state.step = "opening";
+  setProgress(5, "Abertura do convite");
+  await susie(`${phaseTitle("Tipo de Abertura", "◇")}Agora vamos escolher como o convite começa. A abertura é a primeira impressão que o convidado vê.
+    ${openingAssets()}`);
+  choices([
+    { label: "Sem Abertura", action: () => finishPreview("Sem Abertura") }
+  ]);
+}
+
+async function finishPreview(choice) {
+  user(choice);
+  setChoice("openingType", choice === "Abertura Longa" ? "long" : choice === "Abertura Curta" ? "short" : "none");
+  if (state.editing) { state.editing = false; finalStep(); }
+  else openingPhotoStep();
+}
+
+async function openingPhotoStep() {
+  state.step = "openingPhoto";
+  setProgress(6, "Foto na abertura");
+  await susie(`${phaseTitle("Foto na Abertura", "▣")}Você quer colocar uma foto especial logo na abertura? Ela deixa o início do convite mais pessoal e emocionante.<br><small>A foto será combinada e enviada pelo WhatsApp quando você confirmar o pedido.</small>`);
+  choices([
+    { label: "Incluir Foto na Abertura <span class='choice-price'>+R$5</span>", action: () => chooseAndGo("openingPhoto", "include", "Incluir Foto na Abertura (+R$5)", musicStep) },
+    { label: "Não Quero", action: () => chooseAndGo("openingPhoto", "none", "Não quero foto na abertura", musicStep) }
+  ]);
+}
+
+async function musicStep() {
+  state.step = "music";
+  setProgress(7, "Música");
+  await susie(`${phaseTitle("Música", "♫")}Agora vamos escolher a música do convite. Você pode me mandar o nome, um link, usar a música do modelo ou deixar sem música.`);
+  setInput(true, [], "Digite o nome ou link da música aqui");
+  const options = [{ label: "Sem música", keepEnabled: true, action: () => chooseMusic("none", "Sem música") }];
+  if (state.selectedModel) options.unshift({ label: "Usar música do modelo", keepEnabled: true, action: () => chooseMusic("model_music", "Usar música do modelo") });
+  options.push({ label: "Escreva no chat 👇", hint: true });
+  choices(options);
+}
+
+async function chooseMusic(mode, label, value = "") {
+  const changingPreviousChoice = state.step !== "music";
+  user(label);
+  state.choices.music = { mode, value };
+  calculateTotal();
+  setInput(false);
+  if (changingPreviousChoice) {
+    await susie(`Perfeito! Alterei sua escolha de música para <strong>${label}</strong> e mantive o restante do orçamento.`);
+  } else if (state.editing) { state.editing = false; finalStep(); }
+  else rsvpStep();
+}
+
+async function rsvpStep() {
+  state.step = "rsvp";
+  setProgress(8, "Confirmação");
+  await susie(`${phaseTitle("Confirmação de Presença", "✓")}Seu convite também pode ajudar a organizar quem vai participar da festa! Escolha como prefere receber as confirmações.
+    ${assetStrip([
+      assetVideo("assets/orcamento/Exemplo Confirmar Whatsapp.mp4", "Direto no WhatsApp", { group: "rsvp", value: "whatsapp", label: "Confirmação direto no WhatsApp" }),
+      assetVideo("assets/orcamento/Formulário inteligente.mp4", "Formulário Inteligente", { group: "rsvp", value: "smart_form", label: "Formulário Inteligente (+R$5)" }),
+      assetImage("assets/orcamento/Exemplo Confirmar Formulário.jpg", "Lista organizada")
+    ])}`);
+  choices([
+    { label: "Sem confirmação", action: () => chooseAndGo("rsvp", "none", "Sem confirmação", giftsStep) }
+  ]);
+}
+
+async function giftsStep() {
+  state.step = "gifts";
+  setProgress(9, "Presentes");
+  await susie(`${phaseTitle("Presentes", "♢")}Agora vamos escolher como as dicas de presente vão aparecer. Essa parte pode ser simples ou mais interativa.
+    ${assetStrip([
+      assetImage("assets/orcamento/Simples.png", "Sugestões Simples", { group: "gifts", value: "simple", label: "Sugestões Simples" }),
+      assetImage("assets/orcamento/Premium.jpg", "Sugestões Premium", { group: "gifts", value: "premium", label: "Sugestões Premium (+R$5)" }),
+      assetVideo("assets/orcamento/Lista Inteligente.mp4", "Lista Inteligente", { group: "gifts", value: "smart_list", label: "Lista Inteligente (+R$15)" }),
+      assetImage("assets/orcamento/Exemplo Link Lista.jpg", "Lista do Cliente", { group: "gifts", value: "client_list", label: "Lista do Cliente" })
+    ])}`);
+  choices([
+    { label: "Sem dicas de presente", action: () => chooseAndGo("gifts", "none", "Sem dicas de presente", manualStep) }
+  ]);
+}
+
+async function giftDetailsStep(mode, label) {
+  user(label);
+  setChoice("gifts", mode);
+  state.step = "giftDetails";
+  setProgress(9, "Sugestões de presentes");
+  persist();
+  await susie(`${phaseTitle("Sugestões de Presentes", "♢")}Escreva as sugestões que você quer mostrar aos convidados. Você pode seguir o exemplo esmaecido no campo abaixo.`);
+  setInput(true, [], GIFT_PLACEHOLDER);
+  els.composer.classList.add("composer-expanded");
+  if (state.giftDetails) els.input.value = state.giftDetails;
+  els.input.focus();
+}
+
+async function submitGiftDetails() {
+  const value = els.input.value.trim();
+  if (!value) return;
+  state.giftDetails = value;
+  persist();
+  user(value.replace(/\n/g, "<br>"));
+  setInput(false);
+  if (state.editing) { state.editing = false; finalStep(); }
+  else manualStep();
+}
+
+async function manualStep() {
+  state.step = "manual";
+  setProgress(10, "Manual");
+  await susie(`${phaseTitle("Manual do Convidado", "≡")}O Manual do Convidado ajuda a passar orientações importantes de um jeito bonito e organizado. Como você quer incluir essa parte?
+    ${assetStrip([
+      assetImage("assets/orcamento/Exemplo Manual do Convidado.jpg", "Manual Simples", { group: "manual", value: "simple", label: "Manual Simples" }),
+      assetImage("assets/orcamento/Manual Premium.jpg", "Manual Premium", { group: "manual", value: "premium", label: "Manual Premium (+R$5)" })
+    ])}`);
+  choices([
+    { label: "Manual do Cliente", action: () => chooseAndGo("manual", "client", "Manual do Cliente", countdownStep) },
+    { label: "Sem Manual", action: () => chooseAndGo("manual", "none", "Sem Manual", countdownStep) }
+  ]);
+}
+
+async function manualDetailsStep(mode, label) {
+  user(label);
+  setChoice("manual", mode);
+  state.step = "manualDetails";
+  setProgress(10, "Texto do manual");
+  persist();
+  await susie(`${phaseTitle("Texto do Manual", "≡")}O texto abaixo já está pronto. Adapte o que quiser ou apenas confirme para continuar.`);
+  setInput(true, [], "Escreva o Manual do Convidado");
+  els.composer.classList.add("composer-expanded");
+  els.input.value = state.manualDetails || MANUAL_TEMPLATE;
+  els.input.focus();
+}
+
+async function submitManualDetails() {
+  const value = els.input.value.trim();
+  if (!value) return;
+  state.manualDetails = value;
+  persist();
+  user(value.replace(/\n/g, "<br>"));
+  setInput(false);
+  if (state.editing) { state.editing = false; finalStep(); }
+  else countdownStep();
+}
+
+async function countdownStep() {
+  state.step = "countdown";
+  setProgress(11, "Cronômetro");
+  const future = new Date(); future.setMonth(future.getMonth() + 3);
+  await susie(`${phaseTitle("Contagem Regressiva", "◷")}Quer incluir um cronômetro contando os dias para o evento? Ele cria aquela expectativa gostosa até a data chegar.
+    <div class="countdown-preview" data-countdown-target="${future.toISOString()}">
+      <h4>CONTAGEM REGRESSIVA</h4>
+      <div class="countdown-units">
+        <div><strong data-unit="months">00</strong><span>Meses</span></div>
+        <div><strong data-unit="days">00</strong><span>Dias</span></div>
+        <div><strong data-unit="hours">00</strong><span>Hs</span></div>
+        <div><strong data-unit="minutes">00</strong><span>Min</span></div>
+        <div><strong data-unit="seconds">00</strong><span>Seg</span></div>
+      </div>
+    </div>`);
+  startCountdownPreview();
+  choices([
+    { label: "Incluir Cronômetro", action: () => chooseAndGo("countdown", "include", "Incluir Cronômetro", galleryStep) },
+    { label: "Não Quero", action: () => chooseAndGo("countdown", "none", "Sem Cronômetro", galleryStep) }
+  ]);
+}
+
+function startCountdownPreview() {
+  clearInterval(countdownTimer);
+  const preview = [...els.messages.querySelectorAll(".countdown-preview")].pop();
+  if (!preview) return;
+  const target = new Date(preview.dataset.countdownTarget);
+  const update = () => {
+    const current = new Date();
+    let difference = Math.max(0, target - current);
+    const seconds = Math.floor((difference / 1000) % 60);
+    const minutes = Math.floor((difference / 60000) % 60);
+    const hours = Math.floor((difference / 3600000) % 24);
+    const totalDays = Math.floor(difference / 86400000);
+    const months = Math.floor(totalDays / 30);
+    const days = totalDays % 30;
+    const values = { months, days, hours, minutes, seconds };
+    Object.entries(values).forEach(([unit, value]) => {
+      const element = preview.querySelector(`[data-unit="${unit}"]`);
+      if (element) element.textContent = String(value).padStart(2, "0");
+    });
+  };
+  update();
+  countdownTimer = setInterval(update, 1000);
+}
+
+async function galleryStep() {
+  state.step = "gallery";
+  setProgress(12, "Galeria");
+  await susie(`${phaseTitle("Galeria de Fotos", "▦")}Você quer incluir uma galeria de fotos no convite? Ela deixa o convite mais pessoal e ajuda a contar a história visual do evento.<br><small>As fotos serão enviadas pelo WhatsApp depois da confirmação.</small>${missingPreview("Galeria de Fotos")}`);
+  yesNo("gallery", "Incluir Galeria", 5, saveDateStep);
+}
+
+async function reminderStep() {
+  state.step = "reminder";
+  setProgress(14, "Lembrete");
+  await susie(`${phaseTitle("Lembrete", "♧")}Quer incluir um lembrete para enviar aos convidados alguns dias antes da festa? É um videozinho com música para relembrar todo mundo de um jeito bonito.
+    ${assetStrip([assetImage("assets/orcamento/Lembrete.jpg", "Exemplo de Lembrete")])}`);
+  yesNo("reminder", "Incluir Lembrete", 15, qrStep);
+}
+
+async function saveDateStep() {
+  state.step = "saveTheDate";
+  setProgress(13, "Save The Date");
+  await susie(`${phaseTitle("Save The Date", "◫")}${isFirstAccessDay
+    ? "Agora uma opção especial ✨ Fechando o convite ainda hoje, você ganha o Save The Date Simples de brinde!"
+    : "Você também pode incluir um Save The Date para avisar os convidados antes do convite oficial."}
+    ${assetStrip([assetImage("assets/orcamento/Exemplo Save The Date.jpg", "Exemplo de Save The Date")])}`);
+  choices([
+    { label: isFirstAccessDay ? "Save The Date Simples — Brinde" : "Save The Date Simples <span class='choice-price'>+R$15</span>", action: () => chooseAndGo("saveTheDate", "simple", isFirstAccessDay ? "Save The Date Simples — Brinde" : "Save The Date Simples (+R$15)", reminderStep) },
+    { label: "Save The Date Premium <span class='choice-price'>+R$50</span>", action: () => chooseAndGo("saveTheDate", "premium", "Save The Date Premium (+R$50)", reminderStep) },
+    { label: "Não Quero", action: () => chooseAndGo("saveTheDate", "none", "Sem Save The Date", reminderStep) }
+  ]);
+}
+
+async function qrStep() {
+  state.step = "photoQrCode";
+  setProgress(15, "QR Code de Fotos");
+  await susie(`${phaseTitle("QR Code de Fotos", "▣")}Já imaginou se você pudesse ter acesso as fotos que os seus convidados tiraram durante a sua festa? Com nosso sistema isso é possível! Os convidados escaneiam o QR Code, tiram fotos e elas ficam salvas no celular deles e no seu! O código pode ficar no convite ou em materiais da festa, como cardápios na mesa, cartões ou cartazes na entrada!${missingPreview("Sistema QR Code de Fotos")}`);
+  yesNo("photoQrCode", "Incluir QR Code", 35, playlistStep);
+}
+
+async function playlistStep() {
+  state.step = "guestPlaylist";
+  setProgress(16, "Playlist");
+  await susie(`${phaseTitle("Playlist dos Convidados", "♫")}Quer deixar os convidados sugerirem músicas antes da festa? A Playlist dos Convidados abre um formulário onde eles podem mandar sugestões, e você encaminha para o seu DJ somente as que você concordar!${missingPreview("Formulário da Playlist dos Convidados")}`);
+  yesNo("guestPlaylist", "Incluir Playlist dos Convidados", 5, notesStep);
+}
+
+async function notesStep() {
+  state.step = "notes";
+  setProgress(17, "Observações finais");
+  await susie(`${phaseTitle("Observações Finais", "✎")}Antes de fechar, quer me contar mais alguma observação importante sobre o convite? Pode ser uma ideia, preferência ou pedido especial.`);
+  setInput(true, [], "Digite sua observação aqui");
+  choices([{ label: "Não tenho observações", action: () => finishNotes("") }]);
+}
+
+async function finishNotes(value) {
+  state.notes = value;
+  state.editing = false;
+  persist();
+  setInput(false);
+  if (!value) user("Não tenho observações");
+  await finalStep();
+}
+
+function yesNo(key, label, price, next) {
+  choices([
+    { label: `${label} <span class='choice-price'>+R$${price}</span>`, action: () => chooseAndGo(key, "include", `${label} (+R$${price})`, next) },
+    { label: "Não Quero", action: () => chooseAndGo(key, "none", "Não Quero", next) }
+  ]);
+}
+
+function chooseAndGo(key, value, label, next) {
+  user(label);
+  setChoice(key, value);
+  if (state.editing) { state.editing = false; finalStep(); }
+  else next();
+}
+
+const labels = {
+  include: "Incluir", none: "Não incluir", long: "Abertura Longa", short: "Abertura Curta",
+  whatsapp: "Direto no WhatsApp", smart_form: "Formulário Inteligente", simple: "Simples",
+  premium: "Premium", smart_list: "Lista Inteligente", client_list: "Lista do Cliente",
+  client: "Manual do Cliente", model_music: "Música do modelo", name_or_link: "Nome ou link informado"
+};
+
+function choiceLabel(value) {
+  if (value && typeof value === "object") return labels[value.mode] || value.value || "Informada";
+  return labels[value] || value || "Não informado";
+}
+
+function summaryHtml() {
+  const modelName = state.selectedModelData?.name || (state.modelMode === "new" ? "Modelo novo" : "Não escolhido");
+  const rows = [
+    ["Modelo", modelName], ["Identidade Visual", choiceLabel(state.choices.visualIdentity)],
+    ["Abertura", choiceLabel(state.choices.openingType)], ["Foto na abertura", choiceLabel(state.choices.openingPhoto)],
+    ["Música", choiceLabel(state.choices.music)], ["Confirmação", choiceLabel(state.choices.rsvp)],
+    ["Presentes", choiceLabel(state.choices.gifts)], ["Manual", choiceLabel(state.choices.manual)],
+    ["Cronômetro", choiceLabel(state.choices.countdown)], ["Galeria", choiceLabel(state.choices.gallery)],
+    ["Lembrete", choiceLabel(state.choices.reminder)], ["Save The Date", choiceLabel(state.choices.saveTheDate)],
+    ["QR Code de Fotos", choiceLabel(state.choices.photoQrCode)], ["Playlist", choiceLabel(state.choices.guestPlaylist)]
+  ];
+  return `<div class="summary-card">
+    <h3>Orçamento de ${state.name}</h3>
+    <div class="summary-event"><strong>${state.event.type || "Evento"}</strong><span>${state.event.eventName || "Nome pendente"} · ${state.event.date || "Data pendente"}</span></div>
+    ${rows.map(([key, value]) => `<div class="summary-row"><span>${key}</span><strong>${value}</strong></div>`).join("")}
+    ${state.giftDetails ? `<div class="summary-text"><strong>Texto dos presentes</strong><p>${escapeHtml(state.giftDetails).replace(/\n/g, "<br>")}</p></div>` : ""}
+    ${state.manualDetails ? `<div class="summary-text"><strong>Texto do manual</strong><p>${escapeHtml(state.manualDetails).replace(/\n/g, "<br>")}</p></div>` : ""}
+    <div class="summary-row"><span>Observações</span><strong>${state.notes || "Nenhuma"}</strong></div>
+    <div class="summary-pending"><strong>Pendências:</strong> ${state.pending.length ? state.pending.join(", ") : "Nenhuma"}</div>
+    <div class="summary-total"><span>Valor total</span><strong>R$ ${state.total}</strong></div>
+    <p>Prazo de entrega: até 2 dias úteis após o pagamento do sinal de R$20.</p>
+  </div>`;
+}
+
+async function finalStep() {
+  state.step = "final";
+  setProgress(17, "Resumo final");
+  persist();
+  await susie(`${phaseTitle("Resumo do Orçamento", "✓")}Prontinho! Montei o resumo do seu orçamento ✨ Dá uma olhadinha se está tudo certo.${summaryHtml()}`);
+  const editGroup = document.createElement("div");
+  editGroup.className = "edit-grid";
+  editGroup.innerHTML = `<h3>Quer mudar alguma coisa?</h3><p>Clique nas opções abaixo.</p>`;
+  [["fa-palette","Modelo","model"],["fa-calendar-days","Dados","event"],["fa-wand-magic-sparkles","Identidade","identity"],["fa-envelope-open","Abertura","opening"],["fa-image","Foto","openingPhoto"],["fa-music","Música","music"],["fa-user-check","Confirmação","rsvp"],["fa-gift","Presentes","gifts"],["fa-book-open","Manual","manual"],["fa-clock","Cronômetro","countdown"],["fa-images","Galeria","gallery"],["fa-bell","Lembrete","reminder"],["fa-heart","Save The Date","saveTheDate"],["fa-qrcode","QR Code","photoQrCode"],["fa-list","Playlist","guestPlaylist"],["fa-pen","Observações","notes"]].forEach(([icon, label, key]) => {
+    editGroup.insertAdjacentHTML("beforeend", `<button type="button" data-edit="${key}"><i class="fa-solid ${icon}"></i>${label}</button>`);
+  });
+  els.messages.appendChild(editGroup);
+  updateMoreIndicator();
+  choices([
+    { className: "whatsapp-choice", label: `<i class="fa-brands fa-whatsapp"></i><span><small>Finalizar orçamento</small><strong>CONFIRMAR PELO WHATSAPP</strong></span>`, action: openWhatsApp },
+    { label: "Recomeçar orçamento", action: restart }
+  ]);
+}
+
+function editSection(key) {
+  const handlers = {
+    model: modelStep, event: eventStep, identity: identityStep,
+    opening: () => { state.editing = true; state.step = "opening"; setProgress(5, "Abertura do convite"); susie(`${phaseTitle("Tipo de Abertura", "◇")}Vamos alterar o tipo de abertura.${openingAssets()}`).then(() => choices([
+      { label: "Sem Abertura", action: () => finishPreview("Sem Abertura") }
+    ])); },
+    openingPhoto: openingPhotoStep, music: musicStep, rsvp: rsvpStep, gifts: giftsStep, manual: manualStep,
+    countdown: countdownStep, gallery: galleryStep, reminder: reminderStep, saveTheDate: saveDateStep,
+    photoQrCode: qrStep, guestPlaylist: playlistStep, notes: notesStep
+  };
+  state.editing = true;
+  user(`Alterar: ${key}`);
+  handlers[key]?.();
+}
+
+function whatsappMessage() {
+  const e = state.event;
+  return `Oi! Finalizei meu orçamento pelo site com a Susie \u2728
+
+\u{1F464} *Cliente:* ${state.name}
+
+\u{1F48C} *MODELO*
+- Tipo: ${state.modelMode}
+- Modelo escolhido: ${state.selectedModelData?.name || "Não escolhido"}
+- Personalização: ${state.modelCustomization || "Nenhuma"}
+- Briefing de modelo novo: ${state.modelBrief || "Nenhum"}
+
+\u{1F389} *DADOS DO EVENTO*
+- Tipo de evento: ${e.type || "Pendente"}
+- Nome: ${e.eventName || "Pendente"}
+- Data: ${e.date || "Pendente"}
+- Horário: ${e.time || "Pendente"}
+- Local: ${e.location || "Pendente"}
+
+\u2728 *ESCOLHAS DO CONVITE*
+${Object.entries(state.choices).map(([key, value]) => `- ${key}: ${choiceLabel(value)}`).join("\n")}
+
+\u{1F381} *SUGESTÕES DE PRESENTES*
+${state.giftDetails || "Não informado"}
+
+\u{1F4D6} *MANUAL DO CONVIDADO*
+${state.manualDetails || "Não informado"}
+
+\u{1F4DD} *OBSERVAÇÕES*
+${state.notes || "Nenhuma"}
+
+\u26A0\uFE0F *PENDÊNCIAS*
+${state.pending.length ? state.pending.join(", ") : "Nenhuma"}
+
+\u{1F4B0} *VALOR TOTAL:* R$${state.total}
+
+\u23F0 *Prazo de entrega:* até 2 dias úteis após o pagamento do sinal de R$20.
+
+\u26A0\uFE0F PAGAMENTO DE SINAL
+Sinal de R$20: https://mpago.la/1wvHN6p ou Pix CPF 49455859890.`;
+}
+
+function openWhatsApp() {
+  persist();
+  window.open(`https://api.whatsapp.com/send/?phone=5511939047235&text=${encodeURIComponent(whatsappMessage())}&type=phone_number&app_absent=0`, "_blank", "noopener");
+}
+
+function openAssetModal(card) {
+  const { previewType, previewSrc, previewLabel } = card.dataset;
+  els.assetModalContent.innerHTML = previewType === "video"
+    ? `<video src="${previewSrc}" aria-label="${previewLabel}" muted loop autoplay playsinline controls></video><strong>${previewLabel}</strong>`
+    : `<img src="${previewSrc}" alt="${previewLabel}"><strong>${previewLabel}</strong>`;
+  els.assetModal.hidden = false;
+  activeAssetCard = card;
+  els.assetModalSelect.hidden = !card.dataset.selectGroup;
+  document.body.classList.add("modal-open");
+  els.assetModalClose.focus();
+}
+
+function closeAssetModal() {
+  els.assetModal.hidden = true;
+  els.assetModalContent.innerHTML = "";
+  activeAssetCard = null;
+  els.assetModalSelect.hidden = true;
+  document.body.classList.remove("modal-open");
+}
+
+function selectAssetOption(card) {
+  const { selectGroup: group, selectValue: value, selectLabel: label } = card.dataset;
+  if (!group) return;
+  const radio = card.querySelector('input[type="radio"]');
+  if (radio) radio.checked = true;
+  if (group === "opening") {
+    finishPreview(label);
+  } else if (group === "rsvp") {
+    chooseAndGo("rsvp", value, label, giftsStep);
+  } else if (group === "gifts") {
+    if (value === "simple" || value === "premium") giftDetailsStep(value, label);
+    else chooseAndGo("gifts", value, label, manualStep);
+  } else if (group === "manual") {
+    manualDetailsStep(value, label);
+  }
+}
+
+async function startOrResume() {
+  const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "null");
+  if (!saved?.name) return begin();
+  Object.assign(state, saved);
+  els.welcome.hidden = true;
+  els.chat.hidden = false;
+  els.total.textContent = `R$ ${state.total || 80}`;
+  setInput(false);
+  await susie(`Que bom ter você de volta, <strong>${state.name}</strong>! Suas escolhas continuam salvas por aqui ✨`);
+  const handlers = {
+    model: modelStep, modelBrief: modelStep, event: eventStep, identity: identityStep, opening: () => openingStep(state.choices.visualIdentity === "include"),
+    openingPhoto: openingPhotoStep, music: musicStep, rsvp: rsvpStep, gifts: giftsStep, giftDetails: () => giftDetailsStep(state.choices.gifts || "simple", choiceLabel(state.choices.gifts)),
+    manual: manualStep, manualDetails: () => manualDetailsStep(state.choices.manual || "simple", choiceLabel(state.choices.manual)),
+    countdown: countdownStep, gallery: galleryStep, reminder: reminderStep, saveTheDate: saveDateStep,
+    photoQrCode: qrStep, guestPlaylist: playlistStep, notes: notesStep, final: finalStep
+  };
+  (handlers[state.step] || modelStep)();
+}
+
+function submitMessage(event) {
+  event.preventDefault();
+  if (state.step === "name") submitName();
+  else if (state.step === "modelBrief") submitModelBrief();
+  else if (state.step === "music") {
+    const value = els.input.value.trim();
+    if (value) chooseMusic("name_or_link", value, value);
+  } else if (state.step === "giftDetails") submitGiftDetails();
+  else if (state.step === "manualDetails") submitManualDetails();
+  else if (state.step === "notes") {
+    const value = els.input.value.trim();
+    if (value) { user(value); finishNotes(value); }
+  }
+}
+
+function restart() {
+  clearInterval(placeholderTimer);
+  localStorage.removeItem(STORAGE_KEY);
+  Object.assign(state, {
+    step: "name", name: "", total: 80, selectedModel: false, selectedModelData: null,
+    modelMode: "none", modelBrief: "", modelCustomization: "", event: {}, choices: {}, giftDetails: "", manualDetails: "", notes: "", pending: [], editing: false
+  });
+  els.messages.innerHTML = "";
+  els.total.textContent = "R$ 80";
+  begin();
+}
+
+const savedOnLoad = JSON.parse(localStorage.getItem(STORAGE_KEY) || "null");
+if (savedOnLoad?.name) {
+  $("#start-chat span").textContent = "Continuar meu orçamento";
+  queueMicrotask(startOrResume);
+}
+els.start.addEventListener("click", startOrResume);
+els.composer.addEventListener("submit", submitMessage);
+els.restart.addEventListener("click", restart);
+els.messages.addEventListener("scroll", updateMoreIndicator, { passive: true });
+els.messages.addEventListener("click", event => {
+  const assetCard = event.target.closest(".asset-card");
+  if (assetCard) {
+    if (event.target.closest(".asset-select")) {
+      event.stopPropagation();
+      selectAssetOption(assetCard);
+      return;
+    }
+    openAssetModal(assetCard);
+    return;
+  }
+  const editButton = event.target.closest("[data-edit]");
+  if (editButton) {
+    editButton.closest(".edit-grid").querySelectorAll("button").forEach(button => button.disabled = true);
+    editSection(editButton.dataset.edit);
+  }
+});
+els.messages.addEventListener("keydown", event => {
+  if ((event.key === "Enter" || event.key === " ") && event.target.matches(".asset-card")) {
+    event.preventDefault();
+    openAssetModal(event.target);
+  }
+});
+els.assetModalClose.addEventListener("click", closeAssetModal);
+els.assetModalSelect.addEventListener("click", () => {
+  const selectedCard = activeAssetCard;
+  closeAssetModal();
+  if (selectedCard) selectAssetOption(selectedCard);
+});
+els.assetModal.addEventListener("click", event => {
+  if (event.target === els.assetModal) closeAssetModal();
+});
+document.addEventListener("keydown", event => {
+  if (event.key === "Escape" && !els.assetModal.hidden) closeAssetModal();
+});
+els.moreIndicator.addEventListener("click", () => {
+  els.messages.scrollBy({ top: Math.max(160, els.messages.clientHeight * .72), behavior: "smooth" });
+  setTimeout(updateMoreIndicator, 360);
+});
+els.help.addEventListener("click", () => {
+  const text = encodeURIComponent("Oi! Eu estava fazendo o orçamento pelo site e tive uma dificuldade…");
+  window.open(`https://wa.me/5511939047235?text=${text}`, "_blank", "noopener");
+});
