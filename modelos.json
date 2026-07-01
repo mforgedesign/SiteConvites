@@ -8127,14 +8127,16 @@
     "paleta_cores": "",
     "button_color": "#0c2b71",
     "idade": "",
-    "capa_path": "",
-    "capa_type": "",
+    "capa_path": "assets/capa.jpg",
+    "capa_type": "image",
     "config_json": {
       "assets": {
-        "capa": "",
-        "musica": "",
-        "aberturaSlides": [],
-        "folhaPreenchida": ""
+        "capa": "assets/capa.jpg",
+        "musica": "assets/musica.mp3",
+        "aberturaSlides": [
+          "assets/slide1.mp4"
+        ],
+        "folhaPreenchida": "assets/folha_preenchida.mp4"
       },
       "botoes": [
         {
@@ -8204,9 +8206,9 @@
         },
         "slug": "modelo-tropical",
         "tema": "Tropical",
-        "musica": "",
+        "musica": "assets/musica.mp3",
         "paletaCores": "",
-        "tipoAbertura": "nenhuma",
+        "tipoAbertura": "longa",
         "particulasAbertura": true
       }
     }

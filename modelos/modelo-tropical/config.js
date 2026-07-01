@@ -32,10 +32,10 @@ window.config = {
     "tema": "Tropical",
     // Tema visual do convite (ex: princesa, floral, minimalista, elegante)
 
-    "musica": "",
+    "musica": "assets/musica.mp3",
     // Música de fundo principal do convite
 
-    "tipoAbertura": "nenhuma",
+    "tipoAbertura": "longa",
     // Tipo de animação de abertura do convite: curta | longa | nenhuma
 
     "particulasAbertura": true,
@@ -60,17 +60,19 @@ window.config = {
   // ARQUIVOS / ASSETS DO CONVITE (Caminhos)
   // =========================
   "assets": {
-    "capa": "",
+    "capa": "assets/capa.jpg",
     // Arquivo da capa principal do convite
 
-    "aberturaSlides": [],
+    "aberturaSlides": [
+      "assets/slide1.mp4"
+    ],
     // Lista de vídeos ou slides que compõem a abertura animada
 
 
-    "folhaPreenchida": "",
+    "folhaPreenchida": "assets/folha_preenchida.mp4",
     // Arte da folha com o conteúdo do evento preenchido
 
-    "musica": ""
+    "musica": "assets/musica.mp3"
     // Arquivo de música usado no convite
   },
 

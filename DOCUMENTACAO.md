@@ -86,3 +86,9 @@ O projeto opera em um ecossistema dividido em 3 camadas (Frontend, Middleware Su
 A vitrine usa `capa_path` e `capa_type` do `modelos.json`. Capas podem ser imagens ou vídeos; quando nenhum asset visual existe, `getCoverUrl()` retorna um placeholder inline e não tenta carregar `assets/capa.jpg`.
 
 Os configs publicados precisam referenciar arquivos presentes na própria pasta do modelo. O modelo Sarah e os caminhos históricos detectados na auditoria foram alinhados com os nomes físicos atuais. Detalhes em `changelog_2026-07-01_12-00_assets_modelos_sem_404.md`.
+
+### Restauração do modelo Tropical (01/07/2026)
+
+O modelo `modelo-tropical` voltou a usar seus assets locais originais: capa, vídeo de abertura, folha em vídeo, música, brilhos e SVGs de botão. Os arquivos foram recuperados do histórico anterior ao commit que os removeu durante a migração para Supabase. O catálogo aponta novamente para `assets/capa.jpg`.
+
+Detalhes em `changelog_2026-07-01_10-45_restaurar_assets_modelo_tropical.md`.
