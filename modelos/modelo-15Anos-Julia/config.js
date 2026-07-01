@@ -8,8 +8,8 @@ window.config = {
     "endereco": ""
   },
   "convite": {
-    "paletaCores": "Azul Marinho",
-    "tema": "Harry Potter",
+    "paletaCores": "Azul Marinho e Preto",
+    "tema": "Harry Potter Hogwarts",
     "musica": "assets/music.mp3",
     "tipoAbertura": "",
     "particulasAbertura": true,

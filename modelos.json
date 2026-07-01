@@ -1,10 +1,10 @@
 [
   {
     "slug": "modelo-YasminZara15Anos",
-    "name": "Yasmin Zara",
+    "name": "Baile de Máscaras",
     "tipo": "Aniversário",
-    "tema": "",
-    "paleta_cores": "",
+    "tema": "Baile de Máscaras",
+    "paleta_cores": "Vermelho e Dourado",
     "button_color": "#171717",
     "idade": 15,
     "capa_path": "assets/cover.jpg",
@@ -19,8 +19,8 @@
         "endereco": ""
       },
       "convite": {
-        "paletaCores": "",
-        "tema": "",
+        "paletaCores": "Vermelho e Dourado",
+        "tema": "Baile de Máscaras",
         "musica": "assets/music.mp3",
         "tipoAbertura": "",
         "particulasAbertura": true,
@@ -117,10 +117,10 @@
   },
   {
     "slug": "modelo-Teca-Anos60",
-    "name": "Teca",
+    "name": "Anos 60",
     "tipo": "Aniversário",
-    "tema": "",
-    "paleta_cores": "",
+    "tema": "Anos 60",
+    "paleta_cores": "Pink, Bege e Preto",
     "button_color": "#d93f55",
     "idade": "",
     "capa_path": "assets/cover.jpg",
@@ -135,8 +135,8 @@
         "endereco": ""
       },
       "convite": {
-        "paletaCores": "",
-        "tema": "",
+        "paletaCores": "Pink, Bege e Preto",
+        "tema": "Anos 60",
         "musica": "assets/music.mp3",
         "tipoAbertura": "",
         "particulasAbertura": true,
@@ -223,7 +223,7 @@
   },
   {
     "slug": "modelo-Larissa15Anos",
-    "name": "Larissa",
+    "name": "Floral",
     "tipo": "Aniversário",
     "tema": "Floral",
     "paleta_cores": "Dourado, Lilás e Rosé",
@@ -348,7 +348,7 @@
   },
   {
     "slug": "modelo-JulianaBusson35Anos",
-    "name": "Juliana Busson",
+    "name": "Bridgerton",
     "tipo": "Aniversário",
     "tema": "Bridgerton",
     "paleta_cores": "Azul e Dourado",
@@ -476,7 +476,7 @@
   },
   {
     "slug": "modelo-Julianne15Anos",
-    "name": "Julianne",
+    "name": "Floral",
     "tipo": "Aniversário",
     "tema": "Floral",
     "paleta_cores": "Rosa com Azul e Prata",
@@ -601,7 +601,7 @@
   },
   {
     "slug": "modelo-Gabriella-15Anos",
-    "name": "Gabriella",
+    "name": "Floral",
     "tipo": "Aniversário",
     "tema": "Floral",
     "paleta_cores": "Masala",
@@ -720,10 +720,10 @@
   },
   {
     "slug": "modelo-Enf-BrunaEduarda-Formatura",
-    "name": "Enf. Bruna Eduarda",
+    "name": "Formatura Enfermagem",
     "tipo": "Formatura",
-    "tema": "",
-    "paleta_cores": "",
+    "tema": "Formatura Enfermagem",
+    "paleta_cores": "Verde e Dourado",
     "button_color": "#1c341b",
     "idade": "",
     "capa_path": "assets/cover.jpg",
@@ -738,8 +738,8 @@
         "endereco": ""
       },
       "convite": {
-        "paletaCores": "",
-        "tema": "",
+        "paletaCores": "Verde e Dourado",
+        "tema": "Formatura Enfermagem",
         "musica": "assets/music.mp3",
         "tipoAbertura": "",
         "particulasAbertura": true,
@@ -851,7 +851,7 @@
   },
   {
     "slug": "modelo-ester15anos",
-    "name": "Ester",
+    "name": "15 Anos",
     "tipo": "Aniversário",
     "tema": "15 Anos",
     "paleta_cores": "Azul com Prata",
@@ -976,7 +976,7 @@
   },
   {
     "slug": "modelo-Ester-15Anos",
-    "name": "Ester",
+    "name": "Jardim encantado",
     "tipo": "Debutante",
     "tema": "Jardim encantado",
     "paleta_cores": "Rosa com Branco, Verde claro e Dourado",
@@ -1101,10 +1101,10 @@
   },
   {
     "slug": "modelo-Emanuelle-1Ano",
-    "name": "Emanuelle",
+    "name": "Castelo Encantado",
     "tipo": "Aniversário",
-    "tema": "",
-    "paleta_cores": "",
+    "tema": "Castelo Encantado",
+    "paleta_cores": "Azul, Lilás e Prata",
     "button_color": "#559dfe",
     "idade": 1,
     "capa_path": "assets/cover.jpg",
@@ -1119,8 +1119,8 @@
         "endereco": ""
       },
       "convite": {
-        "paletaCores": "",
-        "tema": "",
+        "paletaCores": "Azul, Lilás e Prata",
+        "tema": "Castelo Encantado",
         "musica": "assets/music.mp3",
         "tipoAbertura": "",
         "particulasAbertura": true,
@@ -1227,10 +1227,10 @@
   },
   {
     "slug": "modelo-EliCavalcante40Anos",
-    "name": "Eli Cavalcante",
+    "name": "Baile de Máscaras",
     "tipo": "Aniversário",
-    "tema": "",
-    "paleta_cores": "",
+    "tema": "Baile de Máscaras",
+    "paleta_cores": "Vermelho, Preto e Dourado",
     "button_color": "#121212",
     "idade": 40,
     "capa_path": "assets/cover.png",
@@ -1245,8 +1245,8 @@
         "endereco": ""
       },
       "convite": {
-        "paletaCores": "",
-        "tema": "",
+        "paletaCores": "Vermelho, Preto e Dourado",
+        "tema": "Baile de Máscaras",
         "musica": "assets/music.mp3",
         "tipoAbertura": "",
         "particulasAbertura": true,
@@ -1333,10 +1333,10 @@
   },
   {
     "slug": "modelo-Catarina15Anos",
-    "name": "Catarina",
+    "name": "Castelo Encantado",
     "tipo": "Aniversário",
-    "tema": "",
-    "paleta_cores": "",
+    "tema": "Castelo Encantado",
+    "paleta_cores": "Verde Água, branco e Dourado",
     "button_color": "#7a8b63",
     "idade": 15,
     "capa_path": "assets/cover.jpg",
@@ -1351,8 +1351,8 @@
         "endereco": ""
       },
       "convite": {
-        "paletaCores": "",
-        "tema": "",
+        "paletaCores": "Verde Água, branco e Dourado",
+        "tema": "Castelo Encantado",
         "musica": "assets/music.mp3",
         "tipoAbertura": "",
         "particulasAbertura": true,
@@ -1454,10 +1454,10 @@
   },
   {
     "slug": "modelo-Antonella1Ano",
-    "name": "Antonella",
+    "name": "Floral Elegante",
     "tipo": "Aniversário",
-    "tema": "",
-    "paleta_cores": "",
+    "tema": "Floral Elegante",
+    "paleta_cores": "Rosa e Dourado",
     "button_color": "#940627",
     "idade": 1,
     "capa_path": "assets/cover.jpg",
@@ -1472,8 +1472,8 @@
         "endereco": ""
       },
       "convite": {
-        "paletaCores": "",
-        "tema": "",
+        "paletaCores": "Rosa e Dourado",
+        "tema": "Floral Elegante",
         "musica": "assets/music.mp3",
         "tipoAbertura": "",
         "particulasAbertura": true,
@@ -1560,7 +1560,7 @@
   },
   {
     "slug": "modelo-beatriz15anos",
-    "name": "Beatriz",
+    "name": "15 Anos",
     "tipo": "Aniversário",
     "tema": "15 Anos",
     "paleta_cores": "Vermelho/Dourado",
@@ -1681,7 +1681,7 @@
   },
   {
     "slug": "modelo-AniversarioGabriella-15Anos",
-    "name": "Gabriella",
+    "name": "Baile de Inverno",
     "tipo": "Aniversário",
     "tema": "Baile de Inverno",
     "paleta_cores": "Prata, Azul e Branco",
@@ -1806,10 +1806,10 @@
   },
   {
     "slug": "modelo-AnnaFlavia-15Anos",
-    "name": "Anna Flavia",
+    "name": "Floral Mágico",
     "tipo": "Aniversário",
-    "tema": "",
-    "paleta_cores": "",
+    "tema": "Floral Mágico",
+    "paleta_cores": "Azul, Rosa, Verde Água e Pérola",
     "button_color": "#3282b8",
     "idade": 15,
     "capa_path": "assets/cover.jpg",
@@ -1824,8 +1824,8 @@
         "endereco": ""
       },
       "convite": {
-        "paletaCores": "",
-        "tema": "",
+        "paletaCores": "Azul, Rosa, Verde Água e Pérola",
+        "tema": "Floral Mágico",
         "musica": "assets/music.mp3",
         "tipoAbertura": "",
         "particulasAbertura": true,
@@ -1927,10 +1927,10 @@
   },
   {
     "slug": "modelo-anajulia15anos",
-    "name": "Ana Julia",
+    "name": "Enrolados Rapunzel",
     "tipo": "Aniversário",
-    "tema": "Enrolados",
-    "paleta_cores": "lilas",
+    "tema": "Enrolados Rapunzel",
+    "paleta_cores": "Lilás e Dourado",
     "button_color": "#703a92",
     "idade": 15,
     "capa_path": "assets/cover.jpg",
@@ -1945,8 +1945,8 @@
         "endereco": ""
       },
       "convite": {
-        "paletaCores": "lilas",
-        "tema": "Enrolados",
+        "paletaCores": "Lilás e Dourado",
+        "tema": "Enrolados Rapunzel",
         "musica": "assets/music.mp3",
         "tipoAbertura": "",
         "particulasAbertura": true,
@@ -2048,10 +2048,10 @@
   },
   {
     "slug": "modelo-Alessandra50Anos",
-    "name": "Alessandra",
+    "name": "Salão Elegante",
     "tipo": "Aniversário",
-    "tema": "",
-    "paleta_cores": "",
+    "tema": "Salão Elegante",
+    "paleta_cores": "Preto e Dourado",
     "button_color": "#121212",
     "idade": 40,
     "capa_path": "assets/cover.png",
@@ -2066,8 +2066,8 @@
         "endereco": ""
       },
       "convite": {
-        "paletaCores": "",
-        "tema": "",
+        "paletaCores": "Preto e Dourado",
+        "tema": "Salão Elegante",
         "musica": "assets/music.mp3",
         "tipoAbertura": "",
         "particulasAbertura": true,
@@ -2174,7 +2174,7 @@
   },
   {
     "slug": "modelo-AliceAlves-15Anos",
-    "name": "Alice Alves",
+    "name": "Jardim Encantado",
     "tipo": "Aniversário",
     "tema": "Jardim Encantado",
     "paleta_cores": "Rosa pink deep, prata, rosa bebê",
@@ -2280,7 +2280,7 @@
   },
   {
     "slug": "modelo-ana-julia15anos",
-    "name": "Ana Julia",
+    "name": "15 Anos",
     "tipo": "Aniversário",
     "tema": "15 Anos",
     "paleta_cores": "Azul Marinho, Rosa Bebê e Prata",
@@ -2388,10 +2388,10 @@
   },
   {
     "slug": "modelo-15Anos-Julia",
-    "name": "Júlia",
+    "name": "Harry Potter Hogwarts",
     "tipo": "Aniversário",
-    "tema": "Harry Potter",
-    "paleta_cores": "Azul Marinho",
+    "tema": "Harry Potter Hogwarts",
+    "paleta_cores": "Azul Marinho e Preto",
     "button_color": "#0d2459",
     "idade": 15,
     "capa_path": "assets/cover.png",
@@ -2406,8 +2406,8 @@
         "endereco": ""
       },
       "convite": {
-        "paletaCores": "Azul Marinho",
-        "tema": "Harry Potter",
+        "paletaCores": "Azul Marinho e Preto",
+        "tema": "Harry Potter Hogwarts",
         "musica": "assets/music.mp3",
         "tipoAbertura": "",
         "particulasAbertura": true,
@@ -2509,10 +2509,10 @@
   },
   {
     "slug": "modelo-15Anos-Alicia",
-    "name": "Alicia ",
+    "name": "Jardim Encantado",
     "tipo": "Aniversário",
-    "tema": "",
-    "paleta_cores": "",
+    "tema": "Jardim Encantado",
+    "paleta_cores": "Rosé Gold e Branco",
     "button_color": "#eca2d1",
     "idade": 15,
     "capa_path": "assets/cover.jpg",
@@ -2527,8 +2527,8 @@
         "endereco": ""
       },
       "convite": {
-        "paletaCores": "",
-        "tema": "",
+        "paletaCores": "Rosé Gold e Branco",
+        "tema": "Jardim Encantado",
         "musica": "assets/music.mp3",
         "tipoAbertura": "",
         "particulasAbertura": true,
@@ -2615,7 +2615,7 @@
   },
   {
     "slug": "modelo-Sarah-Vieira-15Anos",
-    "name": "Floral e Azul com Branco e Prata",
+    "name": "Floral",
     "tipo": "Debutante",
     "tema": "Floral",
     "paleta_cores": "Azul com Branco e Prata",

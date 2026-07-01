@@ -95,6 +95,14 @@ Detalhes em `changelog_2026-07-01_10-45_restaurar_assets_modelo_tropical.md`.
 
 ### Assets finais e nome visual do modelo Sarah (01/07/2026)
 
-O modelo `modelo-Sarah-Vieira-15Anos` usa as versões finais atuais de `cover.jpg` e `slide1.mp4` da pasta de Produção. Seu nome no catálogo é `Floral e Azul com Branco e Prata`, seguindo a regra `Tema e Paleta` em vez do nome da pessoa.
+O modelo `modelo-Sarah-Vieira-15Anos` usa as versões finais atuais de `cover.jpg` e `slide1.mp4` da pasta de Produção. Seu título foi normalizado para `Floral`, enquanto a paleta `Azul com Branco e Prata` permanece no subtítulo.
 
 Detalhes em `changelog_2026-07-01_12-10_sarah_assets_nome_visual.md`.
+
+### Título por tema e subtítulo por paleta no lote de modelos (01/07/2026)
+
+Os 22 modelos do lote `666f44d` foram corrigidos para usar `name` como título de tema e `paleta_cores` como subtítulo. Doze modelos sem metadados completos receberam os valores visuais informados manualmente; os outros dez reutilizaram os campos existentes em seus configs.
+
+Os valores manuais também foram persistidos em cada `config.js` e em `config_json`, mantendo catálogo, filtros e futuras reutilizações consistentes.
+
+Detalhes em `changelog_2026-07-01_13-30_corrigir_22_tema_paleta.md`.

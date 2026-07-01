@@ -8,8 +8,8 @@ window.config = {
     "endereco": ""
   },
   "convite": {
-    "paletaCores": "",
-    "tema": "",
+    "paletaCores": "Rosa e Dourado",
+    "tema": "Floral Elegante",
     "musica": "assets/music.mp3",
     "tipoAbertura": "",
     "particulasAbertura": true,
