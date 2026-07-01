@@ -21,20 +21,20 @@ window.config = {
     }
   },
   "assets": {
-    "capa": "assets/capa_1766447182.jpg",
+    "capa": "assets/cover.jpg",
     "cartao": "assets/cartao_gen.jpg",
     "aberturaSlides": [
-      "assets/abertura_1766447182.mp4"
+      "assets/slide1.mp4"
     ],
     "aberturaSlidesMeta": [
       {
-        "filePath": "assets/abertura_1766447182.mp4",
+        "filePath": "assets/slide1.mp4",
         "label": "Slide 1",
         "type": "video"
       }
     ],
-    "folhaVazia": "assets/folha_vazia_1766447182_1.jpg",
-    "folhaPreenchida": "assets/chatgpt_image_29_de_jun_de_2026_14_06_17.png",
+    "folhaVazia": "assets/folha_vazia.jpg",
+    "folhaPreenchida": "assets/folha.png",
     "musica": "assets/music.mp3",
     "fabric": {
       "saveTheDate": {

@@ -35,7 +35,7 @@ window.config = {
     "musica": "assets/musica.mp3",
     // Música de fundo principal do convite
 
-    "tipoAbertura": "longa",
+    "tipoAbertura": "nenhuma",
     // Tipo de animação de abertura do convite: curta | longa | nenhuma
 
     "particulasAbertura": true,
@@ -60,12 +60,10 @@ window.config = {
   // ARQUIVOS / ASSETS DO CONVITE (Caminhos)
   // =========================
   "assets": {
-    "capa": "assets/capa.jpg",
+    "capa": "",
     // Arquivo da capa principal do convite
 
-    "aberturaSlides": [
-      "assets/slide1.mp4"
-    ],
+    "aberturaSlides": [],
     // Lista de vídeos ou slides que compõem a abertura animada
 
     "folhaPreenchida": "assets/folha_preenchida.jpg",

@@ -756,6 +756,8 @@
                         paletaCores: m.paleta_cores,
                         buttonColor: m.button_color || '#c9557c',
                         tags: buildTags(m.tipo),
+                        coverPath: m.capa_path || '',
+                        coverType: m.capa_type || (/\.(mp4|webm|mov)$/i.test(m.capa_path || '') ? 'video' : 'image'),
                         cover: getCoverUrl(m.slug, m.capa_path),
                         loaded: true
                     }));
@@ -907,7 +909,7 @@
                 tipo: model.tipo,
                 paletaCores: model.paletaCores,
                 buttonColor: model.buttonColor,
-                capa: model.cover.replace(/^\//, '')
+                capa: model.coverType === 'image' && model.coverPath ? model.cover.replace(/^\//, '') : ''
             };
 
             localStorage.setItem('selectedModel', JSON.stringify(modelData));
@@ -926,13 +928,16 @@
             card.dataset.name = model.name.toLowerCase();
             card.dataset.colors = (model.paletaCores || '').toLowerCase();
             card.dataset.tema = (model.tema || '').toLowerCase();
+            const coverMedia = model.coverType === 'video'
+                ? `<video src="${model.cover}" class="model-cover loaded" autoplay loop muted playsinline preload="metadata"></video>`
+                : `<img src="${model.cover}"
+                         alt="${model.name}"
+                         class="model-cover loaded"
+                         onerror="this.onerror=null;this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 300 400%22%3E%3Crect fill=%22%23e5e7eb%22 width=%22300%22 height=%22400%22/%3E%3Ctext fill=%22%239ca3af%22 x=%22150%22 y=%22200%22 text-anchor=%22middle%22 font-size=%2214%22%3ESem capa%3C/text%3E%3C/svg%3E';">`;
 
             card.innerHTML = `
                 <div class="cover-click-area relative overflow-hidden" onclick="openPreview(models.find(m=>m.slug==='${model.slug}'))" style="cursor:pointer">
-                    <img src="${model.cover}"
-                         alt="${model.name}"
-                         class="model-cover loaded"
-                         onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 300 400%22%3E%3Crect fill=%22%23e5e7eb%22 width=%22300%22 height=%22400%22/%3E%3Ctext fill=%22%239ca3af%22 x=%22150%22 y=%22200%22 text-anchor=%22middle%22 font-size=%2214%22%3ESem capa%3C/text%3E%3C/svg%3E';">
+                    ${coverMedia}
                 </div>
                 <div class="card-info">
                     <h3 class="card-name font-semibold text-sm mb-0.5 line-clamp-1">${model.name}</h3>

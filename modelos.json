@@ -7,7 +7,8 @@
     "paleta_cores": "Azul com Branco e Prata",
     "button_color": "#0c2b71",
     "idade": 15,
-    "capa_path": "assets/capa_1766447182.jpg",
+    "capa_path": "assets/cover.jpg",
+    "capa_type": "image",
     "config_json": {
       "evento": {
         "tipo": "Debutante",
@@ -31,20 +32,20 @@
         }
       },
       "assets": {
-        "capa": "assets/capa_1766447182.jpg",
+        "capa": "assets/cover.jpg",
         "cartao": "assets/cartao_gen.jpg",
         "aberturaSlides": [
-          "assets/abertura_1766447182.mp4"
+          "assets/slide1.mp4"
         ],
         "aberturaSlidesMeta": [
           {
-            "filePath": "assets/abertura_1766447182.mp4",
+            "filePath": "assets/slide1.mp4",
             "label": "Slide 1",
             "type": "video"
           }
         ],
-        "folhaVazia": "assets/folha_vazia_1766447182_1.jpg",
-        "folhaPreenchida": "assets/chatgpt_image_29_de_jun_de_2026_14_06_17.png",
+        "folhaVazia": "assets/folha_vazia.jpg",
+        "folhaPreenchida": "assets/folha.png",
         "musica": "assets/music.mp3",
         "fabric": {
           "saveTheDate": {
@@ -5612,14 +5613,13 @@
     "paleta_cores": "Preto e Branco (+Verde + Prata)",
     "button_color": "#000000",
     "idade": "",
-    "capa_path": "assets/capa.jpg",
+    "capa_path": "assets/folha_preenchida.jpg",
+    "capa_type": "image",
     "config_json": {
       "assets": {
-        "capa": "assets/capa.jpg",
+        "capa": "",
         "musica": "assets/musica.mp3",
-        "aberturaSlides": [
-          "assets/slide1.mp4"
-        ],
+        "aberturaSlides": [],
         "folhaPreenchida": "assets/folha_preenchida.jpg"
       },
       "botoes": [
@@ -5692,7 +5692,7 @@
         "tema": "Galo (Clube Atlético Mineiro)",
         "musica": "assets/musica.mp3",
         "paletaCores": "Preto e Branco (+Verde + Prata)",
-        "tipoAbertura": "longa",
+        "tipoAbertura": "nenhuma",
         "particulasAbertura": true
       }
     }
@@ -7286,10 +7286,11 @@
     "paleta_cores": "",
     "button_color": "#0c2b71",
     "idade": "",
-    "capa_path": "assets/capa.jpg",
+    "capa_path": "assets/slide1.mp4",
+    "capa_type": "video",
     "config_json": {
       "assets": {
-        "capa": "assets/capa.jpg",
+        "capa": "",
         "musica": "assets/musica.mp3",
         "aberturaSlides": [
           "assets/slide1.mp4"
@@ -7658,15 +7659,16 @@
     "paleta_cores": "Rosa com Prata",
     "button_color": "#0c2b71",
     "idade": "",
-    "capa_path": "assets/capa.jpg",
+    "capa_path": "assets/cover.jpg",
+    "capa_type": "image",
     "config_json": {
       "assets": {
-        "capa": "assets/capa.jpg",
-        "musica": "assets/musica.mp3",
+        "capa": "assets/cover.jpg",
+        "musica": "assets/music.mp3",
         "aberturaSlides": [
           "assets/slide1.mp4"
         ],
-        "folhaPreenchida": "assets/folha_preenchida.jpg"
+        "folhaPreenchida": "assets/folha.jpg"
       },
       "botoes": [
         {
@@ -7736,7 +7738,7 @@
         },
         "slug": "modelo-rosaprata",
         "tema": "",
-        "musica": "assets/musica.mp3",
+        "musica": "assets/music.mp3",
         "paletaCores": "Rosa com Prata",
         "tipoAbertura": "longa",
         "particulasAbertura": true
@@ -7751,11 +7753,12 @@
     "paleta_cores": "Rose Gold",
     "button_color": "#0c2b71",
     "idade": "",
-    "capa_path": "assets/capa.jpg",
+    "capa_path": "assets/cover.jpg",
+    "capa_type": "image",
     "config_json": {
       "assets": {
-        "capa": "assets/capa.jpg",
-        "musica": "assets/musica.mp3",
+        "capa": "assets/cover.jpg",
+        "musica": "assets/music.mp3",
         "aberturaSlides": [
           "assets/slide1.mp4"
         ],
@@ -7829,7 +7832,7 @@
         },
         "slug": "modelo-rosegold",
         "tema": "",
-        "musica": "assets/musica.mp3",
+        "musica": "assets/music.mp3",
         "paletaCores": "Rose Gold",
         "tipoAbertura": "longa",
         "particulasAbertura": true
@@ -7937,15 +7940,16 @@
     "paleta_cores": "Roxo com Dourado",
     "button_color": "#0c2b71",
     "idade": "",
-    "capa_path": "assets/capa.jpg",
+    "capa_path": "assets/cover.jpg",
+    "capa_type": "image",
     "config_json": {
       "assets": {
-        "capa": "assets/capa.jpg",
-        "musica": "assets/musica.mp3",
+        "capa": "assets/cover.jpg",
+        "musica": "assets/music.mp3",
         "aberturaSlides": [
           "assets/slide1.mp4"
         ],
-        "folhaPreenchida": "assets/folha_preenchida.mp4"
+        "folhaPreenchida": "assets/folha.mp4"
       },
       "botoes": [
         {
@@ -8015,7 +8019,7 @@
         },
         "slug": "modelo-roxoedourado",
         "tema": "",
-        "musica": "assets/musica.mp3",
+        "musica": "assets/music.mp3",
         "paletaCores": "Roxo com Dourado",
         "tipoAbertura": "longa",
         "particulasAbertura": true
@@ -8123,15 +8127,14 @@
     "paleta_cores": "",
     "button_color": "#0c2b71",
     "idade": "",
-    "capa_path": "assets/capa.jpg",
+    "capa_path": "",
+    "capa_type": "",
     "config_json": {
       "assets": {
-        "capa": "assets/capa.jpg",
-        "musica": "assets/musica.mp3",
-        "aberturaSlides": [
-          "assets/slide1.mp4"
-        ],
-        "folhaPreenchida": "assets/folha_preenchida.mp4"
+        "capa": "",
+        "musica": "",
+        "aberturaSlides": [],
+        "folhaPreenchida": ""
       },
       "botoes": [
         {
@@ -8201,9 +8204,9 @@
         },
         "slug": "modelo-tropical",
         "tema": "Tropical",
-        "musica": "assets/musica.mp3",
+        "musica": "",
         "paletaCores": "",
-        "tipoAbertura": "longa",
+        "tipoAbertura": "nenhuma",
         "particulasAbertura": true
       }
     }
@@ -8402,15 +8405,16 @@
     "paleta_cores": "",
     "button_color": "#0c2b71",
     "idade": "",
-    "capa_path": "assets/capa.jpg",
+    "capa_path": "assets/cover.jpg",
+    "capa_type": "image",
     "config_json": {
       "assets": {
-        "capa": "assets/capa.jpg",
-        "musica": "assets/musica.mp3",
+        "capa": "assets/cover.jpg",
+        "musica": "assets/music.mp3",
         "aberturaSlides": [
           "assets/slide1.mp4"
         ],
-        "folhaPreenchida": "assets/folha_preenchida.jpg"
+        "folhaPreenchida": "assets/folha.jpg"
       },
       "botoes": [
         {
@@ -8480,7 +8484,7 @@
         },
         "slug": "modelo-vitoriasecrets",
         "tema": "Victoria Secrets",
-        "musica": "assets/musica.mp3",
+        "musica": "assets/music.mp3",
         "paletaCores": "",
         "tipoAbertura": "longa",
         "particulasAbertura": true

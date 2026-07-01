@@ -60,7 +60,7 @@ window.config = {
   // ARQUIVOS / ASSETS DO CONVITE (Caminhos)
   // =========================
   "assets": {
-    "capa": "assets/capa.jpg",
+    "capa": "",
     // Arquivo da capa principal do convite
 
     "aberturaSlides": [

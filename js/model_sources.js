@@ -32,6 +32,9 @@ function getAssetBaseUrl(slug) {
 }
 
 function getCoverUrl(slug, capaPath) {
+  if (!capaPath) {
+    return 'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 300 400%22%3E%3Crect fill=%22%23e5e7eb%22 width=%22300%22 height=%22400%22/%3E%3Ctext fill=%22%239ca3af%22 x=%22150%22 y=%22200%22 text-anchor=%22middle%22 font-size=%2214%22%3ESem capa%3C/text%3E%3C/svg%3E';
+  }
   const base = getAssetBaseUrl(slug);
-  return base + (capaPath || 'capa.jpg').replace('assets/', '');
+  return base + capaPath.replace('assets/', '');
 }

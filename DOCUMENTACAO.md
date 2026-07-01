@@ -80,3 +80,9 @@ O projeto opera em um ecossistema dividido em 3 camadas (Frontend, Middleware Su
 ---
 *Atualizado massivamente em 21/03/2026 após consolidação de domínio web e VPS.*
 *Modificado em 03/06/2026 16:16:* Adição da feature Playlist dos Convidados aos Extras e sincronização com quoteData. Detalhes em [Changelog - Playlist Convidados nos Extras](file:///C:/Users/Acer/Documents/Novo%20Site%20v7/changelog_2026-06-03_16-16_adicionado_extra_playlist_convidados_orcamento.md).
+
+## Correção de Assets dos Modelos (01/07/2026)
+
+A vitrine usa `capa_path` e `capa_type` do `modelos.json`. Capas podem ser imagens ou vídeos; quando nenhum asset visual existe, `getCoverUrl()` retorna um placeholder inline e não tenta carregar `assets/capa.jpg`.
+
+Os configs publicados precisam referenciar arquivos presentes na própria pasta do modelo. O modelo Sarah e os caminhos históricos detectados na auditoria foram alinhados com os nomes físicos atuais. Detalhes em `changelog_2026-07-01_12-00_assets_modelos_sem_404.md`.
