@@ -175,10 +175,44 @@
             z-index: 10;
         }
 
+        .model-media-pair {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 6px;
+            padding: 8px;
+            background: var(--bg-secondary);
+        }
+
+        .model-media-frame {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 9/16;
+            overflow: hidden;
+            border-radius: 10px;
+            background: rgba(0, 0, 0, 0.04);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .model-media-label {
+            position: absolute;
+            left: 6px;
+            bottom: 6px;
+            z-index: 2;
+            padding: 2px 6px;
+            border-radius: 999px;
+            background: rgba(0, 0, 0, 0.58);
+            color: #fff;
+            font-size: 9px;
+            font-weight: 600;
+            line-height: 1.2;
+        }
+
         .model-cover {
             width: 100%;
-            aspect-ratio: 3/4;
-            object-fit: cover;
+            height: 100%;
+            object-fit: contain;
             transition: transform 0.4s ease, opacity 0.4s ease;
             opacity: 0;
         }
@@ -188,13 +222,13 @@
         }
 
         .model-card:hover .model-cover.loaded {
-            transform: scale(1.05);
+            transform: scale(1.02);
         }
 
         /* Skeleton loading */
         .cover-skeleton {
             width: 100%;
-            aspect-ratio: 3/4;
+            aspect-ratio: 9/16;
             background: linear-gradient(110deg, var(--bg-secondary) 8%, rgba(255,255,255,0.15) 18%, var(--bg-secondary) 33%);
             background-size: 200% 100%;
             animation: skeleton-shimmer 1.5s ease-in-out infinite;
@@ -568,6 +602,59 @@
             return slug.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-zA-Z0-9\-_]/g, '-');
         }
 
+        function normalizeText(value) {
+            return String(value || '')
+                .normalize('NFD')
+                .replace(/[\u0300-\u036f]/g, '')
+                .toLowerCase()
+                .trim();
+        }
+
+        function uniqueValues(values) {
+            return [...new Set(values.filter(Boolean))];
+        }
+
+        function isDebutanteType(tipo) {
+            const normalized = normalizeText(tipo).replace(/\s+/g, ' ');
+            return normalized === 'debutante' || normalized === '15 anos' || normalized === 'quinze anos';
+        }
+
+        function isEventType(model, tipo) {
+            if (isDebutanteType(tipo)) return isDebutanteType(model.tipo);
+            return normalizeText(model.tipo) === normalizeText(tipo);
+        }
+
+        function getAssetType(assetPath) {
+            return /\.(mp4|webm|mov)$/i.test(assetPath || '') ? 'video' : 'image';
+        }
+
+        function getModelAssetUrl(slug, assetPath) {
+            if (!assetPath) return '';
+            if (/^(data:|blob:|https?:\/\/)/i.test(assetPath)) return assetPath;
+            const cleanPath = String(assetPath).replace(/^\.?\//, '').replace(/^assets\//, '');
+            return getAssetBaseUrl(slug) + cleanPath;
+        }
+
+        function getFilledSheetPath(modelData) {
+            const assets = modelData.config_json?.assets || {};
+            return modelData.folha_preenchida_path
+                || modelData.folhaPreenchida_path
+                || modelData.folha_path
+                || assets.folhaPreenchida
+                || assets.folha_preenchida
+                || assets.folha
+                || '';
+        }
+
+        function escapeHtml(value) {
+            return String(value || '')
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#39;');
+        }
+
         // ============================
         // THEME
         // ============================
@@ -759,6 +846,9 @@
                         coverPath: m.capa_path || '',
                         coverType: m.capa_type || (/\.(mp4|webm|mov)$/i.test(m.capa_path || '') ? 'video' : 'image'),
                         cover: getCoverUrl(m.slug, m.capa_path),
+                        sheetPath: getFilledSheetPath(m),
+                        sheetType: getAssetType(getFilledSheetPath(m)),
+                        sheet: getModelAssetUrl(m.slug, getFilledSheetPath(m)),
                         loaded: true
                     }));
                     slugs = models.map(m => m.slug);
@@ -774,11 +864,10 @@
         function buildTags(tipo) {
             const tags = [];
             if (tipo) tags.push(tipo);
-            if (tipo === 'Aniversário') tags.push('15 Anos');
-            if (tipo === 'Debutante') tags.push('15 Anos');
-            if (tipo === 'Formatura') tags.push('Adulto');
-            if (tipo === 'Casamento') tags.push('Adulto');
-            return tags;
+            if (isDebutanteType(tipo)) tags.push('Debutante', '15 Anos');
+            if (normalizeText(tipo) === 'formatura') tags.push('Adulto');
+            if (normalizeText(tipo) === 'casamento') tags.push('Adulto');
+            return uniqueValues(tags);
         }
 
         function formatSlug(slug) {
@@ -842,7 +931,7 @@
 
         async function loadModelConfig(slug) {
             try {
-                const r = await fetch('/modelos/' + slug + '/config.js');
+                const r = await fetch('modelos/' + slug + '/config.js');
                 const t = await r.text();
                 const nome = (t.match(/"nome":\s*"([^"]*)"/) || [,''])[1] || formatSlug(slug);
                 const tipo = (t.match(/"tipo":\s*"([^"]*)"/) || [,''])[1] || '';
@@ -850,13 +939,9 @@
                 const paletaCores = (t.match(/"paletaCores":\s*"([^"]*)"/) || [,''])[1] || '';
                 const buttonColor = (t.match(/"buttonColor":\s*"([^"]*)"/) || [,''])[1] || '#c9557c';
                 const capaPath = (t.match(/"capa":\s*"([^"]*)"/) || [,''])[1];
-
-                const tags = [];
-                if (tipo) tags.push(tipo);
-                if (tipo === 'Aniversário') tags.push('15 Anos');
-                if (tipo === 'Debutante') tags.push('15 Anos');
-                if (tipo === 'Formatura') tags.push('Adulto');
-                if (tipo === 'Casamento') tags.push('Adulto');
+                const folhaPath = (t.match(/"folhaPreenchida":\s*"([^"]*)"/) || [,''])[1]
+                    || (t.match(/"folha":\s*"([^"]*)"/) || [,''])[1]
+                    || 'assets/folha.jpg';
 
                 models.push({
                     slug,
@@ -865,8 +950,13 @@
                     tema,
                     paletaCores,
                     buttonColor,
-                    tags,
-                    cover: capaPath ? '/modelos/' + slug + '/' + capaPath : '/modelos/' + slug + '/assets/capa.jpg',
+                    tags: buildTags(tipo),
+                    coverPath: capaPath || 'assets/capa.jpg',
+                    coverType: getAssetType(capaPath),
+                    cover: getModelAssetUrl(slug, capaPath || 'assets/capa.jpg'),
+                    sheetPath: folhaPath,
+                    sheetType: getAssetType(folhaPath),
+                    sheet: getModelAssetUrl(slug, folhaPath),
                     loaded: true
                 });
             } catch(e) {
@@ -878,7 +968,12 @@
                     paletaCores: '',
                     buttonColor: '#c9557c',
                     tags: [],
-                    cover: '/modelos/' + slug + '/assets/capa.jpg',
+                    coverPath: 'assets/capa.jpg',
+                    coverType: 'image',
+                    cover: getModelAssetUrl(slug, 'assets/capa.jpg'),
+                    sheetPath: 'assets/folha.jpg',
+                    sheetType: 'image',
+                    sheet: getModelAssetUrl(slug, 'assets/folha.jpg'),
                     loaded: true
                 });
             }
@@ -889,10 +984,10 @@
         // ============================
         const sections = [
             { id: 'todos', title: 'Todos os Convites', filter: () => true },
-            { id: 'aniversario', title: 'Aniversário', filter: m => m.tipo === 'Aniversário' },
-            { id: 'casamento', title: 'Casamento', filter: m => m.tipo === 'Casamento' },
-            { id: 'debutante', title: 'Debutante', filter: m => m.tipo === 'Debutante' },
-            { id: 'formatura', title: 'Formatura', filter: m => m.tipo === 'Formatura' }
+            { id: 'aniversario', title: 'Aniversário', filter: m => isEventType(m, 'Aniversário') },
+            { id: 'casamento', title: 'Casamento', filter: m => isEventType(m, 'Casamento') },
+            { id: 'debutante', title: 'Debutante', filter: m => isDebutanteType(m.tipo) },
+            { id: 'formatura', title: 'Formatura', filter: m => isEventType(m, 'Formatura') }
         ];
 
         // ============================
@@ -919,25 +1014,48 @@
         // ============================
         // CREATE CARD (for filtered renders)
         // ============================
+        function placeholderSvg(label) {
+            return 'data:image/svg+xml,' + encodeURIComponent(
+                `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1600"><rect fill="#e5e7eb" width="900" height="1600"/><text fill="#9ca3af" x="450" y="800" text-anchor="middle" font-size="54">${label}</text></svg>`
+            );
+        }
+
+        function createMediaMarkup(src, type, label, altText) {
+            const fallback = placeholderSvg('Sem ' + label.toLowerCase());
+            const safeLabel = escapeHtml(label);
+            const safeAlt = escapeHtml(altText || label);
+            const safeSrc = escapeHtml(src || fallback);
+            const media = type === 'video'
+                ? `<video src="${safeSrc}" class="model-cover loaded" autoplay loop muted playsinline preload="metadata"></video>`
+                : `<img src="${safeSrc}"
+                         alt="${safeAlt}"
+                         class="model-cover loaded"
+                         onerror="this.onerror=null;this.src='${fallback}';">`;
+
+            return `
+                <div class="model-media-frame">
+                    ${media}
+                    <span class="model-media-label">${safeLabel}</span>
+                </div>
+            `;
+        }
+
         function createModelCard(model, isSelected) {
             const card = document.createElement('div');
             card.className = `model-card relative ${isSelected ? 'selected' : ''}`;
             card.dataset.slug = model.slug;
             card.dataset.configLoaded = 'true';
-            card.dataset.tags = model.tags.join(' ').toLowerCase();
-            card.dataset.name = model.name.toLowerCase();
-            card.dataset.colors = (model.paletaCores || '').toLowerCase();
-            card.dataset.tema = (model.tema || '').toLowerCase();
-            const coverMedia = model.coverType === 'video'
-                ? `<video src="${model.cover}" class="model-cover loaded" autoplay loop muted playsinline preload="metadata"></video>`
-                : `<img src="${model.cover}"
-                         alt="${model.name}"
-                         class="model-cover loaded"
-                         onerror="this.onerror=null;this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 300 400%22%3E%3Crect fill=%22%23e5e7eb%22 width=%22300%22 height=%22400%22/%3E%3Ctext fill=%22%239ca3af%22 x=%22150%22 y=%22200%22 text-anchor=%22middle%22 font-size=%2214%22%3ESem capa%3C/text%3E%3C/svg%3E';">`;
+            card.dataset.tags = normalizeText(model.tags.join(' '));
+            card.dataset.name = normalizeText(model.name);
+            card.dataset.colors = normalizeText(model.paletaCores);
+            card.dataset.tema = normalizeText(model.tema);
+            const coverMedia = createMediaMarkup(model.cover, model.coverType, 'Capa', model.name);
+            const sheetMedia = createMediaMarkup(model.sheet, model.sheetType, 'Convite', model.name + ' - convite');
 
             card.innerHTML = `
-                <div class="cover-click-area relative overflow-hidden" onclick="openPreview(models.find(m=>m.slug==='${model.slug}'))" style="cursor:pointer">
+                <div class="cover-click-area model-media-pair" onclick="openPreview(models.find(m=>m.slug==='${model.slug}'))" style="cursor:pointer">
                     ${coverMedia}
+                    ${sheetMedia}
                 </div>
                 <div class="card-info">
                     <h3 class="card-name font-semibold text-sm mb-0.5 line-clamp-1">${model.name}</h3>
@@ -984,25 +1102,61 @@
         // ============================
         // RENDER (for search/filter)
         // ============================
+        function getSearchTokens(searchValue) {
+            return normalizeText(searchValue).split(/\s+/).filter(t => t.length > 0);
+        }
+
+        function applySearchFilters(modelList, searchTerm) {
+            let terms = getSearchTokens(searchTerm);
+            let filtered = [...modelList];
+
+            const hasDebutanteAlias = terms.includes('debutante')
+                || terms.includes('15anos')
+                || terms.includes('quinze')
+                || (terms.includes('15') && terms.includes('anos'));
+
+            if (hasDebutanteAlias) {
+                filtered = filtered.filter(m => isDebutanteType(m.tipo));
+                terms = terms.filter(t => !['debutante', '15', 'anos', '15anos', 'quinze'].includes(t));
+            }
+
+            const typeFilters = [
+                { token: 'aniversario', match: m => isEventType(m, 'Aniversário') },
+                { token: 'casamento', match: m => isEventType(m, 'Casamento') },
+                { token: 'formatura', match: m => isEventType(m, 'Formatura') }
+            ];
+
+            typeFilters.forEach(typeFilter => {
+                if (terms.includes(typeFilter.token)) {
+                    filtered = filtered.filter(typeFilter.match);
+                    terms = terms.filter(t => t !== typeFilter.token);
+                }
+            });
+
+            if (terms.length > 0) {
+                filtered = filtered.filter(m => {
+                    const searchable = normalizeText([
+                        m.name,
+                        m.paletaCores,
+                        m.tema,
+                        m.tipo,
+                        ...(m.tags || [])
+                    ].join(' '));
+                    return terms.every(t => searchable.includes(t));
+                });
+            }
+
+            return filtered.sort((a, b) => a.name.localeCompare(b.name, 'pt-BR'));
+        }
+
         function renderModels(searchTerm = '') {
             const container = document.getElementById('modelsContainer');
             container.innerHTML = '';
-            const term = (searchTerm || '').toLowerCase().trim();
 
             let filteredModels = [...models];
 
-            if (term) {
-                const terms = term.split(/\s+/).filter(t => t.length > 0);
-                filteredModels = filteredModels.filter(m => {
-                    return terms.every(t =>
-                        m.name.toLowerCase().includes(t) ||
-                        (m.paletaCores && m.paletaCores.toLowerCase().includes(t)) ||
-                        (m.tema && m.tema.toLowerCase().includes(t)) ||
-                        (m.tipo && m.tipo.toLowerCase().includes(t)) ||
-                        m.tags.some(tag => tag.toLowerCase().includes(t))
-                    );
-                });
-                filteredModels.sort((a, b) => a.name.localeCompare(b.name, 'pt-BR'));
+            if ((searchTerm || '').trim()) {
+                filteredModels = applySearchFilters(filteredModels, searchTerm);
             }
 
             sections.forEach(section => {
@@ -1023,8 +1177,11 @@
             const currentValue = input.value.trim();
 
             if (btn.classList.contains('active')) {
-                const terms = currentValue.split(/\s+/).filter(t => t.toLowerCase() !== term.toLowerCase());
-                input.value = terms.join(' ');
+                const tokensToRemove = getSearchTokens(term);
+                input.value = currentValue
+                    .split(/\s+/)
+                    .filter(t => !tokensToRemove.includes(normalizeText(t)))
+                    .join(' ');
                 btn.classList.remove('active');
                 btn.innerHTML = `<span>${term}</span>`;
             } else {
@@ -1035,13 +1192,14 @@
             }
 
             renderModels(input.value);
+            updateSuggestionButtons(input.value);
         }
 
         function updateSuggestionButtons(searchValue) {
-            const terms = searchValue.toLowerCase().split(/\s+/).filter(t => t.length > 0);
+            const terms = getSearchTokens(searchValue);
             document.querySelectorAll('.suggestion-btn').forEach(btn => {
-                const btnTerm = btn.dataset.term.toLowerCase();
-                const isActive = terms.some(t => btnTerm.includes(t) || t.includes(btnTerm));
+                const btnTerms = getSearchTokens(btn.dataset.term);
+                const isActive = btnTerms.length > 0 && btnTerms.every(t => terms.includes(t));
                 btn.classList.toggle('active', isActive);
                 if (isActive) {
                     btn.innerHTML = `<span>${btn.dataset.term}</span><span class="ml-1 opacity-70">✕</span>`;

@@ -1,5 +1,13 @@
 # Documentação Completa do Projeto: Site Convites & VPS Bot
 
+## Cards de modelos com capa + folha preenchida e filtros por tipo (2026-07-01)
+
+- `modelos.html` renderiza dois assets no card de cada modelo: a capa e a folha preenchida do convite.
+- Os dois assets usam proporção `9:16` e `object-fit: contain`, para exibir a imagem inteira sem corte.
+- A folha preenchida é resolvida a partir de `folha_preenchida_path`, `folhaPreenchida_path`, `folha_path` ou `config_json.assets` (`folhaPreenchida`, `folha_preenchida`, `folha`).
+- A busca por tipo de evento agora normaliza acentos e trata `15 anos` como alias de `Debutante`, sem incluir automaticamente todos os modelos de `Aniversário`.
+- Changelog relacionado: `changelog_2026-07-01_14-00_cards_capa_folha_filtros_tipo.md`.
+
 ## Modelos em Galeria Grid (2026-06-24)
 
 - `modelos.html` nao usa mais carrosseis horizontais para exibir os modelos.
