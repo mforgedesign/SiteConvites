@@ -1,0 +1,435 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Auditar modelos de 15 anos</title>
+  <style>
+    :root {
+      --accent: #c9557c;
+      --bg: #f7f3f5;
+      --card: #ffffff;
+      --text: #241923;
+      --muted: #7c6c77;
+      --border: #eadde4;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      background: rgba(247, 243, 245, 0.96);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(10px);
+      padding: 16px;
+    }
+
+    .wrap {
+      max-width: 1320px;
+      margin: 0 auto;
+    }
+
+    h1 {
+      margin: 0 0 8px;
+      font-size: 22px;
+    }
+
+    .hint {
+      margin: 0 0 14px;
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.45;
+    }
+
+    .toolbar {
+      display: grid;
+      grid-template-columns: minmax(180px, 1fr) auto auto auto;
+      gap: 10px;
+      align-items: center;
+    }
+
+    input[type="search"] {
+      width: 100%;
+      padding: 11px 12px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: #fff;
+      color: var(--text);
+      font-size: 14px;
+    }
+
+    button {
+      border: 0;
+      border-radius: 10px;
+      padding: 11px 14px;
+      cursor: pointer;
+      font-weight: 700;
+      color: #fff;
+      background: var(--accent);
+    }
+
+    button.secondary {
+      color: var(--text);
+      background: #fff;
+      border: 1px solid var(--border);
+    }
+
+    main {
+      padding: 18px 16px 40px;
+    }
+
+    .status {
+      margin: 0 0 14px;
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+      gap: 14px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 2px solid transparent;
+      border-radius: 14px;
+      overflow: hidden;
+      cursor: pointer;
+      box-shadow: 0 8px 24px rgba(67, 35, 54, 0.08);
+      transition: transform 0.15s ease, border-color 0.15s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-2px);
+    }
+
+    .card.selected {
+      border-color: var(--accent);
+    }
+
+    .media {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 6px;
+      padding: 8px;
+      background: #f0e7ec;
+    }
+
+    .frame {
+      aspect-ratio: 9 / 16;
+      background: #e9dde4;
+      border-radius: 9px;
+      overflow: hidden;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .frame img,
+    .frame video {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+    }
+
+    .label {
+      position: absolute;
+      left: 5px;
+      bottom: 5px;
+      padding: 2px 6px;
+      border-radius: 999px;
+      background: rgba(0, 0, 0, 0.6);
+      color: #fff;
+      font-size: 10px;
+      font-weight: 700;
+    }
+
+    .info {
+      padding: 10px 11px 12px;
+    }
+
+    .title {
+      margin: 0 0 4px;
+      font-size: 14px;
+      font-weight: 800;
+      line-height: 1.25;
+    }
+
+    .meta {
+      margin: 0;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.35;
+      word-break: break-word;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      margin-top: 8px;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: #f3edf0;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .selected .badge {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    textarea {
+      width: 100%;
+      min-height: 180px;
+      margin-top: 16px;
+      padding: 12px;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      resize: vertical;
+      font-family: Consolas, monospace;
+      font-size: 12px;
+    }
+
+    @media (max-width: 720px) {
+      .toolbar {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .toolbar input {
+        grid-column: 1 / -1;
+      }
+
+      button {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <h1>Auditar modelos de 15 anos</h1>
+      <p class="hint">
+        Esta página mostra apenas os modelos cujo tipo atual é <strong>Aniversário</strong>.
+        Clique nos que deveriam ser <strong>Debutante / 15 anos</strong> e depois copie o texto.
+      </p>
+      <div class="toolbar">
+        <input id="search" type="search" placeholder="Filtrar por título, tema, paleta ou slug">
+        <button class="secondary" id="selectVisible" type="button">Selecionar visíveis</button>
+        <button class="secondary" id="clearSelection" type="button">Limpar</button>
+        <button id="copySelected" type="button">Copiar selecionados</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="wrap">
+      <p class="status" id="status">Carregando modelos...</p>
+      <div class="grid" id="grid"></div>
+      <textarea id="output" readonly placeholder="O texto copiado também aparecerá aqui."></textarea>
+    </div>
+  </main>
+
+  <script>
+    const state = {
+      all: [],
+      visible: [],
+      selected: new Set()
+    };
+
+    function normalizeText(value) {
+      return String(value || '')
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .toLowerCase()
+        .trim();
+    }
+
+    function isAniversario(model) {
+      return normalizeText(model.tipo) === 'aniversario';
+    }
+
+    function assetUrl(model, assetPath) {
+      if (!assetPath) return '';
+      if (/^(data:|blob:|https?:\/\/)/i.test(assetPath)) return assetPath;
+      const clean = String(assetPath).replace(/^\.?\//, '').replace(/^assets\//, '');
+      return `modelos/${encodeURIComponent(model.slug)}/assets/${clean.split('/').map(encodeURIComponent).join('/')}`;
+    }
+
+    function getSheetPath(model) {
+      const assets = model.config_json?.assets || {};
+      return model.folha_preenchida_path
+        || model.folhaPreenchida_path
+        || model.folha_path
+        || assets.folhaPreenchida
+        || assets.folha_preenchida
+        || assets.folha
+        || '';
+    }
+
+    function isVideo(path) {
+      return /\.(mp4|webm|mov)$/i.test(path || '');
+    }
+
+    function fallback(label) {
+      return 'data:image/svg+xml,' + encodeURIComponent(
+        `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 1600"><rect width="900" height="1600" fill="#eadde4"/><text x="450" y="800" fill="#9b8b95" font-size="54" text-anchor="middle">${label}</text></svg>`
+      );
+    }
+
+    function escapeHtml(value) {
+      return String(value || '')
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#39;');
+    }
+
+    function mediaMarkup(model, path, label) {
+      const src = assetUrl(model, path) || fallback(`Sem ${label}`);
+      const safeSrc = escapeHtml(src);
+      const safeLabel = escapeHtml(label);
+      const media = isVideo(path)
+        ? `<video src="${safeSrc}" autoplay loop muted playsinline preload="metadata"></video>`
+        : `<img src="${safeSrc}" alt="${safeLabel} ${escapeHtml(model.name || model.slug)}" onerror="this.onerror=null;this.src='${fallback(`Sem ${label}`)}';">`;
+
+      return `<div class="frame">${media}<span class="label">${safeLabel}</span></div>`;
+    }
+
+    function selectedText() {
+      const selected = state.all.filter(model => state.selected.has(model.slug));
+      if (!selected.length) return '';
+
+      const lines = [
+        `Modelos que devem virar Debutante / 15 anos (${selected.length}):`,
+        ''
+      ];
+
+      selected.forEach((model, index) => {
+        lines.push(`${index + 1}. slug: ${model.slug}`);
+        lines.push(`   título atual: ${model.name || ''}`);
+        lines.push(`   tema: ${model.tema || model.config_json?.convite?.tema || ''}`);
+        lines.push(`   paleta: ${model.paleta_cores || model.config_json?.convite?.paletaCores || ''}`);
+        lines.push(`   tipo atual: ${model.tipo || ''}`);
+      });
+
+      return lines.join('\n');
+    }
+
+    function updateOutput() {
+      document.getElementById('output').value = selectedText();
+      document.getElementById('status').textContent =
+        `${state.visible.length} modelos visíveis de ${state.all.length} aniversários atuais. ${state.selected.size} selecionados para virar Debutante / 15 anos.`;
+    }
+
+    function render() {
+      const grid = document.getElementById('grid');
+      const search = normalizeText(document.getElementById('search').value);
+      const terms = search.split(/\s+/).filter(Boolean);
+
+      state.visible = state.all.filter(model => {
+        if (!terms.length) return true;
+        const haystack = normalizeText([
+          model.slug,
+          model.name,
+          model.tema,
+          model.paleta_cores,
+          model.config_json?.convite?.tema,
+          model.config_json?.convite?.paletaCores
+        ].join(' '));
+        return terms.every(term => haystack.includes(term));
+      });
+
+      grid.innerHTML = state.visible.map(model => {
+        const selected = state.selected.has(model.slug);
+        const cover = model.capa_path || model.config_json?.assets?.capa || 'assets/capa.jpg';
+        const sheet = getSheetPath(model);
+        return `
+          <article class="card ${selected ? 'selected' : ''}" data-slug="${escapeHtml(model.slug)}">
+            <div class="media">
+              ${mediaMarkup(model, cover, 'Capa')}
+              ${mediaMarkup(model, sheet, 'Convite')}
+            </div>
+            <div class="info">
+              <h2 class="title">${escapeHtml(model.name || model.slug)}</h2>
+              <p class="meta">Tema: ${escapeHtml(model.tema || model.config_json?.convite?.tema || '')}</p>
+              <p class="meta">Paleta: ${escapeHtml(model.paleta_cores || model.config_json?.convite?.paletaCores || '')}</p>
+              <p class="meta">Slug: ${escapeHtml(model.slug)}</p>
+              <span class="badge">${selected ? '✓ Marcado como 15 anos' : 'Marcar como 15 anos'}</span>
+            </div>
+          </article>
+        `;
+      }).join('');
+
+      updateOutput();
+    }
+
+    async function copySelected() {
+      const text = selectedText();
+      if (!text) {
+        alert('Nenhum modelo selecionado.');
+        return;
+      }
+
+      document.getElementById('output').value = text;
+      await navigator.clipboard.writeText(text);
+      alert('Texto copiado. Cole aqui no Codex para eu corrigir os tipos.');
+    }
+
+    async function init() {
+      const response = await fetch('modelos.json?audit=' + Date.now());
+      const modelos = await response.json();
+      state.all = modelos
+        .filter(isAniversario)
+        .sort((a, b) => String(a.name || a.slug).localeCompare(String(b.name || b.slug), 'pt-BR'));
+      render();
+    }
+
+    document.getElementById('grid').addEventListener('click', event => {
+      const card = event.target.closest('.card');
+      if (!card) return;
+      const slug = card.dataset.slug;
+      if (state.selected.has(slug)) {
+        state.selected.delete(slug);
+      } else {
+        state.selected.add(slug);
+      }
+      render();
+    });
+
+    document.getElementById('search').addEventListener('input', render);
+    document.getElementById('selectVisible').addEventListener('click', () => {
+      state.visible.forEach(model => state.selected.add(model.slug));
+      render();
+    });
+    document.getElementById('clearSelection').addEventListener('click', () => {
+      state.selected.clear();
+      render();
+    });
+    document.getElementById('copySelected').addEventListener('click', copySelected);
+
+    init().catch(error => {
+      console.error(error);
+      document.getElementById('status').textContent = 'Erro ao carregar modelos.json.';
+    });
+  </script>
+</body>
+</html>

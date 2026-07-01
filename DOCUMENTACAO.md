@@ -8,6 +8,13 @@
 - A busca por tipo de evento agora normaliza acentos e trata `15 anos` como alias de `Debutante`, sem incluir automaticamente todos os modelos de `Aniversário`.
 - Changelog relacionado: `changelog_2026-07-01_14-00_cards_capa_folha_filtros_tipo.md`.
 
+## Auditoria manual de modelos 15 anos (2026-07-01)
+
+- `auditar-15anos.html` é uma página utilitária simples para revisar modelos atualmente classificados como `Aniversário`.
+- A página lê `modelos.json`, filtra apenas `tipo = Aniversário`, mostra capa + folha preenchida e permite marcar quais modelos devem virar `Debutante / 15 anos`.
+- O botão `Copiar selecionados` copia um texto estruturado com slug, título atual, tema, paleta e tipo atual para correção posterior no catálogo.
+- Changelog relacionado: `changelog_2026-07-01_14-15_auditoria_15anos.md`.
+
 ## Modelos em Galeria Grid (2026-06-24)
 
 - `modelos.html` nao usa mais carrosseis horizontais para exibir os modelos.
