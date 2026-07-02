@@ -23,7 +23,9 @@ const els = {
 
 const state = {
   step: "name",
+  leadId: "",
   name: "",
+  phone: "",
   total: 80,
   selectedModel: false,
   selectedModelData: null,
@@ -73,6 +75,66 @@ let countdownTimer;
 let activeAssetCard = null;
 let startupInFlight = false;
 let submissionInFlight = false;
+let trackingTimer;
+
+function createLeadId() {
+  if (globalThis.crypto?.randomUUID) return crypto.randomUUID();
+  return `lead-${Date.now()}-${Math.random().toString(16).slice(2)}`;
+}
+
+function normalizePhone(value) {
+  let digits = String(value || "").replace(/\D/g, "");
+  if (digits.startsWith("00")) digits = digits.slice(2);
+  if (digits.length === 10 || digits.length === 11) digits = `55${digits}`;
+  if (digits.length < 12 || digits.length > 15) return "";
+  return `+${digits}`;
+}
+
+function trackingPayload(eventType, details = {}) {
+  return {
+    schemaVersion: 1,
+    eventId: createLeadId(),
+    eventType,
+    occurredAt: new Date().toISOString(),
+    leadId: state.leadId,
+    phoneE164: state.phone,
+    name: state.name,
+    step: state.step,
+    total: state.total,
+    pageUrl: location.href,
+    referrer: document.referrer || "",
+    details,
+    snapshot: {
+      selectedModel: state.selectedModelData?.slug || "",
+      modelMode: state.modelMode,
+      modelBrief: state.modelBrief,
+      modelCustomization: state.modelCustomization,
+      event: state.event,
+      choices: state.choices,
+      giftDetails: state.giftDetails,
+      manualDetails: state.manualDetails,
+      notes: state.notes,
+      pending: state.pending
+    }
+  };
+}
+
+function trackEvent(eventType, details = {}, immediate = false) {
+  const config = globalThis.SUSIE_TRACKING_CONFIG || {};
+  if (!config.endpoint || !state.leadId) return;
+  const body = JSON.stringify({ ...trackingPayload(eventType, details), writeKey: config.writeKey || "" });
+  if (immediate && navigator.sendBeacon) {
+    navigator.sendBeacon(config.endpoint, new Blob([body], { type: "text/plain;charset=UTF-8" }));
+    return;
+  }
+  fetch(config.endpoint, { method: "POST", mode: "no-cors", keepalive: true, headers: { "Content-Type": "text/plain;charset=UTF-8" }, body })
+    .catch(() => {});
+}
+
+function scheduleSnapshot() {
+  clearTimeout(trackingTimer);
+  trackingTimer = setTimeout(() => trackEvent("state_snapshot"), 500);
+}
 
 function now() {
   return new Intl.DateTimeFormat("pt-BR", { hour: "2-digit", minute: "2-digit" }).format(new Date());
@@ -99,9 +161,10 @@ function positionNewMessage(row, preferStart = false) {
 }
 
 function setProgress(number, label) {
-  els.progressBar.style.width = `${Math.round((number / 16) * 100)}%`;
+  els.progressBar.style.width = `${Math.round((number / 17) * 100)}%`;
   els.progressLabel.textContent = label;
-  els.progressNumber.textContent = `${number} de 16`;
+  els.progressNumber.textContent = `${number} de 17`;
+  trackEvent("step_viewed", { progress: number, label });
 }
 
 function setInput(enabled, examples = [], fallback = "Escolha uma opção acima para continuar") {
@@ -225,6 +288,7 @@ function addPrice(amount) {
 
 function persist() {
   localStorage.setItem(STORAGE_KEY, JSON.stringify(state));
+  scheduleSnapshot();
 }
 
 function calculateTotal() {
@@ -259,6 +323,7 @@ async function begin() {
   els.welcome.hidden = true;
   els.chat.hidden = false;
   state.step = "name";
+  state.leadId ||= createLeadId();
   setProgress(1, "Vamos começar");
   setInput(true, placeholders.name, "Como você se chama?");
   await susie("Olá! Eu sou a <strong>Susie</strong> e vou te ajudar a criar o seu convite rapidinho! Como você se chama?", 520);
@@ -271,13 +336,36 @@ async function submitName() {
   persist();
   user(value);
   setInput(false);
-  await susie(`Muito bem, <strong>${value}</strong>! Nossos convites custam R$80 e já incluem música, abertura 3D animada e botões clicáveis. Vou te explicar tudo bem fácil e rápido ✨`);
+  trackEvent("name_provided");
+  await phoneStep();
+}
+
+async function phoneStep() {
+  state.step = "phone";
+  setProgress(2, "Seu contato");
+  persist();
+  setInput(true, ["(11) 99999-9999", "+55 11 99999-9999"], "Digite seu WhatsApp com DDD");
+  await susie(`Muito bem, <strong>${escapeHtml(state.name)}</strong>! Agora me informe o número do seu WhatsApp com DDD. A equipe de produção entrará em contato pelo número fornecido para confirmar o orçamento do seu convite.`);
+}
+
+async function submitPhone() {
+  const phone = normalizePhone(els.input.value);
+  if (!phone) {
+    await susie("Não consegui validar esse número. Digite o WhatsApp com DDD, por exemplo: <strong>(11) 99999-9999</strong>.");
+    return;
+  }
+  state.phone = phone;
+  persist();
+  user(phone.replace(/(\+\d{2})(\d{2})(\d{4,5})(\d{4})/, "$1 $2 $3-$4"));
+  setInput(false);
+  trackEvent("phone_provided", {}, true);
+  await susie(`Obrigada! Nossos convites custam R$80 e já incluem música, abertura 3D animada e botões clicáveis. Vou te explicar tudo bem fácil e rápido ✨`);
   await modelStep();
 }
 
 async function modelStep() {
   state.step = "model";
-  setProgress(2, "Escolha do modelo");
+  setProgress(3, "Escolha do modelo");
   const selected = JSON.parse(localStorage.getItem("selectedModel") || "null");
   if (selected) {
     state.selectedModel = true;
@@ -350,7 +438,7 @@ async function submitModelBrief() {
 async function eventStep() {
   state.step = "event";
   setInput(false);
-  setProgress(3, "Dados do evento");
+  setProgress(4, "Dados do evento");
   const customizationValue = state.modelCustomization || "";
   const themeFields = state.choices.modelCustomization
     ? `<div class="field field-wide"><label>Tema e paleta solicitados</label><input name="themePalette" value="${escapeHtml(customizationValue)}"></div>`
@@ -389,7 +477,7 @@ async function submitEvent(event) {
 
 async function openingStep() {
   state.step = "opening";
-  setProgress(4, "Abertura do convite");
+  setProgress(5, "Abertura do convite");
   await susie(`${phaseTitle("Tipo de Abertura", "◇")}Agora vamos escolher como o convite começa. A abertura é a primeira impressão que o convidado vê.
     ${openingAssets()}`);
   choices([
@@ -406,7 +494,7 @@ async function finishPreview(choice) {
 
 async function openingPhotoStep() {
   state.step = "openingPhoto";
-  setProgress(5, "Foto na abertura");
+  setProgress(6, "Foto na abertura");
   await susie(`${phaseTitle("Foto na Abertura", "▣")}Você quer colocar uma foto especial logo na abertura? Ela deixa o início do convite mais pessoal e emocionante.<br><small>A foto será combinada e enviada pelo WhatsApp quando você confirmar o pedido.</small>`);
   choices([
     { label: "Incluir Foto na Abertura <span class='choice-price'>+R$5</span>", action: () => chooseAndGo("openingPhoto", "include", "Incluir Foto na Abertura (+R$5)", musicStep) },
@@ -416,7 +504,7 @@ async function openingPhotoStep() {
 
 async function musicStep() {
   state.step = "music";
-  setProgress(6, "Música");
+  setProgress(7, "Música");
   await susie(`${phaseTitle("Música", "♫")}Agora vamos escolher a música do convite. Você pode me mandar o nome, um link, usar a música do modelo ou deixar sem música.`);
   setInput(true, [], "Digite o nome ou link da música aqui");
   const options = [{ label: "Sem música", keepEnabled: true, action: () => chooseMusic("none", "Sem música") }];
@@ -439,7 +527,7 @@ async function chooseMusic(mode, label, value = "") {
 
 async function rsvpStep() {
   state.step = "rsvp";
-  setProgress(7, "Confirmação");
+  setProgress(8, "Confirmação");
   await susie(`${phaseTitle("Confirmação de Presença", "✓")}Seu convite também pode ajudar a organizar quem vai participar da festa! Escolha como prefere receber as confirmações.
     ${assetStrip([
       assetVideo("assets/orcamento/Exemplo Confirmar Whatsapp.mp4", "Direto no WhatsApp", { group: "rsvp", value: "whatsapp", label: "Confirmação direto no WhatsApp" }),
@@ -453,7 +541,7 @@ async function rsvpStep() {
 
 async function giftsStep() {
   state.step = "gifts";
-  setProgress(8, "Presentes");
+  setProgress(9, "Presentes");
   await susie(`${phaseTitle("Presentes", "♢")}Agora vamos escolher como as dicas de presente vão aparecer. Essa parte pode ser simples ou mais interativa.
     ${assetStrip([
       assetImage("assets/orcamento/Simples.png", "Sugestões Simples", { group: "gifts", value: "simple", label: "Sugestões Simples" }),
@@ -470,7 +558,7 @@ async function giftDetailsStep(mode, label) {
   user(label);
   setChoice("gifts", mode);
   state.step = "giftDetails";
-  setProgress(8, "Sugestões de presentes");
+  setProgress(9, "Sugestões de presentes");
   persist();
   await susie(`${phaseTitle("Sugestões de Presentes", "♢")}Escreva as sugestões que você quer mostrar aos convidados. Você pode seguir o exemplo esmaecido no campo abaixo.`);
   setInput(true, [], GIFT_PLACEHOLDER);
@@ -492,7 +580,7 @@ async function submitGiftDetails() {
 
 async function manualStep() {
   state.step = "manual";
-  setProgress(9, "Manual");
+  setProgress(10, "Manual");
   await susie(`${phaseTitle("Manual do Convidado", "≡")}O Manual do Convidado ajuda a passar orientações importantes de um jeito bonito e organizado. Como você quer incluir essa parte?
     ${assetStrip([
       assetImage("assets/orcamento/Exemplo Manual do Convidado.jpg", "Manual Simples", { group: "manual", value: "simple", label: "Manual Simples" }),
@@ -508,7 +596,7 @@ async function manualDetailsStep(mode, label) {
   user(label);
   setChoice("manual", mode);
   state.step = "manualDetails";
-  setProgress(9, "Texto do manual");
+  setProgress(10, "Texto do manual");
   persist();
   await susie(`${phaseTitle("Texto do Manual", "≡")}O texto abaixo já está pronto. Adapte o que quiser ou apenas confirme para continuar.`);
   setInput(true, [], "Escreva o Manual do Convidado");
@@ -530,7 +618,7 @@ async function submitManualDetails() {
 
 async function countdownStep() {
   state.step = "countdown";
-  setProgress(10, "Cronômetro");
+  setProgress(11, "Cronômetro");
   const future = new Date(); future.setMonth(future.getMonth() + 3);
   await susie(`${phaseTitle("Contagem Regressiva", "◷")}Quer incluir um cronômetro contando os dias para o evento? Ele cria aquela expectativa gostosa até a data chegar.
     <div class="countdown-preview" data-countdown-target="${future.toISOString()}">
@@ -576,14 +664,14 @@ function startCountdownPreview() {
 
 async function galleryStep() {
   state.step = "gallery";
-  setProgress(11, "Galeria");
+  setProgress(12, "Galeria");
   await susie(`${phaseTitle("Galeria de Fotos", "▦")}Você quer incluir uma galeria de fotos no convite? Ela deixa o convite mais pessoal e ajuda a contar a história visual do evento.<br><small>As fotos serão enviadas pelo WhatsApp depois da confirmação.</small>${missingPreview("Galeria de Fotos")}`);
   yesNo("gallery", "Incluir Galeria", 5, saveDateStep);
 }
 
 async function reminderStep() {
   state.step = "reminder";
-  setProgress(13, "Lembrete");
+  setProgress(14, "Lembrete");
   await susie(`${phaseTitle("Lembrete", "♧")}Quer incluir um lembrete para enviar aos convidados alguns dias antes da festa? É um videozinho com música para relembrar todo mundo de um jeito bonito.
     ${assetStrip([assetImage("assets/orcamento/Lembrete.jpg", "Exemplo de Lembrete")])}`);
   yesNo("reminder", "Incluir Lembrete", 15, qrStep);
@@ -591,7 +679,7 @@ async function reminderStep() {
 
 async function saveDateStep() {
   state.step = "saveTheDate";
-  setProgress(12, "Save The Date");
+  setProgress(13, "Save The Date");
   await susie(`${phaseTitle("Save The Date", "◫")}${isFirstAccessDay
     ? "Agora uma opção especial ✨ Fechando o convite ainda hoje, você ganha o Save The Date Simples de brinde!"
     : "Você também pode incluir um Save The Date para avisar os convidados antes do convite oficial."}
@@ -605,21 +693,21 @@ async function saveDateStep() {
 
 async function qrStep() {
   state.step = "photoQrCode";
-  setProgress(14, "QR Code de Fotos");
+  setProgress(15, "QR Code de Fotos");
   await susie(`${phaseTitle("QR Code de Fotos", "▣")}Já imaginou se você pudesse ter acesso as fotos que os seus convidados tiraram durante a sua festa? Com nosso sistema isso é possível! Os convidados escaneiam o QR Code, tiram fotos e elas ficam salvas no celular deles e no seu! O código pode ficar no convite ou em materiais da festa, como cardápios na mesa, cartões ou cartazes na entrada!${missingPreview("Sistema QR Code de Fotos")}`);
   yesNo("photoQrCode", "Incluir QR Code", 35, playlistStep);
 }
 
 async function playlistStep() {
   state.step = "guestPlaylist";
-  setProgress(15, "Playlist");
+  setProgress(16, "Playlist");
   await susie(`${phaseTitle("Playlist dos Convidados", "♫")}Quer deixar os convidados sugerirem músicas antes da festa? A Playlist dos Convidados abre um formulário onde eles podem mandar sugestões, e você encaminha para o seu DJ somente as que você concordar!${missingPreview("Formulário da Playlist dos Convidados")}`);
   yesNo("guestPlaylist", "Incluir Playlist dos Convidados", 5, notesStep);
 }
 
 async function notesStep() {
   state.step = "notes";
-  setProgress(16, "Observações finais");
+  setProgress(17, "Observações finais");
   await susie(`${phaseTitle("Observações Finais", "✎")}Antes de fechar, quer me contar mais alguma observação importante sobre o convite? Pode ser uma ideia, preferência ou pedido especial.`);
   setInput(true, [], "Digite sua observação aqui");
   choices([{ label: "Não tenho observações", action: () => finishNotes("") }]);
@@ -686,7 +774,7 @@ function summaryHtml() {
 
 async function finalStep() {
   state.step = "final";
-  setProgress(16, "Resumo final");
+  setProgress(17, "Resumo final");
   persist();
   await susie(`${phaseTitle("Resumo do Orçamento", "✓")}Prontinho! Montei o resumo do seu orçamento ✨ Dá uma olhadinha se está tudo certo.${summaryHtml()}`);
   const editGroup = document.createElement("div");
@@ -706,7 +794,7 @@ async function finalStep() {
 function editSection(key) {
   const handlers = {
     model: modelStep, event: eventStep,
-    opening: () => { state.editing = true; state.step = "opening"; setProgress(4, "Abertura do convite"); susie(`${phaseTitle("Tipo de Abertura", "◇")}Vamos alterar o tipo de abertura.${openingAssets()}`).then(() => choices([
+    opening: () => { state.editing = true; state.step = "opening"; setProgress(5, "Abertura do convite"); susie(`${phaseTitle("Tipo de Abertura", "◇")}Vamos alterar o tipo de abertura.${openingAssets()}`).then(() => choices([
       { label: "Sem Abertura", action: () => finishPreview("Sem Abertura") }
     ])); },
     openingPhoto: openingPhotoStep, music: musicStep, rsvp: rsvpStep, gifts: giftsStep, manual: manualStep,
@@ -760,6 +848,7 @@ function whatsappMessage() {
   const sections = [
     "Oi! Finalizei meu orçamento pelo site com a Susie \u2728",
     `\u{1F464} *Cliente:* ${state.name}`,
+    `\u{1F4F1} *WhatsApp informado:* ${state.phone}`,
   ];
 
   const modelLines = [
@@ -803,6 +892,7 @@ function whatsappMessage() {
 
 function openWhatsApp() {
   persist();
+  trackEvent("budget_confirmed_whatsapp", { destination: "5511939047235" }, true);
   window.open(`https://api.whatsapp.com/send/?phone=5511939047235&text=${encodeURIComponent(whatsappMessage())}&type=phone_number&app_absent=0`, "_blank", "noopener");
 }
 
@@ -860,6 +950,7 @@ async function startOrResume() {
       return;
     }
     Object.assign(state, saved);
+    state.leadId ||= createLeadId();
     state.choices ||= {};
     delete state.choices.visualIdentity;
     if (state.step === "identity") state.step = "opening";
@@ -868,8 +959,12 @@ async function startOrResume() {
     calculateTotal();
     setInput(false);
     await susie(`Que bom ter você de volta, <strong>${state.name}</strong>! Suas escolhas continuam salvas por aqui ✨`);
+    if (!state.phone) {
+      await phoneStep();
+      return;
+    }
     const handlers = {
-      model: modelStep, modelBrief: modelStep, event: eventStep, opening: openingStep,
+      phone: phoneStep, model: modelStep, modelBrief: modelStep, event: eventStep, opening: openingStep,
       openingPhoto: openingPhotoStep, music: musicStep, rsvp: rsvpStep, gifts: giftsStep, giftDetails: () => giftDetailsStep(state.choices.gifts || "simple", choiceLabel(state.choices.gifts)),
       manual: manualStep, manualDetails: () => manualDetailsStep(state.choices.manual || "simple", choiceLabel(state.choices.manual)),
       countdown: countdownStep, gallery: galleryStep, reminder: reminderStep, saveTheDate: saveDateStep,
@@ -886,6 +981,7 @@ function submitMessage(event) {
   if (submissionInFlight) return;
   let action = null;
   if (state.step === "name") action = submitName();
+  else if (state.step === "phone") action = submitPhone();
   else if (state.step === "modelBrief") action = submitModelBrief();
   else if (state.step === "music") {
     const value = els.input.value.trim();
