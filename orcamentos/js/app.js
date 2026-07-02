@@ -41,6 +41,7 @@ const state = {
 
 const STORAGE_KEY = "susie_budget_state";
 const FIRST_ACCESS_KEY = "susie_budget_first_access_date";
+const PUBLIC_SITE_ORIGIN = "https://pedidos.mforge.com.br";
 const today = new Date().toISOString().slice(0, 10);
 if (!localStorage.getItem(FIRST_ACCESS_KEY)) localStorage.setItem(FIRST_ACCESS_KEY, today);
 const isFirstAccessDay = localStorage.getItem(FIRST_ACCESS_KEY) === today;
@@ -70,6 +71,8 @@ let placeholderTimer;
 let placeholderIndex = 0;
 let countdownTimer;
 let activeAssetCard = null;
+let startupInFlight = false;
+let submissionInFlight = false;
 
 function now() {
   return new Intl.DateTimeFormat("pt-BR", { hour: "2-digit", minute: "2-digit" }).format(new Date());
@@ -96,9 +99,9 @@ function positionNewMessage(row, preferStart = false) {
 }
 
 function setProgress(number, label) {
-  els.progressBar.style.width = `${Math.round((number / 17) * 100)}%`;
+  els.progressBar.style.width = `${Math.round((number / 16) * 100)}%`;
   els.progressLabel.textContent = label;
-  els.progressNumber.textContent = `${number} de 17`;
+  els.progressNumber.textContent = `${number} de 16`;
 }
 
 function setInput(enabled, examples = [], fallback = "Escolha uma opção acima para continuar") {
@@ -144,8 +147,14 @@ function choices(items) {
     button.className = `choice ${item.className || ""}`;
     button.innerHTML = item.label;
     button.addEventListener("click", () => {
+      if (button.dataset.actionRunning === "true") return;
+      button.dataset.actionRunning = "true";
       if (!item.keepEnabled) group.querySelectorAll("button").forEach(btn => btn.disabled = true);
-      item.action();
+      Promise.resolve(item.action()).finally(() => {
+        if (item.keepEnabled) {
+          setTimeout(() => delete button.dataset.actionRunning, 350);
+        }
+      });
     });
     group.appendChild(button);
   });
@@ -223,7 +232,6 @@ function calculateTotal() {
   let total = 80;
   if (state.modelMode === "new") total += 10;
   if (c.modelCustomization) total += 10;
-  if (c.visualIdentity === "include") total += 50;
   if (c.openingPhoto === "include") total += 5;
   if (c.rsvp === "smart_form") total += 5;
   if (c.gifts === "premium") total += 5;
@@ -376,31 +384,12 @@ async function submitEvent(event) {
   event.currentTarget.querySelectorAll("input,select,button").forEach(el => el.disabled = true);
   user(parts.length ? parts.join(" · ") : "Prefiro completar esses dados depois");
   if (state.editing) { state.editing = false; await finalStep(); }
-  else await identityStep();
+  else await openingStep();
 }
 
-async function identityStep() {
-  state.step = "identity";
-  setProgress(4, "Toques especiais");
-  await susie(`${phaseTitle("Identidade Visual", "✦")}Que tal deixar todo o visual da festa combinando com o convite? Nós podemos montar toda a Identidade Visual pra você! ✨
-    <div class="preview-card">
-      <div class="preview-visual">Identidade Visual</div>
-      <div class="preview-body"><p>Uma direção visual completa para convite, festa e lembrancinhas.</p>
-        <div class="deliverables"><span>Paleta de cores</span><span>Logo em 4K</span><span>Elementos PNG</span><span>Tipografia</span><span>Rótulos e Tags para você imprimir</span><span>Arte do cardápio para você imprimir</span><span>Logo vetorizada</span></div>
-      </div>
-    </div>`);
-  choices([
-    { label: "Incluir Identidade Visual <span class='choice-price'>+R$50</span>", action: () => openingStep(true) },
-    { label: "Agora não", action: () => openingStep(false) }
-  ]);
-}
-
-async function openingStep(includeIdentity) {
-  user(includeIdentity ? "Incluir Identidade Visual (+R$50)" : "Agora não");
-  setChoice("visualIdentity", includeIdentity ? "include" : "none");
-  if (state.editing) { state.editing = false; return finalStep(); }
+async function openingStep() {
   state.step = "opening";
-  setProgress(5, "Abertura do convite");
+  setProgress(4, "Abertura do convite");
   await susie(`${phaseTitle("Tipo de Abertura", "◇")}Agora vamos escolher como o convite começa. A abertura é a primeira impressão que o convidado vê.
     ${openingAssets()}`);
   choices([
@@ -417,7 +406,7 @@ async function finishPreview(choice) {
 
 async function openingPhotoStep() {
   state.step = "openingPhoto";
-  setProgress(6, "Foto na abertura");
+  setProgress(5, "Foto na abertura");
   await susie(`${phaseTitle("Foto na Abertura", "▣")}Você quer colocar uma foto especial logo na abertura? Ela deixa o início do convite mais pessoal e emocionante.<br><small>A foto será combinada e enviada pelo WhatsApp quando você confirmar o pedido.</small>`);
   choices([
     { label: "Incluir Foto na Abertura <span class='choice-price'>+R$5</span>", action: () => chooseAndGo("openingPhoto", "include", "Incluir Foto na Abertura (+R$5)", musicStep) },
@@ -427,7 +416,7 @@ async function openingPhotoStep() {
 
 async function musicStep() {
   state.step = "music";
-  setProgress(7, "Música");
+  setProgress(6, "Música");
   await susie(`${phaseTitle("Música", "♫")}Agora vamos escolher a música do convite. Você pode me mandar o nome, um link, usar a música do modelo ou deixar sem música.`);
   setInput(true, [], "Digite o nome ou link da música aqui");
   const options = [{ label: "Sem música", keepEnabled: true, action: () => chooseMusic("none", "Sem música") }];
@@ -450,7 +439,7 @@ async function chooseMusic(mode, label, value = "") {
 
 async function rsvpStep() {
   state.step = "rsvp";
-  setProgress(8, "Confirmação");
+  setProgress(7, "Confirmação");
   await susie(`${phaseTitle("Confirmação de Presença", "✓")}Seu convite também pode ajudar a organizar quem vai participar da festa! Escolha como prefere receber as confirmações.
     ${assetStrip([
       assetVideo("assets/orcamento/Exemplo Confirmar Whatsapp.mp4", "Direto no WhatsApp", { group: "rsvp", value: "whatsapp", label: "Confirmação direto no WhatsApp" }),
@@ -464,7 +453,7 @@ async function rsvpStep() {
 
 async function giftsStep() {
   state.step = "gifts";
-  setProgress(9, "Presentes");
+  setProgress(8, "Presentes");
   await susie(`${phaseTitle("Presentes", "♢")}Agora vamos escolher como as dicas de presente vão aparecer. Essa parte pode ser simples ou mais interativa.
     ${assetStrip([
       assetImage("assets/orcamento/Simples.png", "Sugestões Simples", { group: "gifts", value: "simple", label: "Sugestões Simples" }),
@@ -481,7 +470,7 @@ async function giftDetailsStep(mode, label) {
   user(label);
   setChoice("gifts", mode);
   state.step = "giftDetails";
-  setProgress(9, "Sugestões de presentes");
+  setProgress(8, "Sugestões de presentes");
   persist();
   await susie(`${phaseTitle("Sugestões de Presentes", "♢")}Escreva as sugestões que você quer mostrar aos convidados. Você pode seguir o exemplo esmaecido no campo abaixo.`);
   setInput(true, [], GIFT_PLACEHOLDER);
@@ -503,7 +492,7 @@ async function submitGiftDetails() {
 
 async function manualStep() {
   state.step = "manual";
-  setProgress(10, "Manual");
+  setProgress(9, "Manual");
   await susie(`${phaseTitle("Manual do Convidado", "≡")}O Manual do Convidado ajuda a passar orientações importantes de um jeito bonito e organizado. Como você quer incluir essa parte?
     ${assetStrip([
       assetImage("assets/orcamento/Exemplo Manual do Convidado.jpg", "Manual Simples", { group: "manual", value: "simple", label: "Manual Simples" }),
@@ -519,7 +508,7 @@ async function manualDetailsStep(mode, label) {
   user(label);
   setChoice("manual", mode);
   state.step = "manualDetails";
-  setProgress(10, "Texto do manual");
+  setProgress(9, "Texto do manual");
   persist();
   await susie(`${phaseTitle("Texto do Manual", "≡")}O texto abaixo já está pronto. Adapte o que quiser ou apenas confirme para continuar.`);
   setInput(true, [], "Escreva o Manual do Convidado");
@@ -541,7 +530,7 @@ async function submitManualDetails() {
 
 async function countdownStep() {
   state.step = "countdown";
-  setProgress(11, "Cronômetro");
+  setProgress(10, "Cronômetro");
   const future = new Date(); future.setMonth(future.getMonth() + 3);
   await susie(`${phaseTitle("Contagem Regressiva", "◷")}Quer incluir um cronômetro contando os dias para o evento? Ele cria aquela expectativa gostosa até a data chegar.
     <div class="countdown-preview" data-countdown-target="${future.toISOString()}">
@@ -587,14 +576,14 @@ function startCountdownPreview() {
 
 async function galleryStep() {
   state.step = "gallery";
-  setProgress(12, "Galeria");
+  setProgress(11, "Galeria");
   await susie(`${phaseTitle("Galeria de Fotos", "▦")}Você quer incluir uma galeria de fotos no convite? Ela deixa o convite mais pessoal e ajuda a contar a história visual do evento.<br><small>As fotos serão enviadas pelo WhatsApp depois da confirmação.</small>${missingPreview("Galeria de Fotos")}`);
   yesNo("gallery", "Incluir Galeria", 5, saveDateStep);
 }
 
 async function reminderStep() {
   state.step = "reminder";
-  setProgress(14, "Lembrete");
+  setProgress(13, "Lembrete");
   await susie(`${phaseTitle("Lembrete", "♧")}Quer incluir um lembrete para enviar aos convidados alguns dias antes da festa? É um videozinho com música para relembrar todo mundo de um jeito bonito.
     ${assetStrip([assetImage("assets/orcamento/Lembrete.jpg", "Exemplo de Lembrete")])}`);
   yesNo("reminder", "Incluir Lembrete", 15, qrStep);
@@ -602,7 +591,7 @@ async function reminderStep() {
 
 async function saveDateStep() {
   state.step = "saveTheDate";
-  setProgress(13, "Save The Date");
+  setProgress(12, "Save The Date");
   await susie(`${phaseTitle("Save The Date", "◫")}${isFirstAccessDay
     ? "Agora uma opção especial ✨ Fechando o convite ainda hoje, você ganha o Save The Date Simples de brinde!"
     : "Você também pode incluir um Save The Date para avisar os convidados antes do convite oficial."}
@@ -616,21 +605,21 @@ async function saveDateStep() {
 
 async function qrStep() {
   state.step = "photoQrCode";
-  setProgress(15, "QR Code de Fotos");
+  setProgress(14, "QR Code de Fotos");
   await susie(`${phaseTitle("QR Code de Fotos", "▣")}Já imaginou se você pudesse ter acesso as fotos que os seus convidados tiraram durante a sua festa? Com nosso sistema isso é possível! Os convidados escaneiam o QR Code, tiram fotos e elas ficam salvas no celular deles e no seu! O código pode ficar no convite ou em materiais da festa, como cardápios na mesa, cartões ou cartazes na entrada!${missingPreview("Sistema QR Code de Fotos")}`);
   yesNo("photoQrCode", "Incluir QR Code", 35, playlistStep);
 }
 
 async function playlistStep() {
   state.step = "guestPlaylist";
-  setProgress(16, "Playlist");
+  setProgress(15, "Playlist");
   await susie(`${phaseTitle("Playlist dos Convidados", "♫")}Quer deixar os convidados sugerirem músicas antes da festa? A Playlist dos Convidados abre um formulário onde eles podem mandar sugestões, e você encaminha para o seu DJ somente as que você concordar!${missingPreview("Formulário da Playlist dos Convidados")}`);
   yesNo("guestPlaylist", "Incluir Playlist dos Convidados", 5, notesStep);
 }
 
 async function notesStep() {
   state.step = "notes";
-  setProgress(17, "Observações finais");
+  setProgress(16, "Observações finais");
   await susie(`${phaseTitle("Observações Finais", "✎")}Antes de fechar, quer me contar mais alguma observação importante sobre o convite? Pode ser uma ideia, preferência ou pedido especial.`);
   setInput(true, [], "Digite sua observação aqui");
   choices([{ label: "Não tenho observações", action: () => finishNotes("") }]);
@@ -674,7 +663,7 @@ function choiceLabel(value) {
 function summaryHtml() {
   const modelName = state.selectedModelData?.name || (state.modelMode === "new" ? "Modelo novo" : "Não escolhido");
   const rows = [
-    ["Modelo", modelName], ["Identidade Visual", choiceLabel(state.choices.visualIdentity)],
+    ["Modelo", modelName],
     ["Abertura", choiceLabel(state.choices.openingType)], ["Foto na abertura", choiceLabel(state.choices.openingPhoto)],
     ["Música", choiceLabel(state.choices.music)], ["Confirmação", choiceLabel(state.choices.rsvp)],
     ["Presentes", choiceLabel(state.choices.gifts)], ["Manual", choiceLabel(state.choices.manual)],
@@ -697,13 +686,13 @@ function summaryHtml() {
 
 async function finalStep() {
   state.step = "final";
-  setProgress(17, "Resumo final");
+  setProgress(16, "Resumo final");
   persist();
   await susie(`${phaseTitle("Resumo do Orçamento", "✓")}Prontinho! Montei o resumo do seu orçamento ✨ Dá uma olhadinha se está tudo certo.${summaryHtml()}`);
   const editGroup = document.createElement("div");
   editGroup.className = "edit-grid";
   editGroup.innerHTML = `<h3>Quer mudar alguma coisa?</h3><p>Clique nas opções abaixo.</p>`;
-  [["fa-palette","Modelo","model"],["fa-calendar-days","Dados","event"],["fa-wand-magic-sparkles","Identidade","identity"],["fa-envelope-open","Abertura","opening"],["fa-image","Foto","openingPhoto"],["fa-music","Música","music"],["fa-user-check","Confirmação","rsvp"],["fa-gift","Presentes","gifts"],["fa-book-open","Manual","manual"],["fa-clock","Cronômetro","countdown"],["fa-images","Galeria","gallery"],["fa-bell","Lembrete","reminder"],["fa-heart","Save The Date","saveTheDate"],["fa-qrcode","QR Code","photoQrCode"],["fa-list","Playlist","guestPlaylist"],["fa-pen","Observações","notes"]].forEach(([icon, label, key]) => {
+  [["fa-palette","Modelo","model"],["fa-calendar-days","Dados","event"],["fa-envelope-open","Abertura","opening"],["fa-image","Foto","openingPhoto"],["fa-music","Música","music"],["fa-user-check","Confirmação","rsvp"],["fa-gift","Presentes","gifts"],["fa-book-open","Manual","manual"],["fa-clock","Cronômetro","countdown"],["fa-images","Galeria","gallery"],["fa-bell","Lembrete","reminder"],["fa-heart","Save The Date","saveTheDate"],["fa-qrcode","QR Code","photoQrCode"],["fa-list","Playlist","guestPlaylist"],["fa-pen","Observações","notes"]].forEach(([icon, label, key]) => {
     editGroup.insertAdjacentHTML("beforeend", `<button type="button" data-edit="${key}"><i class="fa-solid ${icon}"></i>${label}</button>`);
   });
   els.messages.appendChild(editGroup);
@@ -716,8 +705,8 @@ async function finalStep() {
 
 function editSection(key) {
   const handlers = {
-    model: modelStep, event: eventStep, identity: identityStep,
-    opening: () => { state.editing = true; state.step = "opening"; setProgress(5, "Abertura do convite"); susie(`${phaseTitle("Tipo de Abertura", "◇")}Vamos alterar o tipo de abertura.${openingAssets()}`).then(() => choices([
+    model: modelStep, event: eventStep,
+    opening: () => { state.editing = true; state.step = "opening"; setProgress(4, "Abertura do convite"); susie(`${phaseTitle("Tipo de Abertura", "◇")}Vamos alterar o tipo de abertura.${openingAssets()}`).then(() => choices([
       { label: "Sem Abertura", action: () => finishPreview("Sem Abertura") }
     ])); },
     openingPhoto: openingPhotoStep, music: musicStep, rsvp: rsvpStep, gifts: giftsStep, manual: manualStep,
@@ -729,46 +718,87 @@ function editSection(key) {
   handlers[key]?.();
 }
 
+function modelModeLabel() {
+  if (state.modelMode === "selected") return "Modelo escolhido da galeria";
+  if (state.modelMode === "new") return "Criação de modelo novo";
+  return "Modelo ainda não definido";
+}
+
+function selectedModelLink() {
+  const slug = state.selectedModelData?.slug;
+  return slug ? `${PUBLIC_SITE_ORIGIN}/modelos.html?modelo=${encodeURIComponent(slug)}` : "";
+}
+
+function whatsappChoiceLines() {
+  const c = state.choices || {};
+  const specs = [
+    ["openingType", "Tipo de abertura", { long: "Abertura Longa", short: "Abertura Curta" }],
+    ["openingPhoto", "Foto na abertura", { include: "Sim" }],
+    ["rsvp", "Confirmação de presença", { whatsapp: "Direto no WhatsApp", smart_form: "Formulário Inteligente" }],
+    ["gifts", "Presentes", { simple: "Sugestões Simples", premium: "Sugestões Premium", smart_list: "Lista Inteligente", client_list: "Lista do Cliente" }],
+    ["manual", "Manual do Convidado", { simple: "Manual Simples", premium: "Manual Premium", client: "Manual do Cliente" }],
+    ["countdown", "Cronômetro", { include: "Sim" }],
+    ["gallery", "Galeria de Fotos", { include: "Sim" }],
+    ["saveTheDate", "Save The Date", { simple: isFirstAccessDay ? "Simples — Brinde de primeiro acesso" : "Simples", premium: "Premium" }],
+    ["reminder", "Lembrete", { include: "Sim" }],
+    ["photoQrCode", "QR Code de Fotos", { include: "Sim" }],
+    ["guestPlaylist", "Playlist dos Convidados", { include: "Sim" }]
+  ];
+  const lines = specs.flatMap(([key, label, values]) => {
+    const value = c[key];
+    if (!value || value === "none" || !values[value]) return [];
+    return [`- ${label}: ${values[value]}`];
+  });
+  const music = c.music;
+  if (music?.mode === "model_music") lines.splice(2, 0, "- Música: Usar música do modelo");
+  if (music?.mode === "name_or_link" && music.value?.trim()) lines.splice(2, 0, `- Música: ${music.value.trim()}`);
+  return lines;
+}
+
 function whatsappMessage() {
-  const e = state.event;
-  return `Oi! Finalizei meu orçamento pelo site com a Susie \u2728
+  const e = state.event || {};
+  const sections = [
+    "Oi! Finalizei meu orçamento pelo site com a Susie \u2728",
+    `\u{1F464} *Cliente:* ${state.name}`,
+  ];
 
-\u{1F464} *Cliente:* ${state.name}
+  const modelLines = [
+    "\u{1F48C} *MODELO*",
+    `- Tipo: ${modelModeLabel()}`
+  ];
+  const modelLink = selectedModelLink();
+  if (modelLink) modelLines.push(`- Link do modelo escolhido: ${modelLink}`);
+  if (state.modelCustomization?.trim()) modelLines.push(`- Personalização: ${state.modelCustomization.trim()}`);
+  if (state.modelBrief?.trim()) modelLines.push(`- Briefing do modelo novo: ${state.modelBrief.trim()}`);
+  sections.push(modelLines.join("\n"));
 
-\u{1F48C} *MODELO*
-- Tipo: ${state.modelMode}
-- Modelo escolhido: ${state.selectedModelData?.name || "Não escolhido"}
-- Personalização: ${state.modelCustomization || "Nenhuma"}
-- Briefing de modelo novo: ${state.modelBrief || "Nenhum"}
+  const eventFields = [
+    ["Tipo de evento", e.type],
+    ["Nome", e.eventName],
+    ["Idade", e.age],
+    ["Data", e.date],
+    ["Horário de início", e.time],
+    ["Horário de término", e.endTime],
+    ["Local", e.location],
+    ["Tema e paleta", e.themePalette],
+    ["Tema", e.theme],
+    ["Paleta de cores", e.palette]
+  ].filter(([, value]) => String(value || "").trim());
+  if (eventFields.length) {
+    sections.push(`\u{1F389} *DADOS DO EVENTO*\n${eventFields.map(([label, value]) => `- ${label}: ${String(value).trim()}`).join("\n")}`);
+  }
 
-\u{1F389} *DADOS DO EVENTO*
-- Tipo de evento: ${e.type || "Pendente"}
-- Nome: ${e.eventName || "Pendente"}
-- Data: ${e.date || "Pendente"}
-- Horário: ${e.time || "Pendente"}
-- Local: ${e.location || "Pendente"}
+  const choiceLines = whatsappChoiceLines();
+  if (choiceLines.length) sections.push(`\u2728 *ESCOLHAS DO CONVITE*\n${choiceLines.join("\n")}`);
+  if (state.giftDetails?.trim()) sections.push(`\u{1F381} *SUGESTÕES DE PRESENTES*\n${state.giftDetails.trim()}`);
+  if (state.manualDetails?.trim()) sections.push(`\u{1F4D6} *MANUAL DO CONVIDADO*\n${state.manualDetails.trim()}`);
+  if (state.notes?.trim()) sections.push(`\u{1F4DD} *OBSERVAÇÕES*\n${state.notes.trim()}`);
+  if (state.pending?.length) sections.push(`\u26A0\uFE0F *PENDÊNCIAS*\n${state.pending.join(", ")}`);
 
-\u2728 *ESCOLHAS DO CONVITE*
-${Object.entries(state.choices).map(([key, value]) => `- ${key}: ${choiceLabel(value)}`).join("\n")}
-
-\u{1F381} *SUGESTÕES DE PRESENTES*
-${state.giftDetails || "Não informado"}
-
-\u{1F4D6} *MANUAL DO CONVIDADO*
-${state.manualDetails || "Não informado"}
-
-\u{1F4DD} *OBSERVAÇÕES*
-${state.notes || "Nenhuma"}
-
-\u26A0\uFE0F *PENDÊNCIAS*
-${state.pending.length ? state.pending.join(", ") : "Nenhuma"}
-
-\u{1F4B0} *VALOR TOTAL:* R$${state.total}
-
-\u23F0 *Prazo de entrega:* até 2 dias úteis após o pagamento do sinal de R$20.
-
-\u26A0\uFE0F PAGAMENTO DE SINAL
-Sinal de R$20: https://mpago.la/1wvHN6p ou Pix CPF 49455859890.`;
+  sections.push(`\u{1F4B0} *VALOR TOTAL:* R$${state.total}`);
+  sections.push("\u23F0 *Prazo de entrega:* até 2 dias úteis após o pagamento do sinal de R$20.");
+  sections.push("\u26A0\uFE0F *PAGAMENTO DE SINAL*\nSinal de R$20: https://mpago.la/1wvHN6p ou Pix CPF 49455859890.");
+  return sections.join("\n\n");
 }
 
 function openWhatsApp() {
@@ -799,8 +829,15 @@ function closeAssetModal() {
 function selectAssetOption(card) {
   const { selectGroup: group, selectValue: value, selectLabel: label } = card.dataset;
   if (!group) return;
+  const assetGroup = card.closest(".asset-strip");
+  if (assetGroup?.dataset.selectionHandled === "true") return;
+  if (assetGroup) assetGroup.dataset.selectionHandled = "true";
+  assetGroup?.querySelectorAll('input[type="radio"]').forEach(input => { input.disabled = true; });
   const radio = card.querySelector('input[type="radio"]');
-  if (radio) radio.checked = true;
+  if (radio) {
+    radio.disabled = false;
+    radio.checked = true;
+  }
   if (group === "opening") {
     finishPreview(label);
   } else if (group === "rsvp") {
@@ -814,37 +851,57 @@ function selectAssetOption(card) {
 }
 
 async function startOrResume() {
-  const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "null");
-  if (!saved?.name) return begin();
-  Object.assign(state, saved);
-  els.welcome.hidden = true;
-  els.chat.hidden = false;
-  els.total.textContent = `R$ ${state.total || 80}`;
-  setInput(false);
-  await susie(`Que bom ter você de volta, <strong>${state.name}</strong>! Suas escolhas continuam salvas por aqui ✨`);
-  const handlers = {
-    model: modelStep, modelBrief: modelStep, event: eventStep, identity: identityStep, opening: () => openingStep(state.choices.visualIdentity === "include"),
-    openingPhoto: openingPhotoStep, music: musicStep, rsvp: rsvpStep, gifts: giftsStep, giftDetails: () => giftDetailsStep(state.choices.gifts || "simple", choiceLabel(state.choices.gifts)),
-    manual: manualStep, manualDetails: () => manualDetailsStep(state.choices.manual || "simple", choiceLabel(state.choices.manual)),
-    countdown: countdownStep, gallery: galleryStep, reminder: reminderStep, saveTheDate: saveDateStep,
-    photoQrCode: qrStep, guestPlaylist: playlistStep, notes: notesStep, final: finalStep
-  };
-  (handlers[state.step] || modelStep)();
+  if (startupInFlight || !els.chat.hidden) return;
+  startupInFlight = true;
+  try {
+    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || "null");
+    if (!saved?.name) {
+      await begin();
+      return;
+    }
+    Object.assign(state, saved);
+    state.choices ||= {};
+    delete state.choices.visualIdentity;
+    if (state.step === "identity") state.step = "opening";
+    els.welcome.hidden = true;
+    els.chat.hidden = false;
+    calculateTotal();
+    setInput(false);
+    await susie(`Que bom ter você de volta, <strong>${state.name}</strong>! Suas escolhas continuam salvas por aqui ✨`);
+    const handlers = {
+      model: modelStep, modelBrief: modelStep, event: eventStep, opening: openingStep,
+      openingPhoto: openingPhotoStep, music: musicStep, rsvp: rsvpStep, gifts: giftsStep, giftDetails: () => giftDetailsStep(state.choices.gifts || "simple", choiceLabel(state.choices.gifts)),
+      manual: manualStep, manualDetails: () => manualDetailsStep(state.choices.manual || "simple", choiceLabel(state.choices.manual)),
+      countdown: countdownStep, gallery: galleryStep, reminder: reminderStep, saveTheDate: saveDateStep,
+      photoQrCode: qrStep, guestPlaylist: playlistStep, notes: notesStep, final: finalStep
+    };
+    await (handlers[state.step] || modelStep)();
+  } finally {
+    startupInFlight = false;
+  }
 }
 
 function submitMessage(event) {
   event.preventDefault();
-  if (state.step === "name") submitName();
-  else if (state.step === "modelBrief") submitModelBrief();
+  if (submissionInFlight) return;
+  let action = null;
+  if (state.step === "name") action = submitName();
+  else if (state.step === "modelBrief") action = submitModelBrief();
   else if (state.step === "music") {
     const value = els.input.value.trim();
-    if (value) chooseMusic("name_or_link", value, value);
-  } else if (state.step === "giftDetails") submitGiftDetails();
-  else if (state.step === "manualDetails") submitManualDetails();
+    if (value) action = chooseMusic("name_or_link", value, value);
+  } else if (state.step === "giftDetails") action = submitGiftDetails();
+  else if (state.step === "manualDetails") action = submitManualDetails();
   else if (state.step === "notes") {
     const value = els.input.value.trim();
-    if (value) { user(value); finishNotes(value); }
+    if (value) {
+      user(value);
+      action = finishNotes(value);
+    }
   }
+  if (!action) return;
+  submissionInFlight = true;
+  Promise.resolve(action).finally(() => { submissionInFlight = false; });
 }
 
 function restart() {
