@@ -51,6 +51,10 @@
       <button class="more-indicator" id="more-indicator" aria-label="Ver mais conteúdo" hidden>↓</button>
 
       <div class="composer-wrap">
+        <button class="checkout-button" id="checkout-button" type="button" hidden>
+          <i class="fa-brands fa-whatsapp" aria-hidden="true"></i>
+          <span>Finalizar Compra</span>
+        </button>
         <form class="composer" id="composer">
           <textarea id="message-input" rows="3" autocomplete="off" aria-label="Sua resposta"></textarea>
           <button type="submit" id="send-button" aria-label="Enviar resposta">➜</button>
@@ -66,6 +70,25 @@
     </section>
   </main>
 
+  <div class="contact-modal" id="contact-modal" role="dialog" aria-modal="true" aria-labelledby="contact-title" hidden>
+    <form class="contact-card" id="contact-form">
+      <span class="avatar contact-avatar" aria-hidden="true">S</span>
+      <p class="eyebrow">ANTES DE COMEÇAR</p>
+      <h2 id="contact-title">Como podemos te chamar?</h2>
+      <div class="contact-field">
+        <label for="contact-name">Nome</label>
+        <input id="contact-name" name="name" type="text" autocomplete="name" minlength="2" required placeholder="Seu nome">
+      </div>
+      <div class="contact-field">
+        <label for="contact-phone">WhatsApp</label>
+        <input id="contact-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" required placeholder="(11) 99999-9999">
+        <small>Entraremos em contato pelo WhatsApp para encaminhar o link do seu convite quando estiver pronto.</small>
+      </div>
+      <p class="contact-error" id="contact-error" role="alert" hidden></p>
+      <button class="primary-button" type="submit">Continuar</button>
+    </form>
+  </div>
+
   <template id="typing-template">
     <div class="message-row susie typing-row">
       <span class="mini-avatar">S</span>
@@ -76,7 +99,7 @@
   <div class="asset-modal" id="asset-modal" role="dialog" aria-modal="true" aria-label="Visualização ampliada" hidden>
     <button class="asset-modal-close" id="asset-modal-close" aria-label="Fechar visualização">×</button>
     <div class="asset-modal-content" id="asset-modal-content"></div>
-    <button class="asset-modal-select" id="asset-modal-select" hidden>Escolher</button>
+    <button class="asset-modal-select" id="asset-modal-select" hidden>Selecionar</button>
   </div>
 
   <script src="../js/meta-pixel.js"></script>
