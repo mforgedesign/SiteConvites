@@ -98,6 +98,7 @@ function normalizePhone(value) {
 }
 
 function trackingPayload(eventType, details = {}) {
+  const marketingAttribution = globalThis.MForgeMeta?.getAttribution?.() || {};
   return {
     schemaVersion: 1,
     eventId: createLeadId(),
@@ -110,8 +111,12 @@ function trackingPayload(eventType, details = {}) {
     total: state.total,
     pageUrl: location.href,
     referrer: document.referrer || "",
-    details,
+    details: {
+      ...details,
+      marketingAttribution
+    },
     snapshot: {
+      marketingAttribution,
       selectedModel: state.selectedModelData?.slug || "",
       modelMode: state.modelMode,
       modelBrief: state.modelBrief,
