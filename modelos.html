@@ -480,6 +480,7 @@
             to { transform: rotate(360deg); }
         }
     </style>
+    <script src="js/meta-pixel.js"></script>
 </head>
 
 <body class="antialiased">
@@ -997,6 +998,13 @@
             const model = models.find(m => m.slug === slug);
             if (!model) return;
 
+            globalThis.MForgeMeta?.track('ViewContent', {
+                content_ids: [model.slug],
+                content_name: model.name,
+                content_category: model.tipo || 'Convites digitais',
+                content_type: 'product'
+            });
+
             const modelData = {
                 slug: model.slug,
                 name: model.name,
@@ -1209,9 +1217,17 @@
             });
         }
 
+        let metaSearchTimer;
         document.getElementById('searchInput').addEventListener('input', (e) => {
             renderModels(e.target.value);
             updateSuggestionButtons(e.target.value);
+            clearTimeout(metaSearchTimer);
+            const term = e.target.value.trim();
+            if (term.length >= 2) {
+                metaSearchTimer = setTimeout(() => {
+                    globalThis.MForgeMeta?.track('Search', { search_string: term.slice(0, 100) });
+                }, 800);
+            }
         });
 
         // ============================

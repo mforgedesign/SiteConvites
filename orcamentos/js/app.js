@@ -120,9 +120,12 @@ function trackingPayload(eventType, details = {}) {
 }
 
 function trackEvent(eventType, details = {}, immediate = false) {
+  if (!state.leadId) return;
+  const payload = trackingPayload(eventType, details);
+  globalThis.MForgeMeta?.trackSusieEvent(payload);
   const config = globalThis.SUSIE_TRACKING_CONFIG || {};
-  if (!config.endpoint || !state.leadId) return;
-  const body = JSON.stringify({ ...trackingPayload(eventType, details), writeKey: config.writeKey || "" });
+  if (!config.endpoint) return;
+  const body = JSON.stringify({ ...payload, writeKey: config.writeKey || "" });
   if (immediate && navigator.sendBeacon) {
     navigator.sendBeacon(config.endpoint, new Blob([body], { type: "text/plain;charset=UTF-8" }));
     return;
@@ -776,6 +779,7 @@ async function finalStep() {
   state.step = "final";
   setProgress(17, "Resumo final");
   persist();
+  trackEvent("budget_completed");
   await susie(`${phaseTitle("Resumo do Orçamento", "✓")}Prontinho! Montei o resumo do seu orçamento ✨ Dá uma olhadinha se está tudo certo.${summaryHtml()}`);
   const editGroup = document.createElement("div");
   editGroup.className = "edit-grid";
