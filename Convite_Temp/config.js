@@ -10,7 +10,7 @@ window.config = {
   "convite": {
     "paletaCores": "",
     "tema": "",
-    "musica": "assets/Musica.mp3",
+    "musica": "assets/musica.mp3",
     "tipoAbertura": "",
     "particulasAbertura": true,
     "slug": "15-anos-alice",
@@ -21,17 +21,17 @@ window.config = {
     }
   },
   "assets": {
-    "capa": "assets/Capa.jpg",
+    "capa": "assets/capa.jpg",
     "aberturaSlides": [
-      "assets/Slide1.mp4",
-      "assets/Slide2.mp4",
+      "assets/slide1.mp4",
+      "assets/slide2.mp4",
       "assets/Slide3.mp4",
-      "assets/Slide4.mp4",
-      "assets/Slide5.mp4"
+      "assets/slide4.mp4",
+      "assets/slide5.mp4"
     ],
-    "folhaVazia": "assets/Folha Preenchida.jpg",
-    "folhaPreenchida": "assets/Folha Preenchida.jpg",
-    "musica": "assets/Musica.mp3",
+    "folhaVazia": "assets/folha_preenchida.jpg",
+    "folhaPreenchida": "assets/folha_preenchida.jpg",
+    "musica": "assets/musica.mp3",
     "fotos": []
   },
   "botoes": [
