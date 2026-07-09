@@ -825,6 +825,7 @@
         let models = [];
         let selectedModelSlug = null;
         let coverObserver = null;
+        const PREFETCH_AHEAD_CARDS = 2;
         let lastModelosJson = '';
 
         // Load models from local modelos.json
@@ -879,22 +880,79 @@
                 .trim();
         }
 
-        // Initialize Intersection Observer for lazy cover loading
+        function getRenderedCards() {
+            return Array.from(document.querySelectorAll('.model-card'));
+        }
+
+        function loadMediaElement(media) {
+            if (!media || media.dataset.loaded === 'true') return;
+            const src = media.dataset.src;
+            if (!src) return;
+
+            media.dataset.loaded = 'true';
+            media.removeAttribute('data-src');
+
+            if (media.tagName === 'VIDEO') {
+                media.addEventListener('loadedmetadata', () => media.classList.add('loaded'), { once: true });
+                media.addEventListener('canplay', () => media.classList.add('loaded'), { once: true });
+                media.src = src;
+                media.load();
+                return;
+            }
+
+            media.addEventListener('load', () => media.classList.add('loaded'), { once: true });
+            media.addEventListener('error', () => {
+                const fallback = media.dataset.fallback;
+                if (fallback && media.src !== fallback) {
+                    media.src = fallback;
+                }
+                media.classList.add('loaded');
+            }, { once: true });
+            media.src = src;
+        }
+
+        function loadCardMedia(card) {
+            if (!card || card.dataset.mediaLoaded === 'true') return;
+            card.dataset.mediaLoaded = 'true';
+            card.querySelectorAll('.model-cover').forEach(loadMediaElement);
+        }
+
+        function preloadCardAndNext(card) {
+            const cards = getRenderedCards();
+            const start = cards.indexOf(card);
+            if (start < 0) return;
+            for (let i = start; i <= start + PREFETCH_AHEAD_CARDS && i < cards.length; i++) {
+                loadCardMedia(cards[i]);
+            }
+        }
+
+        function primeVisibleCards() {
+            const cards = getRenderedCards();
+            const visibleCards = cards.filter(card => {
+                const rect = card.getBoundingClientRect();
+                return rect.bottom >= 0 && rect.top <= window.innerHeight;
+            });
+            (visibleCards.length ? visibleCards : cards.slice(0, 1)).forEach(preloadCardAndNext);
+        }
+
+        function observeRenderedCards() {
+            if (!coverObserver) return;
+            coverObserver.disconnect();
+            getRenderedCards().forEach(card => coverObserver.observe(card));
+            requestAnimationFrame(primeVisibleCards);
+        }
+
+        // Initialize Intersection Observer for dynamic media loading
         function initCoverObserver() {
             coverObserver = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
-                        const img = entry.target;
-                        const src = img.dataset.src;
-                        if (src) {
-                            img.src = src;
-                            img.removeAttribute('data-src');
-                        }
-                        coverObserver.unobserve(img);
+                        preloadCardAndNext(entry.target);
+                        coverObserver.unobserve(entry.target);
                     }
                 });
             }, {
-                rootMargin: '200px',
+                rootMargin: '0px',
                 threshold: 0.01
             });
         }
@@ -1034,11 +1092,13 @@
             const safeAlt = escapeHtml(altText || label);
             const safeSrc = escapeHtml(src || fallback);
             const media = type === 'video'
-                ? `<video src="${safeSrc}" class="model-cover loaded" autoplay loop muted playsinline preload="metadata"></video>`
-                : `<img src="${safeSrc}"
+                ? `<video data-src="${safeSrc}"
+                         class="model-cover"
+                         autoplay loop muted playsinline preload="none"></video>`
+                : `<img data-src="${safeSrc}"
+                         data-fallback="${fallback}"
                          alt="${safeAlt}"
-                         class="model-cover loaded"
-                         onerror="this.onerror=null;this.src='${fallback}';">`;
+                         class="model-cover">`;
 
             return `
                 <div class="model-media-frame">
@@ -1174,6 +1234,7 @@
                 }
             });
 
+            observeRenderedCards();
         }
 
         // ============================
