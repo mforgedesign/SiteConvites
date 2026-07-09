@@ -153,6 +153,10 @@
             word-break: normal;
         }
 
+        .html-modal-rsvp .html-modal-content {
+            padding-top: 58px;
+        }
+
         .html-modal-content img,
         .html-modal-content video,
         .html-modal-content iframe,
@@ -1478,7 +1482,9 @@
             
             const contentDiv = document.getElementById('popupHtmlContent');
             contentDiv.innerHTML = content;
-            document.getElementById('popupHtmlModal').classList.add('active');
+            const modal = document.getElementById('popupHtmlModal');
+            modal.classList.toggle('html-modal-rsvp', Boolean(htmlOverride));
+            modal.classList.add('active');
             
             // Re-attach RSVP listeners if RSVP HTML was just injected
             attachRSVPListeners();
