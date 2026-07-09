@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 
 <head>
@@ -126,6 +126,63 @@
         .custom-scrollbar::-webkit-scrollbar-thumb {
             background: #ccc;
             border-radius: 10px;
+        }
+        .html-modal-shell {
+            position: relative;
+            width: min(86vw, 400px);
+            max-width: calc(100vw - 32px);
+            max-height: 88vh;
+            overflow: hidden;
+            overflow-x: hidden;
+            overscroll-behavior: contain;
+            border-radius: 22px;
+        }
+
+        .html-modal-shell,
+        .html-modal-shell * {
+            max-width: 100%;
+            box-sizing: border-box;
+        }
+
+        .html-modal-content {
+            width: 100%;
+            max-height: 88vh;
+            overflow-y: auto;
+            overflow-x: hidden;
+            overflow-wrap: anywhere;
+            word-break: normal;
+        }
+
+        .html-modal-content img,
+        .html-modal-content video,
+        .html-modal-content iframe,
+        .html-modal-content table,
+        .html-modal-content svg,
+        .html-modal-content canvas {
+            max-width: 100%;
+        }
+
+        .html-modal-content table {
+            width: 100%;
+            table-layout: fixed;
+        }
+
+        .html-modal-close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            z-index: 260;
+            width: 42px;
+            height: 42px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 999px;
+            color: #fff;
+            background: rgba(0, 0, 0, 0.42);
+            border: 1px solid rgba(255, 255, 255, 0.22);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.32);
+            backdrop-filter: blur(8px);
         }
 
         .button-gallery-shell {
@@ -509,27 +566,17 @@
 
     <!-- Popup HTML Universal (Manual, RSVP, Pix, etc) -->
     <div id="popupHtmlModal" class="modal" onclick="closeModal('popupHtmlModal')">
-        <div class="relative w-full max-w-[400px] max-h-[90vh] rounded-xl shadow-2xl overflow-hidden flex flex-col border border-white/20 bg-black/40 backdrop-blur-xl"
-            onclick="event.stopPropagation()">
-            <div class="relative z-10 flex justify-between items-center p-4 border-b border-white/10 bg-white/5">
-                <div class="flex items-center gap-3">
-                    <i id="popupHtmlIcon" class="text-white text-xl"></i>
-                    <h2 id="popupHtmlTitle" class="text-xl font-bold text-white">Informação</h2>
-                </div>
-                <button onclick="closeModal('popupHtmlModal')" class="text-white hover:text-gray-300 transition-colors">
-                    <i class="fa-solid fa-xmark text-2xl"></i>
-                </button>
-            </div>
-            <div class="relative z-10 p-6 overflow-y-auto custom-scrollbar text-white flex-1 relative">
-                <div id="popupHtmlContent" class="text-sm leading-relaxed w-full">
-                    <!-- Conteúdo Injetado via JS -->
-                </div>
+        <div class="html-modal-shell custom-scrollbar" onclick="event.stopPropagation()">
+            <button type="button" onclick="closeModal('popupHtmlModal'); event.stopPropagation();" class="html-modal-close" aria-label="Fechar">
+                <i class="fa-solid fa-xmark text-2xl"></i>
+            </button>
+            <div id="popupHtmlContent" class="html-modal-content custom-scrollbar">
+                <!-- Conteúdo Injetado via JS -->
             </div>
         </div>
     </div>
 
-    <!-- Popup Imagem/Presentes -->
-    <div id="popupImage" class="modal" onclick="closeModal('popupImage')">
+    <!-- Popup Imagem/Presentes --><div id="popupImage" class="modal" onclick="closeModal('popupImage')">
         <div class="relative max-w-[90vw] max-h-[90vh] rounded-xl shadow-2xl overflow-hidden"
             onclick="event.stopPropagation()">
             <button onclick="closeModal('popupImage')"
@@ -1427,13 +1474,7 @@
         // MODALS & RSVP SCRIPT INJECTIONS
         // ==========================================
         function openHtmlModal(btn, htmlOverride) {
-            const title = btn.titulo.replace(/\n/g, ' ');
-            const icon = btn.icone;
             const content = htmlOverride || btn.conteudo;
-
-            document.getElementById('popupHtmlTitle').innerText = title;
-            const iconEl = document.getElementById('popupHtmlIcon');
-            if (iconEl && icon) iconEl.className = icon + " text-white text-xl";
             
             const contentDiv = document.getElementById('popupHtmlContent');
             contentDiv.innerHTML = content;
