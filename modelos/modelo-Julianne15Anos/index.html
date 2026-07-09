@@ -481,7 +481,7 @@
             </div>
 
             <!-- Click to interact (hidden until preload finishes) -->
-            <div id="dicaInteractionContainer" class="absolute z-10 flex flex-col items-center gap-1 animate-pulse" style="opacity: 0; pointer-events: none; transition: opacity 0.6s ease;">
+            <div id="dicaInteractionContainer" class="absolute z-10 flex flex-col items-center gap-1 animate-pulse" style="display: none; opacity: 0; pointer-events: none; transition: opacity 0.6s ease;">
                 <div class="flex items-center gap-3">
                     <span class="texto-capa text-2xl font-bold uppercase tracking-widest">Clique</span>
                     <i class="fa-solid fa-hand-pointer text-4xl text-white drop-shadow-lg animar-clique"></i>
@@ -581,6 +581,10 @@
         let currentSlideIndex = 0;
         let slideTimer = null;
         let isTransitioning = false;
+        let openingAssetsReady = false;
+        let openingPreloadFailed = false;
+        let backgroundMediaUrl = '';
+        const preloadedAssetUrls = new Map();
 
         // Script to fix window inner height on iOS
         function setViewportHeight() {
@@ -683,13 +687,14 @@
             }
 
             // Background Media
-            const bgMediaUrl = config.assets.folhaPreenchida || config.assets.folhaVazia;
-            if (bgMediaUrl) {
-                if (bgMediaUrl.endsWith('.mp4')) {
-                    fundoTelaVideo.src = bgMediaUrl;
+            backgroundMediaUrl = config.assets.folhaPreenchida || config.assets.folhaVazia || '';
+            if (backgroundMediaUrl) {
+                if (isVideoAsset(backgroundMediaUrl)) {
+                    fundoTelaVideo.src = backgroundMediaUrl;
+                    fundoTelaVideo.preload = 'auto';
                     fundoTelaVideo.load();
                 } else {
-                    fundoTelaImg.src = bgMediaUrl;
+                    fundoTelaImg.src = backgroundMediaUrl;
                 }
             }
 
@@ -716,7 +721,7 @@
                 setupCountdown();
             }
 
-            // Interaction Event (will be enabled after preload finishes)
+            // Interaction is guarded by openingAssetsReady and visually enabled after preload finishes.
             capa.addEventListener('click', startSequence);
 
             // Watermark (Pagamento Pendente)
@@ -861,31 +866,93 @@
         // ==========================================
         // ASSET PRELOADER
         // ==========================================
+        function isVideoAsset(url) {
+            return /\.(mp4|webm|mov)(\?|#|$)/i.test(String(url || ''));
+        }
+
+        function resolvePreloadedUrl(url) {
+            return preloadedAssetUrls.get(url) || url;
+        }
+
+        function markPreloadBlocked(preloaderSlow, message) {
+            openingPreloadFailed = true;
+            if (preloaderSlow) {
+                preloaderSlow.textContent = message || 'Não foi possível carregar todos os arquivos. Verifique a conexão e recarregue.';
+                preloaderSlow.style.opacity = '1';
+            }
+        }
+
+        function revealInteractionAfterPreload(preloaderUI, dicaContainer) {
+            if (preloaderUI) {
+                preloaderUI.style.opacity = '0';
+            }
+
+            setTimeout(() => {
+                if (preloaderUI) {
+                    preloaderUI.style.display = 'none';
+                }
+                if (!dicaContainer) return;
+                dicaContainer.style.display = 'flex';
+                requestAnimationFrame(() => {
+                    dicaContainer.style.opacity = '1';
+                    dicaContainer.style.pointerEvents = 'auto';
+                });
+            }, 650);
+        }
+
+        function preloadImageAsset(url) {
+            return new Promise((resolve, reject) => {
+                const img = new Image();
+                img.onload = () => resolve(url);
+                img.onerror = () => reject(new Error(`Falha ao carregar imagem: ${url}`));
+                img.src = url;
+            });
+        }
+
+        async function preloadVideoAsset(url) {
+            const response = await fetch(url, { cache: 'force-cache' });
+            if (!response.ok) {
+                throw new Error(`Falha ao carregar vídeo: ${url}`);
+            }
+            const blob = await response.blob();
+            if (!blob || blob.size === 0) {
+                throw new Error(`Vídeo vazio: ${url}`);
+            }
+            const objectUrl = URL.createObjectURL(blob);
+            preloadedAssetUrls.set(url, objectUrl);
+            return objectUrl;
+        }
+
         function preloadAllSlides() {
             const preloaderUI = document.getElementById('preloaderUI');
             const preloaderBar = document.getElementById('preloaderBar');
             const preloaderSlow = document.getElementById('preloaderSlow');
             const dicaContainer = document.getElementById('dicaInteractionContainer');
 
-            // Build unified list of assets to preload (capa + slides)
+            openingAssetsReady = false;
+            openingPreloadFailed = false;
+
+            // Build unified list of assets to preload before interaction.
             const assetsToLoad = [];
 
-            // Include capa if it exists (must be loaded before "Clique" appears)
             if (config.assets.capa) {
                 assetsToLoad.push({ url: config.assets.capa, type: 'image' });
             }
 
-            // Include abertura slides
             slideAssets.forEach(url => {
-                const isVideo = url.endsWith('.mp4') || url.endsWith('.webm');
-                assetsToLoad.push({ url, type: isVideo ? 'video' : 'image' });
+                assetsToLoad.push({ url, type: isVideoAsset(url) ? 'video' : 'image' });
             });
 
+            if (backgroundMediaUrl) {
+                assetsToLoad.push({
+                    url: backgroundMediaUrl,
+                    type: isVideoAsset(backgroundMediaUrl) ? 'video' : 'image'
+                });
+            }
+
             if (assetsToLoad.length === 0) {
-                // Nothing to preload — go directly to interaction (no loader flash)
-                preloaderUI.style.display = 'none';
-                dicaContainer.style.opacity = '1';
-                dicaContainer.style.pointerEvents = 'auto';
+                openingAssetsReady = true;
+                revealInteractionAfterPreload(preloaderUI, dicaContainer);
                 return;
             }
 
@@ -904,30 +971,23 @@
 
                 if (loaded >= total) {
                     clearTimeout(slowTimer);
-                    // All assets loaded — fade out loader, THEN show interact button
-                    preloaderUI.style.opacity = '0';
-                    setTimeout(() => {
-                        preloaderUI.style.display = 'none';
-                        dicaContainer.style.opacity = '1';
-                        dicaContainer.style.pointerEvents = 'auto';
-                    }, 500);
+                    openingAssetsReady = true;
+                    revealInteractionAfterPreload(preloaderUI, dicaContainer);
                 }
             }
 
             assetsToLoad.forEach(asset => {
-                if (asset.type === 'video') {
-                    // Preload video by fetching blob into cache
-                    fetch(asset.url)
-                        .then(r => r.blob())
-                        .then(() => onAssetLoaded())
-                        .catch(() => onAssetLoaded()); // count as loaded even if failed
-                } else {
-                    // Preload image
-                    const img = new Image();
-                    img.onload = onAssetLoaded;
-                    img.onerror = onAssetLoaded;
-                    img.src = asset.url;
-                }
+                const preload = asset.type === 'video'
+                    ? preloadVideoAsset(asset.url)
+                    : preloadImageAsset(asset.url);
+
+                preload
+                    .then(onAssetLoaded)
+                    .catch((err) => {
+                        console.warn(err);
+                        clearTimeout(slowTimer);
+                        markPreloadBlocked(preloaderSlow);
+                    });
             });
         }
 
@@ -936,9 +996,9 @@
         // ==========================================
         function startSequence() {
             if (iniciouInteracao) return;
+            if (!openingAssetsReady || openingPreloadFailed) return;
             iniciouInteracao = true;
 
-            capa.classList.add('invisivel');
             btnMute.classList.remove('invisivel');
 
             if (audio && config.assets.musica) {
@@ -947,10 +1007,16 @@
             }
 
             if (fundoTelaVideo && fundoTelaVideo.src) {
+                const preloadedBgUrl = resolvePreloadedUrl(backgroundMediaUrl);
+                if (preloadedBgUrl && fundoTelaVideo.src !== preloadedBgUrl) {
+                    fundoTelaVideo.src = preloadedBgUrl;
+                    fundoTelaVideo.load();
+                }
                 fundoTelaVideo.play().catch(e => console.log("Bg play failed"));
             }
 
             if (config.convite.tipoAbertura === 'nenhuma' || slideAssets.length === 0) {
+                capa.classList.add('invisivel');
                 irParaLoop();
             } else {
                 // Only show "Pular" if there are 2+ slides (meaningful sequence)
@@ -960,7 +1026,9 @@
                     startOpeningParticles();
                 }
 
-                playSlide(0);
+                playSlide(0, () => {
+                    capa.classList.add('invisivel');
+                });
             }
         }
 
@@ -972,31 +1040,39 @@
 
             currentSlideIndex = index;
             const slideUrl = slideAssets[index];
-            const isVideo = slideUrl.endsWith('.mp4') || slideUrl.endsWith('.webm');
+            const playableUrl = resolvePreloadedUrl(slideUrl);
+            const isVideo = isVideoAsset(slideUrl);
 
             // Clean up both elements
             videoAbertura.onended = null;
             videoAbertura.oncanplay = null;
+            videoAbertura.onloadeddata = null;
             videoAbertura.ontimeupdate = null;
             videoAbertura.classList.add('invisivel');
             imgAbertura.classList.add('invisivel');
             clearTimeout(slideTimer);
 
             if (isVideo) {
-                videoAbertura.src = slideUrl;
-                
+                if (videoAbertura.getAttribute('src') !== playableUrl) {
+                    videoAbertura.src = playableUrl;
+                }
+                videoAbertura.preload = 'auto';
+                 
                 // Use 'playing' event — fires only when the first frame is actually visible
                 let readyFired = false;
-                videoAbertura.oncanplay = () => {
+                const showAndPlay = () => {
                     videoAbertura.oncanplay = null;
-                    // INSTANT show — bypass .camada CSS transition
+                    videoAbertura.onloadeddata = null;
+                    try { videoAbertura.currentTime = 0; } catch (e) { }
                     videoAbertura.style.transition = 'none';
                     videoAbertura.classList.remove('invisivel');
                     videoAbertura.offsetHeight; // force reflow
                     videoAbertura.style.transition = '';
                     videoAbertura.play().catch(e => console.warn("Play blocked:", e));
                 };
-                
+                videoAbertura.onloadeddata = showAndPlay;
+                videoAbertura.oncanplay = showAndPlay;
+                 
                 videoAbertura.addEventListener('playing', function onPlaying() {
                     videoAbertura.removeEventListener('playing', onPlaying);
                     if (readyFired) return;
@@ -1014,7 +1090,7 @@
                     // Multiple slides — transition to next slide
                     videoAbertura.ontimeupdate = () => {
                         if (transitionTriggered) return;
-                        if (videoAbertura.duration > 0 && videoAbertura.currentTime >= videoAbertura.duration - 0.8) {
+                        if (videoAbertura.duration > 0 && videoAbertura.currentTime >= videoAbertura.duration - 0.65) {
                             transitionTriggered = true;
                             videoAbertura.ontimeupdate = null;
                             triggerTransition(index + 1);
@@ -1034,8 +1110,11 @@
                         irParaLoop();
                     };
                 }
-                
+                 
                 videoAbertura.load();
+                if (videoAbertura.readyState >= 3) {
+                    setTimeout(showAndPlay, 0);
+                }
             } else {
                 const img = imgAbertura;
                 img.onload = () => {
@@ -1044,7 +1123,7 @@
                     if (onReady) { onReady(); onReady = null; }
                     img.onload = null;
                 };
-                img.src = slideUrl;
+                img.src = playableUrl;
                 
                 // If image is cached, onload may not fire
                 if (img.complete) {
