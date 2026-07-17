@@ -1,0 +1,22 @@
+{
+  "instruction": "Gere um prompt para seedream para criar uma imagem de envelope",
+  "prompt": "",
+  "refImageFile": null,
+  "generatedCoverPath": "assets/cover.png",
+  "folhaInstruction": "Gere um prompt para seedream para criar uma imagem de de uma folha em branco com adornos em torno, sendo essa folha o objeto central e principal da imagem, ocupando quase a tela toda, mas ainda deixando espaço para visualizar o chão, o fundo e os elementos laterais",
+  "folhaPrompt": "",
+  "folhaRefImageFile": null,
+  "folhaModel": "desconhecido",
+  "generatedFolhaPath": "assets/folha.png",
+  "cartaoPrompt": "Gere um cartão na horizontal elegante nessa mesma atmosfera e mesmo tema (Elegante) e mesma paleta de cor (Lilás), escrito apenas Gabriela, idade 15 Anos.",
+  "cartaoRefImageFile": "assets/references/cartao_3eafcf864c6ea727.png",
+  "generatedCartaoPath": "assets/5b42011fccb90598a8147164a4490c33_1_1783015447_3876.png",
+  "aberturaInstruction": "Crie um prompt de geração de vídeo para essa imagem com a abertura do envelope e um brilho saindo de dentro, no final o brilho vai fazer a tela ficar toda em branco sólido ao aumentar o brilho.",
+  "aberturaPrompt": "The animation begins by focusing on an envelope sealed with a single wax seal. As soon as the wax seal physically detaches and falls to the ground, it is not replaced, duplicated, or regenerated at any point. The envelope remains permanently open after this moment, without any additional seal appearing.\nOnce the seal is removed, the envelope flap slowly lifts. From within, shimmering sparkles, glittering dust, and trails of radiant light emerge, spreading in a mesmerizing display to the surroundings, with magical beams of luminous particles curving around the envelope, passing in front of and behind it in a three-dimensional spiral. These particles originate only from inside the envelope and also from behind the envelope, increasing in density and brightness as they move.\nThe radiant light intensifies and expands outward, gradually filling the entire scene. No new physical objects are introduced during this transition. The intense glow of the beams and sparkles transforms into a solid, dazzling white screen in the final frame. The camera subtly and slowly zooms in.",
+  "aberturaSlide2Prompt": "Remove the envelope from the image completely, revealing only the beautiful background scene, keeping all other elements intact. The result should look natural without any envelope.",
+  "aberturaSlide3ImagePrompt": "",
+  "aberturaSlide3AnimPrompt": "",
+  "aberturaSlide4Prompt": "Remove the envelope from the image completely, revealing only the beautiful background scene, keeping all other elements intact. The result should look natural without any envelope.",
+  "refImageFiles": [],
+  "folhaRefImageFiles": []
+}
