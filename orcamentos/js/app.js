@@ -49,11 +49,7 @@ const state = {
 };
 
 const STORAGE_KEY = "susie_budget_state";
-const FIRST_ACCESS_KEY = "susie_budget_first_access_date";
 const PUBLIC_SITE_ORIGIN = "https://pedidos.mforge.com.br";
-const today = new Date().toISOString().slice(0, 10);
-if (!localStorage.getItem(FIRST_ACCESS_KEY)) localStorage.setItem(FIRST_ACCESS_KEY, today);
-const isFirstAccessDay = localStorage.getItem(FIRST_ACCESS_KEY) === today;
 
 const placeholders = {
   name: ["Luiz Fernando", "Samantha", "Kelly Vieira", "Lívia Maia", "Sarah Vieira"],
@@ -178,9 +174,9 @@ function positionNewMessage(row, preferStart = false) {
 
 function setProgress(number, label) {
   els.checkout.hidden = state.step !== "final";
-  els.progressBar.style.width = `${Math.round((number / 12) * 100)}%`;
+  els.progressBar.style.width = `${Math.round((number / 13) * 100)}%`;
   els.progressLabel.textContent = label;
-  els.progressNumber.textContent = `${number} de 12`;
+  els.progressNumber.textContent = `${number} de 13`;
   trackEvent("step_viewed", { progress: number, label });
 }
 
@@ -319,8 +315,9 @@ function calculateTotal() {
   if (c.gifts === "smart_list") total += 15;
   if (c.manual === "premium") total += 5;
   if (c.gallery === "include") total += 5;
-  if (c.saveTheDate === "simple" && !isFirstAccessDay) total += 15;
+  if (c.saveTheDate === "simple") total += 25;
   if (c.saveTheDate === "premium") total += 50;
+  if (c.reminder === "include") total += 25;
   state.total = total;
   els.total.textContent = `R$ ${total}`;
   els.total.classList.add("bump");
@@ -700,20 +697,26 @@ async function galleryStep() {
 async function saveDateStep() {
   state.step = "saveTheDate";
   setProgress(11, "Save The Date");
-  await susie(`${phaseTitle("Save The Date", "◫")}${isFirstAccessDay
-    ? "Agora uma opção especial ✨ Fechando o convite ainda hoje, você ganha o Save The Date Simples de brinde!"
-    : "Você também pode incluir um Save The Date para avisar os convidados antes do convite oficial."}
+  await susie(`${phaseTitle("Save The Date", "◫")}Você também pode incluir um Save The Date para avisar os convidados antes do convite oficial.
     ${assetStrip([assetImage("assets/orcamento/Exemplo Save The Date.jpg", "Exemplo de Save The Date")])}`);
   choices([
-    { label: isFirstAccessDay ? "Save The Date Simples — Brinde" : "Save The Date Simples <span class='choice-price'>+R$15</span>", action: () => chooseAndGo("saveTheDate", "simple", isFirstAccessDay ? "Save The Date Simples — Brinde" : "Save The Date Simples (+R$15)", notesStep) },
-    { label: "Save The Date Premium <span class='choice-price'>+R$50</span>", action: () => chooseAndGo("saveTheDate", "premium", "Save The Date Premium (+R$50)", notesStep) },
-    { label: "Não Quero", action: () => chooseAndGo("saveTheDate", "none", "Sem Save The Date", notesStep) }
+    { label: "Save The Date Simples <span class='choice-price'>+R$25</span>", action: () => chooseAndGo("saveTheDate", "simple", "Save The Date Simples (+R$25)", reminderStep) },
+    { label: "Save The Date Premium <span class='choice-price'>+R$50</span>", action: () => chooseAndGo("saveTheDate", "premium", "Save The Date Premium (+R$50)", reminderStep) },
+    { label: "Não Quero", action: () => chooseAndGo("saveTheDate", "none", "Sem Save The Date", reminderStep) }
   ]);
+}
+
+async function reminderStep() {
+  state.step = "reminder";
+  setProgress(12, "Lembrete");
+  await susie(`${phaseTitle("Lembrete", "♧")}Quer incluir um lembrete para enviar aos convidados alguns dias antes da festa? É um videozinho com música para relembrar todo mundo de um jeito bonito.
+    ${assetStrip([assetImage("assets/orcamento/Lembrete.jpg", "Exemplo de Lembrete")])}`);
+  yesNo("reminder", "Incluir Lembrete", 25, notesStep);
 }
 
 async function notesStep() {
   state.step = "notes";
-  setProgress(12, "Observações finais");
+  setProgress(13, "Observações finais");
   await susie(`${phaseTitle("Observações Finais", "✎")}Antes de fechar, quer me contar mais alguma observação importante sobre o convite? Pode ser uma ideia, preferência ou pedido especial.`);
   setInput(true, [], "Digite sua observação aqui");
   choices([{ label: "Não tenho observações", action: () => finishNotes("") }]);
@@ -762,9 +765,6 @@ function summaryChoice(key) {
   if (key === "rsvp" && state.choices.rsvp === "whatsapp" && state.rsvpPhone) {
     return `${value} · ${state.rsvpPhone}`;
   }
-  if (key === "saveTheDate" && state.choices.saveTheDate === "simple" && isFirstAccessDay) {
-    return "Save The Date Simples (Brinde)";
-  }
   return value;
 }
 
@@ -777,7 +777,8 @@ const summaryOptions = [
   ["manual", "Manual", "manual"],
   ["countdown", "Cronômetro", "countdown"],
   ["gallery", "Galeria", "gallery"],
-  ["saveTheDate", "Save The Date", "saveTheDate"]
+  ["saveTheDate", "Save The Date", "saveTheDate"],
+  ["reminder", "Lembrete", "reminder"]
 ];
 
 function isSummaryIncluded(key) {
@@ -795,7 +796,8 @@ function summaryAddition(key) {
     gifts: value === "premium" ? 5 : value === "smart_list" ? 15 : 0,
     manual: value === "premium" ? 5 : 0,
     gallery: value === "include" ? 5 : 0,
-    saveTheDate: value === "premium" ? 50 : value === "simple" && !isFirstAccessDay ? 15 : 0
+    saveTheDate: value === "premium" ? 50 : value === "simple" ? 25 : 0,
+    reminder: value === "include" ? 25 : 0
   };
   return prices[key] || 0;
 }
@@ -827,7 +829,7 @@ function summaryHtml() {
 
 async function finalStep() {
   state.step = "final";
-  setProgress(12, "Resumo final");
+  setProgress(13, "Resumo final");
   els.checkout.hidden = false;
   persist();
   trackEvent("budget_completed");
@@ -835,7 +837,7 @@ async function finalStep() {
   const editGroup = document.createElement("div");
   editGroup.className = "edit-grid";
   editGroup.innerHTML = `<h3>Outras opções</h3><p>Você também pode incluir:</p>`;
-  [["fa-envelope-open","Abertura","openingType","opening"],["fa-image","Foto","openingPhoto","openingPhoto"],["fa-music","Música","music","music"],["fa-user-check","Confirmação","rsvp","rsvp"],["fa-gift","Presentes","gifts","gifts"],["fa-book-open","Manual","manual","manual"],["fa-clock","Cronômetro","countdown","countdown"],["fa-images","Galeria","gallery","gallery"],["fa-heart","Save The Date","saveTheDate","saveTheDate"],["fa-pen","Observações","notes","notes"]].filter(([, , choiceKey]) => choiceKey === "notes" ? !state.notes : !isSummaryIncluded(choiceKey)).forEach(([icon, label, , key]) => {
+  [["fa-envelope-open","Abertura","openingType","opening"],["fa-image","Foto","openingPhoto","openingPhoto"],["fa-music","Música","music","music"],["fa-user-check","Confirmação","rsvp","rsvp"],["fa-gift","Presentes","gifts","gifts"],["fa-book-open","Manual","manual","manual"],["fa-clock","Cronômetro","countdown","countdown"],["fa-images","Galeria","gallery","gallery"],["fa-heart","Save The Date","saveTheDate","saveTheDate"],["fa-bell","Lembrete","reminder","reminder"],["fa-pen","Observações","notes","notes"]].filter(([, , choiceKey]) => choiceKey === "notes" ? !state.notes : !isSummaryIncluded(choiceKey)).forEach(([icon, label, , key]) => {
     editGroup.insertAdjacentHTML("beforeend", `<button type="button" data-edit="${key}"><i class="fa-solid ${icon}"></i>${label}</button>`);
   });
   if (editGroup.querySelector("button")) els.messages.appendChild(editGroup);
@@ -851,7 +853,7 @@ function editSection(key) {
       { label: "Sem Abertura", action: () => finishPreview("Sem Abertura") }
     ])); },
     openingPhoto: openingPhotoStep, music: musicStep, rsvp: rsvpStep, gifts: giftsStep, manual: manualStep,
-    countdown: countdownStep, gallery: galleryStep, saveTheDate: saveDateStep, notes: notesStep
+    countdown: countdownStep, gallery: galleryStep, saveTheDate: saveDateStep, reminder: reminderStep, notes: notesStep
   };
   state.editing = true;
   user(`Alterar: ${key}`);
@@ -879,7 +881,8 @@ function whatsappChoiceLines() {
     ["manual", "Manual do Convidado", { simple: "Manual Simples", premium: "Manual Premium", client: "Manual do Cliente" }],
     ["countdown", "Cronômetro", { include: "Sim" }],
     ["gallery", "Galeria de Fotos", { include: "Sim" }],
-    ["saveTheDate", "Save The Date", { simple: isFirstAccessDay ? "Simples — Brinde de primeiro acesso" : "Simples", premium: "Premium" }]
+    ["saveTheDate", "Save The Date", { simple: "Simples", premium: "Premium" }],
+    ["reminder", "Lembrete", { include: "Sim" }]
   ];
   const lines = specs.flatMap(([key, label, values]) => {
     const value = c[key];
@@ -1037,12 +1040,11 @@ async function startOrResume() {
     state.leadId ||= createLeadId();
     state.choices ||= {};
     delete state.choices.visualIdentity;
-    delete state.choices.reminder;
     delete state.choices.photoQrCode;
     delete state.choices.guestPlaylist;
     if (state.step === "identity") state.step = "opening";
     if (["name", "phone"].includes(state.step)) state.step = "model";
-    if (["reminder", "photoQrCode", "guestPlaylist"].includes(state.step)) state.step = "notes";
+    if (["photoQrCode", "guestPlaylist"].includes(state.step)) state.step = "notes";
     els.welcome.hidden = true;
     els.chat.hidden = false;
     calculateTotal();
@@ -1052,7 +1054,7 @@ async function startOrResume() {
       model: modelStep, modelBrief: modelStep, event: eventStep, opening: openingStep,
       openingPhoto: openingPhotoStep, music: musicStep, rsvp: rsvpStep, rsvpPhone: () => rsvpPhoneStep("Confirmação direto no WhatsApp"), gifts: giftsStep, giftDetails: () => giftDetailsStep(state.choices.gifts || "simple", choiceLabel(state.choices.gifts)),
       manual: manualStep, manualDetails: () => manualDetailsStep(state.choices.manual || "simple", choiceLabel(state.choices.manual)),
-      countdown: countdownStep, gallery: galleryStep, saveTheDate: saveDateStep, notes: notesStep, final: finalStep
+      countdown: countdownStep, gallery: galleryStep, saveTheDate: saveDateStep, reminder: reminderStep, notes: notesStep, final: finalStep
     };
     await (handlers[state.step] || modelStep)();
   } finally {
