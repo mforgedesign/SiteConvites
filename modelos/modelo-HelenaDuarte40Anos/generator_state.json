@@ -9,7 +9,7 @@
   "folhaInstruction": "Gere um prompt para seedream para criar uma imagem de de uma folha em branco com adornos em torno, sendo essa folha o objeto central e principal da imagem, ocupando quase a tela toda, mas ainda deixando espaço para visualizar o chão, o fundo e os elementos laterais",
   "folhaPrompt": "Create a blank premium vertical 9:16 invitation sheet matching a luxurious royal black-and-gold theme. Deep black textured background with a refined thin metallic-gold ornamental frame, delicate crown-inspired filigree and subtle arabesques placed around the edges, discreet golden particles and elegant soft light. Keep the central area clean, empty and highly legible for later typography. Sophisticated adult royal aesthetic, balanced symmetry, high-end editorial design. Absolutely no text, no letters, no numbers, no logos, no watermark, no people, no phone interface, no browser interface, and no envelope.",
   "folhaModel": "desconhecido",
-  "generatedFolhaPath": "assets/folha.jpg",
+  "generatedFolhaPath": "assets/folha.png",
   "cartaoPrompt": "Gere um cartão vertical 9:16 elegante, na mesma atmosfera, no tema (Realeza luxuosa, majestosa e sofisticada) e na paleta de cores (Preto com Dourado). Como identificação do evento, escreva apenas \"Aniversário Helena Duarte\". Escreva também a frase exata \"Clique para abrir o convite!\". Copie ambas literalmente, sem acrescentar idade, data, horário, endereço ou outros dizeres, e deixe-as visíveis, legíveis e integradas ao design.",
   "cartaoRefImageFile": "assets/references/cartao_5b22025bd6c9a9a2.png",
   "generatedCartaoPath": "assets/cartao_gen.jpg",

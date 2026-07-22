@@ -2,7 +2,7 @@ window.config = {
   "evento": {
     "tipo": "Aniversário",
     "nome": "Helena Duarte",
-    "idade": 40,
+    "idade": 15,
     "data": "",
     "hora": "",
     "endereco": ""
@@ -11,7 +11,7 @@ window.config = {
     "paletaCores": "Preto com Dourado",
     "tema": "Realeza luxuosa, majestosa e sofisticada",
     "musica": "",
-    "tipoAbertura": "curta",
+    "tipoAbertura": "",
     "particulasAbertura": true,
     "slug": "modelo-HelenaDuarte40Anos",
     "seo": {
@@ -34,7 +34,7 @@ window.config = {
       }
     ],
     "folhaVazia": "assets/folha_vazia.jpg",
-    "folhaPreenchida": "assets/folha.jpg",
+    "folhaPreenchida": "assets/folha.png",
     "musica": "",
     "fotos": [],
     "popupImagensPorBotao": {}
