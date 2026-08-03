@@ -1,0 +1,57 @@
+{
+  "agentAsset": {
+    "resourceKey": "asset:capa",
+    "role": "capa",
+    "path": "assets/capa_1768837170288.jpg",
+    "sha256": "410679bf33910024ef027d61f384dd04a585b6c321992886b8844cc63da92494",
+    "mime": "image/jpeg",
+    "width": 1080,
+    "height": 1920,
+    "prompt": null,
+    "model": null
+  },
+  "agentAssets": {
+    "button:btn_legacy_gifts": {
+      "resourceKey": "button:btn_legacy_gifts",
+      "role": "popup",
+      "path": "assets/convitenoiteestreladadaamandaketlhyn_presentes_sem_prata.png",
+      "sha256": "b555a9bb6bc47df2c8cd7883a0f184d158234b19beefa4b85ef0861007e30eeb",
+      "mime": "image/png",
+      "width": 941,
+      "height": 1672,
+      "prompt": null,
+      "model": null
+    },
+    "asset:capa": {
+      "resourceKey": "asset:capa",
+      "role": "capa",
+      "path": "assets/capa_1768837170288.jpg",
+      "sha256": "410679bf33910024ef027d61f384dd04a585b6c321992886b8844cc63da92494",
+      "mime": "image/jpeg",
+      "width": 1080,
+      "height": 1920,
+      "prompt": null,
+      "model": null
+    }
+  },
+  "generatedCoverPath": "assets/cover.jpg",
+  "refImageFiles": [],
+  "refImageFile": null,
+  "folhaRefImageFiles": [],
+  "folhaRefImageFile": null,
+  "instruction": "Gere um prompt para seedream para criar uma imagem de envelope",
+  "prompt": "",
+  "folhaInstruction": "Gere um prompt para seedream para criar uma imagem de de uma folha em branco com adornos em torno, sendo essa folha o objeto central e principal da imagem, ocupando quase a tela toda, mas ainda deixando espaço para visualizar o chão, o fundo e os elementos laterais",
+  "folhaPrompt": "",
+  "folhaModel": "desconhecido",
+  "generatedFolhaPath": "assets/folha.mp4",
+  "cartaoPrompt": "",
+  "cartaoRefImageFile": null,
+  "generatedCartaoPath": null,
+  "aberturaInstruction": "Crie um prompt de geração de vídeo para essa imagem com a abertura do envelope e um brilho saindo de dentro, no final o brilho vai fazer a tela ficar toda em branco sólido ao aumentar o brilho.",
+  "aberturaPrompt": "A animação começa focando em um envelope fechado com um único selo de cera. Assim que o selo de cera se desprende fisicamente e cai no chão, ele não é substituído, duplicado nem regenerado em momento algum. O envelope permanece permanentemente aberto após esse instante, sem que surja qualquer outro selo.\nUma vez removido o selo, a aba do envelope se levanta lentamente. De seu interior, emergem brilhos cintilantes, poeira brilhante e rastros de luz radiante, espalhando-se pelo ambiente em um espetáculo hipnotizante, com feixes mágicos de partículas luminosas que se curvam em torno do envelope, passando à sua frente e por trás em um movimento contínuo. Essas partículas originam-se apenas de dentro do envelope, aumentando em densidade e luminosidade à medida que se deslocam.\nA luz radiante se intensifica e se expande para fora, preenchendo gradualmente toda a cena. Nenhum novo objeto físico é introduzido durante essa transição. O brilho intenso dos feixes e das partículas transforma-se em uma tela branca sólida e deslumbrante no quadro final. A câmera aplica um zoom sutil e lento.",
+  "aberturaSlide2Prompt": "Remove the envelope from the image completely, revealing only the beautiful background scene, keeping all other elements intact. The result should look natural without any envelope.",
+  "aberturaSlide3ImagePrompt": "",
+  "aberturaSlide3AnimPrompt": "",
+  "aberturaSlide4Prompt": "Remove the envelope from the image completely, revealing only the beautiful background scene, keeping all other elements intact. The result should look natural without any envelope."
+}
