@@ -1,0 +1,40 @@
+{
+  "schemaVersion": "builder.publication-verification/v1",
+  "slug": "Julia18Anos",
+  "provider": "cloudflare-r2",
+  "state": "served_verified",
+  "verified": true,
+  "expectedRevision": "sha256:d01b1a1f03800b64cc8eb883b4fef7a78f14c5200423d3311597fdf7e4dfc351",
+  "currentRevision": "sha256:d01b1a1f03800b64cc8eb883b4fef7a78f14c5200423d3311597fdf7e4dfc351",
+  "releaseVersion": "v20261014t003201265z-d01b1a1f0380",
+  "deployCommit": null,
+  "checks": {
+    "builderRevision": true,
+    "releaseIdentity": true,
+    "servedIndexDigest": true,
+    "httpStatus": true
+  },
+  "observation": {
+    "attempt": 1,
+    "status": 200,
+    "finalUrl": "https://julia18anos.mforge.online/?__builder_verify=1791937927636-1",
+    "bytes": 112050,
+    "verifiedBytes": 111683,
+    "expectedIndexSha256": "sha256:c3495f9e279060d09b44a462dd7519e1dc9fd67ac5b5922b55a268ed26e8883a",
+    "servedIndexSha256": "sha256:c3495f9e279060d09b44a462dd7519e1dc9fd67ac5b5922b55a268ed26e8883a",
+    "rawServedIndexSha256": "sha256:2e3b2af0ac0c1f77daf2ea779befba94e8b06daac822902bddd6e36b7339e8d7",
+    "contentSha256Header": "sha256:c3495f9e279060d09b44a462dd7519e1dc9fd67ac5b5922b55a268ed26e8883a",
+    "contentSha256HeaderMatches": true,
+    "edgeTransformations": [
+      {
+        "id": "cloudflare-web-analytics-beacon",
+        "count": 1,
+        "removedBytes": 367
+      }
+    ],
+    "servedRelease": "v20261014t003201265z-d01b1a1f0380",
+    "etag": null,
+    "cacheStatus": null
+  },
+  "verifiedAt": "2026-10-14T00:32:08.422Z"
+}
