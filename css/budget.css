@@ -308,6 +308,10 @@
   gap: var(--space-1);
 }
 
+.form-group[hidden] {
+  display: none;
+}
+
 .form-group.col-full {
   grid-column: 1 / -1;
 }

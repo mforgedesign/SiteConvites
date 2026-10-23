@@ -368,6 +368,30 @@ function syncOpeningLock() {
   }
 }
 
+function eventHasAge(type) {
+  return type === "Aniversário" || type === "15 anos";
+}
+
+// Retorna { message, focusId } do primeiro campo obrigatório vazio da etapa, ou null.
+function requiredFieldError(stepIdx) {
+  if (stepIdx === 1 && appState.modelMode === "new" && !appState.modelBrief) {
+    return { message: "Conte o tema e as cores do seu modelo para continuar.", focusId: "input-model-brief", errorId: "model-step-error" };
+  }
+  if (stepIdx === 2) {
+    const e = appState.event;
+    const locked = appState.modelMode === "selected" && Boolean(appState.selectedModel?.slug) && !appState.choices.modelCustomization;
+    const checks = [
+      [!e.eventName, "Informe o nome principal / homenageado.", "evt-name"],
+      [eventHasAge(e.type) && !e.age, "Informe a idade.", "evt-age"],
+      [!locked && !e.theme, "Informe o tema.", "evt-theme"],
+      [!locked && !e.palette, "Informe a paleta de cores.", "evt-pal"]
+    ];
+    const failed = checks.find(([missing]) => missing);
+    if (failed) return { message: failed[1], focusId: failed[2], errorId: "event-step-error" };
+  }
+  return null;
+}
+
 function stepAfter(index) {
   const next = index + 1;
   return next === OPENING_STEP && isShortOnlyModel() ? next + 1 : next;
@@ -689,8 +713,8 @@ function getStepContentHtml(stepIdx) {
         <p id="model-step-error" class="form-error" role="alert" hidden></p>
         ${isNew ? `
           <div style="margin-top: 16px;">
-            <label class="form-label">Briefing do modelo novo:</label>
-            <input type="text" id="input-model-brief" class="form-input" placeholder="Ex.: Tema Floresta Mágica em tons esmeralda e ouro..." value="${escapeHtml(appState.modelBrief || "")}">
+            <label class="form-label" for="input-model-brief">Tema e Cores (obrigatório)</label>
+            <input type="text" id="input-model-brief" class="form-input" required aria-required="true" placeholder="Ex.: Tema Floresta Mágica em tons esmeralda e ouro..." value="${escapeHtml(appState.modelBrief || "")}">
           </div>
         ` : ""}
       `;
@@ -720,12 +744,12 @@ function getStepContentHtml(stepIdx) {
             </select>
           </div>
           <div class="form-group">
-            <label class="form-label" for="evt-name">Nome Principal / Homenageado</label>
-            <input id="evt-name" type="text" class="form-input" placeholder="Ex.: Lívia Maia" value="${escapeHtml(e.eventName)}">
+            <label class="form-label" for="evt-name">Nome Principal / Homenageado *</label>
+            <input id="evt-name" type="text" class="form-input" required aria-required="true" placeholder="Ex.: Lívia Maia" value="${escapeHtml(e.eventName)}">
           </div>
-          <div class="form-group">
-            <label class="form-label" for="evt-age">Idade (se aplicável)</label>
-            <input id="evt-age" type="number" min="0" class="form-input" placeholder="Ex.: 15" value="${escapeHtml(e.age)}">
+          <div class="form-group" id="evt-age-group" ${eventHasAge(e.type) ? "" : "hidden"}>
+            <label class="form-label" for="evt-age">Idade *</label>
+            <input id="evt-age" type="number" min="0" class="form-input" required aria-required="true" placeholder="Ex.: 15" value="${escapeHtml(e.age)}">
           </div>
           <div class="form-group">
             <label class="form-label" for="evt-date">Data do Evento</label>
@@ -750,15 +774,16 @@ function getStepContentHtml(stepIdx) {
             </label>
           </div>` : ""}
           <div class="form-group">
-            <label class="form-label" for="evt-theme">Tema${themeFieldsLocked ? lockedBadgeHtml : ""}</label>
+            <label class="form-label" for="evt-theme">Tema${themeFieldsLocked ? lockedBadgeHtml : " *"}</label>
             <input id="evt-theme" type="text" class="form-input" placeholder="Ex.: Jardim Encantado" value="${escapeHtml(e.theme)}" ${themeFieldsLocked ? "disabled aria-disabled=\"true\"" : ""}>
           </div>
           <div class="form-group">
-            <label class="form-label" for="evt-pal">Paleta de Cores${themeFieldsLocked ? lockedBadgeHtml : ""}</label>
+            <label class="form-label" for="evt-pal">Paleta de Cores${themeFieldsLocked ? lockedBadgeHtml : " *"}</label>
             <input id="evt-pal" type="text" class="form-input" placeholder="Ex.: Rosé, Dourado e Branco" value="${escapeHtml(e.palette)}" ${themeFieldsLocked ? "disabled aria-disabled=\"true\"" : ""}>
           </div>
           ${modelDetailsHelp}
         </div>
+        <p id="event-step-error" class="form-error" role="alert" hidden></p>
       `;
     }
 
@@ -2059,6 +2084,16 @@ function attachStepHandlers(stepIdx) {
       document.querySelector("[data-model-mode='new']")?.focus();
       return;
     }
+    const missing = requiredFieldError(stepIdx);
+    if (missing) {
+      const error = document.getElementById(missing.errorId);
+      if (error) {
+        error.textContent = missing.message;
+        error.hidden = false;
+      }
+      document.getElementById(missing.focusId)?.focus();
+      return;
+    }
     if (stepIdx === 3 && !appState.openingChoiceConfirmed) {
       const error = document.getElementById("opening-step-error");
       if (error) {
@@ -2131,7 +2166,17 @@ function attachStepHandlers(stepIdx) {
       saveDraft();
     });
   } else if (stepIdx === 2) {
-    const themeCustomization = document.getElementById("chk-event-theme-custom");
+    const hideEventError = () => { const error = document.getElementById("event-step-error"); if (error) error.hidden = true; };
+    document.getElementById("step-body-content")?.addEventListener("input", hideEventError);
+    document.getElementById("evt-type")?.addEventListener("change", (event) => {
+      hideEventError();
+      const group = document.getElementById("evt-age-group");
+      const ageInput = document.getElementById("evt-age");
+      const hasAge = eventHasAge(event.target.value);
+      if (group) group.hidden = !hasAge;
+      if (ageInput && !hasAge) ageInput.value = "";
+    });
+    const themeCustomization =document.getElementById("chk-event-theme-custom");
     themeCustomization?.addEventListener("change", (event) => {
       appState.choices.modelCustomization = event.target.checked;
       if (event.target.checked) syncSelectedModelThemeFields();
@@ -2402,7 +2447,7 @@ function saveCurrentStepData(stepIdx) {
   } else if (stepIdx === 2) {
     appState.event.type = document.getElementById("evt-type")?.value || "Aniversário";
     appState.event.eventName = document.getElementById("evt-name")?.value.trim() || "";
-    appState.event.age = document.getElementById("evt-age")?.value.trim() || "";
+    appState.event.age = eventHasAge(appState.event.type) ? document.getElementById("evt-age")?.value.trim() || "" : "";
     appState.event.date = document.getElementById("evt-date")?.value || "";
     appState.event.time = document.getElementById("evt-time")?.value || "";
     appState.event.endTime = document.getElementById("evt-endtime")?.value || "";
