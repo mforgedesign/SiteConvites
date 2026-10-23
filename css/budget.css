@@ -2339,3 +2339,7 @@
   .mobile-reassure { display: flex; }
   .step-actions { margin-bottom: 96px; }
 }
+
+.notice-stamp svg {
+  display: block;
+}

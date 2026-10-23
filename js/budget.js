@@ -53,7 +53,6 @@ const INITIAL_STATE = {
   selectedModel: null,
   modelMode: "none", // 'selected' | 'new' | 'none'
   modelCustomization: "",
-  modelBrief: "",
   event: {
     type: "Aniversário",
     eventName: "",
@@ -374,8 +373,9 @@ function eventHasAge(type) {
 
 // Retorna { message, focusId } do primeiro campo obrigatório vazio da etapa, ou null.
 function requiredFieldError(stepIdx) {
-  if (stepIdx === 1 && appState.modelMode === "new" && !appState.modelBrief) {
-    return { message: "Conte o tema e as cores do seu modelo para continuar.", focusId: "input-model-brief", errorId: "model-step-error" };
+  if (stepIdx === 1 && appState.modelMode === "new") {
+    if (!appState.event.theme) return { message: "Informe o tema do seu modelo para continuar.", focusId: "input-model-theme", errorId: "model-step-error" };
+    if (!appState.event.palette) return { message: "Informe as cores do seu modelo para continuar.", focusId: "input-model-palette", errorId: "model-step-error" };
   }
   if (stepIdx === 2) {
     const e = appState.event;
@@ -712,9 +712,15 @@ function getStepContentHtml(stepIdx) {
 
         <p id="model-step-error" class="form-error" role="alert" hidden></p>
         ${isNew ? `
-          <div style="margin-top: 16px;">
-            <label class="form-label" for="input-model-brief">Tema e Cores (obrigatório)</label>
-            <input type="text" id="input-model-brief" class="form-input" required aria-required="true" placeholder="Ex.: Tema Floresta Mágica em tons esmeralda e ouro..." value="${escapeHtml(appState.modelBrief || "")}">
+          <div class="form-grid" style="margin-top: 16px;">
+            <div class="form-group">
+              <label class="form-label" for="input-model-theme">Tema *</label>
+              <input type="text" id="input-model-theme" class="form-input" required aria-required="true" placeholder="Ex.: Floresta Mágica" value="${escapeHtml(appState.event.theme || "")}">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="input-model-palette">Cores *</label>
+              <input type="text" id="input-model-palette" class="form-input" required aria-required="true" placeholder="Ex.: Esmeralda e Dourado" value="${escapeHtml(appState.event.palette || "")}">
+            </div>
           </div>
         ` : ""}
       `;
@@ -2140,13 +2146,16 @@ function attachStepHandlers(stepIdx) {
       card.addEventListener("click", event => {
         if (isNestedOptionControl(event)) return;
           if (card.dataset.modelMode === "selected" && !appState.selectedModel) return;
+        const wasNew = appState.modelMode === "new";
         appState.modelMode = card.dataset.modelMode;
         if (appState.modelMode === "new") {
           appState.selectedModel = null;
           appState.choices.modelCustomization = false;
           appState.modelCustomization = "";
-          appState.event.theme = "";
-          appState.event.palette = "";
+          if (!wasNew) {
+            appState.event.theme = "";
+            appState.event.palette = "";
+          }
           if (appState.choices.music?.mode === "model_music") appState.choices.music = { mode: "none", value: "" };
         } else {
           syncSelectedModelThemeFields();
@@ -2442,8 +2451,10 @@ function saveCurrentStepData(stepIdx) {
   if (stepIdx === 1) {
     const custInput = document.getElementById("input-model-custom");
     if (custInput) appState.modelCustomization = custInput.value.trim();
-    const briefInput = document.getElementById("input-model-brief");
-    if (briefInput) appState.modelBrief = briefInput.value.trim();
+    const themeInput = document.getElementById("input-model-theme");
+    if (themeInput) appState.event.theme = themeInput.value.trim();
+    const paletteInput = document.getElementById("input-model-palette");
+    if (paletteInput) appState.event.palette = paletteInput.value.trim();
   } else if (stepIdx === 2) {
     appState.event.type = document.getElementById("evt-type")?.value || "Aniversário";
     appState.event.eventName = document.getElementById("evt-name")?.value.trim() || "";
@@ -2531,8 +2542,9 @@ function generateSummaryText() {
     `----------------------------------------`,
     `Modelo: ${mName}`,
     appState.modelMode === "selected" && appState.choices.modelCustomization && appState.modelCustomization ? `Personalização: ${appState.modelCustomization}` : null,
-    appState.modelMode === "new" && appState.modelBrief ? `Briefing novo: ${appState.modelBrief}` : null,
     `Evento: ${appState.event.type} - ${appState.event.eventName || "A definir"}`,
+    appState.event.theme ? `Tema: ${appState.event.theme}` : null,
+    appState.event.palette ? `Paleta: ${appState.event.palette}` : null,
     appState.event.date ? `Data: ${appState.event.date} (${appState.event.time || "horário a definir"})` : null,
     appState.event.location ? `Local: ${appState.event.location}` : null,
     `Abertura: ${getOpeningChoiceLabel()}`,
@@ -2580,7 +2592,6 @@ function generateWhatsAppMessage() {
     `- Escolha: ${mName}`,
     modelUrl ? `- Demonstração: ${modelUrl}` : null,
     appState.modelMode === "selected" && appState.choices.modelCustomization && appState.modelCustomization ? `- Personalização solicitada: ${appState.modelCustomization}` : null,
-    appState.modelMode === "new" && appState.modelBrief ? `- Briefing exclusivo: ${appState.modelBrief}` : null,
     "",
     "🎉 *DADOS DO EVENTO*",
     `- Tipo: ${appState.event.type}`,
