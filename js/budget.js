@@ -83,6 +83,7 @@ const INITIAL_STATE = {
   manualDetails: "",
   rsvpPhone: "",
   notes: "",
+  doubts: [], // ids das etapas em que o cliente marcou "Tenho dúvida"
   // PII temporária NÃO salva no rascunho
   contact: {
     name: "",
@@ -328,20 +329,20 @@ window.addEventListener("message", async event => {
 });
 
 const STEP_DEFINITIONS = [
-  { index: 1, id: "model", title: "Escolha do Modelo", subtitle: "Defina se usará um modelo da coleção ou criará um exclusivo" },
-  { index: 2, id: "event", title: "Dados do Evento", subtitle: "Informações essenciais como data, hora, tipo e local" },
-  { index: 3, id: "opening", title: "Abertura Animada", subtitle: "Como o convite é apresentado na tela do convidado" },
-  { index: 4, id: "openingPhoto", title: "Foto na Abertura", subtitle: "Destaque emocional na entrada do convite" },
-  { index: 5, id: "music", title: "Música de Fundo", subtitle: "Trilha sonora para acompanhar a visualização" },
-  { index: 6, id: "rsvp", title: "Confirmação de Presença", subtitle: "Organize as confirmações dos seus convidados" },
-  { index: 7, id: "gifts", title: "Sugestões de Presentes", subtitle: "Exiba listas, cotas Pix ou ideias de presentes" },
-  { index: 8, id: "manual", title: "Manual do Convidado", subtitle: "Escolha como apresentar as orientações do seu evento" },
-  { index: 9, id: "countdown", title: "Contagem Regressiva", subtitle: "Cronômetro ao vivo até o momento do evento" },
-  { index: 10, id: "gallery", title: "Galeria de Fotos", subtitle: "Compartilhe momentos da festa no convite" },
-  { index: 11, id: "sharedPhotos", title: "Álbum e Filtro com QR Code", subtitle: "Escolha uma ou as duas opções para as fotos da festa" },
-  { index: 12, id: "saveTheDate", title: "Save The Date", subtitle: "Aviso antecipado em vídeo para reserva de data" },
-  { index: 13, id: "reminder", title: "Lembrete Animado", subtitle: "Aviso especial para enviar dias antes da festa" },
-  { index: 14, id: "review", title: "Revisão e Orçamento", subtitle: "Revise o orçamento e conclua pelo WhatsApp" }
+  { index: 1, id: "model", title: "Escolha do Modelo", subtitle: "Defina se usará um modelo da coleção ou criará um exclusivo", hint: "Pode trocar de modelo depois, se mudar de ideia." },
+  { index: 2, id: "event", title: "Dados do Evento", subtitle: "Informações essenciais como data, hora, tipo e local", hint: "Dúvida em algum dado? A gente acerta com você no WhatsApp." },
+  { index: 3, id: "opening", title: "Abertura Animada", subtitle: "Como o convite é apresentado na tela do convidado", hint: "Não sabe qual escolher? Fique com a que gostar mais." },
+  { index: 4, id: "openingPhoto", title: "Foto na Abertura", subtitle: "Destaque emocional na entrada do convite", hint: "Não precisa ter a foto agora. A gente combina com você." },
+  { index: 5, id: "music", title: "Música de Fundo", subtitle: "Trilha sonora para acompanhar a visualização", hint: "Ainda não decidiu a música? Tudo bem, a gente ajuda a escolher." },
+  { index: 6, id: "rsvp", title: "Confirmação de Presença", subtitle: "Organize as confirmações dos seus convidados", hint: "Não entendeu como funciona? Tudo bem, a gente explica no whatsapp." },
+  { index: 7, id: "gifts", title: "Sugestões de Presentes", subtitle: "Exiba listas, cotas Pix ou ideias de presentes", hint: "Não entendeu como funciona? Tudo bem, a gente explica no whatsapp." },
+  { index: 8, id: "manual", title: "Manual do Convidado", subtitle: "Escolha como apresentar as orientações do seu evento", hint: "Não entendeu como funciona? Tudo bem, a gente explica no whatsapp." },
+  { index: 9, id: "countdown", title: "Contagem Regressiva", subtitle: "Cronômetro ao vivo até o momento do evento", hint: "Na dúvida se vale a pena? A gente te orienta no WhatsApp." },
+  { index: 10, id: "gallery", title: "Galeria de Fotos", subtitle: "Compartilhe momentos da festa no convite", hint: "Ainda não tem as fotos? Você envia depois." },
+  { index: 11, id: "sharedPhotos", title: "Álbum e Filtro com QR Code", subtitle: "Escolha uma ou as duas opções para as fotos da festa", hint: "Pode deixar para decidir depois de ver como fica." },
+  { index: 12, id: "saveTheDate", title: "Save The Date", subtitle: "Aviso antecipado em vídeo para reserva de data", hint: "Não sabe qual combina mais? A gente mostra a diferença no WhatsApp." },
+  { index: 13, id: "reminder", title: "Lembrete Animado", subtitle: "Aviso especial para enviar dias antes da festa", hint: "Pode decidir junto com a gente, sem compromisso." },
+  { index: 14, id: "review", title: "Revisão e Orçamento", subtitle: "Revise o orçamento e conclua pelo WhatsApp", hint: "Enviar não fecha o pedido: a gente conversa antes de qualquer pagamento." }
 ];
 const STEP_COUNT = STEP_DEFINITIONS.length;
 const OPENING_STEP = 3;
@@ -413,6 +414,8 @@ function loadDraft() {
         ? savedChoices.musicMode
         : INITIAL_STATE.choices.music.mode;
       appState.choices.music = { mode: musicMode, value: "" };
+      const knownStepIds = STEP_DEFINITIONS.map(step => step.id);
+      appState.doubts = Array.isArray(parsed.doubts) ? parsed.doubts.filter(id => knownStepIds.includes(id)) : [];
       if (Number(parsed.version) !== 4) saveDraft();
     }
   } catch (err) {
@@ -436,6 +439,7 @@ function saveDraft() {
       } : null,
       modelMode: appState.modelMode,
       eventType: appState.event.type,
+      doubts: appState.doubts,
       choices: {
         ...Object.fromEntries(Object.keys(ALLOWED_CHOICES).map(key => [key, appState.choices[key]])),
         musicMode: appState.choices.music?.mode || "none"
@@ -521,6 +525,52 @@ function updatePriceDisplays() {
   if (mobileTotalEl) mobileTotalEl.textContent = formatBudgetTotal(total);
 }
 
+// Tranquilidade: sem pressa, nada é definitivo, atendimento segue no WhatsApp
+function reassuranceHtml() {
+  return `${whatsappIconSvg()}<span>Sem pressa. Nada aqui é definitivo: você ajusta tudo com a gente no WhatsApp antes de fechar.</span>`;
+}
+
+function welcomeHtml() {
+  return `
+    <ul class="welcome-points" aria-label="Como funciona o orçamento">
+      <li><strong>Sem pressa.</strong> Escolha com calma e volte quando quiser.</li>
+      <li><strong>Nada é definitivo.</strong> Tudo o que você marcar aqui pode mudar depois.</li>
+      <li><strong>A gente atende você pelo WhatsApp.</strong> Tire todas as dúvidas antes de fechar o pedido.</li>
+    </ul>`;
+}
+
+function doubtToggleHtml(def) {
+  const active = appState.doubts.includes(def.id);
+  return `
+    <div class="doubt-row">
+      <button type="button" class="doubt-toggle ${active ? "active" : ""}" id="btn-doubt" aria-pressed="${active}">
+        <span class="doubt-mark" aria-hidden="true">${active ? "✓" : "?"}</span>
+        <span id="doubt-label">${active ? "Anotado: vamos conversar sobre isso" : "Tenho dúvida nesta etapa"}</span>
+      </button>
+    </div>`;
+}
+
+function attachDoubtToggle(def) {
+  const button = document.getElementById("btn-doubt");
+  if (!button) return;
+  button.addEventListener("click", () => {
+    const active = !appState.doubts.includes(def.id);
+    appState.doubts = active ? [...appState.doubts, def.id] : appState.doubts.filter(id => id !== def.id);
+    button.classList.toggle("active", active);
+    button.setAttribute("aria-pressed", String(active));
+    button.querySelector(".doubt-mark").textContent = active ? "✓" : "?";
+    document.getElementById("doubt-label").textContent = active ? "Anotado: vamos conversar sobre isso" : "Tenho dúvida nesta etapa";
+    saveDraft();
+  });
+}
+
+function doubtsLine() {
+  const titles = STEP_DEFINITIONS
+    .filter(step => appState.doubts.includes(step.id))
+    .map(step => step.title);
+  return titles.length ? titles.join(", ") : null;
+}
+
 // Renderizar Etapa Atual
 function renderStep() {
   // Qualquer troca de etapa encerra o dialog e toda midia/camera ativa.
@@ -545,6 +595,7 @@ function renderStep() {
 
   let stepHtml = `
     <div class="step-card" role="region" aria-labelledby="step-heading">
+      <p class="reassure-strip">${reassuranceHtml()}</p>
       <div class="step-header">
         <div class="step-indicator">
           <span class="step-tag">Etapa ${visibleIdx} de ${visibleCount}</span>
@@ -552,13 +603,16 @@ function renderStep() {
         </div>
         <h2 id="step-heading" class="step-title" tabindex="-1">${def.title}</h2>
         <p class="step-description">${def.subtitle}</p>
+        ${def.hint ? `<p class="step-hint">${def.hint}</p>` : ""}
         <div class="progress-track" aria-hidden="true">
           <div class="progress-fill" style="width: ${progressPercent}%;"></div>
         </div>
       </div>
+      ${stepIdx === 1 ? welcomeHtml() : ""}
       <div class="step-body" id="step-body-content">
         ${getStepContentHtml(stepIdx)}
       </div>
+      ${stepIdx < STEP_COUNT ? doubtToggleHtml(def) : ""}
       <div class="step-actions">
         <div class="step-actions-left">
           ${stepIdx === STEP_COUNT
@@ -580,6 +634,7 @@ function renderStep() {
   container.innerHTML = stepHtml;
   updatePriceDisplays();
   attachStepHandlers(stepIdx);
+  attachDoubtToggle(def);
   window.scrollTo({ top: container.offsetTop - 80, behavior: "smooth" });
 
   const heading = document.getElementById("step-heading");
@@ -1109,6 +1164,7 @@ function getStepContentHtml(stepIdx) {
 
         <div style="margin-top: 16px;">
           <label class="form-label" for="notes-input">Observações adicionais para a equipe (opcional):</label>
+          <p class="step-hint step-hint-inline">Escreva do seu jeito. A gente organiza para você.</p>
           <textarea id="notes-input" class="form-textarea" placeholder="Algum detalhe especial ou dúvida que você queira registrar...">${escapeHtml(appState.notes || "")}</textarea>
         </div>
       `;
@@ -1241,13 +1297,13 @@ function getStepContentHtml(stepIdx) {
           </div>
 
           <div class="whatsapp-intent-note">
-            <h4>Conclua seu orçamento pelo WhatsApp!</h4>
-            <p>Clique no botão abaixo, para tirar suas dúvidas, acertar detalhes e só depois realizar o pagamento.</p>
+            <h4>Enviar não fecha o pedido</h4>
+            <p>Ao continuar, abrimos uma conversa no WhatsApp com o seu resumo. Lá a gente tira todas as dúvidas, ajusta o que você quiser e só depois combina o pagamento.</p>
           </div>
 
           <div style="display: flex; gap: 12px; flex-wrap: wrap; margin-top: 16px;">
             <button type="button" class="btn btn-primary btn-whatsapp-cta" id="btn-open-whatsapp" style="flex: 2; min-width: 220px; font-size: 1.05rem;">
-              ${whatsappIconSvg()}<span>Continuar no WhatsApp</span>
+              ${whatsappIconSvg()}<span>Continuar atendimento no WhatsApp</span>
             </button>
             <button type="button" class="btn btn-secondary" id="btn-copy-summary" style="flex: 1; min-width: 140px;">
               Copiar Resumo
@@ -2023,21 +2079,24 @@ function attachStepHandlers(stepIdx) {
   const mobileNext = document.getElementById("mobile-step-next");
   if (mobileNext) {
     if (stepIdx === STEP_COUNT) {
-      mobileNext.innerHTML = `${whatsappIconSvg()}<span>Continuar no WhatsApp</span>`;
+      mobileNext.innerHTML = `${whatsappIconSvg()}<span>Continuar atendimento</span>`;
+      mobileNext.setAttribute("aria-label", "Continuar atendimento no WhatsApp");
       mobileNext.classList.add("btn-whatsapp-cta");
     } else {
       mobileNext.textContent = "Próximo";
+      mobileNext.removeAttribute("aria-label");
       mobileNext.classList.remove("btn-whatsapp-cta");
     }
-    mobileNext.addEventListener("click", () => {
+    // onclick (não addEventListener): o botão da barra é fixo e sobrevive às etapas; senão os cliques se acumulam.
+    mobileNext.onclick = () => {
       if (stepIdx === STEP_COUNT) document.getElementById("btn-open-whatsapp")?.click();
       else document.getElementById("btn-step-next")?.click();
-    });
+    };
   }
   const mobileSummary = document.getElementById("mobile-summary-final");
   if (mobileSummary) {
     mobileSummary.hidden = !appState.hasVisitedFinalReview || stepIdx >= STEP_COUNT;
-    mobileSummary.addEventListener("click", () => document.getElementById("btn-summary-final")?.click());
+    mobileSummary.onclick = () => document.getElementById("btn-summary-final")?.click();
   }
 
   // Handlers Específicos
@@ -2445,6 +2504,7 @@ function generateSummaryText() {
     appState.choices.saveTheDate !== 'none' ? `Save the Date: ${appState.choices.saveTheDate}` : null,
     appState.choices.reminder === 'include' ? `Lembrete: Sim` : null,
     appState.notes ? `Observações: ${appState.notes}` : null,
+    doubtsLine() ? `Dúvidas em: ${doubtsLine()}` : null,
     `----------------------------------------`,
     `VALOR TOTAL: ${formatBudgetTotal(total)}`,
     `Prazo de entrega: até ${DELIVERY_DAYS} dias úteis após o pagamento do sinal de R$${DEPOSIT_AMOUNT}.`
@@ -2502,6 +2562,7 @@ function generateWhatsAppMessage() {
     giftDetailsEnabled && appState.giftDetails ? `\n🎁 *DETALHES DOS PRESENTES:*\n${appState.giftDetails}` : null,
     manualDetailsEnabled && appState.manualDetails ? `\n📖 *MANUAL DO CONVIDADO:*\n${appState.manualDetails}` : null,
     appState.notes ? `\n📝 *OBSERVAÇÕES:*\n${appState.notes}` : null,
+    doubtsLine() ? `\n❓ *Dúvidas em:* ${doubtsLine()}` : null,
     "",
     `💰 *VALOR TOTAL:* ${total === null ? formatBudgetTotal(total) : `R$${total}`}`,
     "",
@@ -2515,6 +2576,8 @@ function generateWhatsAppMessage() {
 }
 
 // Inicialização
+const mobileReassure = document.getElementById("mobile-reassure");
+if (mobileReassure) mobileReassure.innerHTML = reassuranceHtml();
 loadDraft();
 initModelFromQuery();
 renderStep();

@@ -2221,3 +2221,117 @@
 
 .notice-dialog [hidden] { display: none !important; }
 .notice-actions .btn { min-width: 128px; }
+
+/* ==========================================================================
+   Tranquilidade: sem pressa, nada definitivo, atendimento pelo WhatsApp
+   ========================================================================== */
+.reassure-strip,
+.mobile-reassure {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  font-size: 0.84rem;
+  line-height: 1.35;
+  color: var(--color-success);
+}
+
+.reassure-strip .whatsapp-mark,
+.mobile-reassure .whatsapp-mark {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 auto;
+}
+
+.reassure-strip {
+  padding: 8px 12px;
+  margin-bottom: var(--space-4);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-sm);
+  background: var(--color-paper);
+}
+
+.mobile-reassure {
+  display: none;
+  max-width: var(--max-content);
+  margin: 0 auto 6px;
+  font-size: 0.72rem;
+}
+
+.step-hint {
+  margin-top: var(--space-2);
+  font-size: 0.92rem;
+  font-style: italic;
+  color: var(--color-wine-dark);
+  line-height: 1.45;
+}
+
+.step-hint-inline {
+  margin: 2px 0 8px;
+  font-size: 0.85rem;
+}
+
+.welcome-points {
+  list-style: none;
+  display: grid;
+  gap: 8px;
+  margin: 0 0 var(--space-4);
+  padding: var(--space-3) var(--space-4);
+  border-left: 3px solid var(--color-brass);
+  border-radius: var(--radius-sm);
+  background: var(--color-paper);
+  font-size: 0.92rem;
+  line-height: 1.45;
+  color: var(--color-ink);
+}
+
+.doubt-row {
+  display: flex;
+  justify-content: flex-start;
+  margin: var(--space-4) 0 0;
+}
+
+.doubt-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 36px;
+  padding: 6px 12px;
+  border: 1px dashed var(--color-muted);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--color-muted);
+  font: inherit;
+  font-size: 0.84rem;
+  cursor: pointer;
+}
+
+.doubt-toggle:hover,
+.doubt-toggle:focus-visible {
+  border-color: var(--color-wine);
+  color: var(--color-wine-dark);
+}
+
+.doubt-toggle.active {
+  border-style: solid;
+  border-color: var(--color-success);
+  color: var(--color-success);
+  background: var(--color-paper);
+}
+
+.doubt-mark {
+  display: inline-grid;
+  place-items: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1px solid currentColor;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+@media (max-width: 900px) {
+  .reassure-strip { display: none; }
+  .mobile-reassure { display: flex; }
+  .step-actions { margin-bottom: 96px; }
+}
