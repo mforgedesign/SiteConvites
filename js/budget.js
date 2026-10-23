@@ -605,7 +605,7 @@ function getStepContentHtml(stepIdx) {
             ${model && getSelectedModelCoverUrl(model) ? `<figure class="selected-model-cover">
               <img src="${getSelectedModelCoverUrl(model)}" alt="Capa do convite ${escapeHtml(model.name || model.slug)}" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.closest('figure').hidden = true">
             </figure>` : ""}
-            <p class="option-desc">${model ? `Selecionado: <strong>${escapeHtml(model.name || model.slug)}</strong>` : "Escolha um dos 145 modelos do nosso catálogo."}</p>
+            <p class="option-desc">${model ? `Selecionado: <strong>${escapeHtml(model.name || model.slug)}</strong>` : "Escolha um dos 143 modelos do nosso catálogo."}</p>
             <div style="margin-top: 8px;">
               <a href="../modelos.html" class="btn btn-secondary" style="font-size:0.85rem; padding: 6px 12px; width: 100%;">
                 ${model ? "Trocar Modelo" : "Explorar Catálogo"}
@@ -782,7 +782,7 @@ function getStepContentHtml(stepIdx) {
         <div class="options-grid">
           <div class="option-card ${m.mode === 'name_or_link' ? 'selected' : ''}" data-music-mode="name_or_link">
             <div class="option-card-head">
-              <span class="option-label">Escolher uma música</span>
+              <span class="option-label">Nova música</span>
               <span class="option-price">Sem adicional</span>
             </div>
             <p class="option-desc">Informe o nome da canção ou um link do YouTube / Spotify.</p>
@@ -794,10 +794,10 @@ function getStepContentHtml(stepIdx) {
           </div>
           ${modelMusicUrl ? `<div class="option-card model-music-card ${m.mode === 'model_music' ? 'selected' : ''}" data-music-mode="model_music">
             <div class="option-card-head">
-              <span class="option-label">Música Padrão do Modelo</span>
+              <span class="option-label">Música do modelo</span>
               <span class="option-price">Sem adicional</span>
             </div>
-            <p class="option-desc">Ouça a trilha original que acompanha ${escapeHtml(selectedMedia?.name || "este modelo")}.</p>
+            <p class="option-desc">Usar a mesma música que já está no modelo que você selecionou.</p>
             <div class="model-music-player" data-model-music-player>
               <button type="button" class="music-play-button" data-music-play aria-label="Reproduzir música do modelo">
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg>
@@ -833,7 +833,7 @@ function getStepContentHtml(stepIdx) {
             </div>
             <p class="option-desc">O convidado confirma pelo próprio WhatsApp.</p>
             ${cur === "whatsapp" ? `<div class="option-inline-field" data-no-card-toggle><label class="form-label" for="rsvp-phone-input">Número do WhatsApp que receberá as confirmações:</label><input type="tel" id="rsvp-phone-input" class="form-input" placeholder="(11) 99999-9999" value="${escapeHtml(appState.rsvpPhone || "")}"></div>` : ""}
-            <button type="button" class="demo-text-button" data-demo-action="rsvp-whatsapp">Testar</button>
+            <button type="button" class="demo-text-button" data-demo-action="rsvp-whatsapp">Ver exemplo</button>
           </div>
           <div class="option-card ${cur === 'smart_form' ? 'selected' : ''}" data-rsvp="smart_form">
             <div class="option-card-head">
@@ -841,7 +841,7 @@ function getStepContentHtml(stepIdx) {
               <span class="option-price">+R$ 5</span>
             </div>
             <p class="option-desc">Organize respostas e acompanhe sua lista de convidados.</p>
-            <button type="button" class="demo-text-button" data-demo-action="rsvp-smart">Testar</button>
+            <button type="button" class="demo-text-button" data-demo-action="rsvp-smart">Ver exemplo</button>
           </div>
           <div class="option-card ${cur === 'none' ? 'selected' : ''}" data-rsvp="none">
             <div class="option-card-head">
@@ -866,7 +866,7 @@ function getStepContentHtml(stepIdx) {
             </div>
             <p class="option-desc">Uma mensagem com tamanhos, ideias e informações úteis.</p>
             ${cur === "simple" ? `<div class="option-inline-field" data-no-card-toggle><label class="form-label" for="gift-details-input">Descreva as sugestões de presente:</label><textarea id="gift-details-input" class="form-textarea" placeholder="Escreva as sugestões e informações que deseja exibir aos convidados.">${escapeHtml(appState.giftDetails || "")}</textarea></div>` : ""}
-            <button type="button" class="demo-text-button" data-demo-action="gift-simple">Testar</button>
+            <button type="button" class="demo-text-button" data-demo-action="gift-simple">Ver exemplo</button>
           </div>
           <div class="option-card ${cur === 'premium' ? 'selected' : ''}" data-gifts="premium">
             <div class="option-card-head">
@@ -875,7 +875,7 @@ function getStepContentHtml(stepIdx) {
             </div>
             <p class="option-desc">Sugestões apresentadas em cartões visuais.</p>
             ${cur === "premium" ? `<div class="option-inline-field" data-no-card-toggle><label class="form-label" for="gift-details-input">Descreva as sugestões de presente:</label><textarea id="gift-details-input" class="form-textarea" placeholder="Escreva as sugestões e informações que deseja exibir aos convidados.">${escapeHtml(appState.giftDetails || "")}</textarea></div>` : ""}
-            <button type="button" class="demo-text-button" data-demo-action="gift-premium">Testar</button>
+            <button type="button" class="demo-text-button" data-demo-action="gift-premium">Ver exemplo</button>
           </div>
           <div class="option-card ${cur === 'smart_list' ? 'selected' : ''}" data-gifts="smart_list">
             <div class="option-card-head">
@@ -884,7 +884,7 @@ function getStepContentHtml(stepIdx) {
             </div>
             <p class="option-desc">Escolha um presente e veja a reserva e o Pix pelo fluxo do convidado.</p>
             <small class="gift-demo-note">Exemplo do v8. Ações locais; nada é salvo.</small>
-            <button type="button" class="demo-text-button" data-demo-action="gift-smart">Testar</button>
+            <button type="button" class="demo-text-button" data-demo-action="gift-smart">Ver exemplo</button>
           </div>
           <div class="option-card ${cur === 'client_list' ? 'selected' : ''}" data-gifts="client_list">
             <div class="option-card-head">
@@ -892,7 +892,7 @@ function getStepContentHtml(stepIdx) {
               <span class="option-price">Sem adicional</span>
             </div>
             <p class="option-desc">Um botão leva o convidado à lista que você já usa.</p>
-            <button type="button" class="demo-text-button" data-demo-action="gift-link">Testar</button>
+            <button type="button" class="demo-text-button" data-demo-action="gift-link">Ver exemplo</button>
           </div>
           <div class="option-card ${cur === 'none' ? 'selected' : ''}" data-gifts="none">
             <div class="option-card-head">
@@ -918,7 +918,7 @@ function getStepContentHtml(stepIdx) {
             </div>
             <p class="option-desc">Você escreve as orientações; elas aparecem no formato padrão do manual.</p>
             ${cur === "simple" ? `<div class="option-inline-field" data-no-card-toggle><label class="form-label" for="manual-details-input">O que você quer informar aos convidados?</label><textarea id="manual-details-input" class="form-textarea" placeholder="Digite as orientações que deseja incluir no manual.">${escapeHtml(manualText)}</textarea></div>` : ""}
-            <button type="button" class="demo-text-button" data-demo-action="manual-simple">Testar</button>
+            <button type="button" class="demo-text-button" data-demo-action="manual-simple">Ver exemplo</button>
           </div>
           <div class="option-card ${cur === 'premium' ? 'selected' : ''}" data-manual="premium">
             <div class="option-card-head">
@@ -927,7 +927,7 @@ function getStepContentHtml(stepIdx) {
             </div>
             <p class="option-desc">Seu conteúdo em uma página visual, organizada por assunto.</p>
             ${cur === "premium" ? `<div class="option-inline-field" data-no-card-toggle><label class="form-label" for="manual-details-input">O que você quer informar aos convidados?</label><textarea id="manual-details-input" class="form-textarea" placeholder="Digite as orientações que deseja incluir no manual.">${escapeHtml(appState.manualDetails || "")}</textarea></div>` : ""}
-            <button type="button" class="demo-text-button" data-demo-action="manual-premium">Testar</button>
+            <button type="button" class="demo-text-button" data-demo-action="manual-premium">Ver exemplo</button>
           </div>
           <div class="option-card ${cur === 'none' ? 'selected' : ''}" data-manual="none">
             <div class="option-card-head">
@@ -945,15 +945,14 @@ function getStepContentHtml(stepIdx) {
       const cur = appState.choices.countdown;
       return `
         <section class="countdown-stage" aria-label="Prévia da contagem regressiva">
-          <span class="countdown-eyebrow">Assim pode aparecer no convite</span>
-          <h3>${escapeHtml(appState.event.eventName || "Está chegando o grande dia")}</h3>
+          ${appState.event.eventName ? `<h3>${escapeHtml(appState.event.eventName)}</h3>` : ""}
           <div class="countdown-preview-units" aria-live="off">
             <div><strong data-countdown-unit="days">--</strong><span>dias</span></div>
             <div><strong data-countdown-unit="hours">--</strong><span>horas</span></div>
             <div><strong data-countdown-unit="minutes">--</strong><span>min</span></div>
             <div><strong data-countdown-unit="seconds">--</strong><span>seg</span></div>
           </div>
-          <p data-countdown-caption>${appState.event.date ? "Contagem até a data do seu evento." : "Exemplo até você informar a data do evento."}</p>
+          ${appState.event.date ? `<p data-countdown-caption>Contagem até a data do seu evento.</p>` : ""}
         </section>
         <div class="options-grid">
           <div class="option-card ${cur === 'include' ? 'selected' : ''}" data-countdown="include">
@@ -1008,12 +1007,12 @@ function getStepContentHtml(stepIdx) {
           ? `Álbum selecionado: ${formatCurrency(PRICE_RULES.sharedAlbum)}. Se incluir o filtro também, os dois ficam por ${formatCurrency(PRICE_RULES.bundle)} no total.`
           : filterOn
             ? `Filtro selecionado: ${formatCurrency(PRICE_RULES.instagramFilter)}. Se incluir o álbum também, os dois ficam por ${formatCurrency(PRICE_RULES.bundle)} no total.`
-            : `Cada opção custa ${formatCurrency(PRICE_RULES.sharedAlbum)}. Escolhendo as duas, o total cai para ${formatCurrency(PRICE_RULES.bundle)} e elas usam um só QR Code.`;
+            : `Cada opção custa ${formatCurrency(PRICE_RULES.sharedAlbum)}. Escolhendo as duas, o total cai para ${formatCurrency(PRICE_RULES.bundle)} e elas funcionam juntas no mesmo QR Code.`;
       return `
         <section class="after-party-section" aria-labelledby="after-party-heading">
           <div class="after-party-head">
             <h3 id="after-party-heading" class="after-party-title">Fotos da festa com um QR Code</h3>
-            <p class="after-party-intro">Cada opção custa ${formatCurrency(PRICE_RULES.sharedAlbum)}. Juntas, ficam por ${formatCurrency(PRICE_RULES.bundle)} porque compartilham o QR Code. Você pode escolher uma, as duas ou não incluir.</p>
+            
           </div>
 
           <div class="after-party-grid">
@@ -1039,7 +1038,7 @@ function getStepContentHtml(stepIdx) {
                 <img src="../assets/examples/filtro-exemplo.png" alt="Moldura de exemplo para o filtro da festa" loading="lazy">
                 <figcaption>Prévia da moldura no formato vertical do Instagram.</figcaption>
               </figure>
-              <button type="button" class="demo-text-button" data-demo-action="test-filter">Testar</button>
+              <button type="button" class="demo-text-button" data-demo-action="test-filter">Ver exemplo</button>
             </article>
             <article class="after-party-card option-card after-party-none-card ${isNone ? 'selected' : ''}" data-after-party-none role="button" tabindex="0" aria-pressed="${isNone}">
               <div class="option-card-head">
@@ -1286,8 +1285,7 @@ function renderWhatsappRsvpDemo() {
 function renderSmartRsvpDemo() {
   const eventTitle = encodeURIComponent(eventConfirmationTitle());
   return `
-    <div class="demo-disclosure">Prévia do formulário de RSVP inteligente do Builder v8. Use um dos nomes de exemplo para testar. A resposta fica somente nesta tela.</div>
-    <button type="button" class="example-open-button" data-demo-action="show-rsvp-list">Ver exemplo de lista</button>
+    <button type="button" class="example-open-button" data-demo-action="show-rsvp-list">Ver exemplo de lista de convidados</button>
     <iframe class="builder-v8-demo-frame builder-v8-rsvp-frame" title="Formulário de RSVP inteligente do Builder v8 — demonstração local" src="../assets/examples/builder-v8-rsvp-smart-demo.html?evento=${escapeHtml(eventTitle)}" sandbox="allow-scripts" loading="eager"></iframe>`;
 }
 
@@ -1307,7 +1305,7 @@ function renderSourceExample(src, alt, note) {
 
 function renderGiftDemo(kind) {
   if (kind === "gift-simple") {
-    return renderSourceExample("../assets/examples/gift-simple-source-safe.png", "Exemplo original do site para sugestões de presente simples", "Exemplo original do site. A chave Pix foi mascarada; esta imagem serve para visualizar a apresentação dessa opção.");
+    return `<iframe class="builder-v8-demo-frame builder-v8-manual-frame" title="Exemplo de sugestões de presente simples" src="../assets/examples/gift-simple-snippet-demo.html?v=20261023-1" sandbox="allow-scripts" allow="clipboard-write" loading="eager"></iframe>`;
   }
   if (kind === "gift-premium") {
     return renderSourceExample("../assets/examples/gift-premium-source-safe.png", "Exemplo original do site para sugestões de presente premium", "Exemplo original do site. A chave Pix e o QR Code foram mascarados; os itens e a arte continuam visíveis.");
@@ -1315,14 +1313,12 @@ function renderGiftDemo(kind) {
   if (kind === "gift-smart") {
     return `<iframe class="builder-v8-demo-frame builder-v8-gift-frame" title="Lista de Presentes" src="../assets/examples/builder-v8-gift-list-demo.html?v=20261002-3" sandbox="allow-scripts allow-popups allow-popups-to-escape-sandbox" allow="clipboard-write" loading="eager"></iframe>`;
   }
-  return renderSourceExample("../assets/examples/gift-link-source.jpg", "Exemplo original de uma lista externa de presentes", "Exemplo original de lista externa. No convite final, os botões levam à loja configurada pelos anfitriões.");
+  return renderSourceExample("../assets/examples/gift-link-source.jpg", "Exemplo original de uma lista externa de presentes", "Crie sua lista em sites de terceiros, como Magalu, iCasei, Shopee, Extra, Shein, Amazon ou em qualquer outro site, e nos encaminhe o link para colocarmos no botão de Lista de Presentes");
 }
 
 function renderManualDemo(kind = "manual-simple") {
   if (kind === "manual-simple") {
-    const manualText = encodeURIComponent(appState.manualDetails || "");
-    return `<div class="demo-disclosure">Prévia no formato padrão de Manual do Builder v8. O texto digitado é usado só nesta demonstração local.</div>
-      <iframe class="builder-v8-demo-frame builder-v8-manual-frame" title="Prévia do Manual do Convidado no formato do Builder v8" src="../assets/examples/manual-snippet-demo.html?v=20261002-1&amp;texto=${escapeHtml(manualText)}" sandbox="allow-scripts" loading="eager"></iframe>`;
+    return `<iframe class="builder-v8-demo-frame builder-v8-manual-frame" title="Exemplo de Manual do Convidado" src="../assets/examples/manual-snippet-demo.html?v=20261023-1" sandbox="allow-scripts" loading="eager"></iframe>`;
   }
   const premium = kind === "manual-premium";
   const src = premium ? "../assets/examples/manual-premium-source-safe.png" : "../assets/examples/manual-guest-source-safe.png";

@@ -1,186 +1,546 @@
 <!doctype html>
 <html lang="pt-BR">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Manual do Convidado · Demonstração</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-  <style>
-*{box-sizing:border-box;margin:0;padding:0}
-.mc-wrap{
-  position:relative;padding:32px 18px 36px;overflow:hidden;
-  font-family:'Cormorant Garamond',serif;
-  background:linear-gradient(160deg,#f4f9ff 0%,#e8f3fd 40%,#f0f7ff 100%);
-}
-.mc-header{position:relative;z-index:2;text-align:center;margin-bottom:10px;}
-.mc-crown{font-size:26px;margin-bottom:6px;display:block;animation:crownFloat 4s ease-in-out infinite;}
-@keyframes crownFloat{0%,100%{transform:translateY(0);}50%{transform:translateY(-5px);}}
-.mc-header h2{font-family:'Cinzel',serif;font-size:22px;color:#1a4a7a;letter-spacing:.15em;margin-bottom:5px;}
-.mc-header p{color:#4a7aaa;font-size:14.5px;font-style:italic;}
-.mc-sub{
-  position:relative;z-index:2;text-align:center;margin-bottom:24px;
-  font-size:13px;color:#6a9abf;font-family:'Cinzel',serif;letter-spacing:.12em;text-transform:uppercase;
-}
-.mc-sub::before,.mc-sub::after{
-  content:'';display:inline-block;width:40px;height:.5px;
-  background:linear-gradient(to right,transparent,rgba(100,160,220,.40));
-  vertical-align:middle;margin:0 10px;
-}
-.mc-sub::after{background:linear-gradient(to left,transparent,rgba(100,160,220,.40));}
-.mc-grid{display:grid;gap:12px;position:relative;z-index:2;}
-.mc-card{
-  border-radius:20px;background:rgba(255,255,255,.82);
-  border:1px solid rgba(100,160,220,.20);
-  box-shadow:0 2px 16px rgba(60,120,200,.07);
-  overflow:hidden;animation:mcFade .6s ease both;
-}
-@keyframes mcFade{from{opacity:0;transform:translateY(11px);}to{opacity:1;transform:translateY(0);}}
-.mc-top{display:flex;align-items:center;gap:13px;padding:15px 15px 13px;}
-.mc-icon{
-  width:46px;height:46px;border-radius:14px;flex-shrink:0;
-  display:flex;align-items:center;justify-content:center;
-  background:linear-gradient(145deg,#b8d8f8,#7ab0e8);
-  color:#fff;font-size:18px;box-shadow:0 2px 10px rgba(80,140,220,.22);
-}
-.mc-title{font-family:'Cinzel',serif;font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:#4a7aaa;margin-bottom:3px;}
-.mc-text{font-size:15px;line-height:1.6;color:#1a3a5a;}
-.mc-divider{height:.5px;margin:0 15px;background:linear-gradient(to right,transparent,rgba(100,160,220,.22),transparent);}
-.mc-body{padding:11px 15px 15px;}
-.mc-highlight{color:#1a6abf;font-weight:600;}
-.mc-tag-row{display:flex;flex-wrap:wrap;gap:7px;margin-top:9px;}
-.mc-tag{display:inline-flex;align-items:center;gap:5px;padding:4px 11px;border-radius:30px;font-size:12.5px;font-style:italic;}
-.mc-tag-ok{background:rgba(200,230,255,.55);border:1px solid rgba(80,150,220,.22);color:#1a4a7a;}
-.mc-tag-no{background:rgba(220,238,255,.55);border:1px solid rgba(80,140,210,.25);color:#1a3a6b;}
-.mc-tag-white{background:rgba(235,235,240,.70);border:1px solid rgba(160,170,190,.30);color:#3a4a5a;}
-.mc-section-label{
-  font-family:'Cinzel',serif;font-size:10.5px;letter-spacing:.12em;
-  text-transform:uppercase;color:#6a9abf;margin:12px 0 6px;
-}
-.mc-note{
-  margin-top:11px;padding:10px 13px;border-radius:14px;
-  background:rgba(180,215,250,.18);border:1px solid rgba(100,160,220,.22);
-  font-size:13.5px;color:#1a4a7a;font-style:italic;line-height:1.55;
-}
-.mc-confirm{
-  position:relative;z-index:2;margin-top:14px;
-  border-radius:20px;
-  background:linear-gradient(145deg,rgba(255,255,255,.90),rgba(210,235,255,.55));
-  border:1px solid rgba(100,160,220,.28);
-  padding:16px 16px 15px;
-  box-shadow:0 2px 18px rgba(60,120,200,.10);
-  animation:mcFade .6s .38s ease both;
-}
-.mc-confirm-top{display:flex;align-items:center;gap:12px;margin-bottom:11px;}
-.mc-confirm-icon{
-  width:46px;height:46px;border-radius:14px;flex-shrink:0;
-  display:flex;align-items:center;justify-content:center;
-  background:linear-gradient(145deg,#5a90d0,#1a5aaa);
-  color:#fff;font-size:18px;box-shadow:0 2px 12px rgba(30,90,180,.28);
-}
-.mc-confirm-title{font-family:'Cinzel',serif;font-size:12px;letter-spacing:.13em;text-transform:uppercase;color:#1a4a7a;margin-bottom:2px;}
-.mc-confirm-sub{font-size:13px;color:#4a7aaa;font-style:italic;}
-.mc-date-badge{
-  display:flex;align-items:center;justify-content:center;gap:10px;
-  background:linear-gradient(145deg,#dceefa,#bcd8f5);
-  border:1px solid rgba(100,160,220,.30);
-  border-radius:14px;padding:11px 14px;
-  font-family:'Cinzel',serif;font-size:15px;
-  color:#1a4a7a;letter-spacing:.10em;
-  box-shadow:inset 0 0 10px rgba(255,255,255,.40);
-}
-.mc-date-badge i{color:#5a90d0;font-size:16px;}
-.mc-confirm-note{
-  margin-top:10px;font-size:13.5px;color:#2a5a8a;
-  font-style:italic;line-height:1.55;text-align:center;
-}
-.lp-star{position:absolute;color:rgba(120,170,230,.50);font-size:11px;animation:starAnim 3s ease-in-out infinite;pointer-events:none;}
-@keyframes starAnim{0%,100%{opacity:0;transform:scale(0);}50%{opacity:1;transform:scale(1);}}
-</style>
-  <style>html,body{margin:0;min-height:100%;width:100%;max-width:100%;overflow-x:hidden}body{padding:0;background:#e8f3fd}.mc-wrap{min-height:100vh;width:100%}.mc-body,.mc-text{overflow-wrap:anywhere}.manual-book-icon{display:block;width:23px;height:23px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}</style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Manual do Convidado · Exemplo</title>
+<style>html,body{margin:0;min-height:100%;width:100%;max-width:100%;overflow-x:hidden}body{background:hsl(141,20%,98%)}</style>
 </head>
 <body>
-<main class="mc-wrap">
-<!-- Floral top-left -->
-<svg style="position:absolute;top:-14px;left:-14px;width:168px;height:168px;opacity:.13;pointer-events:none;z-index:1;" viewBox="0 0 168 168" xmlns="http://www.w3.org/2000/svg">
-  <g>
-    <ellipse cx="84" cy="25" rx="15" ry="31" fill="#7ab0e8" transform="rotate(0 84 84)"/>
-    <ellipse cx="84" cy="25" rx="15" ry="31" fill="#b8d8f8" transform="rotate(45 84 84)"/>
-    <ellipse cx="84" cy="25" rx="15" ry="31" fill="#7ab0e8" transform="rotate(90 84 84)"/>
-    <ellipse cx="84" cy="25" rx="15" ry="31" fill="#b8d8f8" transform="rotate(135 84 84)"/>
-    <ellipse cx="84" cy="25" rx="15" ry="31" fill="#7ab0e8" transform="rotate(180 84 84)"/>
-    <ellipse cx="84" cy="25" rx="15" ry="31" fill="#b8d8f8" transform="rotate(225 84 84)"/>
-    <ellipse cx="84" cy="25" rx="15" ry="31" fill="#7ab0e8" transform="rotate(270 84 84)"/>
-    <ellipse cx="84" cy="25" rx="15" ry="31" fill="#b8d8f8" transform="rotate(315 84 84)"/>
-    <circle cx="84" cy="84" r="13" fill="#dceefa"/>
-  </g>
-</svg>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
 
-<!-- Floral bottom-right -->
-<svg style="position:absolute;bottom:-10px;right:-10px;width:128px;height:128px;opacity:.11;pointer-events:none;z-index:1;" viewBox="0 0 128 128" xmlns="http://www.w3.org/2000/svg">
-  <g>
-    <ellipse cx="64" cy="18" rx="12" ry="24" fill="#90c0f0" transform="rotate(0 64 64)"/>
-    <ellipse cx="64" cy="18" rx="12" ry="24" fill="#c8e2f8" transform="rotate(60 64 64)"/>
-    <ellipse cx="64" cy="18" rx="12" ry="24" fill="#90c0f0" transform="rotate(120 64 64)"/>
-    <ellipse cx="64" cy="18" rx="12" ry="24" fill="#c8e2f8" transform="rotate(180 64 64)"/>
-    <ellipse cx="64" cy="18" rx="12" ry="24" fill="#90c0f0" transform="rotate(240 64 64)"/>
-    <ellipse cx="64" cy="18" rx="12" ry="24" fill="#c8e2f8" transform="rotate(300 64 64)"/>
-    <circle cx="64" cy="64" r="10" fill="#e8f4fd"/>
-  </g>
-</svg>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
-<!-- Floral center-left pequena -->
-<svg style="position:absolute;top:44%;left:-6px;width:70px;height:70px;opacity:.10;pointer-events:none;z-index:1;" viewBox="0 0 70 70" xmlns="http://www.w3.org/2000/svg">
-  <g>
-    <ellipse cx="35" cy="10" rx="7" ry="14" fill="#7ab0e8" transform="rotate(0 35 35)"/>
-    <ellipse cx="35" cy="10" rx="7" ry="14" fill="#b8d8f8" transform="rotate(72 35 35)"/>
-    <ellipse cx="35" cy="10" rx="7" ry="14" fill="#7ab0e8" transform="rotate(144 35 35)"/>
-    <ellipse cx="35" cy="10" rx="7" ry="14" fill="#b8d8f8" transform="rotate(216 35 35)"/>
-    <ellipse cx="35" cy="10" rx="7" ry="14" fill="#7ab0e8" transform="rotate(288 35 35)"/>
-    <circle cx="35" cy="35" r="6" fill="#dceefa"/>
-  </g>
-</svg>
+<style>
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
 
-<i class="lp-star" style="top:9%;left:8%;animation-delay:0s;">✦</i>
-<i class="lp-star" style="top:17%;right:13%;animation-delay:1.1s;">✧</i>
-<i class="lp-star" style="bottom:14%;left:14%;animation-delay:2s;">✦</i>
-<i class="lp-star" style="bottom:7%;right:11%;animation-delay:.6s;">✧</i>
-<i class="lp-star" style="top:38%;right:7%;animation-delay:1.6s;">✦</i>
+.mc-wrap {
+  position: relative;
+  padding: 32px 18px 36px;
+  overflow: hidden;
+  font-family: 'Cormorant Garamond', serif;
+  background: linear-gradient(
+    160deg,
+    hsl(141, 20%, 98%) 0%,
+    hsl(141, 25%, 95%) 40%,
+    hsl(141, 20%, 98%) 100%
+  );
+}
 
+.mc-header {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  margin-bottom: 10px;
+}
 
-  <header class="mc-header">
-    <span class="mc-crown" aria-hidden="true">📖</span>
+.mc-crown {
+  font-size: 26px;
+  margin-bottom: 6px;
+  display: block;
+  color: hsl(141, 44%, 25%);
+  animation: crownFloat 4s ease-in-out infinite;
+}
+
+@keyframes crownFloat {
+  0%, 100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+.mc-header h2 {
+  font-family: 'Cinzel', serif;
+  font-size: 22px;
+  color: hsl(141, 44%, 25%);
+  letter-spacing: .15em;
+  margin-bottom: 5px;
+}
+
+.mc-header p {
+  color: hsl(141, 44%, 25%);
+  font-size: 14.5px;
+  font-style: italic;
+}
+
+.mc-sub {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  margin-bottom: 24px;
+  font-size: 13px;
+  color: hsl(141, 44%, 25%);
+  font-family: 'Cinzel', serif;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+}
+
+.mc-sub::before,
+.mc-sub::after {
+  content: '';
+  display: inline-block;
+  width: 40px;
+  height: .5px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(45, 105, 65, .40)
+  );
+  vertical-align: middle;
+  margin: 0 10px;
+}
+
+.mc-sub::after {
+  background: linear-gradient(
+    to left,
+    transparent,
+    rgba(45, 105, 65, .40)
+  );
+}
+
+.mc-grid {
+  display: grid;
+  gap: 12px;
+  position: relative;
+  z-index: 2;
+}
+
+.mc-card {
+  border-radius: 20px;
+  background: rgba(255, 255, 255, .82);
+  border: 1px solid rgba(100, 160, 120, .20);
+  box-shadow: 0 2px 16px rgba(60, 120, 80, .07);
+  overflow: hidden;
+  animation: mcFade .6s ease both;
+}
+
+@keyframes mcFade {
+  from {
+    opacity: 0;
+    transform: translateY(11px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.mc-top {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 15px 15px 13px;
+}
+
+.mc-icon {
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(
+    145deg,
+    hsl(141, 54%, 70%),
+    hsl(141, 44%, 45%)
+  );
+  color: #fff;
+  font-size: 18px;
+  box-shadow: 0 2px 10px rgba(80, 140, 100, .22);
+}
+
+.mc-title {
+  font-family: 'Cinzel', serif;
+  font-size: 11.5px;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  color: hsl(141, 44%, 25%);
+  margin-bottom: 3px;
+}
+
+.mc-text {
+  font-size: 15px;
+  line-height: 1.6;
+  color: hsl(141, 34%, 12%);
+}
+
+.mc-divider {
+  height: .5px;
+  margin: 0 15px;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(60, 120, 80, .22),
+    transparent
+  );
+}
+
+.mc-body {
+  padding: 11px 15px 15px;
+}
+
+.mc-highlight {
+  color: hsl(141, 44%, 25%);
+  font-weight: 600;
+}
+
+.mc-tag-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+  margin-top: 9px;
+}
+
+.mc-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 11px;
+  border-radius: 30px;
+  font-size: 12.5px;
+  font-style: italic;
+}
+
+.mc-tag-ok {
+  background: rgba(205, 235, 210, .55);
+  border: 1px solid rgba(80, 150, 100, .22);
+  color: hsl(141, 44%, 25%);
+}
+
+.mc-tag-no {
+  background: rgba(220, 240, 225, .55);
+  border: 1px solid rgba(80, 140, 100, .25);
+  color: hsl(141, 44%, 25%);
+}
+
+.mc-tag-white {
+  background: rgba(235, 235, 240, .70);
+  border: 1px solid rgba(160, 170, 190, .30);
+  color: #3a4a5a;
+}
+
+.mc-section-label {
+  font-family: 'Cinzel', serif;
+  font-size: 10.5px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: hsl(141, 44%, 25%);
+  margin: 12px 0 6px;
+}
+
+.mc-note {
+  margin-top: 11px;
+  padding: 10px 13px;
+  border-radius: 14px;
+  background: rgba(180, 225, 190, .18);
+  border: 1px solid rgba(100, 160, 120, .22);
+  font-size: 13.5px;
+  color: hsl(141, 44%, 25%);
+  font-style: italic;
+  line-height: 1.55;
+}
+
+.mc-confirm {
+  position: relative;
+  z-index: 2;
+  margin-top: 14px;
+  border-radius: 20px;
+  background: linear-gradient(
+    145deg,
+    rgba(255, 255, 255, .90),
+    rgba(210, 235, 215, .55)
+  );
+  border: 1px solid rgba(100, 160, 120, .28);
+  padding: 16px 16px 15px;
+  box-shadow: 0 2px 18px rgba(60, 120, 80, .10);
+  animation: mcFade .6s .38s ease both;
+}
+
+.mc-confirm-top {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 11px;
+}
+
+.mc-confirm-icon {
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(
+    145deg,
+    hsl(141, 54%, 70%),
+    hsl(141, 44%, 25%)
+  );
+  color: #fff;
+  font-size: 18px;
+  box-shadow: 0 2px 12px rgba(30, 90, 50, .28);
+}
+
+.mc-confirm-title {
+  font-family: 'Cinzel', serif;
+  font-size: 12px;
+  letter-spacing: .13em;
+  text-transform: uppercase;
+  color: hsl(141, 44%, 25%);
+  margin-bottom: 2px;
+}
+
+.mc-confirm-sub {
+  font-size: 13px;
+  color: hsl(141, 44%, 25%);
+  font-style: italic;
+}
+
+.mc-date-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  background: linear-gradient(
+    145deg,
+    hsl(141, 25%, 95%),
+    hsl(141, 54%, 70%)
+  );
+  border: 1px solid rgba(100, 160, 120, .30);
+  border-radius: 14px;
+  padding: 11px 14px;
+  font-family: 'Cinzel', serif;
+  font-size: 15px;
+  color: hsl(141, 44%, 25%);
+  letter-spacing: .10em;
+  box-shadow: inset 0 0 10px rgba(255, 255, 255, .40);
+}
+
+.mc-date-badge i {
+  color: hsl(141, 44%, 25%);
+  font-size: 16px;
+}
+
+.mc-confirm-note {
+  margin-top: 10px;
+  font-size: 13.5px;
+  color: hsl(141, 34%, 12%);
+  font-style: italic;
+  line-height: 1.55;
+  text-align: center;
+}
+
+.lp-star {
+  position: absolute;
+  color: rgba(60, 120, 80, .50);
+  font-size: 11px;
+  animation: starAnim 3s ease-in-out infinite;
+  pointer-events: none;
+}
+
+@keyframes starAnim {
+  0%, 100% {
+    opacity: 0;
+    transform: scale(0);
+  }
+
+  50% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+</style>
+
+<div class="mc-wrap">
+
+  <div class="mc-header">
+    <span class="mc-crown">
+      <i class="fa-solid fa-leaf"></i>
+    </span>
+
     <h2>Manual do Convidado</h2>
-    <p>Informações importantes para os convidados</p>
-  </header>
-  <div class="mc-sub">✦ &nbsp; orientações do evento &nbsp; ✦</div>
+
+    <p>
+      Orientações para tornar essa celebração ainda mais especial.
+    </p>
+  </div>
+
+  <div class="mc-sub">
+    Leia com carinho e confira todas as orientações.
+  </div>
+
   <div class="mc-grid">
-    <section class="mc-card">
+
+    <div class="mc-card" style="animation-delay: .04s">
       <div class="mc-top">
-        <div class="mc-icon"><svg class="manual-book-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 6.2C9.7 4.8 6.9 4.7 4 5.6v12.1c3-.9 5.8-.8 8 0m0-11.5c2.3-1.4 5.1-1.5 8-.6v12.1c-3-.9-5.8-.8-8 0m0-12.1v12.1m-5.2-9.2c1.4-.1 2.8.2 4 .8m5.2-.8c-1.4-.1-2.8.2-4 .8"/></svg></div>
+
+        <div class="mc-icon">
+          <i class="fa-solid fa-heart"></i>
+        </div>
+
         <div>
-          <div class="mc-title">Orientações</div>
-          <div class="mc-text">Informações para convidados</div>
+          <div class="mc-title">
+            Confirmação de presença
+          </div>
+
+          <div class="mc-text">
+            Sua presença é muito importante para mim!
+            <span class="mc-highlight">
+              Confirme sua presença
+            </span>
+            até a data 05/12/2026.
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="mc-card" style="animation-delay: .09s">
+      <div class="mc-top">
+
+        <div
+          class="mc-icon"
+          style="background: linear-gradient(145deg, #c9e5c8, #6f9f73);"
+        >
+          <i class="fa-solid fa-user-tie"></i>
+        </div>
+
+        <div>
+          <div class="mc-title">
+            Dress Code
+          </div>
+
+          <div class="mc-text">
+            <span class="mc-highlight">Traje Social</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="mc-card" style="animation-delay: .14s">
+
+      <div class="mc-top">
+
+        <div
+          class="mc-icon"
+          style="background: linear-gradient(145deg, #f3c4cf, #d77d96);"
+        >
+          <i class="fa-solid fa-palette"></i>
+        </div>
+
+        <div>
+          <div class="mc-title">
+            Cores a evitar
+          </div>
+
+          <div class="mc-text">
+            Evite tons de
+            <span class="mc-highlight">verde</span>
+            e
+            <span class="mc-highlight">rosa</span>!
+          </div>
+        </div>
+
+      </div>
+
+      <div class="mc-divider"></div>
+
+      <div class="mc-body">
+
+        <div class="mc-text">
+          Essas cores fazem parte da decoração e são exclusivamente da debutante.
+        </div>
+
+        <div class="mc-section-label">
+          Evite
+        </div>
+
+        <div class="mc-tag-row">
+
+          <span class="mc-tag mc-tag-no">
+            <i
+              class="fa-solid fa-xmark"
+              style="font-size: 10px;"
+            ></i>
+            Verde
+          </span>
+
+          <span class="mc-tag mc-tag-no">
+            <i
+              class="fa-solid fa-xmark"
+              style="font-size: 10px;"
+            ></i>
+            Rosa
+          </span>
+
         </div>
       </div>
-      <div class="mc-divider"></div>
-      <div class="mc-body" id="manual-demo-content" aria-live="polite"></div>
-    </section>
+    </div>
+
+    <div class="mc-card" style="animation-delay: .19s">
+      <div class="mc-top">
+
+        <div
+          class="mc-icon"
+          style="background: linear-gradient(145deg, #d8edd3, #8ebd8b);"
+        >
+          <i class="fa-solid fa-clock"></i>
+        </div>
+
+        <div>
+          <div class="mc-title">
+            Pontualidade
+          </div>
+
+          <div class="mc-text">
+            Chegue no horário. Cada momento foi preparado com muito carinho.
+            <span class="mc-highlight">
+              Não perca nenhum detalhe
+            </span>
+            dessa noite especial!
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="mc-card" style="animation-delay: .24s">
+      <div class="mc-top">
+
+        <div
+          class="mc-icon"
+          style="background: linear-gradient(145deg, #f4d0d8, #d98ba0);"
+        >
+          <i class="fa-solid fa-envelope"></i>
+        </div>
+
+        <div>
+          <div class="mc-title">
+            Convite
+          </div>
+
+          <div class="mc-text">
+            Convite é pessoal.
+            <span class="mc-highlight">
+              Convidado não convida!
+            </span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
   </div>
-</main>
-<script>
-(() => {
-  const text = new URLSearchParams(window.location.search).get('texto') || '';
-  const target = document.getElementById('manual-demo-content');
-  const lines = text.split(/\r?\n/).map(line => line.trim()).filter(Boolean);
-  const content = lines.length ? lines : ['As orientações que você escrever serão exibidas aqui.'];
-  for (const line of content) {
-    const paragraph = document.createElement('p');
-    paragraph.className = 'mc-text';
-    paragraph.textContent = line;
-    target.appendChild(paragraph);
-  }
-})();
-</script>
+</div>
 </body>
 </html>
