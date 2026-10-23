@@ -374,7 +374,26 @@ function revealPending(el, delay = 0) {
     if (!el.isConnected) return;
     const rect = el.getBoundingClientRect();
     if (rect.top >= 72 && rect.bottom <= window.innerHeight - 96) return;
-    el.scrollIntoView({ block: "center", behavior: "smooth" });
+    const start = window.scrollY;
+    const max = document.documentElement.scrollHeight - window.innerHeight;
+    const target = Math.max(0, Math.min(max, start + rect.top + rect.height / 2 - window.innerHeight / 2));
+    const distance = target - start;
+    if (Math.abs(distance) < 2) return;
+    // Animação própria (easing): o "smooth" nativo é ignorado em aparelhos com movimento reduzido e vira um salto.
+    const duration = Math.min(900, 400 + Math.abs(distance) * 0.4);
+    const t0 = performance.now();
+    let cancelled = false;
+    const stop = () => { cancelled = true; };
+    window.addEventListener("touchstart", stop, { once: true, passive: true });
+    window.addEventListener("wheel", stop, { once: true, passive: true });
+    const step = (now) => {
+      if (cancelled) return;
+      const k = Math.min(1, (now - t0) / duration);
+      const eased = k < 0.5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
+      window.scrollTo(0, start + distance * eased);
+      if (k < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
   }, delay);
 }
 
@@ -2109,8 +2128,12 @@ function attachStepHandlers(stepIdx) {
         error.textContent = missing.message;
         error.hidden = false;
       }
-      document.getElementById(missing.focusId)?.focus({ preventScroll: true });
-      revealPending(error);
+      const field = document.getElementById(missing.focusId);
+      const group = field?.closest(".form-group");
+      // O aviso vai para baixo do campo pendente, para os dois aparecerem juntos na tela.
+      if (error && group && error.parentElement !== group) group.appendChild(error);
+      field?.focus({ preventScroll: true });
+      revealPending(group || error);
       return;
     }
     if (stepIdx === 3 && !appState.openingChoiceConfirmed) {
