@@ -2117,6 +2117,9 @@ function attachStepHandlers(stepIdx) {
         error.textContent = "Escolha um modelo da coleção ou peça uma criação exclusiva para continuar.";
         error.hidden = false;
       }
+      // O aviso sobe para logo acima das opções, para aparecer junto com elas.
+      const grid = error?.previousElementSibling;
+      if (grid?.classList.contains("options-grid")) grid.before(error);
       document.querySelector("[data-model-mode='new']")?.focus({ preventScroll: true });
       revealPending(error);
       return;
@@ -2142,6 +2145,8 @@ function attachStepHandlers(stepIdx) {
         error.textContent = "Escolha a abertura que você quer para continuar.";
         error.hidden = false;
       }
+      const grid = error?.previousElementSibling;
+      if (grid?.classList.contains("options-grid")) grid.before(error);
       document.querySelector("[data-opening-select]")?.focus({ preventScroll: true });
       revealPending(error);
       return;
