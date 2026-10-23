@@ -367,6 +367,17 @@ function syncOpeningLock() {
   }
 }
 
+// Rola a tela (no celular, acima da barra fixa) até o que está pendente ficar visível.
+function revealPending(el, delay = 0) {
+  if (!el) return;
+  setTimeout(() => {
+    if (!el.isConnected) return;
+    const rect = el.getBoundingClientRect();
+    if (rect.top >= 72 && rect.bottom <= window.innerHeight - 96) return;
+    el.scrollIntoView({ block: "center", behavior: "smooth" });
+  }, delay);
+}
+
 function eventHasAge(type) {
   return type === "Aniversário" || type === "15 anos";
 }
@@ -2087,7 +2098,8 @@ function attachStepHandlers(stepIdx) {
         error.textContent = "Escolha um modelo da coleção ou peça uma criação exclusiva para continuar.";
         error.hidden = false;
       }
-      document.querySelector("[data-model-mode='new']")?.focus();
+      document.querySelector("[data-model-mode='new']")?.focus({ preventScroll: true });
+      revealPending(error);
       return;
     }
     const missing = requiredFieldError(stepIdx);
@@ -2097,7 +2109,8 @@ function attachStepHandlers(stepIdx) {
         error.textContent = missing.message;
         error.hidden = false;
       }
-      document.getElementById(missing.focusId)?.focus();
+      document.getElementById(missing.focusId)?.focus({ preventScroll: true });
+      revealPending(error);
       return;
     }
     if (stepIdx === 3 && !appState.openingChoiceConfirmed) {
@@ -2106,7 +2119,8 @@ function attachStepHandlers(stepIdx) {
         error.textContent = "Escolha a abertura que você quer para continuar.";
         error.hidden = false;
       }
-      document.querySelector("[data-opening-select]")?.focus();
+      document.querySelector("[data-opening-select]")?.focus({ preventScroll: true });
+      revealPending(error);
       return;
     }
     if (appState.currentStepIndex < STEP_COUNT) {
@@ -2162,6 +2176,7 @@ function attachStepHandlers(stepIdx) {
         }
         saveDraft();
         renderStep();
+        if (appState.modelMode === "new") revealPending(document.getElementById("input-model-theme")?.closest(".form-grid"), 650);
       });
     });
 
@@ -2173,6 +2188,7 @@ function attachStepHandlers(stepIdx) {
       document.getElementById("box-model-custom").style.display = e.target.checked ? "block" : "none";
       updatePriceDisplays();
       saveDraft();
+      if (e.target.checked) revealPending(document.getElementById("box-model-custom"));
     });
   } else if (stepIdx === 2) {
     const hideEventError = () => { const error = document.getElementById("event-step-error"); if (error) error.hidden = true; };
@@ -2184,6 +2200,7 @@ function attachStepHandlers(stepIdx) {
       const hasAge = eventHasAge(event.target.value);
       if (group) group.hidden = !hasAge;
       if (ageInput && !hasAge) ageInput.value = "";
+      if (hasAge) revealPending(group);
     });
     const themeCustomization =document.getElementById("chk-event-theme-custom");
     themeCustomization?.addEventListener("change", (event) => {
