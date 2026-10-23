@@ -1,110 +1,99 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-  <meta name="theme-color" content="#fbf5f5">
-  <title>Susie | Orçamento</title>
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%234f46e5'/%3E%3Cpath fill='%23fff' d='M12 22c0-3.3 2.7-6 6-6h28c3.3 0 6 2.7 6 6v20c0 3.3-2.7 6-6 6H18c-3.3 0-6-2.7-6-6V22zm6-1.5 14 12 14-12H18zm29 6.1L34.6 37.2a4 4 0 0 1-5.2 0L17 26.6V42c0 .6.4 1 1 1h28c.6 0 1-.4 1-1V26.6z'/%3E%3C/svg%3E">
-  <meta name="description" content="Monte o orçamento do seu convite com a Susie.">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simulador de Orçamento — MForge Convites</title>
+  <meta name="description" content="Configure seu convite interativo em 14 etapas progressivas. Escolha músicas, confirmação de presença, presentes e confira o valor em tempo real com total clareza.">
+  <link rel="stylesheet" href="../css/fonts.css?v=20261002-1">
+  <link rel="stylesheet" href="../css/base.css?v=20261002-13">
+  <link rel="stylesheet" href="../css/budget.css?v=20261021-ux-3">
+  <link rel="stylesheet" href="../css/budget-media.css?v=20261014-opening-choice-1">
 </head>
-<body>
-  <div class="ambient ambient-one"></div>
-  <div class="ambient ambient-two"></div>
+<body class="budget-page">
+  <header class="site-header">
+    <div class="site-header-inner">
+      <a href="../index.html" class="brand-link" aria-label="MForge Convites - Página Inicial">
+        <span class="brand-name">MForge Convites</span>
+      </a>
+      <nav class="site-nav" aria-label="Navegação Principal">
+        <a href="../index.html">Início</a>
+        <a href="../modelos.html">Modelos</a>
+        <a href="index.html" class="active site-nav-cta" aria-current="page">Orçamento</a>
+        <button type="button" class="site-nav-theme" data-theme-toggle aria-label="Ativar tema escuro" aria-pressed="false"><span class="toggle-knob" aria-hidden="true"><svg viewBox="0 0 20 20" focusable="false"><path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l-.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"/></svg></span></button>
+      </nav>
+    </div>
+  </header>
 
-  <main class="page-shell">
-    <section class="welcome" id="welcome">
-      <div class="welcome-mark" aria-hidden="true">
-        <span class="sparkle">✦</span>
-        <span class="avatar avatar-large">S</span>
-      </div>
-      <p class="eyebrow">SEU CONVITE, DO SEU JEITINHO</p>
-      <h1>Vamos criar algo<br><em>inesquecível?</em></h1>
-      <p class="welcome-copy">A Susie te ajuda a montar seu convite e calcular tudo, de um jeito simples e encantador.</p>
-      <button class="primary-button" id="start-chat">
-        <span>Começar meu orçamento</span><span aria-hidden="true">✨</span>
-      </button>
-      <p class="welcome-note">Leva só alguns minutinhos · sem compromisso</p>
-    </section>
+  <main>
+    <div class="container">
+      <div class="budget-layout">
+        <!-- Container principal do fluxo progressivo (14 etapas) -->
+        <section id="step-container" class="step-container" aria-live="polite">
+          <!-- Renderizado dinamicamente via budget.js -->
+        </section>
 
-    <section class="chat-app" id="chat-app" aria-label="Chat de orçamento" hidden>
-      <header class="chat-header">
-        <div class="susie-profile">
-          <span class="avatar">S</span>
-          <div>
-            <h2>Susie <span>| Orçamento</span></h2>
+        <!-- Barra Lateral de Resumo e Preço (Desktop) -->
+        <aside class="budget-sidebar" aria-label="Resumo do Orçamento Atual">
+          <div class="sidebar-header">
+            <h3 class="sidebar-title">Seu Orçamento</h3>
+            <div id="sidebar-total" class="sidebar-live-total">Escolha uma opção</div>
           </div>
-        </div>
-        <button class="restart-button" id="restart" aria-label="Recomeçar orçamento"><span aria-hidden="true">↻</span> Recomeçar</button>
-      </header>
 
-      <div class="progress-wrap" aria-label="Progresso do orçamento">
-        <div class="progress-copy"><span id="progress-label">Vamos começar</span><span id="progress-number">1 de 5</span></div>
-        <div class="progress-track"><span id="progress-bar"></span></div>
-      </div>
+          <ul class="sidebar-item-list" id="sidebar-items">
+            <!-- Itens discriminados -->
+          </ul>
 
-      <div class="messages" id="messages" aria-live="polite"></div>
-      <button class="more-indicator" id="more-indicator" aria-label="Ver mais conteúdo" hidden>↓</button>
-
-      <div class="composer-wrap">
-        <button class="checkout-button" id="checkout-button" type="button" hidden>
-          <i class="fa-brands fa-whatsapp" aria-hidden="true"></i>
-          <span>Finalizar Compra</span>
-        </button>
-        <form class="composer" id="composer">
-          <textarea id="message-input" rows="3" autocomplete="off" aria-label="Sua resposta"></textarea>
-          <button type="submit" id="send-button" aria-label="Enviar resposta">➜</button>
-        </form>
-        <div class="bottom-bar">
-          <div class="budget">
-            <span>VALOR ATUAL</span>
-            <strong id="total-price">R$ 80</strong>
+          <div class="sidebar-notice">
+            <strong>Transparência MForge:</strong>
+            <p style="margin-top: 4px;">Valores calculados em tempo real. Sinal fixo de R$ 20 para início da produção após alinhamento.</p>
           </div>
-          <button class="help-button" id="help-button"><span>♡</span> Ajuda</button>
-        </div>
+        </aside>
       </div>
-    </section>
+    </div>
   </main>
 
-  <div class="contact-modal" id="contact-modal" role="dialog" aria-modal="true" aria-labelledby="contact-title" hidden>
-    <form class="contact-card" id="contact-form">
-      <span class="avatar contact-avatar" aria-hidden="true">S</span>
-      <p class="eyebrow">ANTES DE COMEÇAR</p>
-      <h2 id="contact-title">Como podemos te chamar?</h2>
-      <div class="contact-field">
-        <label for="contact-name">Nome</label>
-        <input id="contact-name" name="name" type="text" autocomplete="name" minlength="2" required placeholder="Seu nome">
+  <!-- Barra Inferior Fixa para Dispositivos Móveis -->
+  <div class="mobile-budget-bar" aria-label="Total do Orçamento Móvel">
+    <div class="mobile-budget-bar-inner">
+      <div class="mobile-total-info">
+        <span>Total</span>
+        <strong id="mobile-total">Escolha uma opção</strong>
       </div>
-      <div class="contact-field">
-        <label for="contact-phone">WhatsApp</label>
-        <input id="contact-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" required placeholder="(11) 99999-9999">
-        <small>Entraremos em contato pelo WhatsApp para encaminhar o link do seu convite quando estiver pronto.</small>
-      </div>
-      <p class="contact-error" id="contact-error" role="alert" hidden></p>
-      <button class="primary-button" type="submit">Continuar</button>
-    </form>
-  </div>
-
-  <template id="typing-template">
-    <div class="message-row susie typing-row">
-      <span class="mini-avatar">S</span>
-      <div class="bubble typing"><i></i><i></i><i></i></div>
+      <button type="button" class="btn btn-primary" id="mobile-step-next">
+        Próximo
+      </button>
+      <button type="button" class="btn btn-outline mobile-summary-final" id="mobile-summary-final" hidden>Resumo Final</button>
     </div>
-  </template>
-
-  <div class="asset-modal" id="asset-modal" role="dialog" aria-modal="true" aria-label="Visualização ampliada" hidden>
-    <button class="asset-modal-close" id="asset-modal-close" aria-label="Fechar visualização">×</button>
-    <div class="asset-modal-content" id="asset-modal-content"></div>
-    <button class="asset-modal-select" id="asset-modal-select" hidden>Selecionar</button>
   </div>
 
-  <script src="../js/meta-pixel.js"></script>
-  <script src="js/tracking-config.js"></script>
-  <script src="js/app.js"></script>
+  <dialog id="demo-dialog" class="demo-dialog" aria-labelledby="demo-title">
+    <div class="demo-dialog-shell">
+      <header class="demo-dialog-head">
+        <div>
+          <p class="demo-dialog-eyebrow">Experiência de exemplo</p>
+          <h2 id="demo-title">Demonstração</h2>
+        </div>
+        <button type="button" class="demo-dialog-close" id="demo-dialog-close" aria-label="Fechar demonstração">&times;</button>
+      </header>
+      <div class="demo-dialog-content" id="demo-dialog-content"></div>
+    </div>
+  </dialog>
+
+  <dialog id="notice-dialog" class="notice-dialog" aria-labelledby="notice-title" aria-describedby="notice-message">
+    <div class="notice-shell">
+      <span class="notice-stamp" aria-hidden="true">S</span>
+      <p class="notice-eyebrow">Orçamento MForge</p>
+      <h2 id="notice-title">Atenção</h2>
+      <p id="notice-message" class="notice-message"></p>
+      <div class="notice-actions">
+        <button type="button" class="btn btn-outline" id="notice-cancel" hidden>Cancelar</button>
+        <button type="button" class="btn btn-primary" id="notice-confirm">Entendi</button>
+      </div>
+    </div>
+  </dialog>
+
+  <script type="module" src="../js/budget.js?v=20261022-short-lock-3"></script>
+  <script src="../js/theme.js?v=20261002-4" defer></script>
 </body>
 </html>

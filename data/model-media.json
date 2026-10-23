@@ -1,0 +1,2471 @@
+{
+  "source": "config.js público de cada modelo em pedidos.mforge.com.br",
+  "generatedAt": "2026-10-01T22:02:52.920Z",
+  "modelCount": 143,
+  "models": {
+    "modelo-ConviteNoiteEstreladaDaAmandaKetlhyn": {
+      "slug": "modelo-ConviteNoiteEstreladaDaAmandaKetlhyn",
+      "name": "Noite estrelada",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/modelo-ConviteNoiteEstreladaDaAmandaKetlhyn/",
+      "coverPath": "assets/cover.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        },
+        {
+          "path": "assets/slide2.mp4",
+          "label": "Cena 2",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/music.mp3"
+    },
+    "modelo-julia1Anos": {
+      "slug": "modelo-julia1Anos",
+      "name": "Fazendinha",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/modelo-julia1Anos/",
+      "coverPath": "assets/cover.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Erro no vídeo",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/music.mp3"
+    },
+    "modelo-BiancaRibeiro15Anos": {
+      "slug": "modelo-BiancaRibeiro15Anos",
+      "name": "Floral",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/modelo-BiancaRibeiro15Anos/",
+      "coverPath": "assets/cover.png",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Abertura (Vídeo)",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/music.mp3"
+    },
+    "modelo-Yasmin15Anos": {
+      "slug": "modelo-Yasmin15Anos",
+      "name": "Tipo pôr do sol, elementos do mar",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/modelo-Yasmin15Anos/",
+      "coverPath": "assets/cover.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Abertura (Vídeo)",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/music.mp3"
+    },
+    "modelo-Aniversariojulia15Anos": {
+      "slug": "modelo-Aniversariojulia15Anos",
+      "name": "Country",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/modelo-Aniversariojulia15Anos/",
+      "coverPath": "assets/cover.png",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Abertura (Vídeo)",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/music.mp3"
+    },
+    "modelo-Julia-Marcelo": {
+      "slug": "modelo-Julia-Marcelo",
+      "name": "Elegante",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/modelo-Julia-Marcelo/",
+      "coverPath": "assets/cover.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Abertura (Vídeo)",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/music.mp3"
+    },
+    "modelo-Julia-15-Anos": {
+      "slug": "modelo-Julia-15-Anos",
+      "name": "Floresta Encantada (atmosfera mágica e elegante)",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/modelo-Julia-15-Anos/",
+      "coverPath": "assets/cover.png",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Abertura (Vídeo)",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/music.mp3"
+    },
+    "modelo-Julia-Marcelo-5": {
+      "slug": "modelo-Julia-Marcelo-5",
+      "name": "Elegante",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/modelo-Julia-Marcelo-5/",
+      "coverPath": "assets/cover.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Abertura (Vídeo)",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/aaawdwad.mp3"
+    },
+    "modelo-HelenaDuarte40Anos-2": {
+      "slug": "modelo-HelenaDuarte40Anos-2",
+      "name": "Realeza luxuosa, majestosa e sofisticada",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/modelo-HelenaDuarte40Anos-2/",
+      "coverPath": "assets/cover.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Abertura (Vídeo)",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/music.mp3"
+    },
+    "modelo-Mirian-Marcos": {
+      "slug": "modelo-Mirian-Marcos",
+      "name": "Tropical",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/modelo-Mirian-Marcos/",
+      "coverPath": "assets/cover.png",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Abertura (Vídeo)",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/music.mp3"
+    },
+    "modelo-LiviaSthepanny15Anos-4": {
+      "slug": "modelo-LiviaSthepanny15Anos-4",
+      "name": "Elegante",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/modelo-LiviaSthepanny15Anos-4/",
+      "coverPath": "assets/cover.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Abertura (Vídeo)",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/music.mp3"
+    },
+    "modelo-JanainaNunes50Anos": {
+      "slug": "modelo-JanainaNunes50Anos",
+      "name": "Pool Party",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/modelo-JanainaNunes50Anos/",
+      "coverPath": "assets/cover.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Abertura (Video)",
+          "type": "video"
+        },
+        {
+          "path": "assets/slide2.jpg",
+          "label": "Convite Especial",
+          "type": "image"
+        },
+        {
+          "path": "assets/slide3.mp4",
+          "label": "Cena Tematica",
+          "type": "video"
+        },
+        {
+          "path": "assets/slide4.jpg",
+          "label": "Prepare-se",
+          "type": "image"
+        }
+      ],
+      "musicPath": "assets/music.mp3"
+    },
+    "modelo-Milly15Anos": {
+      "slug": "modelo-Milly15Anos",
+      "name": "Disney 100 Anos",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/modelo-Milly15Anos/",
+      "coverPath": "assets/cover.png",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Abertura (Vídeo)",
+          "type": "video"
+        },
+        {
+          "path": "assets/slide2.mp4",
+          "label": "Cena 2",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/music.mp3"
+    },
+    "modelo-Livia-Andre": {
+      "slug": "modelo-Livia-Andre",
+      "name": "Flores de sakura",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/modelo-Livia-Andre/",
+      "coverPath": "assets/cover.png",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Abertura (Vídeo)",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/music.mp3"
+    },
+    "modelo-15Anos-Gabriela": {
+      "slug": "modelo-15Anos-Gabriela",
+      "name": "Elegante",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/modelo-15Anos-Gabriela/",
+      "coverPath": "assets/cover.png",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Erro",
+          "type": "video"
+        },
+        {
+          "path": "assets/slide2.jpg",
+          "label": "Convite Especial",
+          "type": "image"
+        },
+        {
+          "path": "assets/slide3.mp4",
+          "label": "Cena 3",
+          "type": "video"
+        },
+        {
+          "path": "assets/slide4.mp4",
+          "label": "Erro",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/music.mp3"
+    },
+    "modelo-Gabriel14Anos": {
+      "slug": "modelo-Gabriel14Anos",
+      "name": "Marvel Super Heróis",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/modelo-Gabriel14Anos/",
+      "coverPath": "assets/cover.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Abertura (Vídeo)",
+          "type": "video"
+        },
+        {
+          "path": "assets/slide2.jpg",
+          "label": "Convite Especial",
+          "type": "image"
+        },
+        {
+          "path": "assets/slide3.mp4",
+          "label": "Cena Tematica",
+          "type": "video"
+        },
+        {
+          "path": "assets/slide4.jpg",
+          "label": "Prepare-se",
+          "type": "image"
+        }
+      ],
+      "musicPath": "assets/music.mp3"
+    },
+    "modelo-Yasmim-15Anos": {
+      "slug": "modelo-Yasmim-15Anos",
+      "name": "Baile de máscaras com borboletas",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/modelo-Yasmim-15Anos/",
+      "coverPath": "assets/cover.png",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Abertura (Video)",
+          "type": "video"
+        },
+        {
+          "path": "assets/slide2.jpg",
+          "label": "Convite Especial",
+          "type": "image"
+        },
+        {
+          "path": "assets/slide3.mp4",
+          "label": "Cena Tematica",
+          "type": "video"
+        },
+        {
+          "path": "assets/slide4.mp4",
+          "label": "Cena 4",
+          "type": "video"
+        },
+        {
+          "path": "assets/slide5.jpg",
+          "label": "Prepare-se",
+          "type": "image"
+        }
+      ],
+      "musicPath": "assets/music.mp3"
+    },
+    "modelo-MariaClara15Anos": {
+      "slug": "modelo-MariaClara15Anos",
+      "name": "Princesa",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/modelo-MariaClara15Anos/",
+      "coverPath": "assets/cover.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Abertura (Vídeo)",
+          "type": "video"
+        },
+        {
+          "path": "assets/slide2.jpg",
+          "label": "Convite Especial",
+          "type": "image"
+        },
+        {
+          "path": "assets/slide3.mp4",
+          "label": "Cena Temática",
+          "type": "video"
+        },
+        {
+          "path": "assets/slide4.jpg",
+          "label": "Prepare-se",
+          "type": "image"
+        }
+      ],
+      "musicPath": "assets/music.mp3"
+    },
+    "modelo-LiviaAlmeida60Anos": {
+      "slug": "modelo-LiviaAlmeida60Anos",
+      "name": "Elegante",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/modelo-LiviaAlmeida60Anos/",
+      "coverPath": "assets/cover.png",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Abertura (Vídeo)",
+          "type": "video"
+        },
+        {
+          "path": "assets/slide2.jpg",
+          "label": "Convite Especial",
+          "type": "image"
+        },
+        {
+          "path": "assets/slide3.jpg",
+          "label": "Prepare-se",
+          "type": "image"
+        }
+      ],
+      "musicPath": "assets/music.mp3"
+    },
+    "modelo-Karol15Anos": {
+      "slug": "modelo-Karol15Anos",
+      "name": "Elegante",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/modelo-Karol15Anos/",
+      "coverPath": "assets/cover.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Abertura (Video)",
+          "type": "video"
+        },
+        {
+          "path": "assets/slide2.jpg",
+          "label": "Convite Especial",
+          "type": "image"
+        },
+        {
+          "path": "assets/slide3.mp4",
+          "label": "Cena Tematica",
+          "type": "video"
+        },
+        {
+          "path": "assets/slide4.jpg",
+          "label": "Prepare-se",
+          "type": "image"
+        }
+      ],
+      "musicPath": "assets/music.mp3"
+    },
+    "modelo-Andreza-e-Julio": {
+      "slug": "modelo-Andreza-e-Julio",
+      "name": "Elegante, Elementos de casamento no design",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/modelo-Andreza-e-Julio/",
+      "coverPath": "assets/cover.png",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Abertura (Vídeo)",
+          "type": "video"
+        },
+        {
+          "path": "assets/slide2.mp4",
+          "label": "Cena 2",
+          "type": "video"
+        },
+        {
+          "path": "assets/slide3.mp4",
+          "label": "Cena 3",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/music.mp3"
+    },
+    "modelo-Livia15Anos": {
+      "slug": "modelo-Livia15Anos",
+      "name": "Elegante",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/modelo-Livia15Anos/",
+      "coverPath": "assets/cover.png",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Abertura (Vídeo)",
+          "type": "video"
+        }
+      ],
+      "musicPath": ""
+    },
+    "modelo-Julia-15Anos": {
+      "slug": "modelo-Julia-15Anos",
+      "name": "Jardim secreto",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/modelo-Julia-15Anos/",
+      "coverPath": "assets/cover.png",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        },
+        {
+          "path": "assets/slide2.jpg",
+          "label": "Convite Especial",
+          "type": "image"
+        },
+        {
+          "path": "assets/slide3.mp4",
+          "label": "Cena Temática",
+          "type": "video"
+        },
+        {
+          "path": "assets/slide4.jpg",
+          "label": "Prepare-se",
+          "type": "image"
+        }
+      ],
+      "musicPath": "assets/music.mp3"
+    },
+    "modelo-Casamento-Preto-Dourado": {
+      "slug": "modelo-Casamento-Preto-Dourado",
+      "name": "Elegante",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/modelo-Casamento-Preto-Dourado/",
+      "coverPath": "assets/cover.png",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Abertura (Vídeo)",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/music.mp3"
+    },
+    "modelo-Skye-Rosa-2": {
+      "slug": "modelo-Skye-Rosa-2",
+      "name": "Skye",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/modelo-Skye-Rosa-2/",
+      "coverPath": "assets/cover.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Abertura (Vídeo)",
+          "type": "video"
+        },
+        {
+          "path": "assets/slide2.mp4",
+          "label": "Cena 2",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/music.mp3"
+    },
+    "modelo-CircoRosa-2": {
+      "slug": "modelo-CircoRosa-2",
+      "name": "Circo",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/modelo-CircoRosa-2/",
+      "coverPath": "assets/cover.png",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Abertura (Vídeo)",
+          "type": "video"
+        },
+        {
+          "path": "assets/slide2.jpg",
+          "label": "Convite Especial",
+          "type": "image"
+        },
+        {
+          "path": "assets/slide4.jpg",
+          "label": "Prepare-se",
+          "type": "image"
+        }
+      ],
+      "musicPath": "assets/music.mp3"
+    },
+    "modelo-Helena7Anos": {
+      "slug": "modelo-Helena7Anos",
+      "name": "Princesa",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/modelo-Helena7Anos/",
+      "coverPath": "assets/cover.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Abertura (Vídeo)",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/music.mp3"
+    },
+    "modelo-SarahEvelen15Anos": {
+      "slug": "modelo-SarahEvelen15Anos",
+      "name": "Floral",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/modelo-SarahEvelen15Anos/",
+      "coverPath": "assets/cover.png",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Abertura (Video)",
+          "type": "video"
+        },
+        {
+          "path": "assets/slide2.jpg",
+          "label": "Convite Especial",
+          "type": "image"
+        },
+        {
+          "path": "assets/slide3.jpg",
+          "label": "Prepare-se",
+          "type": "image"
+        }
+      ],
+      "musicPath": "assets/music.mp3"
+    },
+    "modelo-beatrizmoura15anos": {
+      "slug": "modelo-beatrizmoura15anos",
+      "name": "BeatrizMoura15Anos",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/modelo-beatrizmoura15anos/",
+      "coverPath": "assets/cover.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/musica.mp3"
+    },
+    "modelo-Yasmin-e-Claudio": {
+      "slug": "modelo-Yasmin-e-Claudio",
+      "name": "Yasmin-e-Claudio",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/modelo-Yasmin-e-Claudio/",
+      "coverPath": "assets/cover.png",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/music.mp3"
+    },
+    "modelo-Casamento-Isaias-e-Sonia": {
+      "slug": "modelo-Casamento-Isaias-e-Sonia",
+      "name": "Casamento-Isaias-e-Sonia",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/modelo-Casamento-Isaias-e-Sonia/",
+      "coverPath": "assets/cover.png",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Abertura (Vídeo)",
+          "type": "video"
+        },
+        {
+          "path": "assets/slide2.mp4",
+          "label": "Cena 2",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/music.mp3"
+    },
+    "modelo-Anthony-Caleb-1Ano": {
+      "slug": "modelo-Anthony-Caleb-1Ano",
+      "name": "Carros",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/modelo-Anthony-Caleb-1Ano/",
+      "coverPath": "assets/cover.png",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        },
+        {
+          "path": "assets/slide2.mp4",
+          "label": "Cena 2",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/music.mp3"
+    },
+    "modelo-YasminZara15Anos": {
+      "slug": "modelo-YasminZara15Anos",
+      "name": "Baile de Máscaras",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/modelo-YasminZara15Anos/",
+      "coverPath": "assets/cover.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        },
+        {
+          "path": "assets/slide2.mp4",
+          "label": "Cena 2",
+          "type": "video"
+        },
+        {
+          "path": "assets/slide3.mp4",
+          "label": "Cena 3",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/music.mp3"
+    },
+    "modelo-Teca-Anos60": {
+      "slug": "modelo-Teca-Anos60",
+      "name": "Anos 60",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/modelo-Teca-Anos60/",
+      "coverPath": "assets/cover.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/music.mp3"
+    },
+    "modelo-Larissa15Anos": {
+      "slug": "modelo-Larissa15Anos",
+      "name": "Floral",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/modelo-Larissa15Anos/",
+      "coverPath": "assets/cover.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Abertura (Vídeo)",
+          "type": "video"
+        },
+        {
+          "path": "assets/slide2.jpg",
+          "label": "Convite Especial",
+          "type": "image"
+        },
+        {
+          "path": "assets/slide3.mp4",
+          "label": "Cena Temática",
+          "type": "video"
+        },
+        {
+          "path": "assets/slide4.jpg",
+          "label": "Prepare-se",
+          "type": "image"
+        }
+      ],
+      "musicPath": ""
+    },
+    "modelo-JulianaBusson35Anos": {
+      "slug": "modelo-JulianaBusson35Anos",
+      "name": "Bridgerton",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/modelo-JulianaBusson35Anos/",
+      "coverPath": "assets/cover.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        },
+        {
+          "path": "assets/slide2.jpg",
+          "label": "Cena 2",
+          "type": "image"
+        },
+        {
+          "path": "assets/slide3.mp4",
+          "label": "Cena 3",
+          "type": "video"
+        },
+        {
+          "path": "assets/slide4.mp4",
+          "label": "Cena 4",
+          "type": "video"
+        },
+        {
+          "path": "assets/slide5.jpg",
+          "label": "Cena 5",
+          "type": "image"
+        }
+      ],
+      "musicPath": "assets/music.mp3"
+    },
+    "modelo-Julianne15Anos": {
+      "slug": "modelo-Julianne15Anos",
+      "name": "Floral",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/modelo-Julianne15Anos/",
+      "coverPath": "assets/cover_gen.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1_abertura.mp4",
+          "label": "Abertura (Video)",
+          "type": "video"
+        },
+        {
+          "path": "assets/slide2_convite_especial.jpg",
+          "label": "Convite Especial",
+          "type": "image"
+        },
+        {
+          "path": "assets/slide3_cena.mp4",
+          "label": "Cena Tematica",
+          "type": "video"
+        },
+        {
+          "path": "assets/slide4_prepare.jpg",
+          "label": "Prepare-se",
+          "type": "image"
+        }
+      ],
+      "musicPath": "assets/music.mp3"
+    },
+    "modelo-Gabriella-15Anos": {
+      "slug": "modelo-Gabriella-15Anos",
+      "name": "Floral",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/modelo-Gabriella-15Anos/",
+      "coverPath": "assets/cover.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Abertura (Vídeo)",
+          "type": "video"
+        },
+        {
+          "path": "assets/slide2.jpg",
+          "label": "Convite Especial",
+          "type": "image"
+        },
+        {
+          "path": "assets/slide4.jpg",
+          "label": "Prepare-se",
+          "type": "image"
+        }
+      ],
+      "musicPath": ""
+    },
+    "modelo-Enf-BrunaEduarda-Formatura": {
+      "slug": "modelo-Enf-BrunaEduarda-Formatura",
+      "name": "Formatura Enfermagem",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/modelo-Enf-BrunaEduarda-Formatura/",
+      "coverPath": "assets/cover.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        },
+        {
+          "path": "assets/slide2.mp4",
+          "label": "Cena 2",
+          "type": "video"
+        },
+        {
+          "path": "assets/slide3.mp4",
+          "label": "Cena 3",
+          "type": "video"
+        },
+        {
+          "path": "assets/slide4.mp4",
+          "label": "Cena 4",
+          "type": "video"
+        },
+        {
+          "path": "assets/slide5.mp4",
+          "label": "Cena 5",
+          "type": "video"
+        },
+        {
+          "path": "assets/slide6.mp4",
+          "label": "Cena 6",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/music.mp3"
+    },
+    "modelo-ester15anos": {
+      "slug": "modelo-ester15anos",
+      "name": "15 Anos",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/modelo-ester15anos/",
+      "coverPath": "assets/cover.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        },
+        {
+          "path": "assets/slide2.mp4",
+          "label": "Cena 2",
+          "type": "video"
+        },
+        {
+          "path": "assets/slide3.mp4",
+          "label": "Cena 3",
+          "type": "video"
+        },
+        {
+          "path": "assets/slide4.mp4",
+          "label": "Cena 4",
+          "type": "video"
+        },
+        {
+          "path": "assets/slide5.mp4",
+          "label": "Cena 5",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/music.mp3"
+    },
+    "modelo-Ester-15Anos": {
+      "slug": "modelo-Ester-15Anos",
+      "name": "Jardim encantado",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/modelo-Ester-15Anos/",
+      "coverPath": "assets/cover.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Abertura (Vídeo)",
+          "type": "video"
+        },
+        {
+          "path": "assets/slide2.jpg",
+          "label": "Convite Especial",
+          "type": "image"
+        },
+        {
+          "path": "assets/slide3.mp4",
+          "label": "Cena 3",
+          "type": "video"
+        },
+        {
+          "path": "assets/slide4.jpg",
+          "label": "Prepare-se",
+          "type": "image"
+        }
+      ],
+      "musicPath": "assets/music.mp3"
+    },
+    "modelo-Emanuelle-1Ano": {
+      "slug": "modelo-Emanuelle-1Ano",
+      "name": "Castelo Encantado",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/modelo-Emanuelle-1Ano/",
+      "coverPath": "assets/cover.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        },
+        {
+          "path": "assets/slide2.mp4",
+          "label": "Cena 2",
+          "type": "video"
+        },
+        {
+          "path": "assets/slide3.jpg",
+          "label": "Cena 3",
+          "type": "image"
+        },
+        {
+          "path": "assets/slide4.mp4",
+          "label": "Cena 4",
+          "type": "video"
+        },
+        {
+          "path": "assets/slide5.jpg",
+          "label": "Cena 5",
+          "type": "image"
+        }
+      ],
+      "musicPath": "assets/music.mp3"
+    },
+    "modelo-EliCavalcante40Anos": {
+      "slug": "modelo-EliCavalcante40Anos",
+      "name": "Baile de Máscaras",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/modelo-EliCavalcante40Anos/",
+      "coverPath": "assets/cover.png",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/music.mp3"
+    },
+    "modelo-Catarina15Anos": {
+      "slug": "modelo-Catarina15Anos",
+      "name": "Castelo Encantado",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/modelo-Catarina15Anos/",
+      "coverPath": "assets/cover.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        },
+        {
+          "path": "assets/slide2.jpg",
+          "label": "Cena 2",
+          "type": "image"
+        },
+        {
+          "path": "assets/slide3.mp4",
+          "label": "Cena 3",
+          "type": "video"
+        },
+        {
+          "path": "assets/slide4.jpg",
+          "label": "Cena 4",
+          "type": "image"
+        }
+      ],
+      "musicPath": "assets/music.mp3"
+    },
+    "modelo-Antonella1Ano": {
+      "slug": "modelo-Antonella1Ano",
+      "name": "Floral Elegante",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/modelo-Antonella1Ano/",
+      "coverPath": "assets/cover.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/music.mp3"
+    },
+    "modelo-beatriz15anos": {
+      "slug": "modelo-beatriz15anos",
+      "name": "15 Anos",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/modelo-beatriz15anos/",
+      "coverPath": "assets/cover.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        },
+        {
+          "path": "assets/slide2.mp4",
+          "label": "Cena 2",
+          "type": "video"
+        },
+        {
+          "path": "assets/slide3.mp4",
+          "label": "Cena 3",
+          "type": "video"
+        },
+        {
+          "path": "assets/slide4.mp4",
+          "label": "Cena 4",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/music.mp3"
+    },
+    "modelo-AniversarioGabriella-15Anos": {
+      "slug": "modelo-AniversarioGabriella-15Anos",
+      "name": "Baile de Inverno",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/modelo-AniversarioGabriella-15Anos/",
+      "coverPath": "assets/cover_gen.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1_abertura.mp4",
+          "label": "Abertura (Vídeo)",
+          "type": "video"
+        },
+        {
+          "path": "assets/slide2_convite_especial.jpg",
+          "label": "Convite Especial",
+          "type": "image"
+        },
+        {
+          "path": "assets/slide3_cena.mp4",
+          "label": "Cena Temática",
+          "type": "video"
+        },
+        {
+          "path": "assets/slide4_prepare.jpg",
+          "label": "Prepare-se",
+          "type": "image"
+        }
+      ],
+      "musicPath": "assets/music.mp3"
+    },
+    "modelo-AnnaFlavia-15Anos": {
+      "slug": "modelo-AnnaFlavia-15Anos",
+      "name": "Floral Mágico",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/modelo-AnnaFlavia-15Anos/",
+      "coverPath": "assets/cover.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        },
+        {
+          "path": "assets/slide2.mp4",
+          "label": "Cena 2",
+          "type": "video"
+        },
+        {
+          "path": "assets/slide3.jpg",
+          "label": "Cena 3",
+          "type": "image"
+        },
+        {
+          "path": "assets/slide4.jpg",
+          "label": "Cena 4",
+          "type": "image"
+        }
+      ],
+      "musicPath": "assets/music.mp3"
+    },
+    "modelo-anajulia15anos": {
+      "slug": "modelo-anajulia15anos",
+      "name": "Enrolados Rapunzel",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/modelo-anajulia15anos/",
+      "coverPath": "assets/cover.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        },
+        {
+          "path": "assets/slide2.mp4",
+          "label": "Cena 2",
+          "type": "video"
+        },
+        {
+          "path": "assets/slide3.mp4",
+          "label": "Cena 3",
+          "type": "video"
+        },
+        {
+          "path": "assets/slide4.mp4",
+          "label": "Cena 4",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/music.mp3"
+    },
+    "modelo-Alessandra50Anos": {
+      "slug": "modelo-Alessandra50Anos",
+      "name": "Salão Elegante",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/modelo-Alessandra50Anos/",
+      "coverPath": "assets/cover.png",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        },
+        {
+          "path": "assets/slide2.mp4",
+          "label": "Cena 2",
+          "type": "video"
+        },
+        {
+          "path": "assets/slide3.mp4",
+          "label": "Cena 3",
+          "type": "video"
+        },
+        {
+          "path": "assets/slide4.mp4",
+          "label": "Cena 4",
+          "type": "video"
+        },
+        {
+          "path": "assets/slide5.mp4",
+          "label": "Cena 5",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/music.mp3"
+    },
+    "modelo-AliceAlves-15Anos": {
+      "slug": "modelo-AliceAlves-15Anos",
+      "name": "Jardim Encantado",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/modelo-AliceAlves-15Anos/",
+      "coverPath": "assets/cover.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/music.mp3"
+    },
+    "modelo-ana-julia15anos": {
+      "slug": "modelo-ana-julia15anos",
+      "name": "15 Anos",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/modelo-ana-julia15anos/",
+      "coverPath": "assets/cover.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/music.mp3"
+    },
+    "modelo-15Anos-Julia": {
+      "slug": "modelo-15Anos-Julia",
+      "name": "Harry Potter Hogwarts",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/modelo-15Anos-Julia/",
+      "coverPath": "assets/cover.png",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        },
+        {
+          "path": "assets/slide2.jpg",
+          "label": "Cena 2",
+          "type": "image"
+        },
+        {
+          "path": "assets/slide3.mp4",
+          "label": "Cena 3",
+          "type": "video"
+        },
+        {
+          "path": "assets/slide4.mp4",
+          "label": "Cena 4",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/music.mp3"
+    },
+    "modelo-15Anos-Alicia": {
+      "slug": "modelo-15Anos-Alicia",
+      "name": "Jardim Encantado",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/modelo-15Anos-Alicia/",
+      "coverPath": "assets/cover.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/music.mp3"
+    },
+    "modelo-Sarah-Vieira-15Anos": {
+      "slug": "modelo-Sarah-Vieira-15Anos",
+      "name": "Floral",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/modelo-Sarah-Vieira-15Anos/",
+      "coverPath": "assets/cover.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/music.mp3"
+    },
+    "modelo-alicenopaisdasmaravilhas": {
+      "slug": "modelo-alicenopaisdasmaravilhas",
+      "name": "alicenopaisdasmaravilhas",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/modelo-alicenopaisdasmaravilhas/",
+      "coverPath": "assets/capa.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/musica.mp3"
+    },
+    "modelo-aniversario-sereia": {
+      "slug": "modelo-aniversario-sereia",
+      "name": "aniversario sereia",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/modelo-aniversario-sereia/",
+      "coverPath": "assets/capa.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/musica.mp3"
+    },
+    "modelo-auroramalevola": {
+      "slug": "modelo-auroramalevola",
+      "name": "auroramalevola",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/modelo-auroramalevola/",
+      "coverPath": "assets/capa.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/musica.mp3"
+    },
+    "Modelo-Azul-Prata-Floral": {
+      "slug": "Modelo-Azul-Prata-Floral",
+      "name": "Azul  Prata  Floral",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/Modelo-Azul-Prata-Floral/",
+      "coverPath": "assets/capa.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/musica.mp3"
+    },
+    "modelo-azul-floral": {
+      "slug": "modelo-azul-floral",
+      "name": "azul floral",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/modelo-azul-floral/",
+      "coverPath": "assets/capa.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/musica.mp3"
+    },
+    "modelo-azulcomamarelopastel": {
+      "slug": "modelo-azulcomamarelopastel",
+      "name": "azulcomamarelopastel",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/modelo-azulcomamarelopastel/",
+      "coverPath": "assets/capa.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/musica.mp3"
+    },
+    "Modelo-BaileMascaras-Vermelho": {
+      "slug": "Modelo-BaileMascaras-Vermelho",
+      "name": "Baile Mascaras  Vermelho",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/Modelo-BaileMascaras-Vermelho/",
+      "coverPath": "assets/capa.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/musica.mp3"
+    },
+    "modelo-bailedemascara": {
+      "slug": "modelo-bailedemascara",
+      "name": "bailedemascara",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/modelo-bailedemascara/",
+      "coverPath": "assets/capa.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/musica.mp3"
+    },
+    "modelo-bailedemascarapreta": {
+      "slug": "modelo-bailedemascarapreta",
+      "name": "bailedemascarapreta",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/modelo-bailedemascarapreta/",
+      "coverPath": "assets/capa.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/musica.mp3"
+    },
+    "modelo-baileinverno-AberturaCurta": {
+      "slug": "modelo-baileinverno-AberturaCurta",
+      "name": "baileinverno  Abertura Curta",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/modelo-baileinverno-AberturaCurta/",
+      "coverPath": "assets/capa.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/musica.mp3"
+    },
+    "Modelo-Bela-e-a-Fera": {
+      "slug": "Modelo-Bela-e-a-Fera",
+      "name": "Bela e a  Fera",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/Modelo-Bela-e-a-Fera/",
+      "coverPath": "assets/capa.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/musica.mp3"
+    },
+    "Modelo-Borboleta-Azul-Prata": {
+      "slug": "Modelo-Borboleta-Azul-Prata",
+      "name": "Borboleta  Azul  Prata",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/Modelo-Borboleta-Azul-Prata/",
+      "coverPath": "assets/capa.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/musica.mp3"
+    },
+    "modelo-brancodourado": {
+      "slug": "modelo-brancodourado",
+      "name": "brancodourado",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/modelo-brancodourado/",
+      "coverPath": "assets/capa.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/musica.mp3"
+    },
+    "modelo-casamento-azul-branco": {
+      "slug": "modelo-casamento-azul-branco",
+      "name": "casamento azul branco",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/modelo-casamento-azul-branco/",
+      "coverPath": "assets/capa.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/musica.mp3"
+    },
+    "Modelo-casamento-branco-dourado": {
+      "slug": "Modelo-casamento-branco-dourado",
+      "name": "casamento branco dourado",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/Modelo-casamento-branco-dourado/",
+      "coverPath": "assets/capa.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/musica.mp3"
+    },
+    "modelo-casamentominimalista": {
+      "slug": "modelo-casamentominimalista",
+      "name": "casamentominimalista",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/modelo-casamentominimalista/",
+      "coverPath": "assets/capa.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/musica.mp3"
+    },
+    "modelo-cinderela": {
+      "slug": "modelo-cinderela",
+      "name": "cinderela",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/modelo-cinderela/",
+      "coverPath": "assets/capa.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/musica.mp3"
+    },
+    "modelo-coraline": {
+      "slug": "modelo-coraline",
+      "name": "coraline",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/modelo-coraline/",
+      "coverPath": "assets/capa.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/musica.mp3"
+    },
+    "modelo-debutante-azul-floral": {
+      "slug": "modelo-debutante-azul-floral",
+      "name": "debutante azul floral",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/modelo-debutante-azul-floral/",
+      "coverPath": "assets/capa.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/musica.mp3"
+    },
+    "modelo-debutante-rosa-azul": {
+      "slug": "modelo-debutante-rosa-azul",
+      "name": "debutante rosa azul",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/modelo-debutante-rosa-azul/",
+      "coverPath": "assets/capa.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/musica.mp3"
+    },
+    "modelo-debutante-verde-esmeralda": {
+      "slug": "modelo-debutante-verde-esmeralda",
+      "name": "debutante verde esmeralda",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/modelo-debutante-verde-esmeralda/",
+      "coverPath": "assets/capa.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/musica.mp3"
+    },
+    "modelo-enrolados-rapunzel": {
+      "slug": "modelo-enrolados-rapunzel",
+      "name": "enrolados rapunzel",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/modelo-enrolados-rapunzel/",
+      "coverPath": "assets/capa.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/musica.mp3"
+    },
+    "modelo-formatura": {
+      "slug": "modelo-formatura",
+      "name": "formatura",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/modelo-formatura/",
+      "coverPath": "assets/capa.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/musica.mp3"
+    },
+    "modelo-galo": {
+      "slug": "modelo-galo",
+      "name": "galo",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/modelo-galo/",
+      "coverPath": "assets/capa.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/musica.mp3"
+    },
+    "VanGogh-Júlia-15Anos": {
+      "slug": "VanGogh-Júlia-15Anos",
+      "name": "Júlia",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/VanGogh-J%C3%BAlia-15Anos/",
+      "coverPath": "assets/capa.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/musica.mp3"
+    },
+    "modelo-Las-Vegas": {
+      "slug": "modelo-Las-Vegas",
+      "name": "Las  Vegas",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/modelo-Las-Vegas/",
+      "coverPath": "assets/capa.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/musica.mp3"
+    },
+    "Modelo-Lilas-Prata": {
+      "slug": "Modelo-Lilas-Prata",
+      "name": "Lilas  Prata",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/Modelo-Lilas-Prata/",
+      "coverPath": "assets/capa.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/musica.mp3"
+    },
+    "modelo-lilascomdourado": {
+      "slug": "modelo-lilascomdourado",
+      "name": "lilascomdourado",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/modelo-lilascomdourado/",
+      "coverPath": "assets/capa.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/musica.mp3"
+    },
+    "modelo-lilascomdouradoerosa": {
+      "slug": "modelo-lilascomdouradoerosa",
+      "name": "lilascomdouradoerosa",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/modelo-lilascomdouradoerosa/",
+      "coverPath": "assets/capa.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/musica.mp3"
+    },
+    "modelo-marromdourado": {
+      "slug": "modelo-marromdourado",
+      "name": "marromdourado",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/modelo-marromdourado/",
+      "coverPath": "assets/capa.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/musica.mp3"
+    },
+    "15Anos-Alladin": {
+      "slug": "15Anos-Alladin",
+      "name": "Modelo Alladin Abertura Longa",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/15Anos-Alladin/",
+      "coverPath": "assets/capa.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/musica.mp3"
+    },
+    "Lucca-Astronauta": {
+      "slug": "Lucca-Astronauta",
+      "name": "Modelo Astronauta",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/Lucca-Astronauta/",
+      "coverPath": "assets/capa.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/musica.mp3"
+    },
+    "Lívia15Anos-BaileDeInverno": {
+      "slug": "Lívia15Anos-BaileDeInverno",
+      "name": "Modelo Baile de Inverno",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/L%C3%ADvia15Anos-BaileDeInverno/",
+      "coverPath": "assets/capa.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/musica.mp3"
+    },
+    "Mariana15Anos-Baile": {
+      "slug": "Mariana15Anos-Baile",
+      "name": "Modelo Baile de Máscara",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/Mariana15Anos-Baile/",
+      "coverPath": "assets/capa.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/musica.mp3"
+    },
+    "Emanuela15Anos-BaileMascara": {
+      "slug": "Emanuela15Anos-BaileMascara",
+      "name": "Modelo Baile de Máscaras",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/Emanuela15Anos-BaileMascara/",
+      "coverPath": "assets/capa.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/musica.mp3"
+    },
+    "Fransisca50Anos": {
+      "slug": "Fransisca50Anos",
+      "name": "Modelo Baile de Máscaras Rosa",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/Fransisca50Anos/",
+      "coverPath": "assets/capa.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/musica.mp3"
+    },
+    "Cibele15Anos": {
+      "slug": "Cibele15Anos",
+      "name": "Modelo Castelo Encantado",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/Cibele15Anos/",
+      "coverPath": "assets/capa.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/musica.mp3"
+    },
+    "MariaElise15Anos": {
+      "slug": "MariaElise15Anos",
+      "name": "Modelo Castelo Jardim Encantado",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/MariaElise15Anos/",
+      "coverPath": "assets/capa.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/musica.mp3"
+    },
+    "AliceVitória15Anos": {
+      "slug": "AliceVitória15Anos",
+      "name": "Modelo Céu Estrelado",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/AliceVit%C3%B3ria15Anos/",
+      "coverPath": "assets/capa.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/musica.mp3"
+    },
+    "Alanna15Anos-CeuEstrelado": {
+      "slug": "Alanna15Anos-CeuEstrelado",
+      "name": "Modelo Céu Estrelado",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/Alanna15Anos-CeuEstrelado/",
+      "coverPath": "assets/capa.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/musica.mp3"
+    },
+    "Antônia60Anos": {
+      "slug": "Antônia60Anos",
+      "name": "Modelo Chanel",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/Ant%C3%B4nia60Anos/",
+      "coverPath": "assets/capa.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/musica.mp3"
+    },
+    "AliciaMarinelli15Anos": {
+      "slug": "AliciaMarinelli15Anos",
+      "name": "Modelo Cinema Elegante",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/AliciaMarinelli15Anos/",
+      "coverPath": "assets/capa.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/musica.mp3"
+    },
+    "Lauany15Anos-JardimEncanto": {
+      "slug": "Lauany15Anos-JardimEncanto",
+      "name": "Modelo Encanto Isabela",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/Lauany15Anos-JardimEncanto/",
+      "coverPath": "assets/capa.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/musica.mp3"
+    },
+    "Luara15Anos-JardimDaIntimidade": {
+      "slug": "Luara15Anos-JardimDaIntimidade",
+      "name": "Modelo Encontro com Jesus",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/Luara15Anos-JardimDaIntimidade/",
+      "coverPath": "assets/capa.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/musica.mp3"
+    },
+    "AgathaCristina15Anos": {
+      "slug": "AgathaCristina15Anos",
+      "name": "Modelo Floral Azul e Dourado",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/AgathaCristina15Anos/",
+      "coverPath": "assets/capa.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/musica.mp3"
+    },
+    "Alice10Anos-EmilyVick": {
+      "slug": "Alice10Anos-EmilyVick",
+      "name": "Modelo Floral Borboletas",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/Alice10Anos-EmilyVick/",
+      "coverPath": "assets/capa.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/musica.mp3"
+    },
+    "Maria15anos-AzulDourado": {
+      "slug": "Maria15anos-AzulDourado",
+      "name": "Modelo Floral Borboletas",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/Maria15anos-AzulDourado/",
+      "coverPath": "assets/capa.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/musica.mp3"
+    },
+    "Isadora15Anos-Serenity": {
+      "slug": "Isadora15Anos-Serenity",
+      "name": "Modelo Floral Borboletas",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/Isadora15Anos-Serenity/",
+      "coverPath": "assets/capa.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/musica.mp3"
+    },
+    "AlixValentina15Anos": {
+      "slug": "AlixValentina15Anos",
+      "name": "Modelo Floral Borboletas",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/AlixValentina15Anos/",
+      "coverPath": "assets/capa.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/musica.mp3"
+    },
+    "Graziella15Anos": {
+      "slug": "Graziella15Anos",
+      "name": "Modelo Floral Elegante",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/Graziella15Anos/",
+      "coverPath": "assets/capa.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/musica.mp3"
+    },
+    "15Anos-Caroline": {
+      "slug": "15Anos-Caroline",
+      "name": "Modelo Floral Lilás",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/15Anos-Caroline/",
+      "coverPath": "assets/capa.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/musica.mp3"
+    },
+    "Giovana15Anos-Azul": {
+      "slug": "Giovana15Anos-Azul",
+      "name": "Modelo Floral Minimalista",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/Giovana15Anos-Azul/",
+      "coverPath": "assets/capa.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/musica.mp3"
+    },
+    "LavíniaGregório15Anos": {
+      "slug": "LavíniaGregório15Anos",
+      "name": "Modelo Floral Salão Elegante",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/Lav%C3%ADniaGreg%C3%B3rio15Anos/",
+      "coverPath": "assets/capa.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/musica.mp3"
+    },
+    "Evelyn15Anos": {
+      "slug": "Evelyn15Anos",
+      "name": "Modelo Fluminense Bosque",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/Evelyn15Anos/",
+      "coverPath": "assets/capa.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/musica.mp3"
+    },
+    "Dra-Yasmin": {
+      "slug": "Dra-Yasmin",
+      "name": "Modelo Formatura Odontologia",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/Dra-Yasmin/",
+      "coverPath": "assets/capa.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/musica.mp3"
+    },
+    "Felipe15Anos-GALO": {
+      "slug": "Felipe15Anos-GALO",
+      "name": "Modelo Futebol Galo",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/Felipe15Anos-GALO/",
+      "coverPath": "assets/folha_preenchida.jpg",
+      "slides": [],
+      "musicPath": "assets/musica.mp3"
+    },
+    "Alícia15Anos-JardimEncantado": {
+      "slug": "Alícia15Anos-JardimEncantado",
+      "name": "Modelo Jardim Encantado",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/Al%C3%ADcia15Anos-JardimEncantado/",
+      "coverPath": "assets/capa.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/musica.mp3"
+    },
+    "MariaEduarda-15-Anos": {
+      "slug": "MariaEduarda-15-Anos",
+      "name": "Modelo Jardim Encantado Luxo",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/MariaEduarda-15-Anos/",
+      "coverPath": "assets/capa.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/musica.mp3"
+    },
+    "Antonio&Erika-Casamento": {
+      "slug": "Antonio&Erika-Casamento",
+      "name": "Modelo Lavanda",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/Antonio%26Erika-Casamento/",
+      "coverPath": "assets/capa.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/musica.mp3"
+    },
+    "LaraHamphreis15Anos": {
+      "slug": "LaraHamphreis15Anos",
+      "name": "Modelo Marinho Fundo do Mar",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/LaraHamphreis15Anos/",
+      "coverPath": "assets/capa.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/musica.mp3"
+    },
+    "JoséRoberto60Anos": {
+      "slug": "JoséRoberto60Anos",
+      "name": "Modelo Mundo de Geppeto",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/Jos%C3%A9Roberto60Anos/",
+      "coverPath": "assets/capa.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/musica.mp3"
+    },
+    "Duda15Anos": {
+      "slug": "Duda15Anos",
+      "name": "Modelo Paris",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/Duda15Anos/",
+      "coverPath": "assets/capa.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/musica.mp3"
+    },
+    "MariaLara15Anos": {
+      "slug": "MariaLara15Anos",
+      "name": "Modelo Pergaminho Castelo Encantado",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/MariaLara15Anos/",
+      "coverPath": "assets/capa.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/musica.mp3"
+    },
+    "JuliaNakahara15Anos": {
+      "slug": "JuliaNakahara15Anos",
+      "name": "Modelo Portão Jardim Encantado",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/JuliaNakahara15Anos/",
+      "coverPath": "assets/capa.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/musica.mp3"
+    },
+    "EduardaVasques15Anos": {
+      "slug": "EduardaVasques15Anos",
+      "name": "Modelo Preto e Branco",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/EduardaVasques15Anos/",
+      "coverPath": "assets/capa.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/musica.mp3"
+    },
+    "Dione&Danilo-Casamento": {
+      "slug": "Dione&Danilo-Casamento",
+      "name": "Modelo Salão Elegante",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/Dione%26Danilo-Casamento/",
+      "coverPath": "assets/capa.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/musica.mp3"
+    },
+    "Elisete&Luciano-Casamento": {
+      "slug": "Elisete&Luciano-Casamento",
+      "name": "Modelo Salão Elegante Rosa",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/Elisete%26Luciano-Casamento/",
+      "coverPath": "assets/capa.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/musica.mp3"
+    },
+    "Edmilson60Anos": {
+      "slug": "Edmilson60Anos",
+      "name": "Modelo Show Musical",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/Edmilson60Anos/",
+      "coverPath": "assets/capa.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/musica.mp3"
+    },
+    "15Anos-AnaClara": {
+      "slug": "15Anos-AnaClara",
+      "name": "Modelo Tardezinha Pôr do Sol",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/15Anos-AnaClara/",
+      "coverPath": "assets/capa.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/musica.mp3"
+    },
+    "Morena-15Anos": {
+      "slug": "Morena-15Anos",
+      "name": "Morena",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/Morena-15Anos/",
+      "coverPath": "assets/capa.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/musica.mp3"
+    },
+    "MorenaClarah15Anos": {
+      "slug": "MorenaClarah15Anos",
+      "name": "Morena Clarah",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/MorenaClarah15Anos/",
+      "coverPath": "assets/capa.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/musica.mp3"
+    },
+    "Modelo-Neon-Laranja-Verde": {
+      "slug": "Modelo-Neon-Laranja-Verde",
+      "name": "Neon  Laranja  Verde",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/Modelo-Neon-Laranja-Verde/",
+      "coverPath": "assets/capa.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/musica.mp3"
+    },
+    "modelo-noiteestrelada": {
+      "slug": "modelo-noiteestrelada",
+      "name": "noiteestrelada",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/modelo-noiteestrelada/",
+      "coverPath": "assets/capa.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/musica.mp3"
+    },
+    "modelo-palmeiras": {
+      "slug": "modelo-palmeiras",
+      "name": "palmeiras",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/modelo-palmeiras/",
+      "coverPath": "assets/slide1.mp4",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/musica.mp3"
+    },
+    "Patrícia": {
+      "slug": "Patrícia",
+      "name": "Patrícia",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/Patr%C3%ADcia/",
+      "coverPath": "assets/capa.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/musica.mp3"
+    },
+    "modelo-portão-jardim": {
+      "slug": "modelo-portão-jardim",
+      "name": "portão jardim",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/modelo-port%C3%A3o-jardim/",
+      "coverPath": "assets/capa.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/musica.mp3"
+    },
+    "modelo-rosadouradoespelho": {
+      "slug": "modelo-rosadouradoespelho",
+      "name": "rosadouradoespelho",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/modelo-rosadouradoespelho/",
+      "coverPath": "assets/capa.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/musica.mp3"
+    },
+    "modelo-rosaprata": {
+      "slug": "modelo-rosaprata",
+      "name": "rosaprata",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/modelo-rosaprata/",
+      "coverPath": "assets/cover.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/music.mp3"
+    },
+    "modelo-rosegold": {
+      "slug": "modelo-rosegold",
+      "name": "rosegold",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/modelo-rosegold/",
+      "coverPath": "assets/cover.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/music.mp3"
+    },
+    "Rosely": {
+      "slug": "Rosely",
+      "name": "Rosely Ferrante",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/Rosely/",
+      "coverPath": "assets/capa.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/musica.mp3"
+    },
+    "modelo-roxoedourado": {
+      "slug": "modelo-roxoedourado",
+      "name": "roxoedourado",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/modelo-roxoedourado/",
+      "coverPath": "assets/cover.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/music.mp3"
+    },
+    "Sara15Anos-HP": {
+      "slug": "Sara15Anos-HP",
+      "name": "Sara",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/Sara15Anos-HP/",
+      "coverPath": "assets/capa.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/musica.mp3"
+    },
+    "modelo-tropical": {
+      "slug": "modelo-tropical",
+      "name": "tropical",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/modelo-tropical/",
+      "coverPath": "assets/capa.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/musica.mp3"
+    },
+    "Modelo-VanGogh": {
+      "slug": "Modelo-VanGogh",
+      "name": "Van Gogh",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/Modelo-VanGogh/",
+      "coverPath": "assets/capa.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/musica.mp3"
+    },
+    "VitoriaFabia-15Anos": {
+      "slug": "VitoriaFabia-15Anos",
+      "name": "Vitória Fabia",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/VitoriaFabia-15Anos/",
+      "coverPath": "assets/capa.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/musica.mp3"
+    },
+    "modelo-vitoriasecrets": {
+      "slug": "modelo-vitoriasecrets",
+      "name": "vitoriasecrets",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/modelo-vitoriasecrets/",
+      "coverPath": "assets/cover.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/music.mp3"
+    },
+    "Yasmin15Anos-Ado": {
+      "slug": "Yasmin15Anos-Ado",
+      "name": "Yasmin",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/Yasmin15Anos-Ado/",
+      "coverPath": "assets/capa.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/musica.mp3"
+    },
+    "YasminHabib15Anos": {
+      "slug": "YasminHabib15Anos",
+      "name": "Yasmin Habib",
+      "baseUrl": "https://pedidos.mforge.com.br/modelos/YasminHabib15Anos/",
+      "coverPath": "assets/capa.jpg",
+      "slides": [
+        {
+          "path": "assets/slide1.mp4",
+          "label": "Cena 1",
+          "type": "video"
+        }
+      ],
+      "musicPath": "assets/musica.mp3"
+    }
+  },
+  "referenceDemo": {
+    "name": "Convite de demonstração do site",
+    "baseUrl": "https://pedidos.mforge.com.br/Convite_Temp/",
+    "coverPath": "assets/capa.jpg",
+    "slides": [
+      {
+        "path": "assets/slide1.mp4",
+        "label": "Cena 1",
+        "type": "video"
+      },
+      {
+        "path": "assets/slide2.mp4",
+        "label": "Cena 2",
+        "type": "video"
+      },
+      {
+        "path": "assets/Slide3.mp4",
+        "label": "Cena 3",
+        "type": "video"
+      },
+      {
+        "path": "assets/slide4.mp4",
+        "label": "Cena 4",
+        "type": "video"
+      },
+      {
+        "path": "assets/slide5.mp4",
+        "label": "Cena 5",
+        "type": "video"
+      }
+    ],
+    "musicPath": "assets/musica.mp3"
+  }
+}

@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; script-src 'unsafe-inline'; connect-src 'none'; form-action 'none';">
+  <title>Painel RSVP — demonstração local</title>
+  <link rel="stylesheet" href="../../css/fonts.css?v=20261002-1">
+  <link rel="stylesheet" href="builder-v8-dashboard.css">
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="#" aria-label="MForge Lista de Convidados">
+      <span class="brand-mark">M</span><span><strong>MForge</strong><small>Lista de Convidados</small></span>
+    </a>
+    <div class="topbar-actions">
+      <span class="connection"><i></i> Exemplo local</span>
+      <button class="icon-button" type="button" aria-label="Notificações de exemplo" disabled>♧</button>
+      <button class="icon-button" type="button" aria-label="Atualizar dados" disabled>↻</button>
+      <button class="button button-primary" type="button" disabled>Baixar PDF</button>
+    </div>
+  </header>
+  <main class="shell">
+    <section class="hero">
+      <div><p class="eyebrow">Painel privado · exemplo</p><h1>Uma celebração especial</h1><p class="hero-meta"><span>15 de novembro de 2026</span><span aria-hidden="true">•</span><span>convite-demo</span></p></div>
+      <div class="expiry">Exemplo visual do painel recebido pelo anfitrião. As respostas são fictícias.</div>
+    </section>
+    <section class="summary-grid" aria-label="Resumo das confirmações">
+      <article class="metric"><span>Confirmados</span><strong>3</strong><small>pessoas presentes</small></article>
+      <article class="metric"><span>Não irão</span><strong>1</strong><small>respostas negativas</small></article>
+      <article class="metric"><span>Aguardando</span><strong>2</strong><small>nomes sem resposta</small></article>
+    </section>
+    <div class="workspace">
+      <section class="main-column">
+        <article class="panel">
+          <div class="panel-heading"><div><p class="eyebrow">Respostas</p><h2>Confirmações recebidas</h2></div><span class="count-badge">4 respostas de exemplo</span></div>
+          <div class="table-scroll"><table><thead><tr><th>Convidado</th><th>Status</th><th>WhatsApp</th><th>Atualizado</th></tr></thead>
+            <tbody>
+              <tr><td data-label="Convidado">Marina Costa</td><td data-label="Status">Confirmada</td><td data-label="WhatsApp">—</td><td data-label="Atualizado">Hoje, 10:42</td></tr>
+              <tr><td data-label="Convidado">Pedro Almeida</td><td data-label="Status">Confirmada</td><td data-label="WhatsApp">—</td><td data-label="Atualizado">Ontem, 18:15</td></tr>
+              <tr><td data-label="Convidado">Beatriz Nogueira</td><td data-label="Status">Não irá</td><td data-label="WhatsApp">—</td><td data-label="Atualizado">Ontem, 12:08</td></tr>
+              <tr><td data-label="Convidado">Lucas Ribeiro</td><td data-label="Status">Confirmada</td><td data-label="WhatsApp">—</td><td data-label="Atualizado">12 out., 09:24</td></tr>
+            </tbody>
+          </table></div>
+        </article>
+        <article class="panel" id="guest-list-panel">
+          <div class="panel-heading"><div><p class="eyebrow">Lista permitida</p><h2>Nomes cadastrados</h2></div><span class="count-badge" id="guest-count">6 nomes</span></div>
+          <div class="guest-toolbar"><input class="input" id="guest-filter" type="search" placeholder="Buscar nome" aria-label="Buscar nome"></div>
+          <div class="guest-list" id="guest-list">
+            <div class="guest-row" data-name="Marina Costa"><span><strong>Marina Costa</strong><small>Convite individual</small></span><span class="guest-response yes">Confirmada</span></div>
+            <div class="guest-row" data-name="Marina Couto"><span><strong>Marina Couto</strong><small>Convite individual</small></span><span class="guest-response">Aguardando</span></div>
+            <div class="guest-row" data-name="Pedro Almeida"><span><strong>Pedro Almeida</strong><small>Convite individual</small></span><span class="guest-response yes">Confirmada</span></div>
+            <div class="guest-row" data-name="Beatriz Nogueira"><span><strong>Beatriz Nogueira</strong><small>Convite individual</small></span><span class="guest-response no">Não irá</span></div>
+            <div class="guest-row" data-name="Lucas Ribeiro"><span><strong>Lucas Ribeiro</strong><small>Convite individual</small></span><span class="guest-response yes">Confirmada</span></div>
+            <div class="guest-row" data-name="Isabela Martins"><span><strong>Isabela Martins</strong><small>Convite individual</small></span><span class="guest-response">Aguardando</span></div>
+          </div>
+        </article>
+      </section>
+      <aside class="side-column">
+        <article class="panel settings-panel"><div class="panel-heading"><div><p class="eyebrow">Comportamento</p><h2>Configurações</h2></div></div>
+          <div class="settings-panel-body" style="padding:20px">
+            <div class="switch-row"><span><strong>Limitação por nome</strong><small>O convidado escolhe um nome cadastrado.</small></span><input type="checkbox" checked disabled><i aria-hidden="true"></i></div>
+            <div class="switch-row"><span><strong>WhatsApp do convidado</strong><small>Não solicitado neste exemplo.</small></span><input type="checkbox" disabled><i aria-hidden="true"></i></div>
+            <div class="switch-row"><span><strong>Confirmar acompanhantes</strong><small>Após responder, pode registrar outras pessoas.</small></span><input type="checkbox" checked disabled><i aria-hidden="true"></i></div>
+            <p class="settings-note">Prévia somente para visualização. Alterações não são salvas.</p>
+          </div>
+        </article>
+        <article class="panel add-panel"><div class="panel-heading"><div><p class="eyebrow">Controle de acesso</p><h2>Adicionar convidado</h2></div></div><div class="settings-panel-body" style="padding:20px"><label class="field"><span>Nomes dos convidados</span><textarea class="input guest-names-input" placeholder="Ex.: Maria Oliveira, João Couto" disabled></textarea></label><button class="button button-secondary button-full" type="button" disabled>Adicionar à lista</button></div></article>
+      </aside>
+    </div>
+  </main>
+  <script>
+    const filter=document.getElementById('guest-filter');filter.addEventListener('input',()=>{const q=filter.value.trim().toLocaleLowerCase('pt-BR');document.querySelectorAll('.guest-row').forEach(row=>row.hidden=!row.dataset.name.toLocaleLowerCase('pt-BR').includes(q));});
+  </script>
+</body>
+</html>

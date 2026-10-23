@@ -1,0 +1,1814 @@
+[
+  {
+    "slug": "modelo-ConviteNoiteEstreladaDaAmandaKetlhyn",
+    "name": "Noite estrelada",
+    "tipo": "Aniversário",
+    "tema": "Noite estrelada",
+    "paleta_cores": "Lilás, Preto e Prata",
+    "capa_path": "assets/cover.jpg",
+    "capa_type": "image",
+    "aberturas": [
+      "curta",
+      "longa"
+    ]
+  },
+  {
+    "slug": "modelo-julia1Anos",
+    "name": "Fazendinha",
+    "tipo": "Aniversário",
+    "tema": "Fazendinha",
+    "paleta_cores": "Cores aquarela e suaves",
+    "capa_path": "assets/cover.jpg",
+    "capa_type": "image",
+    "aberturas": [
+      "curta"
+    ]
+  },
+  {
+    "slug": "modelo-BiancaRibeiro15Anos",
+    "name": "Floral",
+    "tipo": "Debutante",
+    "tema": "Floral",
+    "paleta_cores": "Rosé, dourado e rosa bebê",
+    "capa_path": "assets/cover.png",
+    "capa_type": "image",
+    "aberturas": [
+      "curta"
+    ]
+  },
+  {
+    "slug": "modelo-Yasmin15Anos",
+    "name": "Tipo pôr do sol, elementos do mar",
+    "tipo": "Aniversário",
+    "tema": "Tipo pôr do sol, elementos do mar",
+    "paleta_cores": "Azul serenity, laranja candy e pérola",
+    "capa_path": "assets/cover.jpg",
+    "capa_type": "image",
+    "aberturas": [
+      "curta"
+    ]
+  },
+  {
+    "slug": "modelo-Aniversariojulia15Anos",
+    "name": "Country",
+    "tipo": "Aniversário",
+    "tema": "Country",
+    "paleta_cores": "Country",
+    "capa_path": "assets/cover.png",
+    "capa_type": "image",
+    "aberturas": [
+      "curta"
+    ]
+  },
+  {
+    "slug": "modelo-Julia-Marcelo",
+    "name": "Elegante",
+    "tipo": "Casamento",
+    "tema": "Elegante",
+    "paleta_cores": "Prata",
+    "capa_path": "assets/cover.jpg",
+    "capa_type": "image",
+    "aberturas": [
+      "curta"
+    ]
+  },
+  {
+    "slug": "modelo-Julia-15-Anos",
+    "name": "Floresta Encantada (atmosfera mágica e elegante)",
+    "tipo": "Aniversário",
+    "tema": "Floresta Encantada (atmosfera mágica e elegante)",
+    "paleta_cores": "Verde",
+    "capa_path": "assets/cover.png",
+    "capa_type": "image",
+    "aberturas": [
+      "curta"
+    ]
+  },
+  {
+    "slug": "modelo-Julia-Marcelo-5",
+    "name": "Elegante",
+    "tipo": "Casamento",
+    "tema": "Elegante",
+    "paleta_cores": "Rosa clássico, rosa canela e marsala",
+    "capa_path": "assets/cover.jpg",
+    "capa_type": "image",
+    "aberturas": [
+      "curta"
+    ]
+  },
+  {
+    "slug": "modelo-HelenaDuarte40Anos-2",
+    "name": "Realeza luxuosa, majestosa e sofisticada",
+    "tipo": "Aniversário",
+    "tema": "Realeza luxuosa, majestosa e sofisticada",
+    "paleta_cores": "Preto com Dourado",
+    "capa_path": "assets/cover.jpg",
+    "capa_type": "image",
+    "aberturas": [
+      "curta"
+    ]
+  },
+  {
+    "slug": "modelo-Mirian-Marcos",
+    "name": "Tropical",
+    "tipo": "Casamento",
+    "tema": "Tropical",
+    "paleta_cores": "Verde musgo escuro, magenta, rosa pink, laranja vibrante e salmão claro",
+    "capa_path": "assets/cover.png",
+    "capa_type": "image",
+    "aberturas": [
+      "curta"
+    ]
+  },
+  {
+    "slug": "modelo-LiviaSthepanny15Anos-4",
+    "name": "Elegante",
+    "tipo": "Aniversário",
+    "tema": "Elegante",
+    "paleta_cores": "Rosê, dourado e preto",
+    "capa_path": "assets/cover.jpg",
+    "capa_type": "image",
+    "aberturas": [
+      "curta"
+    ]
+  },
+  {
+    "slug": "modelo-JanainaNunes50Anos",
+    "name": "Pool Party",
+    "tipo": "Aniversário",
+    "tema": "Pool Party",
+    "paleta_cores": "Cores variadas",
+    "capa_path": "assets/cover.jpg",
+    "capa_type": "image",
+    "aberturas": []
+  },
+  {
+    "slug": "modelo-Milly15Anos",
+    "name": "Disney 100 Anos",
+    "tipo": "Aniversário",
+    "tema": "Disney 100 Anos",
+    "paleta_cores": "Azul escuro, prata, dourado e branco",
+    "capa_path": "assets/cover.png",
+    "capa_type": "image",
+    "aberturas": [
+      "curta",
+      "longa"
+    ]
+  },
+  {
+    "slug": "modelo-Livia-Andre",
+    "name": "Flores de sakura",
+    "tipo": "Casamento",
+    "tema": "Flores de sakura",
+    "paleta_cores": "Branco, rosa e madeira",
+    "capa_path": "assets/cover.png",
+    "capa_type": "image",
+    "aberturas": [
+      "curta"
+    ]
+  },
+  {
+    "slug": "modelo-15Anos-Gabriela",
+    "name": "Elegante",
+    "tipo": "Debutante",
+    "tema": "Elegante",
+    "paleta_cores": "Lilás",
+    "capa_path": "assets/cover.png",
+    "capa_type": "image",
+    "aberturas": [
+      "curta",
+      "longa"
+    ]
+  },
+  {
+    "slug": "modelo-Gabriel14Anos",
+    "name": "Marvel Super Heróis",
+    "tipo": "Aniversário",
+    "tema": "Marvel Super Heróis ",
+    "paleta_cores": "Vermelho, azul, dourado e preto",
+    "capa_path": "assets/cover.jpg",
+    "capa_type": "image",
+    "aberturas": [
+      "curta",
+      "longa"
+    ]
+  },
+  {
+    "slug": "modelo-Yasmim-15Anos",
+    "name": "Baile de máscaras com borboletas",
+    "tipo": "Aniversário",
+    "tema": "Baile de máscaras com borboletas",
+    "paleta_cores": "Azul royal com prata",
+    "capa_path": "assets/cover.png",
+    "capa_type": "image",
+    "aberturas": [
+      "curta",
+      "longa"
+    ]
+  },
+  {
+    "slug": "modelo-MariaClara15Anos",
+    "name": "Princesa",
+    "tipo": "Debutante",
+    "tema": "Princesa",
+    "paleta_cores": "Verde com Dourado",
+    "capa_path": "assets/cover.jpg",
+    "capa_type": "image",
+    "aberturas": [
+      "curta",
+      "longa"
+    ]
+  },
+  {
+    "slug": "modelo-LiviaAlmeida60Anos",
+    "name": "Elegante",
+    "tipo": "Aniversário",
+    "tema": "Elegante",
+    "paleta_cores": "Terracota, creme e dourado",
+    "capa_path": "assets/cover.png",
+    "capa_type": "image",
+    "aberturas": [
+      "curta",
+      "longa"
+    ]
+  },
+  {
+    "slug": "modelo-Karol15Anos",
+    "name": "Elegante",
+    "tipo": "Debutante",
+    "tema": "Elegante",
+    "paleta_cores": "Marsala vinho com pink",
+    "capa_path": "assets/cover.jpg",
+    "capa_type": "image",
+    "aberturas": [
+      "curta",
+      "longa"
+    ]
+  },
+  {
+    "slug": "modelo-Andreza-e-Julio",
+    "name": "Elegante, Elementos de casamento no design",
+    "tipo": "Casamento",
+    "tema": "Elegante, Elementos de casamento no design",
+    "paleta_cores": " branca, verde oliva e algumas flores no tom rose",
+    "capa_path": "assets/cover.png",
+    "capa_type": "image",
+    "aberturas": [
+      "curta",
+      "longa"
+    ]
+  },
+  {
+    "slug": "modelo-Livia15Anos",
+    "name": "Elegante",
+    "tipo": "Aniversário",
+    "tema": "Elegante",
+    "paleta_cores": "Vermelho, branco e prata",
+    "capa_path": "assets/cover.png",
+    "capa_type": "image",
+    "aberturas": [
+      "curta"
+    ]
+  },
+  {
+    "slug": "modelo-Julia-15Anos",
+    "name": "Jardim secreto",
+    "tipo": "Debutante",
+    "tema": "Jardim secreto",
+    "paleta_cores": "Azul escuro com cobre",
+    "capa_path": "assets/cover.png",
+    "capa_type": "image",
+    "aberturas": [
+      "curta",
+      "longa"
+    ]
+  },
+  {
+    "slug": "modelo-Casamento-Preto-Dourado",
+    "name": "Elegante",
+    "tipo": "Casamento",
+    "tema": "Elegante",
+    "paleta_cores": "Preto e Dourado",
+    "capa_path": "assets/cover.png",
+    "capa_type": "image",
+    "aberturas": [
+      "curta"
+    ]
+  },
+  {
+    "slug": "modelo-Skye-Rosa-2",
+    "name": "Skye",
+    "tipo": "Debutante",
+    "tema": "Skye",
+    "paleta_cores": "Tons de Rosa e metal",
+    "capa_path": "assets/cover.jpg",
+    "capa_type": "image",
+    "aberturas": [
+      "curta",
+      "longa"
+    ]
+  },
+  {
+    "slug": "modelo-CircoRosa-2",
+    "name": "Circo",
+    "tipo": "Debutante",
+    "tema": "Circo",
+    "paleta_cores": "Tons de Rosa",
+    "capa_path": "assets/cover.png",
+    "capa_type": "image",
+    "aberturas": [
+      "curta",
+      "longa"
+    ]
+  },
+  {
+    "slug": "modelo-Helena7Anos",
+    "name": "Princesa",
+    "tipo": "Aniversário",
+    "tema": "Princesa",
+    "paleta_cores": "Vermelho, azul royal, amarelo, dourado, verde-floresta e off-white",
+    "capa_path": "assets/cover.jpg",
+    "capa_type": "image",
+    "aberturas": [
+      "curta"
+    ]
+  },
+  {
+    "slug": "modelo-SarahEvelen15Anos",
+    "name": "Floral",
+    "tipo": "Aniversário",
+    "tema": "Floral",
+    "paleta_cores": "Rosa Pink e Rosa Claro",
+    "capa_path": "assets/cover.png",
+    "capa_type": "image",
+    "aberturas": [
+      "curta",
+      "longa"
+    ]
+  },
+  {
+    "slug": "modelo-beatrizmoura15anos",
+    "name": "BeatrizMoura15Anos",
+    "tipo": "Aniversário",
+    "tema": "BeatrizMoura15Anos",
+    "paleta_cores": "Rosa bebê e dourado",
+    "capa_path": "assets/cover.jpg",
+    "capa_type": "image",
+    "aberturas": [
+      "curta"
+    ]
+  },
+  {
+    "slug": "modelo-Yasmin-e-Claudio",
+    "name": "Yasmin-e-Claudio",
+    "tipo": "Casamento",
+    "tema": "",
+    "paleta_cores": "",
+    "capa_path": "assets/cover.png",
+    "capa_type": "image",
+    "aberturas": [
+      "curta"
+    ]
+  },
+  {
+    "slug": "modelo-Casamento-Isaias-e-Sonia",
+    "name": "Casamento-Isaias-e-Sonia",
+    "tipo": "Casamento",
+    "tema": "",
+    "paleta_cores": "",
+    "capa_path": "assets/cover.png",
+    "capa_type": "image",
+    "aberturas": [
+      "curta",
+      "longa"
+    ]
+  },
+  {
+    "slug": "modelo-Anthony-Caleb-1Ano",
+    "name": "Carros",
+    "tipo": "Aniversário",
+    "tema": "Carros",
+    "paleta_cores": "❤️ Vermelho ferrari. 🔵 Azul petróleo. 💛 Amarelo mostarda. 🤍 Off-white (creme). 🩶 Cinza claro. 🤎 Bege areia. 🌿 Verde sálvia (para um toque delicado).",
+    "capa_path": "assets/cover.png",
+    "capa_type": "image",
+    "aberturas": [
+      "curta",
+      "longa"
+    ]
+  },
+  {
+    "slug": "modelo-YasminZara15Anos",
+    "name": "Baile de Máscaras",
+    "tipo": "Aniversário",
+    "tema": "Baile de Máscaras",
+    "paleta_cores": "Vermelho e Dourado",
+    "capa_path": "assets/cover.jpg",
+    "capa_type": "image",
+    "aberturas": [
+      "curta",
+      "longa"
+    ]
+  },
+  {
+    "slug": "modelo-Teca-Anos60",
+    "name": "Anos 60",
+    "tipo": "Aniversário",
+    "tema": "Anos 60",
+    "paleta_cores": "Pink, Bege e Preto",
+    "capa_path": "assets/cover.jpg",
+    "capa_type": "image",
+    "aberturas": [
+      "curta"
+    ]
+  },
+  {
+    "slug": "modelo-Larissa15Anos",
+    "name": "Floral",
+    "tipo": "Aniversário",
+    "tema": "Floral",
+    "paleta_cores": "Dourado, Lilás e Rosé",
+    "capa_path": "assets/cover.jpg",
+    "capa_type": "image",
+    "aberturas": [
+      "curta",
+      "longa"
+    ]
+  },
+  {
+    "slug": "modelo-JulianaBusson35Anos",
+    "name": "Bridgerton",
+    "tipo": "Aniversário",
+    "tema": "Bridgerton",
+    "paleta_cores": "Azul e Dourado",
+    "capa_path": "assets/cover.jpg",
+    "capa_type": "image",
+    "aberturas": [
+      "curta",
+      "longa"
+    ]
+  },
+  {
+    "slug": "modelo-Julianne15Anos",
+    "name": "Floral",
+    "tipo": "Aniversário",
+    "tema": "Floral",
+    "paleta_cores": "Rosa com Azul e Prata",
+    "capa_path": "assets/cover_gen.jpg",
+    "capa_type": "image",
+    "aberturas": [
+      "curta",
+      "longa"
+    ]
+  },
+  {
+    "slug": "modelo-Gabriella-15Anos",
+    "name": "Floral",
+    "tipo": "Aniversário",
+    "tema": "Floral",
+    "paleta_cores": "Masala",
+    "capa_path": "assets/cover.jpg",
+    "capa_type": "image",
+    "aberturas": [
+      "curta",
+      "longa"
+    ]
+  },
+  {
+    "slug": "modelo-Enf-BrunaEduarda-Formatura",
+    "name": "Formatura Enfermagem",
+    "tipo": "Formatura",
+    "tema": "Formatura Enfermagem",
+    "paleta_cores": "Verde e Dourado",
+    "capa_path": "assets/cover.jpg",
+    "capa_type": "image",
+    "aberturas": [
+      "curta",
+      "longa"
+    ]
+  },
+  {
+    "slug": "modelo-ester15anos",
+    "name": "15 Anos",
+    "tipo": "Aniversário",
+    "tema": "15 Anos",
+    "paleta_cores": "Azul com Prata",
+    "capa_path": "assets/cover.jpg",
+    "capa_type": "image",
+    "aberturas": [
+      "curta",
+      "longa"
+    ]
+  },
+  {
+    "slug": "modelo-Ester-15Anos",
+    "name": "Jardim encantado",
+    "tipo": "Debutante",
+    "tema": "Jardim encantado",
+    "paleta_cores": "Rosa com Branco, Verde claro e Dourado",
+    "capa_path": "assets/cover.jpg",
+    "capa_type": "image",
+    "aberturas": [
+      "curta",
+      "longa"
+    ]
+  },
+  {
+    "slug": "modelo-Emanuelle-1Ano",
+    "name": "Castelo Encantado",
+    "tipo": "Aniversário",
+    "tema": "Castelo Encantado",
+    "paleta_cores": "Azul, Lilás e Prata",
+    "capa_path": "assets/cover.jpg",
+    "capa_type": "image",
+    "aberturas": [
+      "curta",
+      "longa"
+    ]
+  },
+  {
+    "slug": "modelo-EliCavalcante40Anos",
+    "name": "Baile de Máscaras",
+    "tipo": "Aniversário",
+    "tema": "Baile de Máscaras",
+    "paleta_cores": "Vermelho, Preto e Dourado",
+    "capa_path": "assets/cover.png",
+    "capa_type": "image",
+    "aberturas": [
+      "curta"
+    ]
+  },
+  {
+    "slug": "modelo-Catarina15Anos",
+    "name": "Castelo Encantado",
+    "tipo": "Aniversário",
+    "tema": "Castelo Encantado",
+    "paleta_cores": "Verde Água, branco e Dourado",
+    "capa_path": "assets/cover.jpg",
+    "capa_type": "image",
+    "aberturas": [
+      "curta",
+      "longa"
+    ]
+  },
+  {
+    "slug": "modelo-Antonella1Ano",
+    "name": "Floral Elegante",
+    "tipo": "Aniversário",
+    "tema": "Floral Elegante",
+    "paleta_cores": "Rosa e Dourado",
+    "capa_path": "assets/cover.jpg",
+    "capa_type": "image",
+    "aberturas": [
+      "curta"
+    ]
+  },
+  {
+    "slug": "modelo-beatriz15anos",
+    "name": "15 Anos",
+    "tipo": "Aniversário",
+    "tema": "15 Anos",
+    "paleta_cores": "Vermelho/Dourado",
+    "capa_path": "assets/cover.jpg",
+    "capa_type": "image",
+    "aberturas": [
+      "curta",
+      "longa"
+    ]
+  },
+  {
+    "slug": "modelo-AniversarioGabriella-15Anos",
+    "name": "Baile de Inverno",
+    "tipo": "Aniversário",
+    "tema": "Baile de Inverno",
+    "paleta_cores": "Prata, Azul e Branco",
+    "capa_path": "assets/cover_gen.jpg",
+    "capa_type": "image",
+    "aberturas": [
+      "curta",
+      "longa"
+    ]
+  },
+  {
+    "slug": "modelo-AnnaFlavia-15Anos",
+    "name": "Floral Mágico",
+    "tipo": "Aniversário",
+    "tema": "Floral Mágico",
+    "paleta_cores": "Azul, Rosa, Verde Água e Pérola",
+    "capa_path": "assets/cover.jpg",
+    "capa_type": "image",
+    "aberturas": [
+      "curta",
+      "longa"
+    ]
+  },
+  {
+    "slug": "modelo-anajulia15anos",
+    "name": "Enrolados Rapunzel",
+    "tipo": "Aniversário",
+    "tema": "Enrolados Rapunzel",
+    "paleta_cores": "Lilás e Dourado",
+    "capa_path": "assets/cover.jpg",
+    "capa_type": "image",
+    "aberturas": [
+      "curta",
+      "longa"
+    ]
+  },
+  {
+    "slug": "modelo-Alessandra50Anos",
+    "name": "Salão Elegante",
+    "tipo": "Aniversário",
+    "tema": "Salão Elegante",
+    "paleta_cores": "Preto e Dourado",
+    "capa_path": "assets/cover.png",
+    "capa_type": "image",
+    "aberturas": [
+      "curta",
+      "longa"
+    ]
+  },
+  {
+    "slug": "modelo-AliceAlves-15Anos",
+    "name": "Jardim Encantado",
+    "tipo": "Aniversário",
+    "tema": "Jardim Encantado",
+    "paleta_cores": "Rosa pink deep, prata, rosa bebê",
+    "capa_path": "assets/cover.jpg",
+    "capa_type": "image",
+    "aberturas": [
+      "curta"
+    ]
+  },
+  {
+    "slug": "modelo-ana-julia15anos",
+    "name": "15 Anos",
+    "tipo": "Aniversário",
+    "tema": "15 Anos",
+    "paleta_cores": "Azul Marinho, Rosa Bebê e Prata",
+    "capa_path": "assets/cover.jpg",
+    "capa_type": "image",
+    "aberturas": [
+      "curta"
+    ]
+  },
+  {
+    "slug": "modelo-15Anos-Julia",
+    "name": "Harry Potter Hogwarts",
+    "tipo": "Aniversário",
+    "tema": "Harry Potter Hogwarts",
+    "paleta_cores": "Azul Marinho e Preto",
+    "capa_path": "assets/cover.png",
+    "capa_type": "image",
+    "aberturas": [
+      "curta",
+      "longa"
+    ]
+  },
+  {
+    "slug": "modelo-15Anos-Alicia",
+    "name": "Jardim Encantado",
+    "tipo": "Aniversário",
+    "tema": "Jardim Encantado",
+    "paleta_cores": "Rosé Gold e Branco",
+    "capa_path": "assets/cover.jpg",
+    "capa_type": "image",
+    "aberturas": [
+      "curta"
+    ]
+  },
+  {
+    "slug": "modelo-Sarah-Vieira-15Anos",
+    "name": "Floral",
+    "tipo": "Debutante",
+    "tema": "Floral",
+    "paleta_cores": "Azul com Branco e Prata",
+    "capa_path": "assets/cover.jpg",
+    "capa_type": "image",
+    "aberturas": [
+      "curta"
+    ]
+  },
+  {
+    "slug": "modelo-alicenopaisdasmaravilhas",
+    "name": "alicenopaisdasmaravilhas",
+    "tipo": "Aniversário",
+    "tema": "Alice no País das Maravilhas",
+    "paleta_cores": "",
+    "capa_path": "assets/capa.jpg",
+    "capa_type": null,
+    "aberturas": [
+      "curta"
+    ]
+  },
+  {
+    "slug": "modelo-aniversario-sereia",
+    "name": "aniversario sereia",
+    "tipo": "Aniversário",
+    "tema": "Sereia",
+    "paleta_cores": "",
+    "capa_path": "assets/capa.jpg",
+    "capa_type": null,
+    "aberturas": [
+      "curta"
+    ]
+  },
+  {
+    "slug": "modelo-auroramalevola",
+    "name": "auroramalevola",
+    "tipo": "Aniversário",
+    "tema": "Aurora Malévola",
+    "paleta_cores": "Aurora",
+    "capa_path": "assets/capa.jpg",
+    "capa_type": null,
+    "aberturas": [
+      "curta",
+      "longa"
+    ]
+  },
+  {
+    "slug": "Modelo-Azul-Prata-Floral",
+    "name": "Azul  Prata  Floral",
+    "tipo": "Aniversário",
+    "tema": "",
+    "paleta_cores": "Azul Prata Floral",
+    "capa_path": "assets/capa.jpg",
+    "capa_type": null,
+    "aberturas": [
+      "curta",
+      "longa"
+    ]
+  },
+  {
+    "slug": "modelo-azul-floral",
+    "name": "azul floral",
+    "tipo": "Aniversário",
+    "tema": "",
+    "paleta_cores": "Azul Floral",
+    "capa_path": "assets/capa.jpg",
+    "capa_type": null,
+    "aberturas": [
+      "curta"
+    ]
+  },
+  {
+    "slug": "modelo-azulcomamarelopastel",
+    "name": "azulcomamarelopastel",
+    "tipo": "Aniversário",
+    "tema": "",
+    "paleta_cores": "Azul com Amarelo Pastel",
+    "capa_path": "assets/capa.jpg",
+    "capa_type": null,
+    "aberturas": [
+      "curta"
+    ]
+  },
+  {
+    "slug": "Modelo-BaileMascaras-Vermelho",
+    "name": "Baile Mascaras  Vermelho",
+    "tipo": "Aniversário",
+    "tema": "Baile de Máscaras",
+    "paleta_cores": "Vermelho",
+    "capa_path": "assets/capa.jpg",
+    "capa_type": null,
+    "aberturas": [
+      "curta"
+    ]
+  },
+  {
+    "slug": "modelo-bailedemascara",
+    "name": "bailedemascara",
+    "tipo": "Aniversário",
+    "tema": "Baile de Máscaras",
+    "paleta_cores": "",
+    "capa_path": "assets/capa.jpg",
+    "capa_type": null,
+    "aberturas": [
+      "curta",
+      "longa"
+    ]
+  },
+  {
+    "slug": "modelo-bailedemascarapreta",
+    "name": "bailedemascarapreta",
+    "tipo": "Aniversário",
+    "tema": "Baile de Máscaras",
+    "paleta_cores": "",
+    "capa_path": "assets/capa.jpg",
+    "capa_type": null,
+    "aberturas": [
+      "curta"
+    ]
+  },
+  {
+    "slug": "modelo-baileinverno-AberturaCurta",
+    "name": "baileinverno  Abertura Curta",
+    "tipo": "Aniversário",
+    "tema": "Baile de Inverno",
+    "paleta_cores": "",
+    "capa_path": "assets/capa.jpg",
+    "capa_type": null,
+    "aberturas": [
+      "curta"
+    ]
+  },
+  {
+    "slug": "Modelo-Bela-e-a-Fera",
+    "name": "Bela e a  Fera",
+    "tipo": "Aniversário",
+    "tema": "Bela e a Fera",
+    "paleta_cores": "",
+    "capa_path": "assets/capa.jpg",
+    "capa_type": null,
+    "aberturas": [
+      "curta",
+      "longa"
+    ]
+  },
+  {
+    "slug": "Modelo-Borboleta-Azul-Prata",
+    "name": "Borboleta  Azul  Prata",
+    "tipo": "Aniversário",
+    "tema": "Borboleta",
+    "paleta_cores": "Azul Prata Borboleta",
+    "capa_path": "assets/capa.jpg",
+    "capa_type": null,
+    "aberturas": [
+      "curta"
+    ]
+  },
+  {
+    "slug": "modelo-brancodourado",
+    "name": "brancodourado",
+    "tipo": "Aniversário",
+    "tema": "",
+    "paleta_cores": "Branco com Dourado",
+    "capa_path": "assets/capa.jpg",
+    "capa_type": null,
+    "aberturas": [
+      "curta"
+    ]
+  },
+  {
+    "slug": "modelo-casamento-azul-branco",
+    "name": "casamento azul branco",
+    "tipo": "Casamento",
+    "tema": "",
+    "paleta_cores": "Azul com Branco",
+    "capa_path": "assets/capa.jpg",
+    "capa_type": null,
+    "aberturas": [
+      "curta"
+    ]
+  },
+  {
+    "slug": "Modelo-casamento-branco-dourado",
+    "name": "casamento branco dourado",
+    "tipo": "Casamento",
+    "tema": "",
+    "paleta_cores": "Branco com Dourado",
+    "capa_path": "assets/capa.jpg",
+    "capa_type": null,
+    "aberturas": [
+      "curta",
+      "longa"
+    ]
+  },
+  {
+    "slug": "modelo-casamentominimalista",
+    "name": "casamentominimalista",
+    "tipo": "Casamento",
+    "tema": "Minimalista",
+    "paleta_cores": "",
+    "capa_path": "assets/capa.jpg",
+    "capa_type": null,
+    "aberturas": [
+      "curta"
+    ]
+  },
+  {
+    "slug": "modelo-cinderela",
+    "name": "cinderela",
+    "tipo": "Aniversário",
+    "tema": "Cinderela",
+    "paleta_cores": "Cinderela",
+    "capa_path": "assets/capa.jpg",
+    "capa_type": null,
+    "aberturas": [
+      "curta",
+      "longa"
+    ]
+  },
+  {
+    "slug": "modelo-coraline",
+    "name": "coraline",
+    "tipo": "Aniversário",
+    "tema": "Coraline",
+    "paleta_cores": "Coraline",
+    "capa_path": "assets/capa.jpg",
+    "capa_type": null,
+    "aberturas": [
+      "curta",
+      "longa"
+    ]
+  },
+  {
+    "slug": "modelo-debutante-azul-floral",
+    "name": "debutante azul floral",
+    "tipo": "Debutante",
+    "tema": "",
+    "paleta_cores": "Azul Floral",
+    "capa_path": "assets/capa.jpg",
+    "capa_type": null,
+    "aberturas": [
+      "curta"
+    ]
+  },
+  {
+    "slug": "modelo-debutante-rosa-azul",
+    "name": "debutante rosa azul",
+    "tipo": "Debutante",
+    "tema": "",
+    "paleta_cores": "Azul com Rosa",
+    "capa_path": "assets/capa.jpg",
+    "capa_type": null,
+    "aberturas": [
+      "curta",
+      "longa"
+    ]
+  },
+  {
+    "slug": "modelo-debutante-verde-esmeralda",
+    "name": "debutante verde esmeralda",
+    "tipo": "Debutante",
+    "tema": "",
+    "paleta_cores": "Verde Esmeralda",
+    "capa_path": "assets/capa.jpg",
+    "capa_type": null,
+    "aberturas": [
+      "curta"
+    ]
+  },
+  {
+    "slug": "modelo-enrolados-rapunzel",
+    "name": "enrolados rapunzel",
+    "tipo": "Aniversário",
+    "tema": "Enrolados",
+    "paleta_cores": "",
+    "capa_path": "assets/capa.jpg",
+    "capa_type": null,
+    "aberturas": [
+      "curta"
+    ]
+  },
+  {
+    "slug": "modelo-formatura",
+    "name": "formatura",
+    "tipo": "Formatura",
+    "tema": "",
+    "paleta_cores": "",
+    "capa_path": "assets/capa.jpg",
+    "capa_type": null,
+    "aberturas": [
+      "curta"
+    ]
+  },
+  {
+    "slug": "modelo-galo",
+    "name": "galo",
+    "tipo": "Aniversário",
+    "tema": "Galo",
+    "paleta_cores": "",
+    "capa_path": "assets/capa.jpg",
+    "capa_type": null,
+    "aberturas": [
+      "curta"
+    ]
+  },
+  {
+    "slug": "VanGogh-Júlia-15Anos",
+    "name": "Júlia",
+    "tipo": "Aniversário",
+    "tema": "Noite Estrelada – Van Gogh",
+    "paleta_cores": "Azul e Dourado",
+    "capa_path": "assets/capa.jpg",
+    "capa_type": null,
+    "aberturas": [
+      "curta",
+      "longa"
+    ]
+  },
+  {
+    "slug": "modelo-Las-Vegas",
+    "name": "Las  Vegas",
+    "tipo": "Aniversário",
+    "tema": "",
+    "paleta_cores": "",
+    "capa_path": "assets/capa.jpg",
+    "capa_type": null,
+    "aberturas": [
+      "curta"
+    ]
+  },
+  {
+    "slug": "Modelo-Lilas-Prata",
+    "name": "Lilas  Prata",
+    "tipo": "Aniversário",
+    "tema": "",
+    "paleta_cores": "Lilás com Prata",
+    "capa_path": "assets/capa.jpg",
+    "capa_type": null,
+    "aberturas": [
+      "curta",
+      "longa"
+    ]
+  },
+  {
+    "slug": "modelo-lilascomdourado",
+    "name": "lilascomdourado",
+    "tipo": "Aniversário",
+    "tema": "",
+    "paleta_cores": "Lilás com Dourado",
+    "capa_path": "assets/capa.jpg",
+    "capa_type": null,
+    "aberturas": [
+      "curta"
+    ]
+  },
+  {
+    "slug": "modelo-lilascomdouradoerosa",
+    "name": "lilascomdouradoerosa",
+    "tipo": "Aniversário",
+    "tema": "",
+    "paleta_cores": "Lilás com Dourado",
+    "capa_path": "assets/capa.jpg",
+    "capa_type": null,
+    "aberturas": [
+      "curta"
+    ]
+  },
+  {
+    "slug": "modelo-marromdourado",
+    "name": "marromdourado",
+    "tipo": "Aniversário",
+    "tema": "",
+    "paleta_cores": "Marrom com Dourado",
+    "capa_path": "assets/capa.jpg",
+    "capa_type": null,
+    "aberturas": [
+      "curta"
+    ]
+  },
+  {
+    "slug": "15Anos-Alladin",
+    "name": "Modelo Alladin Abertura Longa",
+    "tipo": "Aniversário",
+    "tema": "Alladin",
+    "paleta_cores": "verde tiffany, dourado e roxo",
+    "capa_path": "assets/capa.jpg",
+    "capa_type": null,
+    "aberturas": [
+      "curta"
+    ]
+  },
+  {
+    "slug": "Lucca-Astronauta",
+    "name": "Modelo Astronauta",
+    "tipo": "Aniversário",
+    "tema": "Astronauta",
+    "paleta_cores": "Branco, Prata e Azul",
+    "capa_path": "assets/capa.jpg",
+    "capa_type": null,
+    "aberturas": [
+      "curta",
+      "longa"
+    ]
+  },
+  {
+    "slug": "Lívia15Anos-BaileDeInverno",
+    "name": "Modelo Baile de Inverno",
+    "tipo": "Aniversário",
+    "tema": "Baile de Inverno",
+    "paleta_cores": "Azul Serenity, Azul Claro, Branco, Dourado, Prata",
+    "capa_path": "assets/capa.jpg",
+    "capa_type": null,
+    "aberturas": [
+      "curta"
+    ]
+  },
+  {
+    "slug": "Mariana15Anos-Baile",
+    "name": "Modelo Baile de Máscara",
+    "tipo": "Aniversário",
+    "tema": "Baile de Máscara",
+    "paleta_cores": "Preto e Dourado",
+    "capa_path": "assets/capa.jpg",
+    "capa_type": null,
+    "aberturas": [
+      "curta",
+      "longa"
+    ]
+  },
+  {
+    "slug": "Emanuela15Anos-BaileMascara",
+    "name": "Modelo Baile de Máscaras",
+    "tipo": "Aniversário",
+    "tema": "Baile de Máscaras Floral",
+    "paleta_cores": "Dourado, Preto, Vinho, Prata",
+    "capa_path": "assets/capa.jpg",
+    "capa_type": null,
+    "aberturas": [
+      "curta",
+      "longa"
+    ]
+  },
+  {
+    "slug": "Fransisca50Anos",
+    "name": "Modelo Baile de Máscaras Rosa",
+    "tipo": "Aniversário",
+    "tema": "Baile de Máscaras",
+    "paleta_cores": "Preto, Rosa Pink, Dourado",
+    "capa_path": "assets/capa.jpg",
+    "capa_type": null,
+    "aberturas": [
+      "curta",
+      "longa"
+    ]
+  },
+  {
+    "slug": "Cibele15Anos",
+    "name": "Modelo Castelo Encantado",
+    "tipo": "Aniversário",
+    "tema": "Castelo Encantado (Disney)",
+    "paleta_cores": "Azul Royal, Dourado, Azul Serenity",
+    "capa_path": "assets/capa.jpg",
+    "capa_type": null,
+    "aberturas": [
+      "curta",
+      "longa"
+    ]
+  },
+  {
+    "slug": "MariaElise15Anos",
+    "name": "Modelo Castelo Jardim Encantado",
+    "tipo": "Aniversário",
+    "tema": "Castelo Jardim Encantado Disney",
+    "paleta_cores": "Rosa, Branco, Dourado, Lilás, Verde, Azul",
+    "capa_path": "assets/capa.jpg",
+    "capa_type": null,
+    "aberturas": [
+      "curta",
+      "longa"
+    ]
+  },
+  {
+    "slug": "AliceVitória15Anos",
+    "name": "Modelo Céu Estrelado",
+    "tipo": "Aniversário",
+    "tema": "Céu Estrelado/ Noite Estrelada",
+    "paleta_cores": "Azul, Prata (+Branco)",
+    "capa_path": "assets/capa.jpg",
+    "capa_type": null,
+    "aberturas": [
+      "curta"
+    ]
+  },
+  {
+    "slug": "Alanna15Anos-CeuEstrelado",
+    "name": "Modelo Céu Estrelado",
+    "tipo": "Aniversário",
+    "tema": "Céu Estrelado/ Noite Estrelada",
+    "paleta_cores": "Preto, azul escuro e prata",
+    "capa_path": "assets/capa.jpg",
+    "capa_type": null,
+    "aberturas": [
+      "curta"
+    ]
+  },
+  {
+    "slug": "Antônia60Anos",
+    "name": "Modelo Chanel",
+    "tipo": "Aniversário",
+    "tema": "Um Toque da Chanel",
+    "paleta_cores": "Dourado, Branco, Preto, Pérola (+Prata)",
+    "capa_path": "assets/capa.jpg",
+    "capa_type": null,
+    "aberturas": [
+      "curta"
+    ]
+  },
+  {
+    "slug": "AliciaMarinelli15Anos",
+    "name": "Modelo Cinema Elegante",
+    "tipo": "Aniversário",
+    "tema": "Cinema",
+    "paleta_cores": "Preto, Vermelho e Dourado (+Branco e Preto)",
+    "capa_path": "assets/capa.jpg",
+    "capa_type": null,
+    "aberturas": [
+      "curta",
+      "longa"
+    ]
+  },
+  {
+    "slug": "Lauany15Anos-JardimEncanto",
+    "name": "Modelo Encanto Isabela",
+    "tipo": "Aniversário",
+    "tema": "Jardim encantado, Quarto da Isabela filme encanto",
+    "paleta_cores": "Fúcsia, tons de roxo, lilás e tons de rosa",
+    "capa_path": "assets/capa.jpg",
+    "capa_type": null,
+    "aberturas": [
+      "curta",
+      "longa"
+    ]
+  },
+  {
+    "slug": "Luara15Anos-JardimDaIntimidade",
+    "name": "Modelo Encontro com Jesus",
+    "tipo": "Aniversário",
+    "tema": "Encontro com Jesus",
+    "paleta_cores": "Prata, Lilás, Branco, Creme, Verde, Rosa",
+    "capa_path": "assets/capa.jpg",
+    "capa_type": null,
+    "aberturas": [
+      "curta",
+      "longa"
+    ]
+  },
+  {
+    "slug": "AgathaCristina15Anos",
+    "name": "Modelo Floral Azul e Dourado",
+    "tipo": "Aniversário",
+    "tema": "Floral Jardim Encantado",
+    "paleta_cores": "Azul, Dourado, Branco (+Verde)",
+    "capa_path": "assets/capa.jpg",
+    "capa_type": null,
+    "aberturas": [
+      "curta"
+    ]
+  },
+  {
+    "slug": "Alice10Anos-EmilyVick",
+    "name": "Modelo Floral Borboletas",
+    "tipo": "Aniversário",
+    "tema": "Floral Borboletas Jardim Encantado",
+    "paleta_cores": "Rosa, Prata, Lilás (+Branco e Azul)",
+    "capa_path": "assets/capa.jpg",
+    "capa_type": null,
+    "aberturas": [
+      "curta",
+      "longa"
+    ]
+  },
+  {
+    "slug": "Maria15anos-AzulDourado",
+    "name": "Modelo Floral Borboletas",
+    "tipo": "Aniversário",
+    "tema": "Jardim Encantado Borboletas",
+    "paleta_cores": "Azul Royal, Dourado, Branco",
+    "capa_path": "assets/capa.jpg",
+    "capa_type": null,
+    "aberturas": [
+      "curta",
+      "longa"
+    ]
+  },
+  {
+    "slug": "Isadora15Anos-Serenity",
+    "name": "Modelo Floral Borboletas",
+    "tipo": "Aniversário",
+    "tema": "Jardim Encantado Borboletas",
+    "paleta_cores": "Azul serenity, Prata, Branco",
+    "capa_path": "assets/capa.jpg",
+    "capa_type": null,
+    "aberturas": [
+      "curta",
+      "longa"
+    ]
+  },
+  {
+    "slug": "AlixValentina15Anos",
+    "name": "Modelo Floral Borboletas",
+    "tipo": "Aniversário",
+    "tema": "Jardim Encantado",
+    "paleta_cores": "Verde Tiffany, Prata, Dourado (+Branco)",
+    "capa_path": "assets/capa.jpg",
+    "capa_type": null,
+    "aberturas": [
+      "curta"
+    ]
+  },
+  {
+    "slug": "Graziella15Anos",
+    "name": "Modelo Floral Elegante",
+    "tipo": "Aniversário",
+    "tema": "Floral Jardim Encantado Luxo",
+    "paleta_cores": "Marsala, Vinho, Dourado, Rosa, Branco, Terracota",
+    "capa_path": "assets/capa.jpg",
+    "capa_type": null,
+    "aberturas": [
+      "curta",
+      "longa"
+    ]
+  },
+  {
+    "slug": "15Anos-Caroline",
+    "name": "Modelo Floral Lilás",
+    "tipo": "Aniversário",
+    "tema": "Floral Jardim Borboletas",
+    "paleta_cores": "Lilás, Roxo e Prata (+Branco e Verde)",
+    "capa_path": "assets/capa.jpg",
+    "capa_type": null,
+    "aberturas": [
+      "curta"
+    ]
+  },
+  {
+    "slug": "Giovana15Anos-Azul",
+    "name": "Modelo Floral Minimalista",
+    "tipo": "Aniversário",
+    "tema": "Floral Elegante Minimalista",
+    "paleta_cores": "Azul Royal com Prata e Lilás",
+    "capa_path": "assets/capa.jpg",
+    "capa_type": null,
+    "aberturas": [
+      "curta"
+    ]
+  },
+  {
+    "slug": "LavíniaGregório15Anos",
+    "name": "Modelo Floral Salão Elegante",
+    "tipo": "Aniversário",
+    "tema": "Glitter",
+    "paleta_cores": "Prata Pink e Preto",
+    "capa_path": "assets/capa.jpg",
+    "capa_type": null,
+    "aberturas": [
+      "curta"
+    ]
+  },
+  {
+    "slug": "Evelyn15Anos",
+    "name": "Modelo Fluminense Bosque",
+    "tipo": "Aniversário",
+    "tema": "Bosque Fluminense",
+    "paleta_cores": "Verde, Dourado, Vermelho, Branco",
+    "capa_path": "assets/capa.jpg",
+    "capa_type": null,
+    "aberturas": [
+      "curta",
+      "longa"
+    ]
+  },
+  {
+    "slug": "Dra-Yasmin",
+    "name": "Modelo Formatura Odontologia",
+    "tipo": "Formatura",
+    "tema": "Odontologia Salão Elegante",
+    "paleta_cores": "Azul Royal, Azul Turquesa, Dourado, Preto",
+    "capa_path": "assets/capa.jpg",
+    "capa_type": null,
+    "aberturas": [
+      "curta",
+      "longa"
+    ]
+  },
+  {
+    "slug": "Felipe15Anos-GALO",
+    "name": "Modelo Futebol Galo",
+    "tipo": "Aniversário",
+    "tema": "Galo (Clube Atlético Mineiro)",
+    "paleta_cores": "Preto e Branco (+Verde + Prata)",
+    "capa_path": "assets/folha_preenchida.jpg",
+    "capa_type": "image",
+    "aberturas": []
+  },
+  {
+    "slug": "Alícia15Anos-JardimEncantado",
+    "name": "Modelo Jardim Encantado",
+    "tipo": "Aniversário",
+    "tema": "Jardim Encantado Delicado",
+    "paleta_cores": "Azul Serenity, Branco, Dourado (+Verde)",
+    "capa_path": "assets/capa.jpg",
+    "capa_type": null,
+    "aberturas": [
+      "curta"
+    ]
+  },
+  {
+    "slug": "MariaEduarda-15-Anos",
+    "name": "Modelo Jardim Encantado Luxo",
+    "tipo": "Aniversário",
+    "tema": "Jardim Encantado Luxo",
+    "paleta_cores": "Rosa, Rosé, Dourado, Pérola, Creme, branco, Pink",
+    "capa_path": "assets/capa.jpg",
+    "capa_type": null,
+    "aberturas": [
+      "curta"
+    ]
+  },
+  {
+    "slug": "Antonio&Erika-Casamento",
+    "name": "Modelo Lavanda",
+    "tipo": "Casamento",
+    "tema": "Lavanda e Floral",
+    "paleta_cores": "Lilás, Branco, Prata (+Verde +Creme)",
+    "capa_path": "assets/capa.jpg",
+    "capa_type": null,
+    "aberturas": [
+      "curta",
+      "longa"
+    ]
+  },
+  {
+    "slug": "LaraHamphreis15Anos",
+    "name": "Modelo Marinho Fundo do Mar",
+    "tipo": "Aniversário",
+    "tema": "Fundo do Mar",
+    "paleta_cores": "Verde Tiffany, Azul Marinho, Branco, Prata, Creme",
+    "capa_path": "assets/capa.jpg",
+    "capa_type": null,
+    "aberturas": [
+      "curta",
+      "longa"
+    ]
+  },
+  {
+    "slug": "JoséRoberto60Anos",
+    "name": "Modelo Mundo de Geppeto",
+    "tipo": "Aniversário",
+    "tema": "O Mundo Encantado de Gepetto",
+    "paleta_cores": "Vermelho, Azul Royal, Marrom, Branco, Creme, Dourado, Verde",
+    "capa_path": "assets/capa.jpg",
+    "capa_type": null,
+    "aberturas": [
+      "curta",
+      "longa"
+    ]
+  },
+  {
+    "slug": "Duda15Anos",
+    "name": "Modelo Paris",
+    "tipo": "Aniversário",
+    "tema": "Torre Eiffel Paris",
+    "paleta_cores": "Dourado, Vermelho, Azul, Rosé, Prata, Rosa",
+    "capa_path": "assets/capa.jpg",
+    "capa_type": null,
+    "aberturas": [
+      "curta",
+      "longa"
+    ]
+  },
+  {
+    "slug": "MariaLara15Anos",
+    "name": "Modelo Pergaminho Castelo Encantado",
+    "tipo": "Aniversário",
+    "tema": "Castelo Encandado Jardim Pergaminho",
+    "paleta_cores": "Azul, Prata, lilás, Branco",
+    "capa_path": "assets/capa.jpg",
+    "capa_type": null,
+    "aberturas": [
+      "curta",
+      "longa"
+    ]
+  },
+  {
+    "slug": "JuliaNakahara15Anos",
+    "name": "Modelo Portão Jardim Encantado",
+    "tipo": "Aniversário",
+    "tema": "Portão Jardim Encantado",
+    "paleta_cores": "Rosa, Pink, Branco, Dourado, Pérola, Rosé",
+    "capa_path": "assets/capa.jpg",
+    "capa_type": null,
+    "aberturas": [
+      "curta",
+      "longa"
+    ]
+  },
+  {
+    "slug": "EduardaVasques15Anos",
+    "name": "Modelo Preto e Branco",
+    "tipo": "Aniversário",
+    "tema": "Salão Elegante Preto e Branco",
+    "paleta_cores": "Preto, Prata e Branco",
+    "capa_path": "assets/capa.jpg",
+    "capa_type": null,
+    "aberturas": [
+      "curta",
+      "longa"
+    ]
+  },
+  {
+    "slug": "Dione&Danilo-Casamento",
+    "name": "Modelo Salão Elegante",
+    "tipo": "Casamento",
+    "tema": "Salão Elegante",
+    "paleta_cores": "Azul Royal, Dourado, Branco",
+    "capa_path": "assets/capa.jpg",
+    "capa_type": null,
+    "aberturas": [
+      "curta",
+      "longa"
+    ]
+  },
+  {
+    "slug": "Elisete&Luciano-Casamento",
+    "name": "Modelo Salão Elegante Rosa",
+    "tipo": "Casamento",
+    "tema": "Salão Elegante",
+    "paleta_cores": "Dourado, Rosa, Lavanda, Liilás, Branco",
+    "capa_path": "assets/capa.jpg",
+    "capa_type": null,
+    "aberturas": [
+      "curta",
+      "longa"
+    ]
+  },
+  {
+    "slug": "Edmilson60Anos",
+    "name": "Modelo Show Musical",
+    "tipo": "Aniversário",
+    "tema": "Show Musical Palco",
+    "paleta_cores": "Preto, Dourado, Branco (+Vermelho +Creme)",
+    "capa_path": "assets/capa.jpg",
+    "capa_type": null,
+    "aberturas": [
+      "curta",
+      "longa"
+    ]
+  },
+  {
+    "slug": "15Anos-AnaClara",
+    "name": "Modelo Tardezinha Pôr do Sol",
+    "tipo": "Aniversário",
+    "tema": "Tardezinha",
+    "paleta_cores": "Rosa escuro,laranja e dourado",
+    "capa_path": "assets/capa.jpg",
+    "capa_type": null,
+    "aberturas": [
+      "curta"
+    ]
+  },
+  {
+    "slug": "Morena-15Anos",
+    "name": "Morena",
+    "tipo": "Aniversário",
+    "tema": "",
+    "paleta_cores": "",
+    "capa_path": "assets/capa.jpg",
+    "capa_type": null,
+    "aberturas": [
+      "curta"
+    ]
+  },
+  {
+    "slug": "MorenaClarah15Anos",
+    "name": "Morena Clarah",
+    "tipo": "Aniversário",
+    "tema": "",
+    "paleta_cores": "",
+    "capa_path": "assets/capa.jpg",
+    "capa_type": null,
+    "aberturas": [
+      "curta",
+      "longa"
+    ]
+  },
+  {
+    "slug": "Modelo-Neon-Laranja-Verde",
+    "name": "Neon  Laranja  Verde",
+    "tipo": "Aniversário",
+    "tema": "",
+    "paleta_cores": "Neon Laranja e Verde",
+    "capa_path": "assets/capa.jpg",
+    "capa_type": null,
+    "aberturas": [
+      "curta"
+    ]
+  },
+  {
+    "slug": "modelo-noiteestrelada",
+    "name": "noiteestrelada",
+    "tipo": "Aniversário",
+    "tema": "Noite Estrelada",
+    "paleta_cores": "",
+    "capa_path": "assets/capa.jpg",
+    "capa_type": null,
+    "aberturas": [
+      "curta",
+      "longa"
+    ]
+  },
+  {
+    "slug": "modelo-palmeiras",
+    "name": "palmeiras",
+    "tipo": "Aniversário",
+    "tema": "Palmeiras",
+    "paleta_cores": "",
+    "capa_path": "assets/slide1.mp4",
+    "capa_type": "video",
+    "aberturas": [
+      "curta"
+    ]
+  },
+  {
+    "slug": "Patrícia",
+    "name": "Patrícia",
+    "tipo": "Aniversário",
+    "tema": "",
+    "paleta_cores": "Dourado e preto",
+    "capa_path": "assets/capa.jpg",
+    "capa_type": null,
+    "aberturas": [
+      "curta"
+    ]
+  },
+  {
+    "slug": "modelo-portão-jardim",
+    "name": "portão jardim",
+    "tipo": "Aniversário",
+    "tema": "Jardim",
+    "paleta_cores": "",
+    "capa_path": "assets/capa.jpg",
+    "capa_type": null,
+    "aberturas": [
+      "curta",
+      "longa"
+    ]
+  },
+  {
+    "slug": "modelo-rosadouradoespelho",
+    "name": "rosadouradoespelho",
+    "tipo": "Aniversário",
+    "tema": "",
+    "paleta_cores": "Rosa com Dourado Espelho",
+    "capa_path": "assets/capa.jpg",
+    "capa_type": null,
+    "aberturas": [
+      "curta"
+    ]
+  },
+  {
+    "slug": "modelo-rosaprata",
+    "name": "rosaprata",
+    "tipo": "Aniversário",
+    "tema": "",
+    "paleta_cores": "Rosa com Prata",
+    "capa_path": "assets/cover.jpg",
+    "capa_type": "image",
+    "aberturas": [
+      "curta"
+    ]
+  },
+  {
+    "slug": "modelo-rosegold",
+    "name": "rosegold",
+    "tipo": "Aniversário",
+    "tema": "",
+    "paleta_cores": "Rose Gold",
+    "capa_path": "assets/cover.jpg",
+    "capa_type": "image",
+    "aberturas": [
+      "curta"
+    ]
+  },
+  {
+    "slug": "Rosely",
+    "name": "Rosely Ferrante",
+    "tipo": "Aniversário",
+    "tema": "",
+    "paleta_cores": "Vermelho, Vinho e Dourado",
+    "capa_path": "assets/capa.jpg",
+    "capa_type": null,
+    "aberturas": [
+      "curta",
+      "longa"
+    ]
+  },
+  {
+    "slug": "modelo-roxoedourado",
+    "name": "roxoedourado",
+    "tipo": "Aniversário",
+    "tema": "",
+    "paleta_cores": "Roxo com Dourado",
+    "capa_path": "assets/cover.jpg",
+    "capa_type": "image",
+    "aberturas": [
+      "curta"
+    ]
+  },
+  {
+    "slug": "Sara15Anos-HP",
+    "name": "Sara",
+    "tipo": "Aniversário",
+    "tema": "Harry Potter Baile de Máscaras",
+    "paleta_cores": "",
+    "capa_path": "assets/capa.jpg",
+    "capa_type": null,
+    "aberturas": [
+      "curta",
+      "longa"
+    ]
+  },
+  {
+    "slug": "modelo-tropical",
+    "name": "tropical",
+    "tipo": "Aniversário",
+    "tema": "Tropical",
+    "paleta_cores": "",
+    "capa_path": "assets/capa.jpg",
+    "capa_type": "image",
+    "aberturas": [
+      "curta",
+      "longa"
+    ]
+  },
+  {
+    "slug": "Modelo-VanGogh",
+    "name": "Van Gogh",
+    "tipo": "Aniversário",
+    "tema": "Van Gogh",
+    "paleta_cores": "Van Gogh",
+    "capa_path": "assets/capa.jpg",
+    "capa_type": null,
+    "aberturas": [
+      "curta",
+      "longa"
+    ]
+  },
+  {
+    "slug": "VitoriaFabia-15Anos",
+    "name": "Vitória Fabia",
+    "tipo": "Aniversário",
+    "tema": "",
+    "paleta_cores": "",
+    "capa_path": "assets/capa.jpg",
+    "capa_type": null,
+    "aberturas": [
+      "curta",
+      "longa"
+    ]
+  },
+  {
+    "slug": "modelo-vitoriasecrets",
+    "name": "vitoriasecrets",
+    "tipo": "Aniversário",
+    "tema": "Victoria Secrets",
+    "paleta_cores": "",
+    "capa_path": "assets/cover.jpg",
+    "capa_type": "image",
+    "aberturas": [
+      "curta"
+    ]
+  },
+  {
+    "slug": "Yasmin15Anos-Ado",
+    "name": "Yasmin",
+    "tipo": "Aniversário",
+    "tema": "",
+    "paleta_cores": "",
+    "capa_path": "assets/capa.jpg",
+    "capa_type": null,
+    "aberturas": [
+      "curta",
+      "longa"
+    ]
+  },
+  {
+    "slug": "YasminHabib15Anos",
+    "name": "Yasmin Habib",
+    "tipo": "Aniversário",
+    "tema": "Globo Balada",
+    "paleta_cores": "Pink e Prata",
+    "capa_path": "assets/capa.jpg",
+    "capa_type": null,
+    "aberturas": [
+      "curta",
+      "longa"
+    ]
+  },
+  {
+    "slug": "modelo-Julia18Anos-2",
+    "name": "Fundo do Mar",
+    "tipo": "Aniversário",
+    "tema": "Fundo do Mar",
+    "paleta_cores": "Tons de azul e branco, estética aquarela suave",
+    "capa_path": "assets/cover.png",
+    "capa_type": "image",
+    "aberturas": [
+      "curta"
+    ]
+  },
+  {
+    "slug": "modelo-julia18Anos",
+    "name": "Nossa Senhora Aparecida e Santa Terezinha",
+    "tipo": "Aniversário",
+    "tema": "Nossa Senhora Aparecida e Santa Terezinha",
+    "paleta_cores": "Vermelho, azul, dourado e branco",
+    "capa_path": "assets/cover.jpg",
+    "capa_type": "image",
+    "aberturas": [
+      "curta"
+    ]
+  }
+]

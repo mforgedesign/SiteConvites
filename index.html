@@ -1,161 +1,207 @@
 <!DOCTYPE html>
-<html lang="pt-BR" class="scroll-smooth">
+<html lang="pt-BR">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Convite Digital Interativo</title>
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%234f46e5'/%3E%3Cpath fill='%23fff' d='M12 22c0-3.3 2.7-6 6-6h28c3.3 0 6 2.7 6 6v20c0 3.3-2.7 6-6 6H18c-3.3 0-6-2.7-6-6V22zm6-1.5 14 12 14-12H18zm29 6.1L34.6 37.2a4 4 0 0 1-5.2 0L17 26.6V42c0 .6.4 1 1 1h28c.6 0 1-.4 1-1V26.6z'/%3E%3C/svg%3E">
-    
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;900&display=swap" rel="stylesheet">
-    
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Outfit', 'sans-serif'],
-                    },
-                    colors: {
-                        dark: '#0a0a0a',
-                        primary: '#ffffff',
-                        accent: '#c9557c',
-                        'accent-light': '#e8a0b8',
-                    }
-                }
-            }
-        }
-    </script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <style>
-        :root {
-            --bg-color: #fafafa;
-        }
-        body {
-            background-color: var(--bg-color);
-            /* Prevent overscroll bounce on mobile */
-            overscroll-behavior-y: none;
-        }
-        .gradient-text {
-            background: linear-gradient(135deg, #c9557c, #e8a0b8);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-        .iframe-wrapper {
-            flex: 1;
-            min-height: 0;
-            display: flex;
-            justify-content: center;
-        }
-        .iframe-container {
-            position: relative;
-            height: 100%;
-            aspect-ratio: 9 / 16;
-            max-width: 100%;
-            border-radius: 1.5rem;
-            overflow: hidden;
-            box-shadow: 0 10px 25px -5px rgba(201, 85, 124, 0.15), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
-            border: 4px solid white;
-            background-color: #f3f4f6;
-        }
-        .iframe-container iframe {
-            width: 133.33%;
-            height: 133.33%;
-            transform: scale(0.75);
-            transform-origin: top left;
-            border: none;
-            /* smooth iframe display */
-            opacity: 0;
-            animation: fadeIn 0.5s ease forwards 0.3s;
-        }
-        @keyframes fadeIn {
-            to { opacity: 1; }
-        }
-        .btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0.8rem 1.5rem;
-            border-radius: 1rem;
-            font-weight: 700;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            text-align: center;
-            width: 100%;
-            letter-spacing: -0.01em;
-        }
-        .btn-primary {
-            background: linear-gradient(135deg, #c9557c 0%, #b04669 100%);
-            color: white;
-            box-shadow: 0 4px 15px -3px rgba(201, 85, 124, 0.4);
-            border: none;
-        }
-        .btn-primary:active {
-            transform: scale(0.98);
-        }
-        .btn-secondary {
-            background-color: white;
-            color: #c9557c;
-            border: 2px solid #f1d7e1;
-            box-shadow: 0 2px 8px -2px rgba(201, 85, 124, 0.1);
-        }
-        .btn-secondary:active {
-            background-color: #fdf2f5;
-            border-color: #c9557c;
-            transform: scale(0.98);
-        }
-    </style>
-    <script src="js/meta-pixel.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Convites Digitais Interativos | MForge Convites</title>
+  <meta name="description" content="Explore 145 modelos de convites digitais, configure os recursos do seu evento e veja o orçamento antes de falar com a equipe.">
+  <link rel="stylesheet" href="css/fonts.css?v=20261002-1">
+  <link rel="stylesheet" href="css/base.css?v=20261002-13">
+  <link rel="stylesheet" href="css/home.css?v=20261013-phone-preview">
 </head>
-<body class="antialiased font-sans text-gray-800">
+<body>
+  <header class="site-header">
+    <div class="site-header-inner">
+      <a href="index.html" class="brand-link" aria-label="MForge Convites - Página Inicial">
+        <span class="brand-name">MForge Convites</span>
+      </a>
+      <nav class="site-nav" aria-label="Navegação Principal">
+        <a href="index.html" class="active" aria-current="page">Início</a>
+        <a href="modelos.html">Modelos</a>
+        <a href="orcamentos/index.html" class="site-nav-cta">Orçamento</a>
+        <button type="button" class="site-nav-theme" data-theme-toggle aria-label="Ativar tema escuro" aria-pressed="false"><span class="toggle-knob" aria-hidden="true"><svg viewBox="0 0 20 20" focusable="false"><path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd"/></svg></span></button>
+      </nav>
+    </div>
+  </header>
 
-    <!-- App Container -->
-    <main class="w-full max-w-[480px] mx-auto h-[100dvh] flex flex-col p-4 sm:p-6 overflow-hidden relative">
-        
-        <!-- Decorative bg blobs (subtle) -->
-        <div class="absolute top-[-10%] left-[-10%] w-[50%] h-[30%] bg-pink-200 rounded-full blur-3xl opacity-40 -z-10 mix-blend-multiply"></div>
-        <div class="absolute bottom-[20%] right-[-10%] w-[40%] h-[40%] bg-purple-200 rounded-full blur-3xl opacity-30 -z-10 mix-blend-multiply"></div>
+  <main>
+    <!-- Hero Section -->
+    <section class="hero-section">
+      <div class="container hero-grid">
+        <div class="hero-content">
+          <span class="home-brand-mark" aria-hidden="true"><span>M</span></span>
+          <span class="hero-pretitle">MFORGE CONVITES</span>
+          <h1 class="hero-title">Convite Digital <em>Interativo</em></h1>
+          <p class="hero-description">
+            Que tal dar uma olhada em um dos nossos modelos mais recentes?
+          </p>
+        </div>
 
-        <!-- Header Area -->
-        <header class="text-center shrink-0 mb-3 sm:mb-5 pt-1 sm:pt-2">
-            <h1 class="text-2xl sm:text-3xl font-black mb-1 gradient-text tracking-tight leading-tight">
-                Convite Digital Interativo
-            </h1>
-            <p class="text-[13px] sm:text-sm font-semibold text-gray-500 max-w-[280px] sm:max-w-md mx-auto leading-snug">
-                Que tal dar uma olhada em um dos nossos modelos mais recentes?
-            </p>
-        </header>
-
-        <!-- Dynamic Iframe Area -->
-        <div class="iframe-wrapper w-full mb-4 sm:mb-6">
-            <div class="iframe-container">
-                <!-- Loading Indicator -->
-                <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none -z-10 gap-2">
-                    <i class="fa-solid fa-circle-notch fa-spin text-2xl text-accent/50"></i>
-                    <span class="text-xs text-gray-400 font-medium">Carregando convite...</span>
-                </div>
-                
-                <iframe src="Convite_Temp/?v=20260709-assets" title="Demonstração do Convite" allowfullscreen></iframe>
+        <div class="hero-stage">
+          <div class="invite-frame" aria-label="Demonstração interativa de convite real">
+            <div class="invite-frame-bar" aria-hidden="true">
+              <div class="invite-speaker-pill"></div>
             </div>
+            <div class="invite-viewport">
+              <iframe
+                src="https://pedidos.mforge.com.br/Convite_Temp/?v=20260709-assets"
+                title="Demonstração Real de Convite MForge"
+                class="invite-iframe"
+                loading="lazy"
+                referrerpolicy="no-referrer"
+              ></iframe>
+              <noscript>
+                <div class="invite-fallback">
+                  <p>Seu navegador está sem suporte a iframes.</p>
+                  <a href="https://pedidos.mforge.com.br/Convite_Temp/?v=20260709-assets" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
+                    Abrir demonstração em nova aba
+                  </a>
+                </div>
+              </noscript>
+            </div>
+          </div>
         </div>
 
-        <!-- Action Buttons Area -->
-        <div class="shrink-0 flex flex-col gap-2.5 sm:gap-3 pb-1 sm:pb-2">
-            <a href="modelos.html" class="btn btn-secondary text-[15px] sm:text-base">
-                Quero ver modelos
-            </a>
-            <a href="orcamentos/" class="btn btn-primary text-[15px] sm:text-base flex items-center gap-2">
-                Consultar Valores <i class="fa-solid fa-arrow-right text-sm"></i>
-            </a>
+        <div class="hero-actions">
+          <a href="modelos.html" class="btn btn-outline hero-btn-secondary">
+            Quero ver modelos
+          </a>
+          <a href="orcamentos/index.html" class="btn btn-primary hero-btn-cta">
+            Consultar valores <span aria-hidden="true">→</span>
+          </a>
         </div>
 
-    </main>
+      </div>
+    </section>
 
+    <!-- Recursos e Diferenciais -->
+    <section class="features-section">
+      <div class="container">
+        <div class="section-head">
+          <span class="section-tag">Recursos para o seu convite</span>
+          <h2 class="section-title">Escolha o que faz sentido para a sua festa</h2>
+        </div>
+
+        <div class="features-grid">
+          <div class="feature-card">
+            <span class="feature-num">01</span>
+            <h3>Abertura Animada Elegante</h3>
+            <p>A abertura animada apresenta o convite antes dos botões de evento. A demonstração inclui a opção de pular a animação.</p>
+          </div>
+
+          <div class="feature-card">
+            <span class="feature-num">02</span>
+            <h3>Música do seu jeito</h3>
+            <p>Informe uma música, use a trilha do modelo escolhido ou deixe o convite sem música.</p>
+          </div>
+
+          <div class="feature-card">
+            <span class="feature-num">03</span>
+            <h3>Confirmação de Presença Inteligente</h3>
+            <p>Escolha confirmação direta por WhatsApp ou formulário com contagem de adultos e crianças.</p>
+          </div>
+
+          <div class="feature-card">
+            <span class="feature-num">04</span>
+            <h3>Sugestões para os convidados</h3>
+            <p>Inclua orientações de presentes ou um link para uma lista externa, se isso fizer parte da sua comemoração.</p>
+          </div>
+
+          <div class="feature-card">
+            <span class="feature-num">05</span>
+            <h3>Contagem Regressiva e Localização</h3>
+            <p>Você pode incluir contagem regressiva e um atalho para abrir o local do evento em um aplicativo de mapas.</p>
+          </div>
+
+          <div class="feature-card">
+            <span class="feature-num">06</span>
+            <h3>Prazo da prévia</h3>
+            <p>A prévia é entregue em até 2 dias úteis após o pagamento do sinal de R$ 20. A equipe confirma os detalhes do pedido pelo WhatsApp.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Como Funciona -->
+    <section class="process-section">
+      <div class="container">
+        <div class="section-head">
+          <span class="section-tag">Sem complicação</span>
+          <h2 class="section-title">Como encomendar seu convite</h2>
+        </div>
+
+        <div class="process-steps">
+          <div class="step-box">
+            <strong>Passo 1</strong>
+            <h3>Escolha ou Crie seu Modelo</h3>
+            <p>Navegue pelo catálogo com 145 estilos prontos ou solicite uma criação exclusiva para combinar com o tema do seu evento.</p>
+          </div>
+
+          <div class="step-box">
+            <strong>Passo 2</strong>
+            <h3>Personalize os Detalhes</h3>
+            <p>Pelo nosso configurador transparente, selecione apenas os adicionais que deseja e acompanhe o valor atualizado em tempo real.</p>
+          </div>
+
+          <div class="step-box">
+            <strong>Passo 3</strong>
+            <h3>Finalize no WhatsApp</h3>
+            <p>O configurador prepara uma mensagem com o resumo. Revise o pedido com a equipe e envie pelo WhatsApp quando estiver pronto.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Chamada para Ação -->
+    <section class="cta-banner">
+      <div class="container">
+        <div class="cta-box">
+          <h2 style="font-size: 1.8rem; color: var(--color-wine-dark);">Escolha um modelo ou monte seu orçamento</h2>
+          <p style="color: var(--color-muted);">Compare os modelos ou abra o configurador direto. Nome e WhatsApp só são pedidos na revisão final.</p>
+          <div style="display: flex; gap: var(--space-3); flex-wrap: wrap; justify-content: center;">
+            <a href="modelos.html" class="btn btn-secondary">Ver Modelos Disponíveis</a>
+            <a href="orcamentos/index.html" class="btn btn-primary">Iniciar Orçamento</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col">
+          <span class="brand-name">MForge Convites</span>
+          <p style="color: var(--color-muted); font-size: 0.9rem; margin-top: 8px;">
+            Modelos de convite, opções e orçamento reunidos em um fluxo que você pode revisar antes de falar com a equipe.
+          </p>
+        </div>
+        <div class="footer-col">
+          <h4>Navegação</h4>
+          <ul>
+            <li><a href="index.html">Início</a></li>
+            <li><a href="modelos.html">Catálogo de Modelos (145)</a></li>
+            <li><a href="orcamentos/index.html">Simulador de Orçamento</a></li>
+          </ul>
+        </div>
+        <div class="footer-col">
+          <h4>Atendimento</h4>
+          <p style="color: var(--color-muted); font-size: 0.9rem;">
+            Atendimento direto e personalizado via WhatsApp após revisão do orçamento online.
+          </p>
+          <div style="margin-top: 8px;">
+            <span class="badge badge-wine">Sinal de R$ 20</span>
+            <span class="badge badge-brass" style="margin-left: 4px;">Entrega em 2 dias</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>&copy; MForge Convites Digitais. Todos os direitos reservados.</div>
+        <div>O orçamento só segue para o WhatsApp quando você escolher abrir a conversa.</div>
+      </div>
+    </div>
+  </footer>
+  <script src="js/theme.js?v=20261002-4" defer></script>
 </body>
 </html>

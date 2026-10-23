@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<style>
+:root{--accent:#A65465;--ink:#2d231f;--muted:#756861;--paper:#fffdfa;--line:rgba(70,49,38,.15);font-family:Inter,ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;color:var(--ink);background:transparent}
+*{box-sizing:border-box}body{margin:0;padding:14px;background:linear-gradient(145deg,#A654651f,#A654654d);min-height:100vh}.card{position:relative;overflow:hidden;max-width:520px;margin:auto;padding:24px 20px 20px;border:1px solid rgba(255,255,255,.8);border-radius:28px;background:rgba(255,253,250,.96);box-shadow:0 22px 60px rgba(48,31,20,.16)}
+.card:before{content:"";position:absolute;inset:0 0 auto;height:6px;background:linear-gradient(90deg,transparent,var(--accent),transparent)}.eyebrow{margin:0 0 6px;color:var(--accent);font-size:11px;font-weight:800;letter-spacing:.18em;text-transform:uppercase}.title{margin:0;font-family:Georgia,serif;font-size:clamp(26px,7vw,38px);font-weight:500;line-height:1.05}.intro{margin:10px 0 20px;color:var(--muted);font-size:14px;line-height:1.55}.loading{padding:20px 0;color:var(--muted);text-align:center}.hidden{display:none!important}.field{margin:0 0 15px}.label{display:block;margin:0 0 7px;font-size:11px;font-weight:800;letter-spacing:.08em;text-transform:uppercase}.input{width:100%;height:46px;padding:0 13px;border:1px solid var(--line);border-radius:13px;background:#fff;color:var(--ink);font:inherit;outline:none;transition:.2s}.input:focus{border-color:var(--accent);box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 16%,transparent)}.hint{display:block;margin-top:6px;color:var(--muted);font-size:12px;line-height:1.4}.choice-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}.choice{min-height:44px;padding:9px;border:1px solid var(--line);border-radius:13px;background:#fff;color:var(--ink);font-weight:750;cursor:pointer}.choice.active{border-color:var(--accent);background:linear-gradient(135deg,var(--accent),color-mix(in srgb,var(--accent) 68%,#000));color:#fff}.suggestions{display:grid;gap:7px;margin-top:10px;padding:9px;border:2px solid var(--accent);border-radius:16px;background:#fff;box-shadow:0 18px 42px color-mix(in srgb,var(--accent) 24%,rgba(45,35,31,.18));transform-origin:top center}.suggestions:not(.hidden){animation:suggestionsReveal .3s cubic-bezier(.2,.85,.25,1.18) both}.suggestion{display:flex;align-items:center;justify-content:space-between;gap:10px;width:100%;min-height:48px;padding:11px 13px;border:1px solid color-mix(in srgb,var(--accent) 16%,var(--line));border-radius:12px;background:color-mix(in srgb,var(--accent) 5%,white);color:var(--ink);font:750 14px/1.25 inherit;text-align:left;cursor:pointer;transition:transform .16s ease,background .16s ease,box-shadow .16s ease}.suggestion:before{content:"✓";display:grid;place-items:center;flex:0 0 24px;width:24px;height:24px;border-radius:50%;background:var(--accent);color:#fff;font-size:12px}.suggestion span{flex:1}.suggestion:hover,.suggestion:focus{background:color-mix(in srgb,var(--accent) 14%,white);box-shadow:0 8px 18px color-mix(in srgb,var(--accent) 18%,transparent);outline:none;transform:translateY(-2px) scale(1.01)}.suggestion small{color:var(--muted);font-weight:650}.selected{margin-top:9px;padding:10px 12px;border:1px solid color-mix(in srgb,var(--accent) 28%,transparent);border-radius:11px;background:color-mix(in srgb,var(--accent) 12%,white);color:var(--accent);font-size:12px;font-weight:800;animation:selectedReveal .24s ease-out both}.submit,.companion-button{display:flex;align-items:center;justify-content:center;width:100%;min-height:50px;margin-top:7px;border:0;border-radius:15px;background:linear-gradient(135deg,var(--accent),color-mix(in srgb,var(--accent) 68%,#000));color:#fff;font:800 14px/1 inherit;letter-spacing:.04em;cursor:pointer;box-shadow:0 12px 25px color-mix(in srgb,var(--accent) 28%,transparent)}.companion-button{margin-top:18px;border:1px solid var(--accent);background:#fff;color:var(--accent);box-shadow:none}.submit:disabled{cursor:wait;opacity:.65}.message{margin:12px 0 0;padding:11px 12px;border-radius:12px;font-size:13px;line-height:1.45}.message.error{background:#fff0f0;color:#9b2c2c}.message.success{background:#edf9f0;color:#22683a}.success-screen{text-align:center;padding:26px 4px}.success-icon{display:grid;place-items:center;width:66px;height:66px;margin:0 auto 16px;border-radius:50%;background:color-mix(in srgb,var(--accent) 12%,white);color:var(--accent);font-size:32px}.footer{margin:18px 0 0;color:#9a8c84;font-size:10px;text-align:center;letter-spacing:.08em;text-transform:uppercase}@keyframes suggestionsReveal{from{opacity:0;transform:translateY(-8px) scale(.96)}to{opacity:1;transform:translateY(0) scale(1)}}@keyframes selectedReveal{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:translateY(0)}}@media(prefers-reduced-motion:reduce){.suggestions:not(.hidden),.selected{animation:none}.suggestion{transition:none}}@media(max-width:420px){body{padding:8px}.card{padding:21px 15px 17px;border-radius:22px}.choice-grid{grid-template-columns:1fr}.title{font-size:28px}.suggestion{align-items:flex-start;flex-wrap:wrap}.suggestion small{width:100%;padding-left:34px}}
+.suggestions{margin:0 0 10px;transform-origin:bottom center}.suggestions-title{margin:0 2px 2px;color:var(--accent);font-size:12px;font-weight:850;letter-spacing:.03em}.suggestion:before{content:"";background:transparent;border:2px solid color-mix(in srgb,var(--accent) 55%,white)}.suggestion.active{border-color:var(--accent);background:color-mix(in srgb,var(--accent) 12%,white)}.suggestion.active:before{content:"✓";background:var(--accent);border-color:var(--accent)}.selected{display:flex;align-items:center;gap:8px}.selected:before{content:"✓";display:grid;place-items:center;flex:0 0 22px;width:22px;height:22px;border-radius:50%;background:var(--accent);color:#fff;font-size:12px}
+</style>
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; connect-src 'none'; form-action 'none';"><meta name="referrer" content="no-referrer"></head>
+<body>
+<main class="card">
+  <p class="eyebrow">Confirmação de presença</p>
+  <h1 class="title" id="event-title">Confirme sua presença no evento de exemplo!</h1>
+  <p class="intro">Sua resposta nos ajuda a preparar cada detalhe com carinho.</p>
+  <div class="loading" id="loading">Carregando confirmação…</div>
+  <form id="form" class="hidden" novalidate>
+    <div class="field">
+      <span class="label" id="attendance-label">Você poderá comparecer?</span>
+      <div class="choice-grid">
+        <button class="choice active" id="attending-yes" type="button">Sim, estarei presente</button>
+        <button class="choice" id="attending-no" type="button">Não poderei comparecer</button>
+      </div>
+    </div>
+    <div class="field">
+      <label class="label" id="guest-name-label" for="guest-name">Seu nome completo</label>
+      <div class="suggestions hidden" id="suggestions" role="listbox" aria-label="Selecione seu nome"></div>
+      <input class="input" id="guest-name" autocomplete="off" maxlength="160" placeholder="Comece a digitar seu nome" required>
+      <span class="hint" id="name-hint"></span>
+      <div class="selected hidden" id="selected-name"></div>
+    </div>
+    <div class="field hidden" id="phone-field">
+      <label class="label" for="guest-phone">Seu WhatsApp</label>
+      <input class="input" id="guest-phone" inputmode="tel" maxlength="30" placeholder="(DDD) 99999-9999">
+    </div>
+    <button class="submit" id="submit" type="submit">Enviar confirmação</button>
+    <div class="message hidden" id="message" role="status"></div>
+  </form>
+  <section class="success-screen hidden" id="success">
+    <div class="success-icon">✓</div>
+    <h2 id="success-title">Resposta registrada</h2>
+    <p class="intro" id="success-copy"></p>
+    <button class="companion-button hidden" id="confirm-companions" type="button">Confirmar acompanhantes</button>
+  </section>
+  <p class="footer">Demonstração local • RSVP inteligente</p>
+</main>
+<script>
+(function(){
+  'use strict';
+  var cfg={eventName:"Confirme sua presença no evento de exemplo!"};
+  var buildRsvpWhatsappRedirect=function(){return "";};
+  var normalizeRsvpGuestName=function normalizeRsvpGuestName(value) {
+    return String(value || '')
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .toLocaleLowerCase('pt-BR')
+        .replace(/\s+/g, ' ')
+        .trim();
+};
+  var findExactRsvpGuest=function findExactRsvpGuest(items, typedName) {
+    var normalizedTypedName = normalizeRsvpGuestName(typedName);
+    if (!normalizedTypedName) return null;
+    return (Array.isArray(items) ? items : []).find(function(item) {
+        return item
+            && item.guestId
+            && normalizeRsvpGuestName(item.name) === normalizedTypedName;
+    }) || null;
+};
+  var findUniqueRsvpGuest=function findUniqueRsvpGuest(items) {
+    var validItems = (Array.isArray(items) ? items : []).filter(function(item) {
+        return item && item.guestId && String(item.name || '').trim();
+    });
+    return validItems.length === 1 ? validItems[0] : null;
+};
+  var state={policy:null,selectedGuest:null,attending:true,timer:null,notFoundTimer:null,redirectTimer:null,companionMode:false};
+  var byId=function(id){return document.getElementById(id)};
+  async function rpc(name,body){
+    var title=new URLSearchParams(location.search).get('evento')||cfg.eventName;
+    var guests=[
+      {guestId:'demo-guest-1',name:'Marina Costa'},
+      {guestId:'demo-guest-2',name:'Marina Couto'},
+      {guestId:'demo-guest-3',name:'Pedro Almeida'},
+      {guestId:'demo-guest-4',name:'Beatriz Nogueira'}
+    ];
+    if(name==='rsvp_get_policy')return {ok:true,eventName:title,nameLimitEnabled:true,collectWhatsapp:false,companionConfirmationsEnabled:true,postConfirmWhatsappEnabled:false,confirmationLabel:title};
+    if(name==='rsvp_search_guests_flexible'){
+      var query=normalizeRsvpGuestName(body&&body.p_query);
+      var items=guests.filter(function(item){return normalizeRsvpGuestName(item.name).includes(query)});
+      return {ok:true,items:items};
+    }
+    if(name==='rsvp_record_failed_attempt')return {ok:true};
+    if(name==='rsvp_confirm')return {ok:true,name:body&&body.p_name,message:'Sua resposta foi registrada nesta demonstração local.'};
+    return {ok:false,error:'Ação indisponível na demonstração local.'};
+  }
+  function message(text,type){var el=byId('message');el.textContent=text||'';el.className='message '+(type||'');if(!text)el.classList.add('hidden')}
+  function setAttending(value){state.attending=value;byId('attending-yes').classList.toggle('active',value);byId('attending-no').classList.toggle('active',!value)}
+  function clearNoMatchWarning(){clearTimeout(state.notFoundTimer);state.notFoundTimer=null}
+  function showNameNotFound(){message('Esse nome não está na lista! Verifique se digitou corretamente ou pergunte ao organizador do evento','error')}
+  function selectGuest(item){clearNoMatchWarning();state.selectedGuest=item;byId('guest-name').value=item.name;byId('suggestions').classList.add('hidden');byId('selected-name').textContent='Selecionado: '+item.name;byId('selected-name').classList.remove('hidden');message('','')}
+  function scheduleNoMatchWarning(query){clearNoMatchWarning();state.notFoundTimer=setTimeout(function(){if(!state.selectedGuest&&byId('guest-name').value.trim()===query)showNameNotFound()},3000)}
+  function renderSuggestions(items,query){var box=byId('suggestions');box.replaceChildren();var unique=findUniqueRsvpGuest(items);if(!items.length){box.classList.add('hidden');scheduleNoMatchWarning(query);return}clearNoMatchWarning();if(unique){state.selectedGuest=unique;message('','')}else{var title=document.createElement('p');title.className='suggestions-title';title.textContent='Selecione o seu nome';box.appendChild(title)}items.forEach(function(item){var button=document.createElement('button');button.type='button';button.className='suggestion'+(unique&&item.guestId===unique.guestId?' active':'');button.setAttribute('aria-selected',unique&&item.guestId===unique.guestId?'true':'false');var name=document.createElement('span');name.textContent=item.name;button.appendChild(name);button.onclick=function(){selectGuest(item)};box.appendChild(button)});box.classList.remove('hidden');requestAnimationFrame(function(){box.scrollIntoView({block:'nearest'})})}
+  async function searchNames(query){try{var data=await rpc('rsvp_search_guests_flexible',{p_public_token:cfg.publicToken,p_query:query});if(!data.ok)throw new Error(data.error||'Não foi possível consultar a lista.');if(byId('guest-name').value.trim()!==query)return;renderSuggestions(data.items||[],query)}catch(error){message(error.message,'error')}}
+  async function resolveListedGuest(name){var data=await rpc('rsvp_search_guests_flexible',{p_public_token:cfg.publicToken,p_query:name});if(!data.ok)throw new Error(data.error||'Não foi possível consultar a lista.');var items=data.items||[];renderSuggestions(items,name);return items}
+  async function rejectUnlistedName(name){if(name.length>=2){try{await rpc('rsvp_record_failed_attempt',{p_public_token:cfg.publicToken,p_name:name})}catch(error){console.warn('Tentativa inválida não pôde ser registrada.',error)}}showNameNotFound()}
+  function resetForCompanion(){clearTimeout(state.redirectTimer);clearNoMatchWarning();state.companionMode=true;state.selectedGuest=null;state.attending=true;byId('guest-name').value='';byId('selected-name').classList.add('hidden');renderSuggestions([], '');clearNoMatchWarning();message('','');byId('attendance-label').textContent='Acompanhante poderá comparecer?';byId('guest-name-label').textContent='Nome do acompanhante';var submit=byId('submit');submit.disabled=false;submit.textContent='Enviar confirmação';byId('success').classList.add('hidden');byId('form').classList.remove('hidden');setAttending(true);byId('guest-name').focus()}
+  async function init(){
+    try{var policy=await rpc('rsvp_get_policy',{p_public_token:cfg.publicToken});if(!policy.ok)throw new Error(policy.error||'Confirmação indisponível.');state.policy=policy;byId('event-title').textContent=policy.eventName||cfg.eventName;byId('loading').classList.add('hidden');byId('form').classList.remove('hidden');byId('phone-field').classList.toggle('hidden',!policy.collectWhatsapp);byId('confirm-companions').classList.toggle('hidden',!policy.companionConfirmationsEnabled);byId('name-hint').textContent=policy.nameLimitEnabled?'Digite parte do nome, sobrenome ou telefone cadastrado.':'Digite seu nome como deseja que apareça na lista.';setAttending(true)}
+    catch(error){byId('loading').textContent=error.message;byId('loading').style.color='#9b2c2c'}
+  }
+  byId('attending-yes').onclick=function(){setAttending(true)};byId('attending-no').onclick=function(){setAttending(false)};
+  byId('guest-name').addEventListener('input',function(){clearNoMatchWarning();message('','');state.selectedGuest=null;byId('selected-name').classList.add('hidden');byId('suggestions').classList.add('hidden');byId('suggestions').replaceChildren();if(!state.policy||!state.policy.nameLimitEnabled)return;clearTimeout(state.timer);var query=this.value.trim();if(query.length<2)return;state.timer=setTimeout(function(){searchNames(query)},250)});
+  byId('form').addEventListener('submit',async function(event){
+    event.preventDefault();message('','');var name=byId('guest-name').value.trim();var phone=byId('guest-phone').value.trim();if(state.policy.nameLimitEnabled){if(!state.selectedGuest){var matches;try{matches=await resolveListedGuest(name)}catch(error){message(error.message,'error');return}if(!state.selectedGuest){if(matches.length>1)return;await rejectUnlistedName(name);return}}name=state.selectedGuest.name||name}if(!state.policy.nameLimitEnabled&&name.length<2)return message(state.companionMode?'Informe o nome do acompanhante.':'Informe seu nome completo.','error');if(state.policy.collectWhatsapp&&!phone)return message('Informe seu WhatsApp.','error');var submit=byId('submit');submit.disabled=true;submit.textContent='Enviando…';
+    try{var data=await rpc('rsvp_confirm',{p_public_token:cfg.publicToken,p_guest_id:state.selectedGuest?state.selectedGuest.guestId:null,p_name:name,p_whatsapp:phone,p_companions:0,p_attending:state.attending});if(!data.ok)throw new Error(data.error||'Não foi possível registrar.');var whatsappUrl=state.policy.postConfirmWhatsappEnabled?buildRsvpWhatsappRedirect({phone:state.policy.postConfirmWhatsapp,name:data.name||name,attending:state.attending,confirmationLabel:state.policy.confirmationLabel||state.policy.eventName}):'';byId('form').classList.add('hidden');byId('success-title').textContent=state.attending?'Presença Confirmada!':'Resposta registrada';byId('success-copy').textContent=whatsappUrl?'Resposta salva. Abrindo o WhatsApp em alguns segundos…':(data.message||'Obrigado por responder.');byId('success').classList.remove('hidden');if(whatsappUrl)state.redirectTimer=setTimeout(function(){window.top.location.href=whatsappUrl},4500)}
+    catch(error){message(error.message,'error');submit.disabled=false;submit.textContent='Enviar confirmação'}
+  });
+  byId('confirm-companions').onclick=function(){if(state.policy&&state.policy.companionConfirmationsEnabled)resetForCompanion()};
+  init();
+})();
+</script>
+</body>
+</html>
