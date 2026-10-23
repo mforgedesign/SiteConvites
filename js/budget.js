@@ -1,3 +1,4 @@
+import { enterStep, animateProgress, snapshotIds, revealNewSince, settleSelection, revealIn, attention, animateScrollTo, revealPending } from "./motion.js?v=20261023-motion-1";
 import { calculateBudget, formatCurrency, BASE_PRICE, DELIVERY_DAYS, DEPOSIT_AMOUNT, PRICE_RULES } from "./pricing.js?v=20261014-opening-choice-1";
 
 let MODEL_MEDIA = { models: {}, referenceDemo: null };
@@ -367,36 +368,6 @@ function syncOpeningLock() {
   }
 }
 
-// Rola a tela (no celular, acima da barra fixa) até o que está pendente ficar visível.
-function revealPending(el, delay = 0) {
-  if (!el) return;
-  setTimeout(() => {
-    if (!el.isConnected) return;
-    const rect = el.getBoundingClientRect();
-    if (rect.top >= 72 && rect.bottom <= window.innerHeight - 96) return;
-    const start = window.scrollY;
-    const max = document.documentElement.scrollHeight - window.innerHeight;
-    const target = Math.max(0, Math.min(max, start + rect.top + rect.height / 2 - window.innerHeight / 2));
-    const distance = target - start;
-    if (Math.abs(distance) < 2) return;
-    // Animação própria (easing): o "smooth" nativo é ignorado em aparelhos com movimento reduzido e vira um salto.
-    const duration = Math.min(900, 400 + Math.abs(distance) * 0.4);
-    const t0 = performance.now();
-    let cancelled = false;
-    const stop = () => { cancelled = true; };
-    window.addEventListener("touchstart", stop, { once: true, passive: true });
-    window.addEventListener("wheel", stop, { once: true, passive: true });
-    const step = (now) => {
-      if (cancelled) return;
-      const k = Math.min(1, (now - t0) / duration);
-      const eased = k < 0.5 ? 2 * k * k : 1 - Math.pow(-2 * k + 2, 2) / 2;
-      window.scrollTo(0, start + distance * eased);
-      if (k < 1) requestAnimationFrame(step);
-    };
-    requestAnimationFrame(step);
-  }, delay);
-}
-
 function eventHasAge(type) {
   return type === "Aniversário" || type === "15 anos";
 }
@@ -626,6 +597,9 @@ function doubtsLine() {
 }
 
 // Renderizar Etapa Atual
+// Última etapa desenhada: decide se a troca é avanço, volta ou só um re-render na mesma etapa.
+let lastRendered = { step: null, progress: null };
+
 function renderStep() {
   // Qualquer troca de etapa encerra o dialog e toda midia/camera ativa.
   closeDemo();
@@ -685,14 +659,31 @@ function renderStep() {
     </div>
   `;
 
+  const previous = lastRendered;
+  const sameStep = previous.step === stepIdx;
+  const direction = previous.step == null ? "initial" : sameStep ? "same" : stepIdx > previous.step ? "forward" : "back";
+  const previousIds = sameStep ? snapshotIds(container) : null;
+  lastRendered = { step: stepIdx, progress: progressPercent };
+
   container.innerHTML = stepHtml;
   updatePriceDisplays();
   attachStepHandlers(stepIdx);
   attachDoubtToggle(def);
-  window.scrollTo({ top: container.offsetTop - 80, behavior: "smooth" });
+
+  if (sameStep) {
+    // Escolha dentro da etapa: a tela fica onde está e só o que mudou se mexe.
+    revealNewSince(container, previousIds);
+    settleSelection(container);
+    return;
+  }
+
+  const card = container.querySelector(".step-card");
+  enterStep(card, direction);
+  animateProgress(card?.querySelector(".progress-fill"), previous.progress, progressPercent);
+  animateScrollTo(container.getBoundingClientRect().top + window.scrollY - 80);
 
   const heading = document.getElementById("step-heading");
-  if (heading) heading.focus();
+  if (heading) heading.focus({ preventScroll: true });
 }
 
 // HTML das 14 etapas
@@ -2121,6 +2112,7 @@ function attachStepHandlers(stepIdx) {
       const grid = error?.previousElementSibling;
       if (grid?.classList.contains("options-grid")) grid.before(error);
       document.querySelector("[data-model-mode='new']")?.focus({ preventScroll: true });
+      attention(error);
       revealPending(error);
       return;
     }
@@ -2136,6 +2128,7 @@ function attachStepHandlers(stepIdx) {
       // O aviso vai para baixo do campo pendente, para os dois aparecerem juntos na tela.
       if (error && group && error.parentElement !== group) group.appendChild(error);
       field?.focus({ preventScroll: true });
+      attention(error);
       revealPending(group || error);
       return;
     }
@@ -2148,6 +2141,7 @@ function attachStepHandlers(stepIdx) {
       const grid = error?.previousElementSibling;
       if (grid?.classList.contains("options-grid")) grid.before(error);
       document.querySelector("[data-opening-select]")?.focus({ preventScroll: true });
+      attention(error);
       revealPending(error);
       return;
     }
@@ -2204,7 +2198,7 @@ function attachStepHandlers(stepIdx) {
         }
         saveDraft();
         renderStep();
-        if (appState.modelMode === "new") revealPending(document.getElementById("input-model-theme")?.closest(".form-grid"), 650);
+        if (appState.modelMode === "new") revealPending(document.getElementById("input-model-theme")?.closest(".form-grid"), 120);
       });
     });
 
@@ -2216,7 +2210,10 @@ function attachStepHandlers(stepIdx) {
       document.getElementById("box-model-custom").style.display = e.target.checked ? "block" : "none";
       updatePriceDisplays();
       saveDraft();
-      if (e.target.checked) revealPending(document.getElementById("box-model-custom"));
+      if (e.target.checked) {
+        revealIn(document.getElementById("box-model-custom"));
+        revealPending(document.getElementById("box-model-custom"), 120);
+      }
     });
   } else if (stepIdx === 2) {
     const hideEventError = () => { const error = document.getElementById("event-step-error"); if (error) error.hidden = true; };
@@ -2228,7 +2225,10 @@ function attachStepHandlers(stepIdx) {
       const hasAge = eventHasAge(event.target.value);
       if (group) group.hidden = !hasAge;
       if (ageInput && !hasAge) ageInput.value = "";
-      if (hasAge) revealPending(group);
+      if (hasAge) {
+        revealIn(group);
+        revealPending(group, 120);
+      }
     });
     const themeCustomization =document.getElementById("chk-event-theme-custom");
     themeCustomization?.addEventListener("change", (event) => {

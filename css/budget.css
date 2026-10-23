@@ -2343,3 +2343,16 @@
 .notice-stamp svg {
   display: block;
 }
+
+/* Microinterações: cartões e botões respondem ao toque (o movimento entre etapas fica em js/motion.js). */
+.option-card {
+  transition: border-color 150ms ease, background-color 150ms ease, box-shadow 180ms ease, transform 180ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+@media (hover: hover) {
+  .option-card:hover { transform: translateY(-2px); box-shadow: 0 6px 18px rgba(74, 28, 44, 0.08); }
+  .option-card.selected:hover { box-shadow: 0 0 0 1px var(--color-wine-dark), 0 6px 18px rgba(74, 28, 44, 0.08); }
+}
+.option-card:active { transform: scale(0.985); transition-duration: 90ms; }
+.btn { transition: background-color 150ms ease, border-color 150ms ease, color 150ms ease, transform 120ms ease; }
+.btn:active:not(:disabled) { transform: scale(0.97); }
+.progress-fill { will-change: width; }
