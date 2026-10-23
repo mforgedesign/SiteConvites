@@ -12,7 +12,7 @@ window.config = {
     "tema": "Noite Estrelada – Van Gogh",
     "musica": "assets/musica.mp3",
     "tipoAbertura": "longa",
-    "particulasAbertura": true,
+    "particulasAbertura": false,
     "slug": "VanGogh-Júlia-15Anos",
     "seo": {
       "pageTitle": "Convite: Aniversário",
@@ -25,6 +25,7 @@ window.config = {
     "aberturaSlides": [
       "assets/slide1.mp4"
     ],
+    "aberturaCurtaSlides": ["assets/slide1_curta.mp4"],
     "folhaPreenchida": "assets/folha_preenchida.mp4",
     "musica": "assets/musica.mp3"
   },

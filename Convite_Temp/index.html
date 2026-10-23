@@ -756,6 +756,11 @@
 
             // Abertura Media — preload ALL slides and show progress bar
             slideAssets = config.assets.aberturaSlides || [];
+            // ?abertura=curta: usa a versão curta do modelo (ou só o 1º slide da longa)
+            if (new URLSearchParams(location.search).get('abertura') === 'curta') {
+                const curtaSlides = config.assets.aberturaCurtaSlides || [];
+                slideAssets = curtaSlides.length ? curtaSlides : slideAssets.slice(0, 1);
+            }
             preloadAllSlides();
 
             // Render Buttons based on config arrays

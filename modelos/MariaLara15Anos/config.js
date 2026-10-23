@@ -12,7 +12,7 @@ window.config = {
     "tema": "Castelo Encandado Jardim Pergaminho",
     "musica": "assets/musica.mp3",
     "tipoAbertura": "longa",
-    "particulasAbertura": true,
+    "particulasAbertura": false,
     "slug": "MariaLara15Anos",
     "seo": {
       "pageTitle": "Convite: Aniversário",
@@ -25,6 +25,7 @@ window.config = {
     "aberturaSlides": [
       "assets/slide1.mp4"
     ],
+    "aberturaCurtaSlides": ["assets/slide1_curta.mp4"],
     "folhaPreenchida": "assets/folha_preenchida.mp4",
     "musica": "assets/musica.mp3"
   },
