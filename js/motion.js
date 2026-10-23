@@ -17,7 +17,8 @@ function animate(el, keyframes, options) {
   }
 }
 
-// Com movimento reduzido, o deslocamento some e fica só o esmaecer.
+// Com movimento reduzido (ex.: "Efeitos de animação" desligado no Windows), o deslocamento some
+// e fica o esmaecer em cascata, que não causa desconforto e ainda mostra a transição.
 function enterFrames(dx, dy, scale = 1) {
   if (prefersReducedMotion()) return [{ opacity: 0 }, { opacity: 1 }];
   return [
@@ -33,21 +34,21 @@ export function enterStep(card, direction) {
   const dx = direction === "back" ? -28 : direction === "forward" ? 28 : 0;
   const dy = direction === "initial" ? 14 : 0;
   const header = card.querySelector(".step-header");
-  animate(header, enterFrames(dx, dy), { duration: reduced ? 160 : 340, easing: EASE_OUT });
+  animate(header, enterFrames(dx, dy), { duration: reduced ? 280 : 340, easing: EASE_OUT });
 
   const body = card.querySelector(".step-body");
   const items = body ? staggerTargets(body) : [];
   items.slice(0, 10).forEach((item, i) => {
     animate(item, enterFrames(dx * 0.5, 12), {
-      duration: reduced ? 160 : 380,
-      delay: reduced ? 0 : 70 + i * 40,
+      duration: reduced ? 300 : 380,
+      delay: 70 + i * 40,
       easing: EASE_OUT
     });
   });
 
   const rest = [card.querySelector(".reassure-strip"), card.querySelector(".welcome-card"), ...card.querySelectorAll(":scope > .doubt-row, :scope > .doubt-toggle, :scope > .step-actions")];
   rest.filter(Boolean).forEach(el => {
-    animate(el, enterFrames(0, 8), { duration: reduced ? 160 : 320, delay: reduced ? 0 : 180, easing: EASE_OUT });
+    animate(el, enterFrames(0, 8), { duration: reduced ? 280 : 320, delay: 180, easing: EASE_OUT });
   });
 }
 
@@ -62,7 +63,7 @@ export function animateProgress(fill, fromPercent, toPercent) {
   if (!fill) return;
   if (fromPercent == null || fromPercent === toPercent) return;
   animate(fill, [{ width: `${fromPercent}%` }, { width: `${toPercent}%` }], {
-    duration: prefersReducedMotion() ? 0 : 520,
+    duration: 520,
     easing: EASE_OUT,
     fill: "none"
   });
@@ -71,7 +72,7 @@ export function animateProgress(fill, fromPercent, toPercent) {
 // Bloco que acabou de aparecer (campos extras de uma opção, grupo de idade, caixa de ajuste).
 export function revealIn(el) {
   if (!el || el.hidden) return;
-  animate(el, enterFrames(0, -8, 0.985), { duration: prefersReducedMotion() ? 140 : 300, easing: EASE_OUT });
+  animate(el, enterFrames(0, -8, 0.985), { duration: 300, easing: EASE_OUT });
 }
 
 // Re-render na mesma etapa: anima só o que não existia antes (por id), e dá um "toque" no cartão escolhido.
@@ -90,9 +91,11 @@ export function revealNewSince(root, previousIds) {
 }
 
 export function settleSelection(root) {
-  if (prefersReducedMotion()) return;
+  const frames = prefersReducedMotion()
+    ? [{ opacity: 0.6 }, { opacity: 1 }]
+    : [{ transform: "scale(0.985)" }, { transform: "scale(1.006)", offset: 0.6 }, { transform: "none" }];
   root?.querySelectorAll(".option-card.selected").forEach(card => {
-    animate(card, [{ transform: "scale(0.985)" }, { transform: "scale(1.006)", offset: 0.6 }, { transform: "none" }], {
+    animate(card, frames, {
       duration: 280,
       easing: EASE_OUT,
       fill: "none"
@@ -104,7 +107,7 @@ export function settleSelection(root) {
 export function attention(el) {
   if (!el || el.hidden) return;
   if (prefersReducedMotion()) {
-    animate(el, [{ opacity: 0 }, { opacity: 1 }], { duration: 160 });
+    animate(el, [{ opacity: 0 }, { opacity: 1 }], { duration: 260 });
     return;
   }
   animate(el, [
@@ -116,7 +119,8 @@ export function attention(el) {
   ], { duration: 420, easing: "ease-out", fill: "none" });
 }
 
-// Rolagem animada própria: o "smooth" nativo vira salto em aparelhos com movimento reduzido.
+// Rolagem animada própria: o "smooth" nativo vira salto em aparelhos com movimento reduzido;
+// nesses, ela só fica mais curta.
 let activeScroll = 0;
 export function animateScrollTo(targetY) {
   const max = document.documentElement.scrollHeight - window.innerHeight;
@@ -125,8 +129,7 @@ export function animateScrollTo(targetY) {
   const distance = target - start;
   const token = ++activeScroll;
   if (Math.abs(distance) < 2) return;
-  const duration = prefersReducedMotion() ? 0 : Math.min(900, 400 + Math.abs(distance) * 0.4);
-  if (!duration) { window.scrollTo(0, target); return; }
+  const duration = prefersReducedMotion() ? Math.min(450, 250 + Math.abs(distance) * 0.2) : Math.min(900, 400 + Math.abs(distance) * 0.4);
   const t0 = performance.now();
   const stop = () => { if (activeScroll === token) activeScroll++; };
   window.addEventListener("touchstart", stop, { once: true, passive: true });

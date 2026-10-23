@@ -1,4 +1,4 @@
-import { enterStep, animateProgress, snapshotIds, revealNewSince, settleSelection, revealIn, attention, animateScrollTo, revealPending } from "./motion.js?v=20261023-motion-1";
+import { enterStep, animateProgress, snapshotIds, revealNewSince, settleSelection, revealIn, attention, animateScrollTo, revealPending } from "./motion.js?v=20261023-motion-3";
 import { calculateBudget, formatCurrency, BASE_PRICE, DELIVERY_DAYS, DEPOSIT_AMOUNT, PRICE_RULES } from "./pricing.js?v=20261014-opening-choice-1";
 
 let MODEL_MEDIA = { models: {}, referenceDemo: null };
@@ -390,7 +390,22 @@ function requiredFieldError(stepIdx) {
     const failed = checks.find(([missing]) => missing);
     if (failed) return { message: failed[1], focusId: failed[2], errorId: "event-step-error" };
   }
+  // Opções que abrem um campo próprio: escolhida a opção, o campo passa a ser obrigatório.
+  const c = appState.choices;
+  const inlineChecks = {
+    5: [c.music?.mode === "name_or_link" && !c.music.value, "Informe o nome ou o link da música.", "music-text"],
+    6: [c.rsvp === "whatsapp" && !appState.rsvpPhone, "Informe o número do WhatsApp que vai receber as confirmações.", "rsvp-phone-input"],
+    7: [["simple", "premium"].includes(c.gifts) && !appState.giftDetails, "Descreva as sugestões de presente.", "gift-details-input"],
+    8: [["simple", "premium"].includes(c.manual) && !appState.manualDetails, "Escreva o que você quer informar aos convidados.", "manual-details-input"]
+  };
+  const inline = inlineChecks[stepIdx];
+  if (inline?.[0]) return { message: inline[1], focusId: inline[2], errorId: "inline-step-error" };
   return null;
+}
+
+// Depois de escolher uma opção que abre um campo, rola até ele no celular.
+function revealSelectedInlineField() {
+  revealPending(document.querySelector("#step-body-content .option-card.selected .option-inline-field"), 120);
 }
 
 function stepAfter(index) {
@@ -2118,13 +2133,18 @@ function attachStepHandlers(stepIdx) {
     }
     const missing = requiredFieldError(stepIdx);
     if (missing) {
-      const error = document.getElementById(missing.errorId);
-      if (error) {
-        error.textContent = missing.message;
-        error.hidden = false;
+      let error = document.getElementById(missing.errorId);
+      if (!error) {
+        error = document.createElement("p");
+        error.id = missing.errorId;
+        error.className = "form-error";
+        error.setAttribute("role", "alert");
       }
+      error.textContent = missing.message;
+      error.hidden = false;
       const field = document.getElementById(missing.focusId);
-      const group = field?.closest(".form-group");
+      field?.addEventListener("input", () => { error.hidden = true; }, { once: true });
+      const group = field?.closest(".form-group, .option-inline-field");
       // O aviso vai para baixo do campo pendente, para os dois aparecerem juntos na tela.
       if (error && group && error.parentElement !== group) group.appendChild(error);
       field?.focus({ preventScroll: true });
@@ -2282,10 +2302,12 @@ function attachStepHandlers(stepIdx) {
     document.querySelectorAll("[data-music-mode]").forEach(card => {
       card.addEventListener("click", event => {
         if (isNestedOptionControl(event)) return;
-          const mode = card.dataset.musicMode;
+        saveCurrentStepData(stepIdx);
+        const mode = card.dataset.musicMode;
         appState.choices.music.mode = mode;
         saveDraft();
         renderStep();
+        revealSelectedInlineField();
       });
     });
   } else if (stepIdx === 6) {
@@ -2296,6 +2318,7 @@ function attachStepHandlers(stepIdx) {
         appState.choices.rsvp = card.dataset.rsvp;
         saveDraft();
         renderStep();
+        revealSelectedInlineField();
       });
     });
   } else if (stepIdx === 7) {
@@ -2306,6 +2329,7 @@ function attachStepHandlers(stepIdx) {
         appState.choices.gifts = card.dataset.gifts;
         saveDraft();
         renderStep();
+        revealSelectedInlineField();
       });
     });
   } else if (stepIdx === 8) {
@@ -2316,6 +2340,7 @@ function attachStepHandlers(stepIdx) {
         appState.choices.manual = card.dataset.manual;
         saveDraft();
         renderStep();
+        revealSelectedInlineField();
       });
     });
   } else if (stepIdx === 9) {
