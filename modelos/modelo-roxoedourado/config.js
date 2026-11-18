@@ -70,7 +70,7 @@ window.config = {
   },
   "config": {
     "exibirMarcaDagua": false,
-    "buttonColor": "#0c2b71",
+    "buttonColor": "#9b59d0",
     "buttonSize": 1,
     "isButtonFilled": true,
     "shadowStyle": "linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0) 100%)",

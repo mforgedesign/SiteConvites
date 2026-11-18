@@ -88,7 +88,7 @@ window.config = {
   "config": {
     "exibirMarcaDagua": false,
     "cronometro": false,
-    "buttonColor": "#0c2b71",
+    "buttonColor": "#2d8a9e",
     "buttonSize": 1,
     "isButtonFilled": true,
     "shadowStyle": "linear-gradient(to top, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0) 100%)",
