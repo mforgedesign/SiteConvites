@@ -17,7 +17,7 @@
     "name": "Fazendinha",
     "tipo": "Aniversário",
     "tema": "Fazendinha",
-    "paleta_cores": "Cores aquarela e suaves",
+    "paleta_cores": "Creme, rosa e verde",
     "capa_path": "assets/cover.jpg",
     "capa_type": "image",
     "aberturas": [
@@ -53,7 +53,7 @@
     "name": "Country",
     "tipo": "Aniversário",
     "tema": "Country",
-    "paleta_cores": "Country",
+    "paleta_cores": "Bege, marrom e verde oliva",
     "capa_path": "assets/cover.png",
     "capa_type": "image",
     "aberturas": [
@@ -137,7 +137,7 @@
     "name": "Pool Party",
     "tipo": "Aniversário",
     "tema": "Pool Party",
-    "paleta_cores": "Cores variadas",
+    "paleta_cores": "Azul turquesa, rosa e dourado",
     "capa_path": "assets/cover.jpg",
     "capa_type": "image",
     "aberturas": []
@@ -184,7 +184,7 @@
     "slug": "modelo-Gabriel14Anos",
     "name": "Marvel Super Heróis",
     "tipo": "Aniversário",
-    "tema": "Marvel Super Heróis ",
+    "tema": "Marvel Super Heróis",
     "paleta_cores": "Vermelho, azul, dourado e preto",
     "capa_path": "assets/cover.jpg",
     "capa_type": "image",
@@ -247,10 +247,10 @@
   },
   {
     "slug": "modelo-Andreza-e-Julio",
-    "name": "Elegante, Elementos de casamento no design",
+    "name": "Clássico verde oliva",
     "tipo": "Casamento",
-    "tema": "Elegante, Elementos de casamento no design",
-    "paleta_cores": " branca, verde oliva e algumas flores no tom rose",
+    "tema": "Clássico Elegante",
+    "paleta_cores": "Branco, dourado e verde oliva",
     "capa_path": "assets/cover.png",
     "capa_type": "image",
     "aberturas": [
@@ -348,9 +348,9 @@
   },
   {
     "slug": "modelo-beatrizmoura15anos",
-    "name": "BeatrizMoura15Anos",
+    "name": "Floral com borboletas rosé",
     "tipo": "Aniversário",
-    "tema": "BeatrizMoura15Anos",
+    "tema": "Floral com Borboletas",
     "paleta_cores": "Rosa bebê e dourado",
     "capa_path": "assets/cover.jpg",
     "capa_type": "image",
@@ -360,7 +360,7 @@
   },
   {
     "slug": "modelo-Yasmin-e-Claudio",
-    "name": "Yasmin-e-Claudio",
+    "name": "Floral elegante azul bebê",
     "tipo": "Casamento",
     "tema": "Floral Elegante",
     "paleta_cores": "Azul bebê, dourado e off-white",
@@ -372,7 +372,7 @@
   },
   {
     "slug": "modelo-Casamento-Isaias-e-Sonia",
-    "name": "Casamento-Isaias-e-Sonia",
+    "name": "Floral romântico rosa",
     "tipo": "Casamento",
     "tema": "Floral Romântico",
     "paleta_cores": "Rosa, branco e dourado",
@@ -388,7 +388,7 @@
     "name": "Carros",
     "tipo": "Aniversário",
     "tema": "Carros",
-    "paleta_cores": "❤️ Vermelho ferrari. 🔵 Azul petróleo. 💛 Amarelo mostarda. 🤍 Off-white (creme). 🩶 Cinza claro. 🤎 Bege areia. 🌿 Verde sálvia (para um toque delicado).",
+    "paleta_cores": "Off-white, azul marinho e vermelho",
     "capa_path": "assets/cover.png",
     "capa_type": "image",
     "aberturas": [
@@ -465,7 +465,7 @@
     "name": "Floral",
     "tipo": "Aniversário",
     "tema": "Floral",
-    "paleta_cores": "Masala",
+    "paleta_cores": "Marsala",
     "capa_path": "assets/cover.jpg",
     "capa_type": "image",
     "aberturas": [
@@ -488,10 +488,10 @@
   },
   {
     "slug": "modelo-ester15anos",
-    "name": "15 Anos",
+    "name": "Jardim encantado verde",
     "tipo": "Aniversário",
-    "tema": "15 Anos",
-    "paleta_cores": "Azul com Prata",
+    "tema": "Jardim Encantado",
+    "paleta_cores": "Verde, lilás e rosa",
     "capa_path": "assets/cover.jpg",
     "capa_type": "image",
     "aberturas": [
@@ -564,9 +564,9 @@
   },
   {
     "slug": "modelo-beatriz15anos",
-    "name": "15 Anos",
+    "name": "Tapete vermelho",
     "tipo": "Aniversário",
-    "tema": "15 Anos",
+    "tema": "Tapete Vermelho",
     "paleta_cores": "Vermelho/Dourado",
     "capa_path": "assets/cover.jpg",
     "capa_type": "image",
@@ -641,9 +641,9 @@
   },
   {
     "slug": "modelo-ana-julia15anos",
-    "name": "15 Anos",
+    "name": "Rosas elegantes azul marinho",
     "tipo": "Aniversário",
-    "tema": "15 Anos",
+    "tema": "Rosas Elegantes",
     "paleta_cores": "Azul Marinho, Rosa Bebê e Prata",
     "capa_path": "assets/cover.jpg",
     "capa_type": "image",
@@ -690,7 +690,7 @@
   },
   {
     "slug": "modelo-alicenopaisdasmaravilhas",
-    "name": "alicenopaisdasmaravilhas",
+    "name": "Alice no País das Maravilhas",
     "tipo": "Aniversário",
     "tema": "Alice no País das Maravilhas",
     "paleta_cores": "Bege, azul turquesa e dourado",
@@ -714,10 +714,10 @@
   },
   {
     "slug": "modelo-auroramalevola",
-    "name": "auroramalevola",
+    "name": "Aurora Malévola rosa",
     "tipo": "Aniversário",
     "tema": "Aurora Malévola",
-    "paleta_cores": "Aurora",
+    "paleta_cores": "Rosa, dourado e rosé",
     "capa_path": "assets/capa.jpg",
     "capa_type": null,
     "aberturas": [
@@ -727,10 +727,10 @@
   },
   {
     "slug": "Modelo-Azul-Prata-Floral",
-    "name": "Azul  Prata  Floral",
+    "name": "Azul Prata Floral",
     "tipo": "Aniversário",
     "tema": "Floral Elegante",
-    "paleta_cores": "Azul Prata Floral",
+    "paleta_cores": "Azul royal, prata e branco",
     "capa_path": "assets/capa.jpg",
     "capa_type": null,
     "aberturas": [
@@ -743,7 +743,7 @@
     "name": "azul floral",
     "tipo": "Aniversário",
     "tema": "Floral Elegante",
-    "paleta_cores": "Azul Floral",
+    "paleta_cores": "Azul marinho, azul royal e branco",
     "capa_path": "assets/capa.jpg",
     "capa_type": null,
     "aberturas": [
@@ -752,7 +752,7 @@
   },
   {
     "slug": "modelo-azulcomamarelopastel",
-    "name": "azulcomamarelopastel",
+    "name": "Floral elegante azul",
     "tipo": "Aniversário",
     "tema": "Floral Elegante",
     "paleta_cores": "Azul com Amarelo Pastel",
@@ -764,7 +764,7 @@
   },
   {
     "slug": "Modelo-BaileMascaras-Vermelho",
-    "name": "Baile Mascaras  Vermelho",
+    "name": "Baile Mascaras Vermelho",
     "tipo": "Aniversário",
     "tema": "Baile de Máscaras",
     "paleta_cores": "Vermelho",
@@ -776,7 +776,7 @@
   },
   {
     "slug": "modelo-bailedemascara",
-    "name": "bailedemascara",
+    "name": "Baile de máscaras preto e dourado",
     "tipo": "Aniversário",
     "tema": "Baile de Máscaras",
     "paleta_cores": "Preto, dourado e vinho",
@@ -789,7 +789,7 @@
   },
   {
     "slug": "modelo-bailedemascarapreta",
-    "name": "bailedemascarapreta",
+    "name": "Baile de máscaras preto e prata",
     "tipo": "Aniversário",
     "tema": "Baile de Máscaras",
     "paleta_cores": "Preto, prata e cinza",
@@ -801,7 +801,7 @@
   },
   {
     "slug": "modelo-baileinverno-AberturaCurta",
-    "name": "baileinverno  Abertura Curta",
+    "name": "baileinverno Abertura Curta",
     "tipo": "Aniversário",
     "tema": "Baile de Inverno",
     "paleta_cores": "Azul royal, bege e prata",
@@ -813,7 +813,7 @@
   },
   {
     "slug": "Modelo-Bela-e-a-Fera",
-    "name": "Bela e a  Fera",
+    "name": "Bela e a Fera",
     "tipo": "Aniversário",
     "tema": "Bela e a Fera",
     "paleta_cores": "Vermelho, dourado e azul royal",
@@ -826,10 +826,10 @@
   },
   {
     "slug": "Modelo-Borboleta-Azul-Prata",
-    "name": "Borboleta  Azul  Prata",
+    "name": "Borboleta Azul Prata",
     "tipo": "Aniversário",
     "tema": "Borboleta",
-    "paleta_cores": "Azul Prata Borboleta",
+    "paleta_cores": "Azul marinho, prata e branco",
     "capa_path": "assets/capa.jpg",
     "capa_type": null,
     "aberturas": [
@@ -838,7 +838,7 @@
   },
   {
     "slug": "modelo-brancodourado",
-    "name": "brancodourado",
+    "name": "Salão elegante branco e dourado",
     "tipo": "Aniversário",
     "tema": "Salão Elegante",
     "paleta_cores": "Branco com Dourado",
@@ -875,7 +875,7 @@
   },
   {
     "slug": "modelo-casamentominimalista",
-    "name": "casamentominimalista",
+    "name": "Minimalista branco e prata",
     "tipo": "Casamento",
     "tema": "Minimalista",
     "paleta_cores": "Branco, prata e cinza",
@@ -887,10 +887,10 @@
   },
   {
     "slug": "modelo-cinderela",
-    "name": "cinderela",
+    "name": "Cinderela azul",
     "tipo": "Aniversário",
     "tema": "Cinderela",
-    "paleta_cores": "Cinderela",
+    "paleta_cores": "Azul royal, prata e branco",
     "capa_path": "assets/capa.jpg",
     "capa_type": null,
     "aberturas": [
@@ -900,10 +900,10 @@
   },
   {
     "slug": "modelo-coraline",
-    "name": "coraline",
+    "name": "Coraline roxo e dourado",
     "tipo": "Aniversário",
     "tema": "Coraline",
-    "paleta_cores": "Coraline",
+    "paleta_cores": "Roxo, dourado e preto",
     "capa_path": "assets/capa.jpg",
     "capa_type": null,
     "aberturas": [
@@ -916,7 +916,7 @@
     "name": "debutante azul floral",
     "tipo": "Debutante",
     "tema": "Floral",
-    "paleta_cores": "Azul Floral",
+    "paleta_cores": "Azul marinho, azul royal e branco",
     "capa_path": "assets/capa.jpg",
     "capa_type": null,
     "aberturas": [
@@ -962,7 +962,7 @@
   },
   {
     "slug": "modelo-formatura",
-    "name": "formatura",
+    "name": "Formatura vinho",
     "tipo": "Formatura",
     "tema": "Rústico Elegante",
     "paleta_cores": "Vinho, dourado e off-white",
@@ -974,7 +974,7 @@
   },
   {
     "slug": "modelo-galo",
-    "name": "galo",
+    "name": "Galo preto e branco",
     "tipo": "Aniversário",
     "tema": "Galo",
     "paleta_cores": "Preto, branco e prata",
@@ -999,7 +999,7 @@
   },
   {
     "slug": "modelo-Las-Vegas",
-    "name": "Las  Vegas",
+    "name": "Las Vegas",
     "tipo": "Aniversário",
     "tema": "Las Vegas",
     "paleta_cores": "Preto, dourado e vinho",
@@ -1011,7 +1011,7 @@
   },
   {
     "slug": "Modelo-Lilas-Prata",
-    "name": "Lilas  Prata",
+    "name": "Lilas Prata",
     "tipo": "Aniversário",
     "tema": "Jardim Encantado",
     "paleta_cores": "Lilás com Prata",
@@ -1024,7 +1024,7 @@
   },
   {
     "slug": "modelo-lilascomdourado",
-    "name": "lilascomdourado",
+    "name": "Lavanda com dourado",
     "tipo": "Aniversário",
     "tema": "Lavanda e Floral",
     "paleta_cores": "Lilás com Dourado",
@@ -1036,7 +1036,7 @@
   },
   {
     "slug": "modelo-lilascomdouradoerosa",
-    "name": "lilascomdouradoerosa",
+    "name": "Jardim encantado lilás",
     "tipo": "Aniversário",
     "tema": "Jardim Encantado",
     "paleta_cores": "Lilás com Dourado",
@@ -1048,8 +1048,8 @@
   },
   {
     "slug": "modelo-marromdourado",
-    "name": "marromdourado",
-    "tipo": "Aniversário",
+    "name": "Floral rústico marrom",
+    "tipo": "Casamento",
     "tema": "Floral Rústico",
     "paleta_cores": "Marrom com Dourado",
     "capa_path": "assets/capa.jpg",
@@ -1516,7 +1516,7 @@
     "name": "Modelo Salão Elegante Rosa",
     "tipo": "Casamento",
     "tema": "Salão Elegante",
-    "paleta_cores": "Dourado, Rosa, Lavanda, Liilás, Branco",
+    "paleta_cores": "Dourado, Rosa, Lavanda, Lilás, Branco",
     "capa_path": "assets/capa.jpg",
     "capa_type": null,
     "aberturas": [
@@ -1576,7 +1576,7 @@
   },
   {
     "slug": "Modelo-Neon-Laranja-Verde",
-    "name": "Neon  Laranja  Verde",
+    "name": "Neon Laranja Verde",
     "tipo": "Aniversário",
     "tema": "Neon Festa",
     "paleta_cores": "Neon Laranja e Verde",
@@ -1588,7 +1588,7 @@
   },
   {
     "slug": "modelo-noiteestrelada",
-    "name": "noiteestrelada",
+    "name": "Noite estrelada roxo",
     "tipo": "Aniversário",
     "tema": "Noite Estrelada",
     "paleta_cores": "Roxo, azul marinho e prata",
@@ -1601,7 +1601,7 @@
   },
   {
     "slug": "modelo-palmeiras",
-    "name": "palmeiras",
+    "name": "Palmeiras verde",
     "tipo": "Aniversário",
     "tema": "Palmeiras",
     "paleta_cores": "Verde, prata e branco",
@@ -1613,7 +1613,7 @@
   },
   {
     "slug": "Patrícia",
-    "name": "Patrícia",
+    "name": "Pergaminho dourado e preto",
     "tipo": "Aniversário",
     "tema": "Pergaminho Dourado",
     "paleta_cores": "Dourado e preto",
@@ -1638,10 +1638,10 @@
   },
   {
     "slug": "modelo-rosadouradoespelho",
-    "name": "rosadouradoespelho",
+    "name": "Floral elegante lilás",
     "tipo": "Aniversário",
     "tema": "Floral Elegante",
-    "paleta_cores": "Rosa com Dourado Espelho",
+    "paleta_cores": "Lilás, roxo e dourado",
     "capa_path": "assets/capa.jpg",
     "capa_type": null,
     "aberturas": [
@@ -1650,7 +1650,7 @@
   },
   {
     "slug": "modelo-rosaprata",
-    "name": "rosaprata",
+    "name": "Floral rosa e prata",
     "tipo": "Aniversário",
     "tema": "Floral",
     "paleta_cores": "Rosa com Prata",
@@ -1662,7 +1662,7 @@
   },
   {
     "slug": "modelo-rosegold",
-    "name": "rosegold",
+    "name": "Floral romântico rose gold",
     "tipo": "Aniversário",
     "tema": "Floral Romântico",
     "paleta_cores": "Rose Gold",
@@ -1687,9 +1687,9 @@
   },
   {
     "slug": "modelo-roxoedourado",
-    "name": "roxoedourado",
+    "name": "Enrolados roxo e dourado",
     "tipo": "Aniversário",
-    "tema": "Jardim Encantado",
+    "tema": "Enrolados",
     "paleta_cores": "Roxo com Dourado",
     "capa_path": "assets/cover.jpg",
     "capa_type": "image",
@@ -1712,7 +1712,7 @@
   },
   {
     "slug": "modelo-tropical",
-    "name": "tropical",
+    "name": "Tropical rosa",
     "tipo": "Aniversário",
     "tema": "Tropical",
     "paleta_cores": "Pink, rosa e dourado",
@@ -1728,7 +1728,7 @@
     "name": "Van Gogh",
     "tipo": "Aniversário",
     "tema": "Van Gogh",
-    "paleta_cores": "Van Gogh",
+    "paleta_cores": "Azul royal, amarelo e dourado",
     "capa_path": "assets/capa.jpg",
     "capa_type": null,
     "aberturas": [
@@ -1751,7 +1751,7 @@
   },
   {
     "slug": "modelo-vitoriasecrets",
-    "name": "vitoriasecrets",
+    "name": "Victoria Secrets rosa e preto",
     "tipo": "Aniversário",
     "tema": "Victoria Secrets",
     "paleta_cores": "Rosa, preto e dourado",
@@ -1792,7 +1792,7 @@
     "name": "Fundo do Mar",
     "tipo": "Aniversário",
     "tema": "Fundo do Mar",
-    "paleta_cores": "Tons de azul e branco, estética aquarela suave",
+    "paleta_cores": "Azul, creme e dourado",
     "capa_path": "assets/cover.png",
     "capa_type": "image",
     "aberturas": [
